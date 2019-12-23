@@ -1,5 +1,5 @@
 <template>
-   <p>ここはページ2です。ココロソマリ</p>
+   <p>ここはページ2です。</p>
 </template>
 
 <script>
