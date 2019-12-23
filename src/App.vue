@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="header">
-      <router-link to="/">top</router-link>
-      <router-link to="/page2">page2</router-link>
+      <router-link to="/">about</router-link>
+      <router-link to="/page2">like</router-link>
       <router-link to="/cat">cat</router-link>
     </div>
     <transition mode="out-in">
