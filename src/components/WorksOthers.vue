@@ -1,5 +1,5 @@
 <template>
-   <p>ここはページ2です。</p>
+   <p>作品その他</p>
 </template>
 
 <script>

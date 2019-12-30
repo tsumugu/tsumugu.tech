@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import page1 from '@/components/page1'
-import page2 from '@/components/page2'
+import top from '@/components/Top'
+import worksphp from '@/components/WorksPHP'
+import worksothers from '@/components/WorksOthers'
 import cat from '@/components/CatComponent'
 import notfoundcomponent from '@/components/NotFoundComponent'
 Vue.use(Router)
@@ -11,11 +12,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: page1
+      component: top
     },
     {
-      path: '/page2',
-      component: page2
+      path: '/works-php',
+      component: worksphp
+    },
+    {
+      path: '/works-others',
+      component: worksothers
     },
     {
       path: '/cat',
