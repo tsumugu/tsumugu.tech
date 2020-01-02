@@ -13,7 +13,7 @@
 </template>
 
 <script>
-new Vue({
+export default {
   el: '#app',
   data: {
     windowWidth: window.innerWidth,
@@ -35,7 +35,7 @@ new Vue({
       this.windowHeight = window.innerHeight;
     }
   }
-})
+}
 </script>
 
 <style scoped>
