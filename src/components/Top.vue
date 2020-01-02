@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  data: {
+  data() {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
     scrollY: 0,
