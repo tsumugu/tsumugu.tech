@@ -4,8 +4,7 @@
       <div class="links">
         <router-link to="/works-php">WorksPHP</router-link>
         <router-link to="/works-others">WorksOthers</router-link>
-        <span>Width:{{ windowWidth }} / Height:{{ windowHeight }}</span>
-        <span>{{ scrollY }} ({{ scrollYPer }})</span>
+        <span>{{ scrollY }}</span>
       </div>
       <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/main_tree_noanim.png">
     </div>
