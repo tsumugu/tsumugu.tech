@@ -14,8 +14,7 @@
 
 <script>
 export default {
-  el: '#app',
-  data: {
+  props: {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
     scrollY: 0,
