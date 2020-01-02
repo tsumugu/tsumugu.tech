@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  props: {
+  data: {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
     scrollY: 0,
@@ -25,7 +25,7 @@ export default {
     window.addEventListener('resize', this.handleResize);
   },
   methods: {
-    handleScroll() {
+    handleScroll: function() {
         this.scrollY = window.scrollY;
         this.scrollYPer = this.scrollY/this.windowHeight;
     },
