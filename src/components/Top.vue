@@ -15,24 +15,28 @@
 <script>
 export default {
   data() {
+    /*
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
+    */
     scrollY: 0,
-    scrollYPer: 0
+    //scrollYPer: 0
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
-    window.addEventListener('resize', this.handleResize);
+    //window.addEventListener('resize', this.handleResize);
   },
   methods: {
     handleScroll: function() {
         this.scrollY = window.scrollY;
-        this.scrollYPer = this.scrollY/this.windowHeight;
-    },
-    handleResize: function() {
+        //this.scrollYPer = this.scrollY/this.windowHeight;
+    }
+    /*
+    ,handleResize: function() {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
     }
+    */
   }
 }
 </script>
