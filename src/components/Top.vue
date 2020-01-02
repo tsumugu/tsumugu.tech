@@ -4,18 +4,20 @@
       <div class="links">
         <router-link to="/works-php">WorksPHP</router-link>
         <router-link to="/works-others">WorksOthers</router-link>
-        <span>{{ scrollY }}</span>
       </div>
-      <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/main_tree_noanim.png">
+      <tree></tree>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  data: {
-    scrollY: 0
+Vue.component('tree', {
+  data: function () {
+    return {
+      scrollY: 0
+    }
   },
+  template: '<span>{{ scrollY }}</span><img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/main_tree_noanim.png">',
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -24,7 +26,7 @@ export default {
         this.scrollY = window.scrollY;
     }
   }
-}
+})
 </script>
 
 <style scoped>
