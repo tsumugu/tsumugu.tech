@@ -4,6 +4,8 @@
       <div class="links">
         <router-link to="/works-php">WorksPHP</router-link>
         <router-link to="/works-others">WorksOthers</router-link>
+        <span>Width:{{ windowWidth }} / Height:{{ windowHeight }}</span>
+        <span>{{ scrollY }} ({{ scrollYPer }})</span>
       </div>
       <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/main_tree_noanim.png">
     </div>
@@ -11,6 +13,29 @@
 </template>
 
 <script>
+new Vue({
+  el: '#app',
+  data: {
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight,
+    scrollY: 0,
+    scrollYPer: 0
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleResize);
+  },
+  methods: {
+    handleScroll() {
+        this.scrollY = window.scrollY;
+        this.scrollYPer = this.scrollY/this.windowHeight;
+    },
+    handleResize: function() {
+      this.windowWidth = window.innerWidth;
+      this.windowHeight = window.innerHeight;
+    }
+  }
+})
 </script>
 
 <style scoped>
