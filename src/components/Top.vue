@@ -5,28 +5,12 @@
         <router-link to="/works-php">WorksPHP</router-link>
         <router-link to="/works-others">WorksOthers</router-link>
       </div>
-      <tree></tree>
+      <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/main_tree_noanim.png">
     </div>
   </div>
 </template>
 
 <script>
-Vue.component('tree', {
-  data: function () {
-    return {
-      scrollY: 0
-    }
-  },
-  template: '<span>{{ scrollY }}</span><img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/main_tree_noanim.png">',
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  methods: {
-    handleScroll:function() {
-        this.scrollY = window.scrollY;
-    }
-  }
-})
 </script>
 
 <style scoped>
