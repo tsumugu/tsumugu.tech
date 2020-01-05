@@ -4,13 +4,29 @@
       <div class="links">
         <router-link to="/works-php">WorksPHP</router-link>
         <router-link to="/works-others">WorksOthers</router-link>
+        <!-- debug panel start -->
+        <div class="debug">
+          <input type="range" min="0" max="100" v-model.number="deg">
+        </div>
+        <!-- debug panel end -->
       </div>
-      <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/main_tree_noanim.png">
+      <Tree :deg="deg"></Tree>
     </div>
   </div>
 </template>
 
 <script>
+import Tree from './Tree.vue'
+export default {
+  components: {
+    Tree
+  },
+  data() {
+    return {
+      deg: 0
+    }
+  }
+}
 </script>
 
 <style scoped>
