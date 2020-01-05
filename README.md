@@ -1,8 +1,13 @@
-# pf
+# How to dev for Windows
+## 1.Start cmd
+``` ¥ cd vue/tsumugu.tech ```
+## 2.Start local dev server
+``` ¥ npm run dev ```
 
-> A Vue.js project
+## 3.Let's edit!!
+``` ¥ atom filename ```
 
-## Build Setup
+# Build Setup
 
 ``` bash
 # install dependencies
