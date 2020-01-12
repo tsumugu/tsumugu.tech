@@ -19,10 +19,10 @@ $(document).ready(function(){
       dir = 'up';
     }
     el.attr('d', start);
-    //callback地獄そのうち何とかする
-    el.animate({d: mid}, 1500, mina.easein, function(){
+    //callback地獄そのうち何とかする, mina.easein
+    el.animate({d: mid}, 1500, function(){
       //something
-      el.animate({d: end}, 1000, mina.easein, function(){
+      el.animate({d: end}, 1000, function(){
         //something
         $('#leaf').addClass("fadein");
       });
