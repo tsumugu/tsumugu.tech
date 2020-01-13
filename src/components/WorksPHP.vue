@@ -10,17 +10,21 @@
 </template>
 
 <script>
-import db from '../../config/firebaseInit'
+import firebase from 'firebase'
+
 export default {
   data () {
     return {
-      items: [],
-      loading: true
+      db: null,
+      items: []
     }
   },
   created () {
-    db.collection('contacts').get().then((querySnapshot) => {
-      this.loading = false
+    this.db = firebase.firestore()
+    var _this = this
+    this.db.collection('Works-PHP').get().then((querySnapshot) => {
+      console.log(querySnapshot)
+      _this.items = []
       querySnapshot.forEach((doc) => {
         let data = {
           'id': doc.id,
@@ -31,7 +35,7 @@ export default {
           'Lang': doc.data().Lang,
           'kdwr': doc.data().kdwr
         }
-        this.items.push(data)
+        _this.items.push(data)
       })
     })
   }
