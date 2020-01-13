@@ -1,16 +1,21 @@
 <template>
 <div>
-  <h1>作品PHP</h1>
-  <div id="items">
-    <div class="item" v-for="(item, key) in items" :key="key">
-      <a :href="item.siteurl">
-        <img :src="item.thumbnail">
-        <h2>{{item.title}}</h2>
-        <p>{{item.Lang}}</p>
-        <p>{{item.description}}</p>
-        <p>{{item.kdwr}}</p>
-      </a>
-      <hr>
+  <div v-if="loading">
+  Loading
+  </div>
+  <div v-else>
+    <h1>作品PHP</h1>
+    <div id="items">
+      <div class="item" v-for="(item, key) in items" :key="key">
+        <a :href="item.siteurl">
+          <img :src="item.thumbnail">
+          <h2>{{item.title}}</h2>
+          <p>{{item.Lang}}</p>
+          <p>{{item.description}}</p>
+          <p>{{item.kdwr}}</p>
+        </a>
+        <hr>
+      </div>
     </div>
   </div>
 </div>
@@ -23,6 +28,7 @@ export default {
   data () {
     return {
       db: null,
+      loading: true,
       items: []
     }
   },
@@ -31,6 +37,7 @@ export default {
     var _this = this
     this.db.collection('Works-PHP').get().then((querySnapshot) => {
       _this.items = []
+      _this.loading = false
       querySnapshot.forEach((doc) => {
         let data = {
           'id': doc.id,
