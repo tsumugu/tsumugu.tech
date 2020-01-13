@@ -1,11 +1,18 @@
 <template>
 <div>
   <h1>作品PHP</h1>
-  <ul>
-    <li id="itemlist" v-for="(item, key) in items" :key="key">
-      {{item.title}}
-    </li>
-  </ul>
+  <div id="items">
+    <div class="item" v-for="(item, key) in items" :key="key">
+      <a :href="item.siteurl">
+        <img :src="item.thumbnail">
+        <h2>{{item.title}}</h2>
+        <p>{{item.Lang}}</p>
+        <p>{{item.description}}</p>
+        <p>{{item.kdwr}}</p>
+      </a>
+      <hr>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -23,7 +30,6 @@ export default {
     this.db = firebase.firestore()
     var _this = this
     this.db.collection('Works-PHP').get().then((querySnapshot) => {
-      console.log(querySnapshot)
       _this.items = []
       querySnapshot.forEach((doc) => {
         let data = {
@@ -42,5 +48,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+h1, h2, p {
+  margin: 5px;
+}
+img {
+  width: 70%;
+}
 </style>
