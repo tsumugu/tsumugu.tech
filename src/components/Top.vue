@@ -4,6 +4,7 @@
       <div class="links">
         <router-link to="/works-php">WorksPHP</router-link>
         <router-link to="/works-others">WorksOthers</router-link>
+        <BAY :deg="deg"></BAY>
         <!-- debug panel start -->
         <div class="debug">
           <input type="range" min="0" max="100" v-model.number="deg">
@@ -17,9 +18,11 @@
 
 <script>
 import Tree from './Tree.vue'
+import BAY from './BubbleAndYears.vue'
 export default {
   components: {
-    Tree
+    Tree,
+    BAY
   },
   data() {
     return {

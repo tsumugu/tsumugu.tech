@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     draw(deg) {
-      console.log(deg, this.isDoingAnimation, this.isAnimatedSVG1)
+      // console.log(deg, this.isDoingAnimation, this.isAnimatedSVG1)
       if (deg > 5) {
         if (!this.isDoingAnimation && !this.isAnimatedSVG1) {
           this.infAnim(this.svg1, 'up')
