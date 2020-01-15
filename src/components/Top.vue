@@ -1,18 +1,21 @@
 <template>
   <div class="page1">
-    <div class="bgtree">
-      <div class="links">
-        <router-link to="/works-php">WorksPHP</router-link>
-        <router-link to="/works-others">WorksOthers</router-link>
-        <BAY :deg="deg"></BAY>
-        <!-- debug panel start -->
-        <div class="debug">
-          <input type="range" min="0" max="100" v-model.number="deg">
+    <div id="bgitems">
+      <div id="bgtree">
+        <div id="links">
+          <router-link to="/works-php">WorksPHP</router-link>
+          <router-link to="/works-others">WorksOthers</router-link>
+          <BAY :pageNum="pageNum"></BAY>
+          <!--
+          <div id="debug">
+            <input type="range" min="0" max="100" v-model.number="pageWcNum">
+          </div>
+          -->
         </div>
-        <!-- debug panel end -->
+        <Tree :pageWcNum="pageWcNum"></Tree>
       </div>
-      <Tree :deg="deg"></Tree>
     </div>
+    <div id="scrolldiv"></div>
   </div>
 </template>
 
@@ -26,8 +29,30 @@ export default {
   },
   data() {
     return {
-      deg: 0
+      pageNum: 0,
+      pageWcNum: 0,
+      scrollY: 0,
+      px: 20,
+      beforeScrollLv: 0,
+      handleScrollCallCt: 0
     }
+  },
+  methods: {
+    handleScroll() {
+      if (this.handleScrollCallCt > 0) {
+        this.scrollY = window.scrollY
+        console.log(Math.floor(Math.floor(this.scrollY / this.px) / 10))
+        if (this.beforeScrollLv !== Math.floor(Math.floor(this.scrollY / this.px) / 10)) {
+          this.pageNum += 1
+          this.pageWcNum = this.pageNum * 10 + 1
+        }
+        this.beforeScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
+      }
+      this.handleScrollCallCt++
+    }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -36,11 +61,22 @@ export default {
 img {
   width: 100%;
 }
-.bgtree {
+#scrolldiv {
+  width: 100%;
+  height: 10000px;
+  overflow: scroll;
+}
+#bgitems {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+#bgtree {
   position: relative;
   width: 100%;
+  height: 100%;
 }
-.links {
+#links {
   position: absolute;
   top: 30px;
   left: 30px;

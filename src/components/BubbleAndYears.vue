@@ -5,7 +5,7 @@
 <script>
 export default {
   props: {
-    deg: {
+    pageNum: {
       type: Number,
       default: 0
     }
@@ -17,21 +17,17 @@ export default {
     }
   },
   watch: {
-    deg() {
-      this.draw(this.deg)
+    pageNum() {
+      this.draw(this.pageNum)
     }
   },
   methods: {
-    draw(deg) {
-      if (deg > 5) {
-        this.mes = this.mes_arr[1]
-      } else {
-        this.mes = this.mes_arr[0]
-      }
+    draw(pageNum) {
+      this.mes = this.mes_arr[pageNum - 1]
     }
   },
   mounted() {
-    this.draw(this.deg)
+    this.draw(this.pageNum)
   }
 }
 </script>

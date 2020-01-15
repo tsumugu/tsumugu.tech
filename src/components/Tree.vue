@@ -19,7 +19,7 @@ import Snap from 'snapsvg'
 
 export default {
   props: {
-    deg: {
+    pageWcNum: {
       type: Number,
       default: 0
     }
@@ -34,25 +34,32 @@ export default {
     }
   },
   watch: {
-    deg() {
-      this.draw(this.deg)
+    pageWcNum() {
+      this.draw(this.pageWcNum)
     }
   },
   methods: {
-    draw(deg) {
-      // console.log(deg, this.isDoingAnimation, this.isAnimatedSVG1)
-      if (deg > 5) {
+    draw(pageWcNum) {
+      // console.log(pageWcNum, this.isDoingAnimation, this.isAnimatedSVG1)
+      // Page1
+      if (pageWcNum === 11) {
         if (!this.isDoingAnimation && !this.isAnimatedSVG1) {
           this.infAnim(this.svg1, 'up')
           this.isDoingAnimation = true
           this.isAnimatedSVG1 = true
         }
-      } else {
+      } else if (pageWcNum === 12) {
         if (!this.isDoingAnimation && this.isAnimatedSVG1) {
           this.infAnim(this.svg1, 'down')
           this.isDoingAnimation = true
           this.isAnimatedSVG1 = false
         }
+      }
+      // Page2
+      if (pageWcNum === 21) {
+        alert('do Page2')
+      } else if (pageWcNum === 22) {
+        alert('cancel Page2')
       }
     },
     infAnim(el, dir) {
@@ -93,7 +100,7 @@ export default {
     }
   },
   mounted() {
-    this.draw(this.deg)
+    this.draw(this.pageWcNum)
     this.svg1 = window.Snap.select('#me_after_path')
   }
 }
