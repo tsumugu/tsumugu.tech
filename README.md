@@ -1,35 +1,10 @@
-# How to dev for Windows
-## 1.Start cmd
-``` ¥ cd vue/tsumugu.tech ```
-## 2.Start local dev server
-``` ¥ npm run dev ```
+# CI/CD (GitHubにPushされたら自動でBuildして公開)
+① GitHubにローカルから ```Push```
 
-## 3.Let's edit!!
-``` ¥ atom filename ```
+② PushされるとWebHookでサーバにリクエストが飛ぶので ```Pull```
 
-# Build Setup
+③ ```Pull``` したコードを ```Build```
 
-``` bash
-# install dependencies
-npm install
+④ ビルドしたファイルを公開ディレクトリにコピー(```Deploy```)
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+> ![exp](https://user-images.githubusercontent.com/29032673/72495403-ed2b9780-3869-11ea-8147-e540521560c6.png)
