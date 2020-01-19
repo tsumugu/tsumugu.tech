@@ -156,6 +156,11 @@ export default {
   bottom: 20px;
   height: 70%;
 }
+@media screen and ( max-width:480px) {
+  #sl_svg {
+    width: 100%;
+  }
+}
 #ground {
   position: absolute;
   bottom: 0px;
