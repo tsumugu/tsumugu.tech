@@ -3,10 +3,11 @@
     <div id="bgitems">
       <div id="bgtree">
         <div id="links">
+          <BAY :pageNum="pageNum"></BAY>
+          <!--
           <router-link to="/works-php">WorksPHP</router-link>
           <router-link to="/works-others">WorksOthers</router-link>
           <BAY :pageNum="pageNum"></BAY>
-          <!--
           <div id="debug">
             <input type="range" min="0" max="100" v-model.number="pageWcNum">
           </div>
