@@ -141,6 +141,13 @@ export default {
 </script>
 
 <style scoped>
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display:none;
+}
 #svgs {
   position: relative;
   width: 100%;

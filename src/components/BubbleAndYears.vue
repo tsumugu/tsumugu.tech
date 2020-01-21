@@ -1,7 +1,7 @@
 <template>
 <div id="BAY_wrap">
   <p id="mes">{{mes}}</p>
-  <span id="sentence">{{sen}}</span>
+  <span id="comments">{{com}}</span>
 </div>
 </template>
 
@@ -16,11 +16,14 @@ export default {
   data: function () {
     return {
       mes: '～2015',
-      mes_arr: ['', '中学一年生(2015年) 春', '中学一年生(2015年) 夏'],
-      sentences_arr: [
+      mes_arr: ['', '2015年(中学1年生)' , '2016年(中学2年生)', '2017年(中学3年生)', '2018年(高校1年生)', '2019年(高校2年生)'],
+      comments_arr: [
         'scroll me!',
-        'コンピュータウイルスを作ってみたいという謎の動機でプログラミングデビュー。',
-        '中学一年生の夏休みに一週間ほどのプログラミングキャンプに参加。そこでiOSアプリ制作を学び、プログラミングやものづくりの面白さに目覚める。'
+        'コンピュータウイルスを作ってみたいという謎の動機でプログラミングデビュー。夏休みに一週間ほどのプログラミングキャンプに参加。そこでアプリ制作を学び、プログラミングやものづくりの面白さに目覚める。',
+        '新たにUnityを学ぶ。',
+        'PHPで様々なアプリを量産',
+        'スマホアプリ作ったりPHPを少々。勉強メインで趣味は少なく',
+        'Famiとこのポートフォリオ。1つにすべてを注ぐ'
       ]
     }
   },
@@ -32,7 +35,7 @@ export default {
   methods: {
     draw(pageNum) {
       this.mes = this.mes_arr[pageNum]
-      this.sen = this.sentences_arr[pageNum]
+      this.com = this.comments_arr[pageNum]
     }
   },
   mounted() {
@@ -42,6 +45,13 @@ export default {
 </script>
 
 <style scoped>
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display:none;
+}
 p {
   margin: 0;
   padding: 0;
@@ -49,7 +59,7 @@ p {
 #BAY_wrap {
   width: 100%;
 }
-#sentence {
+#comments {
   width: 100%;
 }
 </style>

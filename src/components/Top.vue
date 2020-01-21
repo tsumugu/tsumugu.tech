@@ -42,12 +42,19 @@ export default {
     handleScroll() {
       if (this.handleScrollCallCt > 0) {
         this.scrollY = window.scrollY
-        console.log(Math.floor(Math.floor(this.scrollY / this.px) / 10))
-        if (this.beforeScrollLv !== Math.floor(Math.floor(this.scrollY / this.px) / 10)) {
-          this.pageNum += 1
-          this.pageWcNum = this.pageNum * 10 + 1
+        var ScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
+        console.log(ScrollLv)
+        if (this.beforeScrollLv !== ScrollLv) {
+          // 正負で前後を切り替え
+          if ((ScrollLv - this.beforeScrollLv)>0) {
+            this.pageNum += 1
+            this.pageWcNum = this.pageNum * 10 + 1
+          } else {
+            this.pageNum -= 1
+            this.pageWcNum = this.pageNum * 10 + 2
+          }
         }
-        this.beforeScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
+        this.beforeScrollLv = ScrollLv
       }
       this.handleScrollCallCt++
     }
@@ -59,6 +66,16 @@ export default {
 </script>
 
 <style scoped>
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display:none;
+}
+html, body {
+  height: 10000px;
+}
 img {
   width: 100%;
 }
