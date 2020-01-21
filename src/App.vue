@@ -14,6 +14,7 @@ export default {
 
 <style>
 body, html {
+  height: 10000px !important;
   margin: 0;
   overflow: scroll !important;
 }

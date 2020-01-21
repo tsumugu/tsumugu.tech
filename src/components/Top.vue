@@ -73,9 +73,6 @@ export default {
 *::-webkit-scrollbar {
   display:none;
 }
-html, body {
-  height: 10000px;
-}
 img {
   width: 100%;
 }
