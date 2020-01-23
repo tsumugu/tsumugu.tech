@@ -167,7 +167,6 @@ export default {
 @media screen and ( max-width:600px) {
   #sl_svg {
     width: 100%;
-    background-color: red;
   }
 }
 #ground {

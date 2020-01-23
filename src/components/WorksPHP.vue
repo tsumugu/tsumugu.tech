@@ -10,7 +10,7 @@
         <a :href="item.siteurl">
           <img :src="item.thumbnail">
           <h2>{{item.title}}</h2>
-          <p>{{item.Lang}}</p>
+          <p>{{item.mainLang}} ( {{item.allLang}} )</p>
           <p>{{item.description}}</p>
           <p>{{item.kdwr}}</p>
         </a>
@@ -35,7 +35,7 @@ export default {
   created () {
     this.db = firebase.firestore()
     var _this = this
-    this.db.collection('Works-PHP').get().then((querySnapshot) => {
+    this.db.collection('Works').get().then((querySnapshot) => {
       _this.items = []
       _this.loading = false
       querySnapshot.forEach((doc) => {
@@ -45,7 +45,8 @@ export default {
           'title': doc.data().title,
           'siteurl': doc.data().siteurl,
           'description': doc.data().description,
-          'Lang': doc.data().Lang,
+          'mainLang': doc.data().mainLang,
+          'allLang': doc.data().allLang,
           'kdwr': doc.data().kdwr
         }
         _this.items.push(data)
