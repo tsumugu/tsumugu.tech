@@ -1,9 +1,0 @@
-<template>
-   <p>作品その他</p>
-</template>
-
-<script>
-</script>
-
-<style>
-</style>

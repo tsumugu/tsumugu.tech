@@ -15,6 +15,7 @@ PHP or not:
     <label for="three">Other</label>
 </div>
 言語: <input v-model="allLang"><br>
+制作年: <input v-model="madeYear"><br>
 説明: <textarea v-model="description"></textarea><br>
 こだわり: <textarea v-model="kdwr"></textarea>
 <button v-on:click="submit">Submit</button>
@@ -34,6 +35,7 @@ export default {
       description: null,
       mainLang: null,
       allLang: null,
+      madeYear: null,
       kdwr: null
     }
   },
@@ -47,6 +49,7 @@ export default {
         'description': this.description,
         'mainLang': this.mainLang,
         'allLang': this.allLang,
+        'madeYear': this.madeYear,
         'kdwr': this.kdwr
       })
       .then(doc => {

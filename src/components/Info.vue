@@ -2,7 +2,7 @@
 <div id="Info_wrap">
   <div>
     <router-link to="/add-works">AddWorks</router-link>
-    <router-link to="/works-php">WorksPHP</router-link>
+    <router-link to="/works">Works</router-link>
   </div>
   <p>{{com}}</p>
   <Chart></Chart>

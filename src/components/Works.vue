@@ -11,6 +11,7 @@
           <img :src="item.thumbnail">
           <h2>{{item.title}}</h2>
           <p>{{item.mainLang}} ( {{item.allLang}} )</p>
+          <p>{{item.madeYear}}</p>
           <p>{{item.description}}</p>
           <p>{{item.kdwr}}</p>
         </a>
@@ -47,6 +48,7 @@ export default {
           'description': doc.data().description,
           'mainLang': doc.data().mainLang,
           'allLang': doc.data().allLang,
+          'madeYear': doc.data().madeYear,
           'kdwr': doc.data().kdwr
         }
         _this.items.push(data)
