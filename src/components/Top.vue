@@ -1,27 +1,19 @@
 <template>
-  <div class="page1">
+  <div id="page1">
     <div id="items">
       <div id="bgitems">
         <div id="bgtree">
           <div id="links">
             <BAY :pageNum="pageNum"></BAY>
-            <!--
-            <router-link to="/works-php">WorksPHP</router-link>
-            <router-link to="/works-others">WorksOthers</router-link>
-            <BAY :pageNum="pageNum"></BAY>
-            <div id="debug">
-              <input type="range" min="0" max="100" v-model.number="pageWcNum">
-            </div>
-            -->
           </div>
           <Tree :pageWcNum="pageWcNum"></Tree>
         </div>
+        <div id="tree-spacer" ref="treespacer"></div>
       </div>
       <div id="infoitems">
         <Info :pageNum="pageNum"></Info>
       </div>
     </div>
-    <div id="scrolldiv"></div>
   </div>
 </template>
 
@@ -40,17 +32,17 @@ export default {
       pageNum: 0,
       pageWcNum: 0,
       scrollY: 0,
-      px: 20,
+      px: 15,
       beforeScrollLv: 0,
       handleScrollCallCt: 0
     }
   },
   methods: {
-    handleScroll() {
+    handleScroll: function(y) {
       if (this.handleScrollCallCt > 0) {
-        this.scrollY = window.scrollY
+        this.scrollY = y
         var ScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
-        console.log(ScrollLv)
+        console.log(this.scrollY, ScrollLv)
         if (this.beforeScrollLv !== ScrollLv) {
           // 正負で前後を切り替え
           if ((ScrollLv - this.beforeScrollLv) > 0) {
@@ -67,8 +59,20 @@ export default {
     }
   },
   mounted() {
-    //document.getElementById('bgitems')
-    window.addEventListener('scroll', this.handleScroll)
+    var _this = this
+    const targetElement = this.$refs.treespacer
+    var beforeScrollHeight = 0
+    var checkScroll = function(){
+      var ScreenHeight = window.innerHeight
+      var clientRect = targetElement.getBoundingClientRect()
+      var y = clientRect.top
+      var scrollHeight = ScreenHeight - y
+      if (scrollHeight !== beforeScrollHeight) {
+        _this.handleScroll(scrollHeight)
+      }
+      beforeScrollHeight = scrollHeight
+    }
+    setInterval(checkScroll, 100);
   }
 }
 </script>
@@ -84,30 +88,31 @@ export default {
 img {
   width: 100%;
 }
-#scrolldiv {
+#page1 {
   width: 100%;
-  height: 10000px;
-  overflow: scroll;
+  height: 100%;
 }
 #items {
-  position: fixed;
   width: 100%;
   height: 100%;
 }
 #bgitems {
+  display: inline-block;
   width: 55%;
   height: 100%;
-  display: inline-block;
+  overflow-y: scroll;
   float: left;
 }
 #infoitems {
+  display: inline-block;
   width: 45%;
   height: 100%;
-  display: inline-block;
+  overflow: scroll;
   background-color: #F4F5F7;
 }
 #bgtree {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
   height: 100%;
 }
@@ -115,5 +120,8 @@ img {
   position: absolute;
   top: 30px;
   left: 30px;
+}
+#tree-spacer {
+  height: 10000px;
 }
 </style>

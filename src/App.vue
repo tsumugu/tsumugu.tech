@@ -14,9 +14,12 @@ export default {
 
 <style>
 body, html {
-  height: 10000px !important;
+  /*height: 10000px !important;*/
+  width: 100%;
+  height: 100%;
   margin: 0;
-  overflow: scroll !important;
+  /*overflow: scroll !important;*/
+  overflow: hidden;
 }
 #app {
   margin: 0;
@@ -26,7 +29,7 @@ body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  overflow: scroll !important;
+  /*overflow: scroll !important;*/
 }
 
 .v-enter-active, .v-leave-active {

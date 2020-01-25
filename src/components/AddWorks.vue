@@ -53,7 +53,7 @@ export default {
         'kdwr': this.kdwr
       })
       .then(doc => {
-        alert("succeed!!");
+        alert("succeed!!")
         _this.thumbnail = ''
         _this.title = ''
         _this.siteurl = ''

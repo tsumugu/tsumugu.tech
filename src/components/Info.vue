@@ -6,14 +6,18 @@
   </div>
   <p>{{com}}</p>
   <Chart></Chart>
+  <Works></Works>
 </div>
 </template>
 
 <script>
 import Chart from './Chart.vue'
+import Info from './Info.vue'
+import Works from './Works.vue'
 export default {
   components: {
-    Chart
+    Chart,
+    Works
   },
   props: {
     pageNum: {
