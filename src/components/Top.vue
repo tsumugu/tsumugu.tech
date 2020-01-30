@@ -42,7 +42,7 @@ export default {
       if (this.handleScrollCallCt > 0) {
         this.scrollY = y
         var ScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
-        console.log(this.scrollY, ScrollLv)
+        // console.log(this.scrollY, ScrollLv)
         if (this.beforeScrollLv !== ScrollLv) {
           // 正負で前後を切り替え
           if ((ScrollLv - this.beforeScrollLv) > 0) {
@@ -62,7 +62,7 @@ export default {
     var _this = this
     const targetElement = this.$refs.treespacer
     var beforeScrollHeight = 0
-    var checkScroll = function(){
+    var checkScroll = function() {
       var ScreenHeight = window.innerHeight
       var clientRect = targetElement.getBoundingClientRect()
       var y = clientRect.top
@@ -72,7 +72,7 @@ export default {
       }
       beforeScrollHeight = scrollHeight
     }
-    setInterval(checkScroll, 100);
+    setInterval(checkScroll, 100)
   }
 }
 </script>
