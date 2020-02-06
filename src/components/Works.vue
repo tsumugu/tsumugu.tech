@@ -4,7 +4,6 @@
   Loading
   </div>
   <div v-else>
-    <h1>作品PHP</h1>
     <div id="tl-items">
       <div class="tl-item" v-for="(item, key) in items" :key="key">
         <a :href="item.siteurl">

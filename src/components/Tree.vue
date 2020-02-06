@@ -347,13 +347,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-*::-webkit-scrollbar {
-  display:none;
-}
 #svgs {
   position: relative;
   width: 100%;
@@ -386,12 +379,8 @@ export default {
 #sl_svg {
   position: absolute;
   bottom: 20px;
+  width: 100%;
   height: 70%;
-}
-@media screen and ( max-width:600px) {
-  #sl_svg {
-    width: 100%;
-  }
 }
 #ground {
   position: absolute;

@@ -3,8 +3,9 @@
   <div>
     <router-link to="/add-works">AddWorks</router-link>
     <router-link to="/works">Works</router-link>
+    <button v-on:click="handle">+1</button>
+    <div>{{ pageWcNum }}</div>
   </div>
-  <p>{{com}}</p>
   <Chart></Chart>
   <Works></Works>
 </div>
@@ -19,25 +20,12 @@ export default {
     Chart,
     Works
   },
-  props: {
-    pageNum: {
-      type: Number,
-      default: 0
-    }
-  },
   data: function () {
     return {
-      com: '',
-      commentsArr: [
-        '',
-        'コンピュータウイルスを作ってみたいという謎の動機でプログラミングデビュー。夏休みに一週間ほどのプログラミングキャンプに参加。そこでアプリ制作を学び、プログラミングやものづくりの面白さに目覚める。',
-        '新たにUnityを学ぶ。',
-        'PHPで様々なアプリを量産',
-        'スマホアプリ作ったりPHPを少々。勉強メインで趣味は少なく',
-        'Famiとこのポートフォリオ。1つにすべてを注ぐ'
-      ],
+      pageNum: 0,
+      pageWcNum: 0,
       gData: {
-        // 凡例とツールチップに表示するラベル
+        // TODO: FireStoreから言語&カラーを取得、設定
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         // 表示するデータ
         datasets: [
@@ -52,31 +40,20 @@ export default {
       }
     }
   },
-  watch: {
-    pageNum() {
-      this.draw(this.pageNum)
-    }
-  },
   methods: {
-    draw(pageNum) {
-      this.com = this.commentsArr[pageNum]
-    }
+    handle() {
+      this.pageNum += 1
+      this.pageWcNum = this.pageNum * 10 + 1
+      this.$emit('updated', this.pageWcNum)
+    },
   },
   mounted() {
-    this.draw(this.pageNum)
     this.renderChart(this.gData, this.options)
   }
 }
 </script>
 
 <style scoped>
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-*::-webkit-scrollbar {
-  display:none;
-}
 p {
   margin: 0;
   padding: 0;
