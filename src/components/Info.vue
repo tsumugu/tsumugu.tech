@@ -6,7 +6,7 @@
     <button v-on:click="handle">+1</button>
     <div>{{ pageWcNum }}</div>
   </div>
-  <Chart></Chart>
+  <div id="chart"><Chart></Chart></div>
   <Works></Works>
 </div>
 </template>
@@ -61,5 +61,8 @@ p {
 #Info_wrap {
   width: 100%;
   height: 100%;
+}
+#chart {
+  width: 80%;
 }
 </style>
