@@ -3,18 +3,8 @@
 サムネイルURL: <input v-model="thumbnail"><br>
 サイトURL: <input v-model="siteurl"><br>
 タイトル: <input v-model="title"><br>
-PHP or not:
-<div>
-    <input type="radio" id="one" value="Web/PHP" v-model="mainLang">
-    <label for="one">Web/PHP</label>
-  <br>
-    <input type="radio" id="two" value="Web/Other" v-model="mainLang">
-    <label for="two">Web/Other</label>
-  <br>
-    <input type="radio" id="three" value="Other" v-model="mainLang">
-    <label for="three">Other</label>
-</div>
-言語: <input v-model="allLang"><br>
+メイン言語:<input v-model="mainLang"><br>
+すべての言語: <input v-model="allLang"><br>
 制作年: <input v-model="madeYear"><br>
 説明: <textarea v-model="description"></textarea><br>
 こだわり: <textarea v-model="kdwr"></textarea>

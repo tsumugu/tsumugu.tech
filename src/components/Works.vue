@@ -10,13 +10,14 @@
       <div class="tl-item" v-for="(item, key) in items" :key="key">
         <!-- Year -->
         <div class="year" v-bind:class="{ hide: !item.isTitle }">
+          <!--  v-bind:style="{'backgroundColor': item.color}" -->
           <div class="year-circle"></div>
           <div class="year-text">{{item.madeYear}}</div>
         </div>
         <!-- Left Line -->
         <div class="card-left" v-bind:class="{ hide: item.isTitle }">
-          <div class="card-left-circle"></div>
-          <div class="card-left-line"></div>
+          <div class="card-left-circle" v-bind:style="{'backgroundColor': item.color}"></div>
+          <div class="card-left-line" v-bind:style="{'backgroundColor': item.color}"></div>
         </div>
         <!-- Card -->
         <div class="card" v-bind:class="{ hide: item.isTitle }">
@@ -43,40 +44,49 @@ export default {
     return {
       db: null,
       loading: true,
-      items: []
+      items: [],
+      lang_color: [],
+      years_color: []
+    }
+  },
+  methods: {
+    drawTL(arg_lang_color) {
+      this.lang_color = arg_lang_color
+      var _this = this
+      this.db.collection('Works').orderBy("madeYear", "asc").get().then((querySnapshot) => {
+        _this.items = []
+        _this.loading = false
+        var before_madeYear = 0
+        querySnapshot.forEach((doc) => {
+          var now_madeYear = doc.data().madeYear
+          if (before_madeYear !== now_madeYear) {
+            _this.items.push({
+              'madeYear': doc.data().madeYear,
+              'isTitle': true,
+              'color': _this.lang_color[doc.data().mainLang]
+            })
+          }
+          let data = {
+            'id': doc.id,
+            'thumbnail': doc.data().thumbnail,
+            'title': doc.data().title,
+            'siteurl': doc.data().siteurl,
+            'description': doc.data().description,
+            'mainLang': doc.data().mainLang,
+            'allLang': doc.data().allLang,
+            'madeYear': doc.data().madeYear,
+            'kdwr': doc.data().kdwr,
+            'isTitle': false,
+            'color': _this.lang_color[doc.data().mainLang]
+          }
+          _this.items.push(data)
+          before_madeYear = now_madeYear
+        })
+      })
     }
   },
   created () {
     this.db = firebase.firestore()
-    var _this = this
-    this.db.collection('Works').orderBy("madeYear", "asc").get().then((querySnapshot) => {
-      _this.items = []
-      _this.loading = false
-      var before_madeYear = 0
-      querySnapshot.forEach((doc) => {
-        var now_madeYear = doc.data().madeYear
-        if (before_madeYear !== now_madeYear) {
-          _this.items.push({
-            'madeYear': doc.data().madeYear,
-            'isTitle': true
-          })
-        }
-        let data = {
-          'id': doc.id,
-          'thumbnail': doc.data().thumbnail,
-          'title': doc.data().title,
-          'siteurl': doc.data().siteurl,
-          'description': doc.data().description,
-          'mainLang': doc.data().mainLang,
-          'allLang': doc.data().allLang,
-          'madeYear': doc.data().madeYear,
-          'kdwr': doc.data().kdwr,
-          'isTitle': false
-        }
-        _this.items.push(data)
-        before_madeYear = now_madeYear
-      })
-    })
   }
 }
 </script>
@@ -112,9 +122,9 @@ a {
   width: 15px;
   height: 10000px;
   margin-top: 5px;
-  margin-left: 17px;
+  margin-left: 19px;
   float: left;
-  background-color: orange;
+  background-color: #c7c7c7;
 }
 #tl-items {
   position: absolute;
@@ -125,7 +135,7 @@ a {
   margin-left: 60px;
   padding: 10px;
   background-color: #fcfcfc;
-  border: 1px solid #000000;
+  border: 1px solid #9699a0;
   border-radius: 25px;
 }
 .card-img {
@@ -137,7 +147,7 @@ a {
   width: 27px;
   height: 27px;
   margin-top: 23px;
-  margin-left: 11px;
+  margin-left: 13px;
   background-color: white;
   border-radius: 50px;
 }
@@ -147,7 +157,7 @@ a {
   float: left;
   margin-top: 30px;
   margin-left: 20px;
-  background-color: pink;
+  background-color: #c7c7c7;
 }
 .year {
 }
@@ -162,7 +172,9 @@ a {
   width: 40px;
   height: 40px;
   margin-left: 5px;
-  background-color: white;
+  /*background-color: white;*/
+  background-color: #c7c7c7;
   border-radius: 50px;
+  border: 1px solid #c7c7c7;
 }
 </style>
