@@ -7,10 +7,17 @@
   <div id="tl-wrap" v-else>
     <div id="left-line"></div>
     <div id="tl-items">
+      <!-- Year -->
+      <div class="tl-item">
+        <div class="year yearFixed colBase">
+        <div class="year-circle"></div>
+        <div class="year-text">2015</div>
+        </div>
+      </div>
+      <!-- v-for -->
       <div class="tl-item" v-for="(item, key) in items" :key="key">
         <!-- Year -->
-        <div class="year" v-bind:class="{ hide: !item.isTitle, yearFixed: item.isFixed, colBase: item.isTitle }">
-          <!--  v-bind:style="{'backgroundColor': item.color}" -->
+        <div class="year" v-bind:class="{ hide: !item.isTitle, skelton: item.isSkelton }">
           <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:class="{ colChild: item.isTitle }"></div>
           <div class="year-text">{{item.madeYear}}</div>
         </div>
@@ -49,6 +56,8 @@ export default {
       years_color: [],
       colBase: null,
       colChild: null,
+      colChildNow: null,
+      colChildBefore: null,
       colCounter: 0,
       nextYear: 0
     }
@@ -66,6 +75,9 @@ export default {
       }
     },
     createBoundingClientRect(e) {
+      if (e == undefined) {
+        return false;
+      }
       var x = (window.pageXOffset !== undefined)
               ? window.pageXOffset
               : (document.documentElement || document.body.parentNode || document.body).scrollLeft;
@@ -89,9 +101,29 @@ export default {
         yEnd: yEnd
       };
     },
-    setcolChild(n) {
-      this.colChild = document.getElementsByClassName('colChild')[n+1]
-      this.nextYear = this.colChild.getAttribute('data-year')
+    setcolChild(n, isFirst) {
+      // n==0のとき常に当たり判定がtrueになるため除外
+      if (isFirst) {
+        this.colChildBefore = null
+        //2016
+        this.colChild = document.getElementsByClassName('colChild')[1]
+      } else {
+        this.colChildBefore = document.getElementsByClassName('colChild')[n]
+        this.colChildNow = document.getElementsByClassName('colChild')[n+1]
+        this.colChild = document.getElementsByClassName('colChild')[n+2]
+      }
+    },
+    toggleFadeinAndOut(e) {
+      var parentsClassList = e.parentNode.classList
+      if (parentsClassList.contains("fadein")) {
+        parentsClassList.add("fadeout")
+        parentsClassList.remove("fadein")
+      } else if (parentsClassList.contains("fadeout")) {
+        parentsClassList.add("fadein")
+        parentsClassList.remove("fadeout")
+      } else {
+        parentsClassList.add("fadeout")
+      }
     },
     drawTL(arg_lang_color) {
       this.lang_color = arg_lang_color
@@ -107,7 +139,7 @@ export default {
             _this.items.push({
               'madeYear': doc.data().madeYear,
               'isTitle': true,
-              'isFixed': (el_count==0),
+              'isSkelton': (el_count==0),
               'color': _this.lang_color[doc.data().mainLang]
             })
           }
@@ -122,7 +154,6 @@ export default {
             'madeYear': doc.data().madeYear,
             'kdwr': doc.data().kdwr,
             'isTitle': false,
-            'isFixed': (el_count==0),
             'color': _this.lang_color[doc.data().mainLang]
           }
           _this.items.push(data)
@@ -133,7 +164,7 @@ export default {
         // v-forが描画され終ったときに実行されるイベント
         this.$nextTick(() => {
           this.colBase = document.getElementsByClassName('colBase')[0];
-          this.setcolChild(0)
+          this.setcolChild(0, true)
         });
 
       })
@@ -144,15 +175,43 @@ export default {
     setInterval(() => {
       if (this.colBase !== null && this.colChild !== null) {
         var colBaseRect = this.createBoundingClientRect(this.colBase);
-        var colChildRect = this.createBoundingClientRect(this.colChild);
-        if(this.detectCollision(colBaseRect, colChildRect)){
-          console.log('coll')
-          this.colCounter++
+        //触れた時点でbeforeに触れているobjがsetされて死ぬ
+        if (this.colChildBefore !== null) {
+          var colChildBeforeRect = this.createBoundingClientRect(this.colChildBefore)
+          var isBeforeCollision = this.detectCollision(colBaseRect, colChildBeforeRect)
+        }
+        if (this.colChild !== null) {
+          var colChildRect = this.createBoundingClientRect(this.colChild)
+          var isAfterCollision = this.detectCollision(colBaseRect, colChildRect)
+        }
+        // FIXME: すぐに復活するバグ
+        if (this.detectCollision(colBaseRect, this.createBoundingClientRect(this.colChildNow))) {
+          if (this.colChildNow.parentNode.classList.contains("fadeout")) {
+            this.toggleFadeinAndOut(this.colChildNow)
+          }
+        }
+        if(isBeforeCollision || isAfterCollision){
+          // console.log('coll')
+          var col_obj = null
+          if (isBeforeCollision && !isAfterCollision) {
+            col_obj = this.colChildBefore
+          } else {
+            col_obj = this.colChild
+          }
+          if (this.colChildBefore !== null) {
+            this.toggleFadeinAndOut(col_obj)
+          }
+          this.nextYear = col_obj.getAttribute('data-year')
           this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
-          this.setcolChild(this.colCounter)
+          if (isBeforeCollision && !isAfterCollision) {
+            this.colCounter--
+          } else {
+            this.colCounter++
+          }
+          this.setcolChild(this.colCounter, false)
         }
       }
-    }, 300)
+    }, 10)
 
   }
 }
@@ -174,6 +233,23 @@ a {
 }
 .hide {
   display: none !important;
+}
+.skelton {
+  opacity: 0;
+}
+.fadein {
+  animation: fadeIn 500ms ease 0s 1 forwards;
+}
+.fadeout {
+  animation: fadeOut 500ms ease 0s 1 forwards;
+}
+@keyframes fadeIn {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+@keyframes fadeOut {
+    0% {opacity: 1}
+    100% {opacity: 0}
 }
 #timeline {
   width: 100%;
