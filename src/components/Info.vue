@@ -1,5 +1,6 @@
 <template>
 <div id="Info_wrap">
+<!--
   <div>
     <router-link to="/add-works">AddWorks</router-link>
     <router-link to="/works">Works</router-link>
@@ -7,6 +8,7 @@
     <div>{{ pageWcNum }}</div>
   </div>
   <div id="chart"><Chart ref="chart"></Chart></div>
+  -->
   <Works ref="works"></Works>
 </div>
 </template>
@@ -59,7 +61,7 @@ export default {
       })
       _this.$set(_this.gData, 'labels', _this.langs)
       _this.$set(_this.gData, 'datasets', [{data: _this.count_data, backgroundColor: _this.colors}])
-      _this.$refs.chart.drawChart(_this.gData)
+      /*_this.$refs.chart.drawChart(_this.gData)*/
       _this.$refs.works.drawTL(_this.lang_color)
     })
   }
