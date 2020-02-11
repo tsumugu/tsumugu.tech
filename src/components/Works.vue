@@ -112,17 +112,21 @@ export default {
         this.colChildNow = document.getElementsByClassName('colChild')[n+1]
         this.colChild = document.getElementsByClassName('colChild')[n+2]
       }
-      console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
+      // console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
     },
     toggleFadeinAndOut(e) {
       var parentsClassList = e.parentNode.classList
+      // console.log(parentsClassList, parentsClassList.contains("fadein"), parentsClassList.contains("fadeout"))
       if (parentsClassList.contains("fadein")) {
+        // console.log("fadein")
         parentsClassList.add("fadeout")
         parentsClassList.remove("fadein")
       } else if (parentsClassList.contains("fadeout")) {
+        // console.log("fadeout")
         parentsClassList.add("fadein")
         parentsClassList.remove("fadeout")
       } else {
+        // console.log("else")
         parentsClassList.add("fadeout")
       }
     },
@@ -173,7 +177,8 @@ export default {
   },
   created () {
     this.db = firebase.firestore()
-    var didnow = false
+    var isDidNowCol = false
+    var before_col_obj = null
     setInterval(() => {
       if (this.colBase !== null && this.colChild !== null) {
         var colBaseRect = this.createBoundingClientRect(this.colBase);
@@ -190,16 +195,38 @@ export default {
           var colChildRect = this.createBoundingClientRect(this.colChild)
           var isAfterCollision = this.detectCollision(colBaseRect, colChildRect)
         }
-        /*
-        if (this.detectCollision(colBaseRect, this.createBoundingClientRect(this.colChildNow))) {
-          // this.toggleFadeinAndOut(this.colChildNow)
-        }
-        */
         if  (isNowCollision) {
-          if (didnow && this.colChildNow.getAttribute('data-year') === "2019") {
-            this.colBase.getElementsByClassName('year-text')[0].innerText = "2018"
-            didnow = false
+          if (!isDidNowCol) {
+            // colChildNowの衝突回数を記録
+            var dcn = this.colChildNow.getAttribute('data-col-num')
+            if (dcn === null) {
+              dcn = 0
+            }
+            dcn = Number(dcn)
+            dcn += 1
+            this.colChildNow.setAttribute('data-col-num', dcn)
+            // console.log('now coll', this.colChildNow.getAttribute('data-col-num'))
+            // 2回目以降のcollにだけ反応
+            if (dcn >= 2) {
+              if (dcn % 2 == 0) {
+                if (this.colChildNow.getAttribute('data-year') === "2019") {
+                  // 2019が2回目にcollしたとき2018に書き換え
+                  this.colBase.getElementsByClassName('year-text')[0].innerText = "2018"
+                  // fadein
+                  var parentsClassList = this.colChildNow.parentNode.classList
+                  if (parentsClassList.contains("fadeout")) {
+                    parentsClassList.add("fadein")
+                    parentsClassList.remove("fadeout")
+                  }
+                }
+              }
+            }
+            //
+            isDidNowCol = true
           }
+        } else {
+          // console.log('not now coll')
+          isDidNowCol = false
         }
         if(isBeforeCollision || isAfterCollision){
           var col_obj = null
@@ -211,7 +238,10 @@ export default {
             // console.log('after coll')
           }
           //if (this.colChildBefore !== null) {
-            //this.toggleFadeinAndOut(col_obj)
+          if (col_obj !== before_col_obj) {
+            this.toggleFadeinAndOut(col_obj)
+            before_col_obj = col_obj
+          }
           //}
           this.setcolChild(this.colCounter, false)
           if (isBeforeCollision && !isAfterCollision) {
@@ -226,7 +256,7 @@ export default {
             this.colCounter++
             if (this.colChild === undefined) {
               this.colCounter-=2
-              didnow = true
+              this.nextYear = "2019"
             }
           }
           //console.log(this.colCounter)
