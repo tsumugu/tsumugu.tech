@@ -75,7 +75,9 @@ p {
 }
 #Info_wrap {
   width: 100%;
-  height: 100%;
+  height: 10000px;
+  overflow-x: hide;
+  background-color: #F4F5F7;
 }
 #chart {
   width: 80%;
