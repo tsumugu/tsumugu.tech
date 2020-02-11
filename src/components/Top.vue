@@ -6,7 +6,7 @@
           <div id="links">
             <BAY :pageNum="pageNum"></BAY>
           </div>
-          <Tree :pageWcNum="pageWcNum"></Tree>
+          <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt"></Tree>
         </div>
         <div id="tree-spacer" ref="treespacer"></div>
       </div>
@@ -29,16 +29,21 @@ export default {
       scrollY: 0,
       px: 15,
       beforeScrollLv: 0,
-      handleScrollCallCt: 0
+      handleScrollCallCt: 0,
+      isAnimating: false
     }
   },
   methods: {
+    treeUpdateEvt: function(value) {
+      // Tree.vue Update Event
+      this.isAnimating = value
+    },
     handleScroll: function(y) {
       if (this.handleScrollCallCt > 0) {
         this.scrollY = y
         var ScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
         // console.log(this.scrollY, ScrollLv)
-        if (this.beforeScrollLv !== ScrollLv) {
+        if (this.beforeScrollLv !== ScrollLv && !this.isAnimating) {
           // 正負で前後を切り替え
           if ((ScrollLv - this.beforeScrollLv) > 0) {
             this.pageNum += 1
@@ -52,8 +57,8 @@ export default {
       }
       this.handleScrollCallCt++
 
-      if (this.pageNum >= 6) {
-        //jump to TimeLine
+      if (this.pageNum === 6) {
+        //jump to TimeLine(Info.vue)
         this.$router.push('info')
       }
     }

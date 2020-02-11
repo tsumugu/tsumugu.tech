@@ -126,6 +126,10 @@ export default {
     }
   },
   methods: {
+    change_isDoingAnimation(a) {
+      this.isDoingAnimation = a
+      this.$emit('updated', this.isDoingAnimation)
+    },
     draw(pageWcNum) {
       var _this = this
       console.log(pageWcNum, this.isDoingAnimation, this.isAnimatedSVG1)
@@ -135,15 +139,15 @@ export default {
       var svg1PathTo = 'M360.57,1060.45c-11.17-.3-14.16,2.83-21-6s-16.49-25.74-24-34c-8.95-9.85-15-59.19-15-75-1.13-20.52,16.34-54,33-66s24-19,38-40.35c3.95-6,4.1-8.73,0-14.65-3.95-5.73-17.52-4.29-23,0-16.26,12.7-43.82,26.1-52.65,44.74-1.78,3.75-4.14,8.16-8.29,8.47-4,.29-6.92-3.4-9.27-6.6-21.19-28.87-55.18-49.1-91-49.72-2.92-.06-6.93,1.27-6.35,4.12a5.05,5.05,0,0,0,1.07,1.95l16.15,21.25c5,6.61,15.94,11.47,22.32,16.79,5.73,4.77,23.92,17.67,30,22,14.86,10.55,16,34,16,59,0,0,1.23,59.43,2.23,70.15,1.77,18.88,7.87,37.88,20.46,52.06,8.64,9.74,20.19,17.11,26.51,28.49Z'
       if (pageWcNum === 11) {
         if (!this.isDoingAnimation && !this.isAnimatedSVG1) {
-          this.infAnim(this.svg1, svg1PathFrom, svg1PathMid, svg1PathTo, 'up', 'svg1', null, true)
-          this.isDoingAnimation = true
+          this.change_isDoingAnimation(true)
           this.isAnimatedSVG1 = true
+          this.infAnim(this.svg1, svg1PathFrom, svg1PathMid, svg1PathTo, 'up', 'svg1', null, true)
         }
       } else if (pageWcNum === 12) {
         if (!this.isDoingAnimation && this.isAnimatedSVG1) {
-          this.infAnim(this.svg1, svg1PathFrom, svg1PathMid, svg1PathTo, 'down', 'svg1', null, true)
-          this.isDoingAnimation = true
+          this.change_isDoingAnimation(true)
           this.isAnimatedSVG1 = false
+          this.infAnim(this.svg1, svg1PathFrom, svg1PathMid, svg1PathTo, 'down', 'svg1', null, true)
         }
         this.isHideSVG1 = false
         this.isHideSVG2 = true
@@ -187,7 +191,7 @@ export default {
             _this.svg2.attr('d', svg2PathFrom)
             if (!_this.isDoingAnimation) {
               _this.infAnim(_this.svg2, svg2PathFrom, null, svg2PathTo, 'up', 'svg2', 'l3', true)
-              _this.isDoingAnimation = true
+              _this.change_isDoingAnimation(true)
               setTimeout(() => {
                 resolve(1)
               }, 1500)
@@ -203,7 +207,7 @@ export default {
             _this.svg2_2.attr('d', svg2Path2From)
             if (!_this.isDoingAnimation) {
               _this.infAnim(_this.svg2_2, svg2Path2From, null, svg2Path2To, 'up', 'svg2', 'l4', true)
-              _this.isDoingAnimation = true
+              _this.change_isDoingAnimation(true)
             }
           })
         })
@@ -293,13 +297,13 @@ export default {
         el.animate({d: mid}, animateTime+500, function() {
           el.animate({d: end}, animateTime, function() {
             _this.setLeavesVisible(fadeinORfadeout, svgName, dataName, isFade)
-            _this.isDoingAnimation = false
+            _this.change_isDoingAnimation(false)
           })
         })
       } else {
         el.animate({d: end}, animateTime, function() {
           _this.setLeavesVisible(fadeinORfadeout, svgName, dataName, isFade)
-          _this.isDoingAnimation = false
+          _this.change_isDoingAnimation(false)
         })
       }
     },

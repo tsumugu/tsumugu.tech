@@ -4,8 +4,6 @@
   <div>
     <router-link to="/add-works">AddWorks</router-link>
     <router-link to="/works">Works</router-link>
-    <button v-on:click="handle">+1</button>
-    <div>{{ pageWcNum }}</div>
   </div>
   <div id="chart"><Chart ref="chart"></Chart></div>
   -->
@@ -25,8 +23,6 @@ export default {
   },
   data: function () {
     return {
-      pageNum: 0,
-      pageWcNum: 0,
       count_data: [],
       langs: [],
       colors: [],
@@ -43,11 +39,6 @@ export default {
     }
   },
   methods: {
-    handle() {
-      this.pageNum += 1
-      this.pageWcNum = this.pageNum * 10 + 1
-      this.$emit('updated', this.pageWcNum)
-    },
   },
   created () {
     this.db = firebase.firestore()
