@@ -112,6 +112,7 @@ export default {
         this.colChildNow = document.getElementsByClassName('colChild')[n+1]
         this.colChild = document.getElementsByClassName('colChild')[n+2]
       }
+      console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
     },
     toggleFadeinAndOut(e) {
       var parentsClassList = e.parentNode.classList
@@ -172,6 +173,7 @@ export default {
   },
   created () {
     this.db = firebase.firestore()
+    var didnow = false
     setInterval(() => {
       if (this.colBase !== null && this.colChild !== null) {
         var colBaseRect = this.createBoundingClientRect(this.colBase);
@@ -180,35 +182,55 @@ export default {
           var colChildBeforeRect = this.createBoundingClientRect(this.colChildBefore)
           var isBeforeCollision = this.detectCollision(colBaseRect, colChildBeforeRect)
         }
+        if (this.colChildNow !== null) {
+          var colChildNowRect = this.createBoundingClientRect(this.colChildNow)
+          var isNowCollision = this.detectCollision(colBaseRect, colChildNowRect)
+        }
         if (this.colChild !== null) {
           var colChildRect = this.createBoundingClientRect(this.colChild)
           var isAfterCollision = this.detectCollision(colBaseRect, colChildRect)
         }
-        // FIXME: すぐに復活するバグ
+        /*
         if (this.detectCollision(colBaseRect, this.createBoundingClientRect(this.colChildNow))) {
-          if (this.colChildNow.parentNode.classList.contains("fadeout")) {
-            this.toggleFadeinAndOut(this.colChildNow)
+          // this.toggleFadeinAndOut(this.colChildNow)
+        }
+        */
+        if  (isNowCollision) {
+          if (didnow && this.colChildNow.getAttribute('data-year') === "2019") {
+            this.colBase.getElementsByClassName('year-text')[0].innerText = "2018"
+            didnow = false
           }
         }
         if(isBeforeCollision || isAfterCollision){
-          // console.log('coll')
           var col_obj = null
           if (isBeforeCollision && !isAfterCollision) {
             col_obj = this.colChildBefore
+            // console.log('before coll')
           } else {
             col_obj = this.colChild
+            // console.log('after coll')
           }
-          if (this.colChildBefore !== null) {
-            this.toggleFadeinAndOut(col_obj)
-          }
-          this.nextYear = col_obj.getAttribute('data-year')
-          this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
+          //if (this.colChildBefore !== null) {
+            //this.toggleFadeinAndOut(col_obj)
+          //}
+          this.setcolChild(this.colCounter, false)
           if (isBeforeCollision && !isAfterCollision) {
             this.colCounter--
+            if (this.colChildBefore === undefined) {
+              this.colCounter++
+            } else {
+              this.nextYear = this.colChildBefore.getAttribute('data-year')
+            }
           } else {
+            this.nextYear = this.colChildNow.getAttribute('data-year')
             this.colCounter++
+            if (this.colChild === undefined) {
+              this.colCounter-=2
+              didnow = true
+            }
           }
-          this.setcolChild(this.colCounter, false)
+          //console.log(this.colCounter)
+          this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
         }
       }
     }, 10)
