@@ -30,7 +30,8 @@ export default {
       px: 15,
       beforeScrollLv: 0,
       handleScrollCallCt: 0,
-      isAnimating: false
+      isAnimating: false,
+      isMoved: false
     }
   },
   methods: {
@@ -57,9 +58,10 @@ export default {
       }
       this.handleScrollCallCt++
 
-      if (this.pageNum === 6) {
-        //jump to TimeLine(Info.vue)
-        this.$router.push('info')
+      if (this.pageNum === 6 && !this.isMoved) {
+        // jump to TimeLine(Info.vue)
+        this.isMoved = true
+        this.$router.replace('info')
       }
     }
   },
