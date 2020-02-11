@@ -112,21 +112,16 @@ export default {
         this.colChildNow = document.getElementsByClassName('colChild')[n+1]
         this.colChild = document.getElementsByClassName('colChild')[n+2]
       }
-      // console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
     },
     toggleFadeinAndOut(e) {
       var parentsClassList = e.parentNode.classList
-      // console.log(parentsClassList, parentsClassList.contains("fadein"), parentsClassList.contains("fadeout"))
       if (parentsClassList.contains("fadein")) {
-        // console.log("fadein")
         parentsClassList.add("fadeout")
         parentsClassList.remove("fadein")
       } else if (parentsClassList.contains("fadeout")) {
-        // console.log("fadeout")
         parentsClassList.add("fadein")
         parentsClassList.remove("fadeout")
       } else {
-        // console.log("else")
         parentsClassList.add("fadeout")
       }
     },
@@ -205,7 +200,6 @@ export default {
             dcn = Number(dcn)
             dcn += 1
             this.colChildNow.setAttribute('data-col-num', dcn)
-            // console.log('now coll', this.colChildNow.getAttribute('data-col-num'))
             // 2回目以降のcollにだけ反応
             if (dcn >= 2) {
               if (dcn % 2 == 0) {
@@ -225,24 +219,19 @@ export default {
             isDidNowCol = true
           }
         } else {
-          // console.log('not now coll')
           isDidNowCol = false
         }
         if(isBeforeCollision || isAfterCollision){
           var col_obj = null
           if (isBeforeCollision && !isAfterCollision) {
             col_obj = this.colChildBefore
-            // console.log('before coll')
           } else {
             col_obj = this.colChild
-            // console.log('after coll')
           }
-          //if (this.colChildBefore !== null) {
           if (col_obj !== before_col_obj) {
             this.toggleFadeinAndOut(col_obj)
             before_col_obj = col_obj
           }
-          //}
           this.setcolChild(this.colCounter, false)
           if (isBeforeCollision && !isAfterCollision) {
             this.colCounter--
@@ -259,7 +248,6 @@ export default {
               this.nextYear = "2019"
             }
           }
-          //console.log(this.colCounter)
           this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
         }
       }
