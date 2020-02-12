@@ -5,6 +5,7 @@
         <div id="bgtree">
           <div id="links">
             <BAY :pageNum="pageNum"></BAY>
+            <!--<router-link to="/Info" id="info_router_link">info</router-link>-->
           </div>
           <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt"></Tree>
         </div>
@@ -60,8 +61,9 @@ export default {
 
       if (this.pageNum === 6 && !this.isMoved) {
         // jump to TimeLine(Info.vue)
+        // XXX: router.pushがrouter.replaceの挙動をするバグ(と思われる、router-linkでは発生しない)
+        this.$router.push('/Info')
         this.isMoved = true
-        this.$router.replace('info')
       }
     }
   },

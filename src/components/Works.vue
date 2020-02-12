@@ -46,6 +46,9 @@
 <script>
 import firebase from 'firebase'
 
+/* #2 change lang theme */
+import '../assets/css/works-colors-cushion.css'
+
 export default {
   data () {
     return {
@@ -256,7 +259,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 h1, h2, p {
   margin: 5px;
@@ -265,7 +267,6 @@ img {
   width: 70%;
 }
 a {
- color: #2c3e50;
  text-decoration: none;
 }
 .show {
@@ -307,7 +308,6 @@ a {
   margin-top: 5px;
   margin-left: 19px;
   float: left;
-  background-color: #c7c7c7;
 }
 #tl-items {
   position: absolute;
@@ -317,12 +317,9 @@ a {
   margin: 10px;
   margin-left: 60px;
   padding: 10px;
-  background-color: #fcfcfc;
-  border: 1px solid #9699a0;
   border-radius: 25px;
 }
 .card-img {
-  border: 1px solid #c7c7c7;
   border-radius: 10px;
 }
 .cardMarginTop {
@@ -343,7 +340,6 @@ a {
   float: left;
   margin-top: 30px;
   margin-left: 20px;
-  background-color: #c7c7c7;
 }
 .year {
 }
@@ -358,10 +354,7 @@ a {
   width: 40px;
   height: 40px;
   margin-left: 5px;
-  /*background-color: white;*/
-  background-color: #c7c7c7;
   border-radius: 50px;
-  border: 1px solid #c7c7c7;
 }
 .yearFixed {
   position: fixed;

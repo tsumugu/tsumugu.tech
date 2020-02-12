@@ -41,14 +41,18 @@ export default {
   methods: {
   },
   created () {
+    /* #1 change lang theme -> #2 is in Works.vue */
+    var theme = "cushion"
+    
     this.db = firebase.firestore()
     var _this = this
     this.db.collection('languages').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        var color_code = doc.data()[theme]
         _this.count_data.push(10)
         _this.langs.push(doc.id)
-        _this.colors.push(doc.data().color)
-        _this.lang_color[doc.id] = doc.data().color
+        _this.colors.push(color_code)
+        _this.lang_color[doc.id] = color_code
       })
       _this.$set(_this.gData, 'labels', _this.langs)
       _this.$set(_this.gData, 'datasets', [{data: _this.count_data, backgroundColor: _this.colors}])
@@ -68,7 +72,6 @@ p {
   width: 100%;
   height: 10000px;
   overflow-x: hide;
-  background-color: #F4F5F7;
 }
 #chart {
   width: 80%;
