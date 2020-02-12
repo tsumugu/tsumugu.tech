@@ -23,8 +23,13 @@
         </div>
         <!-- Left Line -->
         <div class="card-left" v-bind:class="{ hide: item.isTitle }">
+          <!--
+          DEBUG here
           <div class="card-left-circle" v-bind:style="{'backgroundColor': item.color}"></div>
           <div class="card-left-line" v-bind:style="{'backgroundColor': item.color}"></div>
+          -->
+          <div class="card-left-circle"></div>
+          <div class="card-left-line"></div>
         </div>
         <!-- Card -->
         <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
@@ -47,7 +52,7 @@
 import firebase from 'firebase'
 
 /* #2 change lang theme */
-import '../assets/css/works-colors-cushion.css'
+import '../assets/css/works-colors-peru.css'
 
 export default {
   data () {

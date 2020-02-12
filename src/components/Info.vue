@@ -42,13 +42,14 @@ export default {
   },
   created () {
     /* #1 change lang theme -> #2 is in Works.vue */
-    var theme = "cushion"
-    
+    // var theme = "none"
+
     this.db = firebase.firestore()
     var _this = this
     this.db.collection('languages').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        var color_code = doc.data()[theme]
+        // var color_code = doc.data()[theme]
+        var color_code = "#ffffff"
         _this.count_data.push(10)
         _this.langs.push(doc.id)
         _this.colors.push(color_code)
