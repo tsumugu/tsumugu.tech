@@ -52,7 +52,7 @@
 import firebase from 'firebase'
 
 /* #2 change lang theme */
-import '../assets/css/works-colors-peru.css'
+import '../assets/css/works-colors-peru-gray.css'
 
 export default {
   data () {
