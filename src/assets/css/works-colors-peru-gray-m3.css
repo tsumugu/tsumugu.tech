@@ -1,0 +1,37 @@
+/* define colors #mid */
+
+/* text-color */
+.card > a {
+  color: #2c3e50;
+}
+/* card */
+.card-left-circle {
+  background-color: #fa9393 !important;
+}
+/* timeline -> bg-color */
+#timeline {
+  color: #2c3e50;
+  background-color: #f1deb5;
+}
+/* card -> bg-color and border-color */
+.card {
+  background-color: #fffcfa;
+  border: 1px solid #9699a0;
+}
+/* timeline-left-line -> bg-color #699239 */
+#left-line {
+  background-color: #cfc7ba;
+}
+/* timeline-left-line-circle -> bg-color and border-color */
+.year-circle {
+  background-color: #82b349;
+  border: 2px solid #cfc7ba;
+}
+/* card-img -> border-color */
+.card-img {
+  border: 1px solid #cfc7ba;
+}
+/* card-line -> bg-color */
+.card-left-line {
+  background-color: #cfc7ba;
+}
