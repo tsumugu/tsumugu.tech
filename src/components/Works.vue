@@ -18,7 +18,7 @@
       <div class="tl-item" v-for="(item, key) in items" :key="key">
         <!-- Year -->
         <div class="year" v-bind:class="{ hide: !item.isTitle, skelton: item.isSkelton }">
-          <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:class="{ colChild: item.isTitle }"></div>
+          <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle }"></div>
           <div class="year-text">{{item.madeYear}}</div>
         </div>
         <!-- Left Line -->
@@ -67,7 +67,8 @@ export default {
       colChildNow: null,
       colChildBefore: null,
       colCounter: 0,
-      nextYear: 0
+      nextYear: 0,
+      isEnd: false
     }
   },
   methods: {
@@ -148,7 +149,8 @@ export default {
               'madeYear': doc.data().madeYear,
               'isTitle': true,
               'isSkelton': (el_count==0),
-              'color': _this.lang_color[doc.data().mainLang]
+              'color': _this.lang_color[doc.data().mainLang],
+              'isEnd': 'false'
             })
           }
           let data = {
@@ -162,11 +164,19 @@ export default {
             'madeYear': doc.data().madeYear,
             'kdwr': doc.data().kdwr,
             'isTitle': false,
-            'color': _this.lang_color[doc.data().mainLang]
+            'color': _this.lang_color[doc.data().mainLang],
+            'isEnd': 'false'
           }
           _this.items.push(data)
           el_count++
           before_madeYear = now_madeYear
+        })
+        _this.items.push({
+          'madeYear': '将来について',
+          'isTitle': true,
+          'isSkelton': false,
+          'color': '#ffffff',
+          'isEnd': 'true'
         })
 
         // v-forが描画され終ったときに実行されるイベント
@@ -255,6 +265,12 @@ export default {
               this.colCounter-=2
               this.nextYear = "2019"
             }
+          }
+          if (this.colChild === undefined) {
+            // 将来についてのページに飛ばす
+            setTimeout(() => {
+              this.$router.push({ name: 'Top', params: { f: 't' } })
+            }, 200)
           }
           this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
         }

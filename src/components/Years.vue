@@ -1,5 +1,5 @@
 <template>
-<div id="BAY_wrap">
+<div id="Years_wrap">
   <p id="mes">{{mes}}</p>
 </div>
 </template>
@@ -15,7 +15,7 @@ export default {
   data: function () {
     return {
       mes: '～2015',
-      mes_arr: ['scroll me!', '2015年(中学1年生)', '2016年(中学2年生)', '2017年(中学3年生)', '2018年(高校1年生)', '2019年(高校2年生)']
+      year_arr: ['～2015', '2015', '2021～'],
     }
   },
   watch: {
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     draw(pageNum) {
-      this.mes = this.mes_arr[pageNum]
+      this.mes = this.year_arr[pageNum]
     }
   },
   mounted() {

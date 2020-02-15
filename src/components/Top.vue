@@ -1,10 +1,13 @@
 <template>
   <div id="page1">
     <div id="items">
+      <div id="topcontents">
+        <div id="topcontents-text"><Bubble :pageNum="pageNum"></Bubble></div>
+      </div>
       <div id="bgitems">
         <div id="bgtree">
           <div id="links">
-            <BAY :pageNum="pageNum"></BAY>
+            <Years :pageNum="pageNum"></Years>
             <!--<router-link to="/Info" id="info_router_link">info</router-link>-->
           </div>
           <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt"></Tree>
@@ -17,11 +20,13 @@
 
 <script>
 import Tree from './Tree.vue'
-import BAY from './BubbleAndYears.vue'
+import Bubble from './Bubble.vue'
+import Years from './Years.vue'
 export default {
   components: {
     Tree,
-    BAY
+    Bubble,
+    Years
   },
   data() {
     return {
@@ -32,7 +37,8 @@ export default {
       beforeScrollLv: 0,
       handleScrollCallCt: 0,
       isAnimating: false,
-      isMoved: false
+      isMoved: false,
+      isBack: false
     }
   },
   methods: {
@@ -59,7 +65,7 @@ export default {
       }
       this.handleScrollCallCt++
 
-      if (this.pageNum === 6 && !this.isMoved) {
+      if (this.pageNum === 2 && !this.isMoved && !this.isBack) {
         // jump to TimeLine(Info.vue)
         // XXX: router.pushがrouter.replaceの挙動をするバグ(と思われる、router-linkでは発生しない)
         this.$router.push('/Info')
@@ -68,7 +74,15 @@ export default {
     }
   },
   mounted() {
-  var _this = this
+    // Worksから戻ってきてたらfutureに
+    if (this.$route.params.f === "t") {
+      this.isBack = true
+      // TDODO: 2,3を一気に進める
+      this.pageNum = 2
+      this.pageWcNum = 31
+    }
+    //
+    var _this = this
     const targetElement = this.$refs.treespacer
     var beforeScrollHeight = 0
     var checkScroll = function() {
@@ -111,6 +125,17 @@ img {
   height: 100%;
   overflow-y: scroll;
   float: left;
+}
+#topcontents {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#topcontents-text {
+  position: absolute;
+  right: 30px;
+  top: 30px;
 }
 #bgtree {
   position: sticky;

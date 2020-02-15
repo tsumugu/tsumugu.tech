@@ -15,6 +15,11 @@ export default new Router({
       component: top
     },
     {
+      path: '/Top#:f',
+      name: 'Top',
+      component: top
+    },
+    {
       path: '/works',
       component: works
     },
