@@ -115,8 +115,12 @@ export default {
         this.colChildNow = document.getElementsByClassName('colChild')[n+1]
         this.colChild = document.getElementsByClassName('colChild')[n+2]
       }
+      console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
     },
     toggleFadeinAndOut(e) {
+      if (e.getAttribute('data-year') === "2015") {
+        return;
+      }
       var parentsClassList = e.parentNode.classList
       if (parentsClassList.contains("fadein")) {
         parentsClassList.add("fadeout")
@@ -168,7 +172,6 @@ export default {
           el_count++
           before_madeYear = now_madeYear
         })
-        /*
         _this.items.push({
           'madeYear': '将来について',
           'isTitle': true,
@@ -176,7 +179,6 @@ export default {
           'color': '#ffffff',
           'isEnd': 'true'
         })
-        */
 
         // v-forが描画され終ったときに実行されるイベント
         this.$nextTick(() => {
@@ -228,6 +230,16 @@ export default {
                   if (parentsClassList.contains("fadeout")) {
                     parentsClassList.add("fadein")
                     parentsClassList.remove("fadeout")
+                  }
+                } else {
+                  //nowで戻った時
+                  // fadein
+                  var parentsClassList = this.colChildNow.parentNode.classList
+                  if (parentsClassList.contains("fadeout")) {
+                    parentsClassList.add("fadein")
+                    parentsClassList.remove("fadeout")
+                    this.colBase.getElementsByClassName('year-text')[0].innerText = this.colChildBefore.getAttribute('data-year')
+                    this.colCounter--
                   }
                 }
               }
