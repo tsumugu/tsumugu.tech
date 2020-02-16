@@ -31,8 +31,8 @@
           <a :href="item.siteurl" >
             <img class="card-img" :src="item.thumbnail">
             <h2 class="card-title">{{item.title}}</h2>
-            <p class="card-main-lang">{{item.mainLang}} <p class="card-all-lang">({{item.allLang}})</p></p>
             <p class="card-description">{{item.description}}</p>
+            <p class="card-main-lang">{{item.mainLang}} <p class="card-all-lang">({{item.allLang}})</p></p>
             <p class="card-kdwr">{{item.kdwr}}</p>
           </a>
         </div>
@@ -168,6 +168,7 @@ export default {
           el_count++
           before_madeYear = now_madeYear
         })
+        /*
         _this.items.push({
           'madeYear': '将来について',
           'isTitle': true,
@@ -175,6 +176,7 @@ export default {
           'color': '#ffffff',
           'isEnd': 'true'
         })
+        */
 
         // v-forが描画され終ったときに実行されるイベント
         this.$nextTick(() => {
@@ -263,12 +265,14 @@ export default {
               this.nextYear = "2019"
             }
           }
+          /*
           if (this.colChild === undefined) {
             // 将来についてのページに飛ばす
             setTimeout(() => {
               this.$router.push({ name: 'Top', params: { f: 't' } })
             }, 200)
           }
+          */
           this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
         }
       }
@@ -344,11 +348,29 @@ a {
   transform: scale(1.03, 1.03);
   box-shadow: 3px 3px rgba(50, 50, 50, 0.1);
 }
+.cardMarginTop {
+  margin-top: 20px;
+}
 .card-img {
   border-radius: 10px;
 }
-.cardMarginTop {
-  margin-top: 20px;
+.card-title {
+}
+.card-main-lang {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 25px;
+  color: #ffffff;
+  background-color: brown;
+}
+.card-all-lang {
+  display: inline-block;
+  font-size: large;
+}
+.card-description {
+  font-size: large;
+}
+.card-kdwr {
 }
 .card-left-circle {
   position: absolute;
