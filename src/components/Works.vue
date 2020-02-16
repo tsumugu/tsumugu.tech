@@ -23,16 +23,12 @@
         </div>
         <!-- Left Line -->
         <div class="card-left" v-bind:class="{ hide: item.isTitle }">
-          <!--
-          DEBUG here
-          <div class="card-left-circle" v-bind:style="{'backgroundColor': item.color}"></div>
-          <div class="card-left-line" v-bind:style="{'backgroundColor': item.color}"></div>
-          -->
           <div class="card-left-circle"></div>
           <div class="card-left-line"></div>
         </div>
         <!-- Card -->
         <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
+          <div class="card-tab-left-bottom"><div class="card-tab-made-month">{{item.madeMonth}}</div></div>
           <a :href="item.siteurl">
             <img class="card-img" :src="item.thumbnail">
             <h2>{{item.title}}</h2>
@@ -137,7 +133,7 @@ export default {
     drawTL(arg_lang_color) {
       this.lang_color = arg_lang_color
       var _this = this
-      this.db.collection('Works').orderBy("madeYear", "asc").get().then((querySnapshot) => {
+      this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
         _this.items = []
         _this.loading = false
         var before_madeYear = 0
@@ -162,6 +158,7 @@ export default {
             'mainLang': doc.data().mainLang,
             'allLang': doc.data().allLang,
             'madeYear': doc.data().madeYear,
+            'madeMonth': doc.data().madeMonth,
             'kdwr': doc.data().kdwr,
             'isTitle': false,
             'color': _this.lang_color[doc.data().mainLang],
@@ -335,8 +332,9 @@ a {
   width: 100%;
 }
 .card {
+  position: relative;
   margin: 10px;
-  margin-left: 60px;
+  margin-left: 70px;
   padding: 10px;
   border-radius: 25px;
 }
@@ -356,11 +354,30 @@ a {
   border-radius: 50px;
 }
 .card-left-line {
-  width: 40px;
+  width: 50px;
   height: 14px;
   float: left;
   margin-top: 30px;
   margin-left: 20px;
+}
+.card-tab-left-bottom {
+  position: absolute;
+  top: 60px;
+  left: -30px;
+  width: 30px;
+  height: 40px;
+  border-radius: 25px 0px 0px 25px;
+}
+.card-tab-made-month {
+  position: absolute;
+  width: 100%;
+  top: 11px;
+  text-align: center;
+  margin-left: 4px;
+}
+.card-tab-made-month::after {
+  content: '月';
+  font-size: 50%;
 }
 .year {
 }
@@ -380,5 +397,6 @@ a {
 .yearFixed {
   position: fixed;
   width: 100%;
+  z-index: 3;
 }
 </style>

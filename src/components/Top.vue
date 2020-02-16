@@ -77,9 +77,12 @@ export default {
     // Worksから戻ってきてたらfutureに
     if (this.$route.params.f === "t") {
       this.isBack = true
-      // TDODO: 2,3を一気に進める
       this.pageNum = 2
-      this.pageWcNum = 31
+      this.pageWcNum = 21
+      var _this = this
+      setTimeout(() => {
+        _this.pageWcNum = 31
+      }, 5000)
     }
     //
     var _this = this

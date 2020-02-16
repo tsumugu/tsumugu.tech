@@ -14,9 +14,10 @@
   background-color: #f1deb5;
 }
 /* card -> bg-color and border-color */
-.card {
+.card, .card-tab-left-bottom {
   background-color: #fffcfa;
   border: 1px solid #9699a0;
+  border-right: none;
 }
 /* timeline-left-line -> bg-color #699239 */
 #left-line {
