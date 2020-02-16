@@ -28,14 +28,12 @@
         </div>
         <!-- Card -->
         <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
-          <div class="card-tab-left-bottom"><div class="card-tab-made-month">{{item.madeMonth}}</div></div>
-          <a :href="item.siteurl">
+          <a :href="item.siteurl" >
             <img class="card-img" :src="item.thumbnail">
-            <h2>{{item.title}}</h2>
-            <p>{{item.mainLang}} ( {{item.allLang}} )</p>
-            <p>{{item.madeYear}}</p>
-            <p>{{item.description}}</p>
-            <p>{{item.kdwr}}</p>
+            <h2 class="card-title">{{item.title}}</h2>
+            <p class="card-main-lang">{{item.mainLang}} <p class="card-all-lang">({{item.allLang}})</p></p>
+            <p class="card-description">{{item.description}}</p>
+            <p class="card-kdwr">{{item.kdwr}}</p>
           </a>
         </div>
       </div>
@@ -48,7 +46,7 @@
 import firebase from 'firebase'
 
 /* #2 change lang theme */
-import '../assets/css/works-colors-peru-gray-m3.css'
+import '../assets/css/works-colors-test-green.css'
 
 export default {
   data () {
@@ -149,9 +147,10 @@ export default {
               'isEnd': 'false'
             })
           }
+          var thumbnailUrl = doc.data().thumbnail==null ? doc.data().thumbnail : 'https://via.placeholder.com/2560x1480'
           let data = {
             'id': doc.id,
-            'thumbnail': doc.data().thumbnail,
+            'thumbnail': thumbnailUrl,
             'title': doc.data().title,
             'siteurl': doc.data().siteurl,
             'description': doc.data().description,
@@ -162,7 +161,8 @@ export default {
             'kdwr': doc.data().kdwr,
             'isTitle': false,
             'color': _this.lang_color[doc.data().mainLang],
-            'isEnd': 'false'
+            'isEnd': 'false',
+            'isFixed': (el_count==0)
           }
           _this.items.push(data)
           el_count++
@@ -282,7 +282,7 @@ h1, h2, p {
   margin: 5px;
 }
 img {
-  width: 70%;
+  height: 200px;
 }
 a {
  text-decoration: none;
@@ -300,7 +300,8 @@ a {
   animation: fadeIn 500ms ease 0s 1 forwards;
 }
 .fadeout {
-  animation: fadeOut 500ms ease 0s 1 forwards;
+  transform: translateY(-10px);
+  animation: fadeOut 1000ms ease 0s 1 forwards;
 }
 @keyframes fadeIn {
     0% {opacity: 0}
@@ -323,7 +324,7 @@ a {
   display: inline-block;
   width: 15px;
   height: 10000px;
-  margin-top: 5px;
+  margin-top: 10px;
   margin-left: 19px;
   float: left;
 }
@@ -333,16 +334,21 @@ a {
 }
 .card {
   position: relative;
+  width: 80%;
   margin: 10px;
-  margin-left: 70px;
+  margin-left: 60px;
   padding: 10px;
   border-radius: 25px;
+}
+.card:hover {
+  transform: scale(1.03, 1.03);
+  box-shadow: 3px 3px rgba(50, 50, 50, 0.1);
 }
 .card-img {
   border-radius: 10px;
 }
 .cardMarginTop {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .card-left-circle {
   position: absolute;
@@ -354,42 +360,35 @@ a {
   border-radius: 50px;
 }
 .card-left-line {
-  width: 50px;
+  width: 40px;
   height: 14px;
   float: left;
   margin-top: 30px;
   margin-left: 20px;
 }
-.card-tab-left-bottom {
+.card-tab {
   position: absolute;
-  top: 60px;
   left: -30px;
-  width: 30px;
-  height: 40px;
   border-radius: 25px 0px 0px 25px;
-}
-.card-tab-made-month {
-  position: absolute;
-  width: 100%;
-  top: 11px;
-  text-align: center;
-  margin-left: 4px;
-}
-.card-tab-made-month::after {
-  content: '月';
-  font-size: 50%;
+  border-right: none;
 }
 .year {
+  position: relative;
+}
+.colBase {
+  margin-top: 10px;
 }
 .year-text {
-	vertical-align: middle;
+  position: absolute;
+  top: 8px;
+  left: 30px;
   display: inline-block;
   font-size: x-large;
 }
 .year-circle {
 	vertical-align: middle;
   display: inline-block;
-  width: 40px;
+  width: 100px;
   height: 40px;
   margin-left: 5px;
   border-radius: 50px;
