@@ -18,7 +18,7 @@
       <div class="tl-item" v-for="(item, key) in items" :key="key">
         <!-- Year -->
         <div class="year" v-bind:class="{ hide: !item.isTitle, skelton: item.isSkelton }">
-          <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle }"></div>
+          <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle, yearCircleEnd: item.isEnd }"></div>
           <div class="year-text">{{item.madeYear}}</div>
         </div>
         <!-- Left Line -->
@@ -61,8 +61,7 @@ export default {
       colChildNow: null,
       colChildBefore: null,
       colCounter: 0,
-      nextYear: 0,
-      isEnd: false
+      nextYear: 0
     }
   },
   methods: {
@@ -115,7 +114,7 @@ export default {
         this.colChildNow = document.getElementsByClassName('colChild')[n+1]
         this.colChild = document.getElementsByClassName('colChild')[n+2]
       }
-      console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
+      // console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
     },
     toggleFadeinAndOut(e) {
       if (e.getAttribute('data-year') === "2015") {
@@ -148,7 +147,7 @@ export default {
               'isTitle': true,
               'isSkelton': (el_count==0),
               'color': _this.lang_color[doc.data().mainLang],
-              'isEnd': 'false'
+              'isEnd': false
             })
           }
           var thumbnailUrl = doc.data().thumbnail==null ? doc.data().thumbnail : 'https://via.placeholder.com/2560x1480'
@@ -165,7 +164,7 @@ export default {
             'kdwr': doc.data().kdwr,
             'isTitle': false,
             'color': _this.lang_color[doc.data().mainLang],
-            'isEnd': 'false',
+            'isEnd': false,
             'isFixed': (el_count==0)
           }
           _this.items.push(data)
@@ -177,7 +176,7 @@ export default {
           'isTitle': true,
           'isSkelton': false,
           'color': '#ffffff',
-          'isEnd': 'true'
+          'isEnd': true
         })
 
         // v-forが描画され終ったときに実行されるイベント
@@ -400,22 +399,20 @@ a {
   margin-top: 30px;
   margin-left: 20px;
 }
-.card-tab {
-  position: absolute;
-  left: -30px;
-  border-radius: 25px 0px 0px 25px;
-  border-right: none;
-}
 .year {
   position: relative;
 }
 .colBase {
   margin-top: 10px;
 }
+.yearCircleEnd {
+  width: 190px !important;
+}
 .year-text {
   position: absolute;
-  top: 8px;
+  top: 50%;
   left: 30px;
+  transform: translate(0,-50%);
   display: inline-block;
   font-size: x-large;
 }
