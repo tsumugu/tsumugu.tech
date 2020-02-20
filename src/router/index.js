@@ -21,15 +21,11 @@ export default new Router({
     },
     {
       path: '/works',
-      component: works
+      component: info
     },
     {
       path: '/add-works',
       component: addworks
-    },
-    {
-      path: '/info',
-      component: info
     },
     {
       path: '*',

@@ -356,6 +356,7 @@ a {
   border-radius: 25px;
 }
 .card:hover {
+  transition-duration: 300ms;
   transform: scale(1.03, 1.03);
   box-shadow: 3px 3px rgba(50, 50, 50, 0.1);
 }

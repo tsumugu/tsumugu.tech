@@ -68,7 +68,7 @@ export default {
       if (this.pageNum === 2 && !this.isMoved && !this.isBack) {
         // jump to TimeLine(Info.vue)
         // XXX: router.pushがrouter.replaceの挙動をするバグ(と思われる、router-linkでは発生しない)
-        this.$router.push('/Info')
+        this.$router.push('/Works')
         this.isMoved = true
       }
     }

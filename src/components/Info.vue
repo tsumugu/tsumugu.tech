@@ -1,12 +1,5 @@
 <template>
 <div id="Info_wrap">
-<!--
-  <div>
-    <router-link to="/add-works">AddWorks</router-link>
-    <router-link to="/works">Works</router-link>
-  </div>
-  <div id="chart"><Chart ref="chart"></Chart></div>
-  -->
   <Works ref="works"></Works>
 </div>
 </template>
