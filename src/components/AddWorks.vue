@@ -1,13 +1,23 @@
 <template>
 <div>
-サムネイルURL: <input v-model="thumbnail"><br>
 サイトURL: <input v-model="siteurl"><br>
+サムネイルURL: <input v-model="thumbnail"><br>
 タイトル: <input v-model="title"><br>
-メイン言語:<input v-model="mainLang"><br>
-すべての言語: <input v-model="allLang"><br>
+説明:<br>
+<textarea v-model="description"></textarea><br>
+こだわり:<br>
+<textarea v-model="kdwr"></textarea><br>
+ジャンル: <div><input type="radio" id="one" value="web" v-model="genle"><label for="one">Web</label><br>
+<input type="radio" id="two" value="iOS" v-model="genle"><label for="two">iOS</label><br>
+<input type="radio" id="seven" value="Android" v-model="genle"><label for="seven">Android</label><br>
+<input type="radio" id="three" value="マイコン" v-model="genle"><label for="three">マイコン</label><br>
+<input type="radio" id="four" value="Bot" v-model="genle"><label for="four">Bot</label><br>
+<input type="radio" id="five" value="openFrameworks" v-model="genle"><label for="five">openFrameworks</label><br>
+<input type="radio" id="six" value="Other" v-model="genle"><label for="six">Other</label><br>
+</div>
 制作年: <input v-model="madeYear"><br>
-説明: <textarea v-model="description"></textarea><br>
-こだわり: <textarea v-model="kdwr"></textarea>
+制作月: <input v-model="madeMonth"><br>
+すべての言語: <input v-model="allLang"><br>
 <button v-on:click="submit">Submit</button>
 </div>
 </template>
@@ -23,9 +33,10 @@ export default {
       title: null,
       siteurl: null,
       description: null,
-      mainLang: null,
+      genle: null,
       allLang: null,
       madeYear: null,
+      madeMonth: null,
       kdwr: null
     }
   },
@@ -37,9 +48,10 @@ export default {
         'title': this.title,
         'siteurl': this.siteurl,
         'description': this.description,
-        'mainLang': this.mainLang,
+        'genle': this.genle,
         'allLang': this.allLang,
         'madeYear': this.madeYear,
+        'madeMonth': this.madeMonth,
         'kdwr': this.kdwr
       })
       .then(doc => {
@@ -48,8 +60,10 @@ export default {
         _this.title = ''
         _this.siteurl = ''
         _this.description = ''
-        _this.mainLang = ''
+        _this.genle = ''
         _this.allLang = ''
+        _this.madeYear = ''
+        _this.madeMonth = ''
         _this.kdwr = ''
       })
       .catch(error => {
