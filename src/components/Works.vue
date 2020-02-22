@@ -32,7 +32,7 @@
             <img class="card-img" :src="item.thumbnail">
             <h2 class="card-title">{{item.title}}</h2>
             <p class="card-description">{{item.description}}</p>
-            <p class="card-main-lang">{{item.mainLang}} <p class="card-all-lang">({{item.allLang}})</p></p>
+            <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
             <p class="card-kdwr">{{item.kdwr}}</p>
           </a>
         </div>
@@ -157,7 +157,7 @@ export default {
             'title': doc.data().title,
             'siteurl': doc.data().siteurl,
             'description': doc.data().description,
-            'mainLang': doc.data().mainLang,
+            'genle': doc.data().genle,
             'allLang': doc.data().allLang,
             'madeYear': doc.data().madeYear,
             'madeMonth': doc.data().madeMonth,
