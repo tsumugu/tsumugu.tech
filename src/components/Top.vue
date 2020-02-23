@@ -1,157 +1,67 @@
 <template>
-  <div id="page1">
-    <div id="items">
-      <div id="topcontents">
-        <div id="topcontents-text"><Bubble :pageNum="pageNum"></Bubble></div>
-      </div>
-      <div id="bgitems">
-        <div id="bgtree">
-          <div id="links">
-            <Years :pageNum="pageNum"></Years>
-            <!--<router-link to="/Info" id="info_router_link">info</router-link>-->
-          </div>
-          <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt"></Tree>
-        </div>
-        <div id="tree-spacer" ref="treespacer"></div>
-      </div>
-    </div>
-  </div>
+<div id="top-wrap">
+<div id="top-name">Tsumugu Yamaguchi</div>
+<div id="top-bg-canvas" ref="canvas"></div>
+</div>
 </template>
 
 <script>
-import Tree from './Tree.vue'
-import Bubble from './Bubble.vue'
-import Years from './Years.vue'
+import Matter from 'matter-js'
 export default {
-  components: {
-    Tree,
-    Bubble,
-    Years
-  },
-  data() {
+  data: function () {
     return {
-      pageNum: 0,
-      pageWcNum: 0,
-      scrollY: 0,
-      px: 15,
-      beforeScrollLv: 0,
-      handleScrollCallCt: 0,
-      isAnimating: false,
-      isMoved: false,
-      isBack: false
+      canvas: null,
+      dimensions: null
     }
   },
   methods: {
-    treeUpdateEvt: function(value) {
-      // Tree.vue Update Event
-      this.isAnimating = value
-    },
-    handleScroll: function(y) {
-      if (this.handleScrollCallCt > 0) {
-        this.scrollY = y
-        var ScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
-        // console.log(this.scrollY, ScrollLv)
-        if (this.beforeScrollLv !== ScrollLv && !this.isAnimating) {
-          // 正負で前後を切り替え
-          if ((ScrollLv - this.beforeScrollLv) > 0) {
-            this.pageNum += 1
-            this.pageWcNum = this.pageNum * 10 + 1
-          } else {
-            this.pageNum -= 1
-            this.pageWcNum = this.pageNum * 10 + 2
-          }
-        }
-        this.beforeScrollLv = ScrollLv
-      }
-      this.handleScrollCallCt++
-
-      if (this.pageNum === 2 && !this.isMoved && !this.isBack) {
-        // jump to TimeLine(Info.vue)
-        // XXX: router.pushがrouter.replaceの挙動をするバグ(と思われる、router-linkでは発生しない)
-        this.$router.push('/Works')
-        this.isMoved = true
-      }
+    f(){
     }
   },
   mounted() {
-    // Worksから戻ってきてたらfutureに
-    if (this.$route.params.f === "t") {
-      this.isBack = true
-      this.pageNum = 2
-      this.pageWcNum = 21
-      var _this = this
-      setTimeout(() => {
-        _this.pageWcNum = 31
-      }, 5000)
-    }
-    //
-    var _this = this
-    const targetElement = this.$refs.treespacer
-    var beforeScrollHeight = 0
-    var checkScroll = function() {
-      var ScreenHeight = window.innerHeight
-      var clientRect = targetElement.getBoundingClientRect()
-      var y = clientRect.top
-      var scrollHeight = ScreenHeight - y
-      if (scrollHeight !== beforeScrollHeight) {
-        _this.handleScroll(scrollHeight)
+    this.canvas = this.$refs.canvas
+
+    var Engine = Matter.Engine,
+        Render = Matter.Render,
+        Runner = Matter.Runner,
+        World = Matter.World,
+        Bodies = Matter.Bodies;
+    var engine = Engine.create(),
+        world = engine.world;
+    var render = Render.create({
+      element: this.canvas,
+      engine: engine,
+      options: {
+        background: '#FFFFFF',
+        wireframes: false
       }
-      beforeScrollHeight = scrollHeight
-    }
-    setInterval(checkScroll, 100)
+    })
+    Render.run(render)
+    var runner = Runner.create()
+    Runner.run(runner, engine)
+
+    //オブジェクト作成
+    var floor = Bodies.rectangle(400, 350, 800, 30, {
+      isStatic: true
+    })
+    var square = Bodies.rectangle(500, 0, 100, 80)
+    var circle = Bodies.circle(200, 0, 50)
+    World.add(world, [floor, square, circle])
   }
 }
 </script>
 
 <style scoped>
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-*::-webkit-scrollbar {
-  display:none;
-}
-img {
-  width: 100%;
-}
-#page1 {
+#top-wrap {
   width: 100%;
   height: 100%;
+  position: relative;
 }
-#items {
-  width: 100%;
-  height: 100%;
-}
-#bgitems {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  float: left;
-}
-#topcontents {
+#top-name {
   position: absolute;
-  top: 0;
+}
+#top-bg-canvas {
   width: 100%;
   height: 100%;
-}
-#topcontents-text {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-}
-#bgtree {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-#links {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-}
-#tree-spacer {
-  height: 10000px;
 }
 </style>

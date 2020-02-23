@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import top from '@/components/Top'
+import about from '@/components/About'
 import works from '@/components/Works'
 import addworks from '@/components/AddWorks'
 import info from '@/components/Info'
@@ -15,9 +16,13 @@ export default new Router({
       component: top
     },
     {
-      path: '/Top#:f',
-      name: 'Top',
-      component: top
+      path: '/About',
+      component: about
+    },
+    {
+      path: '/About#:f',
+      name: 'About',
+      component: about
     },
     {
       path: '/works',
