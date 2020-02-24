@@ -7,6 +7,10 @@
 
 <script>
 var Matter = require('matter-js')
+require('matter-attractors')
+require('matter-wrap')
+Matter.use('matter-attractors')
+Matter.use('matter-wrap')
 var Engine = Matter.Engine,
     Events = Matter.Events,
     Runner = Matter.Runner,
@@ -65,15 +69,14 @@ export default {
     })
     var runner = Runner.create()
 
-/*
     var attractiveBody = Bodies.circle(
       this.render.options.width / 2,
       this.render.options.height / 2,
       (Math.max(dimensions.width / 4, dimensions.height / 4)) / 2,
       {
         render: {
-          fillStyle: `rgb(240,240,240)`,
-          strokeStyle: `rgb(240,240,240)`,
+          fillStyle: `rgb(0,0,0,0)`,
+          strokeStyle: `rgb(0,0,0,0)`,
           lineWidth: 0
         },
         isStatic: true,
@@ -90,19 +93,6 @@ export default {
       });
 
     World.add(world, attractiveBody);
-
-    // add mouse control
-    var mouse = Mouse.create(this.render.canvas);
-
-    Events.on(this.engine, 'afterUpdate', function() {
-        if (!mouse.position.x) return;
-        // smoothly move the attractor body towards the mouse
-        Body.translate(attractiveBody, {
-            x: (mouse.position.x - attractiveBody.position.x) * 0.12,
-            y: (mouse.position.y - attractiveBody.position.y) * 0.12
-        });
-    });
-*/
         // add some bodies that to be attracted
         for (var i = 0; i < 60; i += 1) {
           let x = Common.random(0, this.render.options.width);
@@ -136,9 +126,9 @@ export default {
                 friction: 0,
                 frictionAir: 0.01,
                 render: {
-                  fillStyle: r > 0.3 ? `#FF2D6A` : `rgb(240,240,240)`,
-                  strokeStyle: `#E9202E`,
-                  lineWidth: 2
+                fillStyle: '#FFFFFF',
+                strokeStyle: `#DDDDDD`,
+                lineWidth: 2
                 }
               });
           World.add(world, circle);
@@ -148,9 +138,9 @@ export default {
                 friction: 0,
                 frictionAir: 0,
                 render: {
-                  fillStyle: r > 0.3 ? `#4267F8` : `rgb(240,240,240)`,
-                  strokeStyle: `#3257E8`,
-                  lineWidth: 4
+                fillStyle: '#FFFFFF',
+                strokeStyle: `#DDDDDD`,
+                lineWidth: 2
                 }
               });
           World.add(world, circle);
@@ -167,9 +157,20 @@ export default {
           World.add(world, circle);
         }
 
+        // add mouse control
+        var mouse = Mouse.create(this.render.canvas);
+        Events.on(this.engine, 'afterUpdate', function() {
+            if (!mouse.position.x) return;
+            // smoothly move the attractor body towards the mouse
+            Body.translate(attractiveBody, {
+                x: (mouse.position.x - attractiveBody.position.x) * 0.12,
+                y: (mouse.position.y - attractiveBody.position.y) * 0.12
+            });
+        });
+
         Runner.run(runner, this.engine);
         Render.run(this.render);
-    // window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize)
   }
 }
 </script>
