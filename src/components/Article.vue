@@ -30,7 +30,7 @@ export default {
   created () {
     var _this = this
     // 5e53df0067592a243bee3c2d
-    axios.get('http://tsumugu.tech:55555/ghost/api/v3/content/posts/'+this.$route.params.id+'/?key=814083040721265d25f581ee51')
+    axios.get('https://tsumugu.tech/getcontent.php?id='+this.$route.params.id)
     .then(function (response) {
       var post = response.data.posts[0]
       _this.title = post.title
