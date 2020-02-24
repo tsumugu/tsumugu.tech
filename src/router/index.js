@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import top from '@/components/Top'
 import about from '@/components/About'
 import works from '@/components/Works'
+import article from '@/components/Article'
 import addworks from '@/components/AddWorks'
 import info from '@/components/Info'
 import notfoundcomponent from '@/components/NotFoundComponent'
@@ -25,8 +26,12 @@ export default new Router({
       component: about
     },
     {
-      path: '/works',
+      path: '/Works',
       component: info
+    },
+    {
+      path: '/Article/:id', 
+      component: article
     },
     {
       path: '/add-works',

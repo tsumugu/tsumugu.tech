@@ -1,5 +1,6 @@
 <template>
 <div>
+記事ID: <input v-model="articleid"><br>
 サイトURL: <input v-model="siteurl"><br>
 サムネイルURL: <input v-model="thumbnail"><br>
 タイトル: <input v-model="title"><br>
@@ -10,6 +11,7 @@
 ジャンル: <div><input type="radio" id="one" value="web" v-model="genle"><label for="one">Web</label><br>
 <input type="radio" id="two" value="iOS" v-model="genle"><label for="two">iOS</label><br>
 <input type="radio" id="seven" value="Android" v-model="genle"><label for="seven">Android</label><br>
+<input type="radio" id="eight" value="Unity" v-model="genle"><label for="eight">Unity</label><br>
 <input type="radio" id="three" value="マイコン" v-model="genle"><label for="three">マイコン</label><br>
 <input type="radio" id="four" value="Bot" v-model="genle"><label for="four">Bot</label><br>
 <input type="radio" id="five" value="openFrameworks" v-model="genle"><label for="five">openFrameworks</label><br>
@@ -29,6 +31,7 @@ export default {
   data () {
     return {
       col: null,
+      articleid: null,
       thumbnail: null,
       title: null,
       siteurl: null,
@@ -43,19 +46,20 @@ export default {
   methods: {
     submit: function (event) {
       var _this = this
-      this.col.add({
+      this.col.doc(this.articleid).set({
         'thumbnail': this.thumbnail,
         'title': this.title,
         'siteurl': this.siteurl,
         'description': this.description,
         'genle': this.genle,
         'allLang': this.allLang,
-        'madeYear': this.madeYear,
-        'madeMonth': this.madeMonth,
+        'madeYear': Number(this.madeYear),
+        'madeMonth': Number(this.madeMonth),
         'kdwr': this.kdwr
       })
       .then(doc => {
         alert("succeed!!")
+        _this.articleid = ''
         _this.thumbnail = ''
         _this.title = ''
         _this.siteurl = ''

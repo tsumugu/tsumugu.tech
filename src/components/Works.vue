@@ -28,13 +28,14 @@
         </div>
         <!-- Card -->
         <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
-          <a :href="item.siteurl" >
+          <!--<a :href="item.siteurl" >-->
             <img class="card-img" :src="item.thumbnail">
             <h2 class="card-title">{{item.title}}</h2>
             <p class="card-description">{{item.description}}</p>
             <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
             <p class="card-kdwr">{{item.kdwr}}</p>
-          </a>
+            <button @click="cardButtonEv(item.id)">See Article</button>
+          <!--</a>-->
         </div>
       </div>
     </div>
@@ -65,6 +66,9 @@ export default {
     }
   },
   methods: {
+    cardButtonEv(articleId) {
+      this.$router.push({ path: `/Article/${articleId}` })
+    },
     detectCollision(rect1, rect2) {
       if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
            (rect1.xStart <= rect2.xEnd && rect2.xEnd <= rect1.xEnd)) &&
