@@ -83,9 +83,9 @@
     "vue-svg-loader": "^0.15.0",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.41.6",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dev-server": "^3.10.3",
-    "webpack-merge": "^4.2.2"
+    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-dev-server": "^3.1.11",
+    "webpack-merge": "^4.1.0"
   },
   "engines": {
     "node": ">= 6.0.0",
