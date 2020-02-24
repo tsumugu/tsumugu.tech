@@ -14,10 +14,6 @@ export default {
       dimensions: null
     }
   },
-  methods: {
-    f(){
-    }
-  },
   mounted() {
     this.canvas = this.$refs.canvas
 
