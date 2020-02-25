@@ -3,39 +3,49 @@
   <div v-if="loading">
   Loading
   </div>
-
-  <div id="tl-wrap" v-else>
-    <div id="left-line"></div>
-    <div id="tl-items">
-      <!-- Year -->
-      <div class="tl-item">
-        <div class="year yearFixed colBase">
-        <div class="year-circle"></div>
-        <div class="year-text">2015</div>
+  <div v-else>
+    <div id="bottom-menu" v-show="isShowBottomMenu">
+      <div id="bottom-menu-inner-rel">
+        <div id="bottom-menu-inner-abs">
+          <div>{{cardSummary}}</div>
+          <div>{{cardSiteUrl}}</div>
+          <div>{{cardArticleId}}</div>
         </div>
       </div>
-      <!-- v-for -->
-      <div class="tl-item" v-for="(item, key) in items" :key="key">
+    </div>
+    <div id="tl-wrap">
+      <div id="left-line"></div>
+      <div id="tl-items">
         <!-- Year -->
-        <div class="year" v-bind:class="{ hide: !item.isTitle, skelton: item.isSkelton }">
-          <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle, yearCircleEnd: item.isEnd }"></div>
-          <div class="year-text">{{item.madeYear}}</div>
+        <div class="tl-item">
+          <div class="year yearFixed colBase">
+          <div class="year-circle"></div>
+          <div class="year-text">2015</div>
+          </div>
         </div>
-        <!-- Left Line -->
-        <div class="card-left" v-bind:class="{ hide: item.isTitle }">
-          <div class="card-left-circle"></div>
-          <div class="card-left-line"></div>
-        </div>
-        <!-- Card -->
-        <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
-          <!--<a :href="item.siteurl" >-->
-            <img class="card-img" :src="item.thumbnail">
-            <h2 class="card-title">{{item.title}}</h2>
-            <p class="card-description">{{item.description}}</p>
-            <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
-            <p class="card-kdwr">{{item.kdwr}}</p>
-            <button @click="cardButtonEv(item.id)">See Article</button>
-          <!--</a>-->
+        <!-- v-for -->
+        <div class="tl-item" v-for="(item, key) in items" :key="key">
+          <!-- Year -->
+          <div class="year" v-bind:class="{ hide: !item.isTitle, skelton: item.isSkelton }">
+            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle, yearCircleEnd: item.isEnd }"></div>
+            <div class="year-text">{{item.madeYear}}</div>
+          </div>
+          <!-- Left Line -->
+          <div class="card-left" v-bind:class="{ hide: item.isTitle }">
+            <div class="card-left-circle"></div>
+            <div class="card-left-line"></div>
+          </div>
+          <!-- Card -->
+          <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
+            <!--<a :href="item.siteurl" >-->
+              <img class="card-img" :src="item.thumbnail">
+              <h2 class="card-title">{{item.title}}</h2>
+              <p class="card-description">{{item.description}}</p>
+              <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
+              <p class="card-kdwr">{{item.kdwr}}</p>
+              <button @click="cardButtonEv(item.siteurl, item.id, item.summary)">Open Bottom Menu</button>
+            <!--</a>-->
+          </div>
         </div>
       </div>
     </div>
@@ -45,7 +55,7 @@
 
 <script>
 import firebase from 'firebase'
-
+import Vue2TouchEvents from 'vue2-touch-events'
 /* #2 change lang theme */
 import '../assets/css/works-colors-test-green.css'
 
@@ -62,12 +72,30 @@ export default {
       colChildNow: null,
       colChildBefore: null,
       colCounter: 0,
-      nextYear: 0
+      nextYear: 0,
+      isShowBottomMenu: false,
+      cardSiteUrl: null,
+      cardArticleId: null,
+      cardSummary: null
     }
   },
   methods: {
-    cardButtonEv(articleId) {
-      this.$router.push({ path: `/Article/${articleId}` })
+    cardButtonEv(siteUrl, articleId, summary) {
+      this.cardSiteUrl = siteUrl
+      this.cardArticleId = articleId
+      this.cardSummary = summary
+
+      // call open func here
+      this.openBottomMenu()
+
+      // console.log(this.cardSiteUrl, this.cardArticleId, this.cardSummary)
+      // this.$router.push({ path: `/Article/${articleId}` })
+    },
+    openBottomMenu() {
+      this.isShowBottomMenu = true
+      // #timeline overflow hidden
+    },
+    closeBottomMenu() {
     },
     detectCollision(rect1, rect2) {
       if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
@@ -161,6 +189,7 @@ export default {
             'title': doc.data().title,
             'siteurl': doc.data().siteurl,
             'description': doc.data().description,
+            'summary': 'summary here',
             'genle': doc.data().genle,
             'allLang': doc.data().allLang,
             'madeYear': doc.data().madeYear,
@@ -334,6 +363,27 @@ a {
   width: 100%;
   height: 10000px;
 }
+.stop-scroll {
+  overflow: hidden !important;
+}
+#bottom-menu {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+#bottom-menu-inner-rel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#bottom-menu-inner-abs {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+}
 #tl-wrap {
   position: relative;
   width: 100%;
@@ -432,6 +482,6 @@ a {
 .yearFixed {
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: 2;
 }
 </style>
