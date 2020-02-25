@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import firebase from 'firebase'
+import Vue2TouchEvents from 'vue2-touch-events'
 const snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`)
 Vue.config.productionTip = false
 
@@ -25,6 +26,7 @@ firebase.analytics()
 new Vue({
   el: '#app',
   snap,
+  Vue2TouchEvents,
   router,
   components: { App },
   template: '<App/>'

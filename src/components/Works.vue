@@ -55,7 +55,6 @@
 
 <script>
 import firebase from 'firebase'
-import Vue2TouchEvents from 'vue2-touch-events'
 /* #2 change lang theme */
 import '../assets/css/works-colors-test-green.css'
 
