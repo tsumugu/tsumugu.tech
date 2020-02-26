@@ -4,11 +4,11 @@
   Loading
   </div>
   <div v-else>
-    <div id="bottom-menu" class="skelton" v-show="isShowBottomMenu" v-bind:class="{ fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
+    <div id="bottom-menu" class="skelton" v-bind:class="{ show: isShowBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
       <div id="bottom-menu-inner-rel">
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
-        <div id="bottom-menu-inner-abs" v-touch:swipe.bottom="closeBottomMenu" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
-          <div id="bmi-a-contents">
+        <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+          <div id="bmi-a-contents" v-touch:swipe.vertical="closeBottomMenu">
             <div>{{cardSummary}}</div>
             <button @click="goToArticle(cardArticleId)">Open Article</button>
             <button @click="goToSite(cardSiteUrl)" v-show="isDispGotoSiteButton">Go to Site</button>
@@ -399,6 +399,7 @@ a {
 
 #bottom-menu {
   position: fixed;
+  display: none;
   width: 100%;
   height: 100%;
   z-index: 3;
@@ -423,6 +424,7 @@ a {
   background-color: white;
 }
 #bmi-a-contents {
+  height: 100%;
   margin: 15px;
 }
 
