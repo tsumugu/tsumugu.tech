@@ -4,11 +4,11 @@
   Loading
   </div>
   <div v-else>
-    <div id="bottom-menu" class="skelton" v-bind:class="{ show: isShowBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
+    <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
       <div id="bottom-menu-inner-rel">
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
         <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
-          <div id="bmi-a-contents" v-touch:swipe.vertical="closeBottomMenu">
+          <div id="bmi-a-contents">
             <div>{{cardSummary}}</div>
             <button @click="goToArticle(cardArticleId)">Open Article</button>
             <button @click="goToSite(cardSiteUrl)" v-show="isDispGotoSiteButton">Go to Site</button>
@@ -77,6 +77,7 @@ export default {
       colCounter: 0,
       nextYear: 0,
       isShowBottomMenu: false,
+      isHideBottomMenu: true,
       isShowBottomMenuInner: false,
       cardSiteUrl: null,
       cardArticleId: null,
@@ -94,14 +95,17 @@ export default {
       this.openBottomMenu()
     },
     openBottomMenu() {
+      this.isHideBottomMenu = false
       this.isShowBottomMenu = true
       this.isShowBottomMenuInner = true
     },
     closeBottomMenu() {
       this.isShowBottomMenuInner = false
-      var _this = this
       setTimeout(() => {
-        _this.isShowBottomMenu = false
+        this.isShowBottomMenu = false
+        setTimeout(() => {
+          this.isHideBottomMenu = true
+        }, 450)
       }, 400)
     },
     goToSite(siteUrl) {
