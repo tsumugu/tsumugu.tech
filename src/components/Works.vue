@@ -5,8 +5,8 @@
   </div>
   <div v-else>
     <div id="bottom-menu" class="skelton" v-show="isShowBottomMenu" v-bind:class="{ fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
-      <div id="bottom-menu-inner-rel">
-        <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+      <div id="bottom-menu-inner-rel" v-on:click="closeBottomMenu">
+        <div id="bottom-menu-inner-abs" v-touch:swipe.bottom="closeBottomMenu" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
             <div>{{cardSummary}}</div>
             <button @click="goToArticle(cardArticleId)">Open Article</button>
