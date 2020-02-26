@@ -4,12 +4,15 @@
   Loading
   </div>
   <div v-else>
-    <div id="bottom-menu" v-show="isShowBottomMenu">
+    <div id="bottom-menu" class="skelton" v-show="isShowBottomMenu" v-bind:class="{ fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
       <div id="bottom-menu-inner-rel">
-        <div id="bottom-menu-inner-abs">
-          <div>{{cardSummary}}</div>
-          <div>{{cardSiteUrl}}</div>
-          <div>{{cardArticleId}}</div>
+        <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+          <div id="bmi-a-contents">
+            <div>{{cardSummary}}</div>
+            <button @click="goToArticle(cardArticleId)">Open Article</button>
+            <button @click="goToSite(cardSiteUrl)" v-show="isDispGotoSiteButton">Go to Site</button>
+            <button @click="closeBottomMenu()">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -73,9 +76,11 @@ export default {
       colCounter: 0,
       nextYear: 0,
       isShowBottomMenu: false,
+      isShowBottomMenuInner: false,
       cardSiteUrl: null,
       cardArticleId: null,
-      cardSummary: null
+      cardSummary: null,
+      isDispGotoSiteButton: true
     }
   },
   methods: {
@@ -83,18 +88,26 @@ export default {
       this.cardSiteUrl = siteUrl
       this.cardArticleId = articleId
       this.cardSummary = summary
-
+      this.isDispGotoSiteButton = (siteUrl !== null)
       // call open func here
       this.openBottomMenu()
-
-      // console.log(this.cardSiteUrl, this.cardArticleId, this.cardSummary)
-      // this.$router.push({ path: `/Article/${articleId}` })
     },
     openBottomMenu() {
       this.isShowBottomMenu = true
-      // #timeline overflow hidden
+      this.isShowBottomMenuInner = true
     },
     closeBottomMenu() {
+      this.isShowBottomMenuInner = false
+      var _this = this
+      setTimeout(() => {
+        _this.isShowBottomMenu = false
+      }, 400)
+    },
+    goToSite(siteUrl) {
+      alert(siteUrl)
+    },
+    goToArticle(articleId) {
+      this.$router.push({ path: `/Article/${articleId}` })
     },
     detectCollision(rect1, rect2) {
       if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
@@ -343,6 +356,9 @@ a {
 .skelton {
   opacity: 0;
 }
+.pos-zero {
+  bottom: -100%;
+}
 .fadein {
   animation: fadeIn 500ms ease 0s 1 forwards;
 }
@@ -358,6 +374,20 @@ a {
     0% {opacity: 1}
     100% {opacity: 0}
 }
+.bottommenuin {
+  animation: BMIn 1000ms ease 0s 1 forwards;
+}
+.bottommenuout {
+  animation: BMOut 1000ms ease 0s 1 forwards;
+}
+@keyframes BMIn {
+    0% {bottom: -100%;opacity: 0;}
+    100% {bottom: 0;opacity: 1;}
+}
+@keyframes BMOut {
+    0% {bottom: 0;opacity: 1;}
+    100% {bottom: -100%;opacity: 0;}
+}
 #timeline {
   width: 100%;
   height: 10000px;
@@ -365,6 +395,7 @@ a {
 .stop-scroll {
   overflow: hidden !important;
 }
+
 #bottom-menu {
   position: fixed;
   width: 100%;
@@ -379,10 +410,15 @@ a {
 }
 #bottom-menu-inner-abs {
   position: absolute;
-  bottom: 0;
   width: 100%;
-  background-color: red;
+  height: 60%;
+  border-radius: 15px 15px 0 0;
+  background-color: white;
 }
+#bmi-a-contents {
+  margin: 15px;
+}
+
 #tl-wrap {
   position: relative;
   width: 100%;
