@@ -1,6 +1,5 @@
 <template>
 <div>
-記事ID: <input v-model="articleid"><br>
 サイトURL: <input v-model="siteurl"><br>
 サムネイルURL: <input v-model="thumbnail"><br>
 タイトル: <input v-model="title"><br>
@@ -31,7 +30,6 @@ export default {
   data () {
     return {
       col: null,
-      articleid: null,
       thumbnail: null,
       title: null,
       siteurl: null,
@@ -46,7 +44,7 @@ export default {
   methods: {
     submit: function (event) {
       var _this = this
-      this.col.doc(this.articleid).set({
+      this.col.add({
         'thumbnail': this.thumbnail,
         'title': this.title,
         'siteurl': this.siteurl,
@@ -58,8 +56,11 @@ export default {
         'kdwr': this.kdwr
       })
       .then(doc => {
-        alert("succeed!!")
-        _this.articleid = ''
+        alert("succeed!! ID->"+doc.id)
+        var result = confirm("Do you want to write this ID's article?");
+        if(result) {
+          window.location = "http://readme.tsumugu2626.xyz/edit/?title="+doc.id;
+        }
         _this.thumbnail = ''
         _this.title = ''
         _this.siteurl = ''

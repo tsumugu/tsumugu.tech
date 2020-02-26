@@ -383,7 +383,7 @@ a {
   animation: BMIn 1000ms ease 0s 1 forwards;
 }
 .bottommenuout {
-  animation: BMOut 1000ms ease 0s 1 forwards;
+  animation: BMOut 700ms ease 0s 1 forwards;
 }
 @keyframes BMIn {
     0% {bottom: -100%;opacity: 0;}

@@ -7,8 +7,6 @@
   NotFound
   </div>
   <div id="contents" v-else>
-    <h1 id="title" v-html="title"></h1>
-    <hr>
     <div id="body" v-html="body"></div>
   </div>
 </div>
@@ -23,7 +21,6 @@ export default {
     return {
       loading: true,
       error: false,
-      title: null,
       body: null
     }
   },
@@ -33,7 +30,6 @@ export default {
     axios.get('https://tsumugu.tech/getcontent.php?id='+this.$route.params.id)
     .then(function (response) {
       var post = response.data.posts[0]
-      _this.title = post.title
       _this.body = post.html
     })
     .catch(function (error) {
