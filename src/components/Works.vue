@@ -5,7 +5,8 @@
   </div>
   <div v-else>
     <div id="bottom-menu" class="skelton" v-show="isShowBottomMenu" v-bind:class="{ fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
-      <div id="bottom-menu-inner-rel" v-on:click="closeBottomMenu">
+      <div id="bottom-menu-inner-rel">
+        <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
         <div id="bottom-menu-inner-abs" v-touch:swipe.bottom="closeBottomMenu" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
             <div>{{cardSummary}}</div>
@@ -407,6 +408,12 @@ a {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
+}
+#bottom-menu-close-div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 40%;
 }
 #bottom-menu-inner-abs {
   position: absolute;
