@@ -5,6 +5,7 @@ import about from '@/components/About'
 import works from '@/components/Works'
 import article from '@/components/Article'
 import addworks from '@/components/AddWorks'
+import auth from '@/components/Auth'
 import info from '@/components/Info'
 import notfoundcomponent from '@/components/NotFoundComponent'
 Vue.use(Router)
@@ -30,7 +31,11 @@ export default new Router({
       component: info
     },
     {
-      path: '/Article/:id', 
+      path: '/Auth',
+      component: auth
+    },
+    {
+      path: '/Article/:id',
       component: article
     },
     {

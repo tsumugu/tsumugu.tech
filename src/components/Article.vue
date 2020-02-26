@@ -7,6 +7,7 @@
   NotFound
   </div>
   <div id="contents" v-else>
+    <p><a v-bind:href="writeUrl" v-show="isLogin">edit</a></p>
     <div id="body" v-html="body"></div>
   </div>
 </div>
@@ -21,12 +22,13 @@ export default {
     return {
       loading: true,
       error: false,
-      body: null
+      body: null,
+      isLogin: false,
+      writeUrl: null
     }
   },
   created () {
     var _this = this
-    // 5e53df0067592a243bee3c2d
     axios.get('https://tsumugu.tech/getcontent.php?id='+this.$route.params.id)
     .then(function (response) {
       var post = response.data.posts[0]
@@ -38,6 +40,11 @@ export default {
     .then(function () {
       _this.loading = false
     })
+    this.writeUrl = "http://readme.tsumugu2626.xyz/view/tsumugu-tech/"+this.$route.params.id
+    //firebase
+    firebase.auth().onAuthStateChanged((user) => {
+      _this.isLogin = user
+    });
   }
 }
 </script>
