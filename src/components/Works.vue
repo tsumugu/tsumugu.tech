@@ -107,7 +107,7 @@ export default {
         this.isShowBottomMenu = false
         setTimeout(() => {
           this.isHideBottomMenu = true
-        }, 500)
+        }, 700)
       }, 400)
     },
     goToSite(siteUrl) {
