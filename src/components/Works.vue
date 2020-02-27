@@ -109,12 +109,12 @@ export default {
       this.isShowBottomMenuInner = true
     },
     closeBottomMenu() {
-      this.summaryLoading = true
       this.isShowBottomMenuInner = false
       setTimeout(() => {
         this.isShowBottomMenu = false
         setTimeout(() => {
           this.isHideBottomMenu = true
+          this.summaryLoading = true
         }, 700)
       }, 400)
     },
