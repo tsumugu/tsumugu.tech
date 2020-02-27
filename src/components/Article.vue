@@ -15,7 +15,7 @@
 
 <script>
 var firebase = require('firebase')
-const axios = require('axios')
+var axios = require('axios')
 
 export default {
   data () {

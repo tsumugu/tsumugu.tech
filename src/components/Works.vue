@@ -9,7 +9,12 @@
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
         <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
-            <div>{{cardSummary}}</div>
+            <div v-if="summaryLoading">Loading</div>
+            <div v-else>
+              <div class="summary" v-for="(item, key) in cardSummary" :key="key">
+              <p>{{item}}</p>
+              </div>
+            </div>
             <button @click="goToArticle(cardArticleId)">Open Article</button>
             <button @click="goToSite(cardSiteUrl)" v-show="isDispGotoSiteButton">Go to Site</button>
             <button @click="closeBottomMenu()">Close</button>
@@ -47,7 +52,7 @@
               <p class="card-description">{{item.description}}</p>
               <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
               <p class="card-kdwr">{{item.kdwr}}</p>
-              <button @click="cardButtonEv(item.siteurl, item.id, item.summary)">Open Bottom Menu</button>
+              <button @click="cardButtonEv(item.siteurl, item.id)">Open Bottom Menu</button>
               <button @click="oepnEdit(item.id)" v-show="isLogin">Edit</button>
             <!--</a>-->
           </div>
@@ -59,7 +64,8 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+var firebase = require('firebase')
+var axios = require('axios')
 /* #2 change lang theme */
 import '../assets/css/works-colors-test-green.css'
 
@@ -82,16 +88,17 @@ export default {
       isShowBottomMenuInner: false,
       cardSiteUrl: null,
       cardArticleId: null,
+      summaryLoading: true,
       cardSummary: null,
       isDispGotoSiteButton: true,
       isLogin: false
     }
   },
   methods: {
-    cardButtonEv(siteUrl, articleId, summary) {
+    cardButtonEv(siteUrl, articleId) {
+      this.getSummary(articleId)
       this.cardSiteUrl = siteUrl
       this.cardArticleId = articleId
-      this.cardSummary = summary
       this.isDispGotoSiteButton = (siteUrl !== null)
       // call open func here
       this.openBottomMenu()
@@ -102,6 +109,7 @@ export default {
       this.isShowBottomMenuInner = true
     },
     closeBottomMenu() {
+      this.summaryLoading = true
       this.isShowBottomMenuInner = false
       setTimeout(() => {
         this.isShowBottomMenu = false
@@ -118,6 +126,19 @@ export default {
     },
     oepnEdit(articleId) {
       window.open("http://readme.tsumugu2626.xyz/view/tsumugu-tech/"+articleId);
+    },
+    getSummary(articleId) {
+      var _this = this
+      axios.get('https://tsumugu.tech/getcontent.php?id='+this.$route.params.id+'&c=s')
+      .then(function (response) {
+        var post = response.data.posts[0]
+        _this.cardSummary = post.summary
+      })
+      .catch(function (error) {
+        _this.cardSummary = ['[ 取得に失敗しました ]']
+      }).then(function () {
+        _this.summaryLoading = false
+      })
     },
     detectCollision(rect1, rect2) {
       if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
@@ -211,7 +232,6 @@ export default {
             'title': doc.data().title,
             'siteurl': doc.data().siteurl,
             'description': doc.data().description,
-            'summary': 'summary here',
             'genle': doc.data().genle,
             'allLang': doc.data().allLang,
             'madeYear': doc.data().madeYear,
