@@ -48,6 +48,7 @@
               <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
               <p class="card-kdwr">{{item.kdwr}}</p>
               <button @click="cardButtonEv(item.siteurl, item.id, item.summary)">Open Bottom Menu</button>
+              <button @click="oepnEdit(item.id)" v-show="isLogin">Edit</button>
             <!--</a>-->
           </div>
         </div>
@@ -82,7 +83,8 @@ export default {
       cardSiteUrl: null,
       cardArticleId: null,
       cardSummary: null,
-      isDispGotoSiteButton: true
+      isDispGotoSiteButton: true,
+      isLogin: false
     }
   },
   methods: {
@@ -105,7 +107,7 @@ export default {
         this.isShowBottomMenu = false
         setTimeout(() => {
           this.isHideBottomMenu = true
-        }, 450)
+        }, 500)
       }, 400)
     },
     goToSite(siteUrl) {
@@ -113,6 +115,9 @@ export default {
     },
     goToArticle(articleId) {
       this.$router.push({ path: `/Article/${articleId}` })
+    },
+    oepnEdit(articleId) {
+      window.open("http://readme.tsumugu2626.xyz/view/tsumugu-tech/"+articleId);
     },
     detectCollision(rect1, rect2) {
       if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
@@ -239,6 +244,11 @@ export default {
     }
   },
   created () {
+    var _this = this
+    firebase.auth().onAuthStateChanged((user) => {
+      _this.isLogin = user
+    });
+
     this.db = firebase.firestore()
     var isDidNowCol = false
     var before_col_obj = null
