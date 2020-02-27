@@ -129,7 +129,7 @@ export default {
     },
     getSummary(articleId) {
       var _this = this
-      axios.get('https://tsumugu.tech/getcontent.php?id='+this.$route.params.id+'&c=s')
+      axios.get('https://tsumugu.tech/getcontent.php?id='+articleId+'&c=s')
       .then(function (response) {
         var post = response.data.posts[0]
         _this.cardSummary = post.summary
