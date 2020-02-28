@@ -78,7 +78,7 @@ export default {
         render: {
           fillStyle: 'transparent',
           strokeStyle: `#FFFFFF`,
-          lineWidth: 4
+          lineWidth: 5
         },
         isStatic: true,
         plugin: {
