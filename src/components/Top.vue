@@ -1,8 +1,9 @@
 <template>
-<div id="top-wrap">
-<div id="top-name">Tsumugu Yamaguchi</div>
-<div id="top-bg-canvas" ref="canvas"></div>
-</div>
+  <div id="top-wrap">
+    <div id="top-bgcolor"></div>
+    <div id="top-name">Tsumugu Yamaguchi</div>
+    <div id="top-bg-canvas" ref="canvas"></div>
+  </div>
 </template>
 
 <script>
@@ -64,7 +65,7 @@ export default {
         width: this.dimensions.width,
         height: this.dimensions.height,
         wireframes: false,
-        background: 'rgb(240,240,240)'
+        background: 'transparent'
       }
     })
     var runner = Runner.create()
@@ -72,12 +73,12 @@ export default {
     var attractiveBody = Bodies.circle(
       this.render.options.width / 2,
       this.render.options.height / 2,
-      (Math.max(dimensions.width / 4, dimensions.height / 4)) / 3,
+      (Math.max(dimensions.width / 4, dimensions.height / 4)) / 1.3,
       {
         render: {
-          fillStyle: `#82b349`,
-          strokeStyle: `#DDDDDD`,
-          lineWidth: 0
+          fillStyle: 'transparent',
+          strokeStyle: `#FFFFFF`,
+          lineWidth: 4
         },
         isStatic: true,
         plugin: {
@@ -94,7 +95,7 @@ export default {
 
     World.add(world, attractiveBody);
         // add some bodies that to be attracted
-        for (var i = 0; i < 80; i += 1) {
+        for (var i = 0; i < 70; i += 1) {
           let x = Common.random(0, this.render.options.width);
           let y = Common.random(0, this.render.options.height);
           let s = Common.random() > 0.6 ? Common.random(10, 80) : Common.random(4, 60);
@@ -110,21 +111,21 @@ export default {
               frictionAir: 0.02,
               angle: Math.round(Math.random() * 360),
               render: {
-                fillStyle: '#FFFFFF',
-                strokeStyle: `#DDDDDD`,
-                lineWidth: 2
+                fillStyle: 'rgb(240, 240, 240)',
+                strokeStyle: `#FFFFFF`,
+                lineWidth: 4
               }
             }
           );
           World.add(world, body);
 
-          var circle = Bodies.circle(x, y, Common.random(2, 20), {
+          var circle = Bodies.circle(x, y, Common.random(2, 15), {
                 mass: 6,
                 friction: 0,
                 frictionAir: 0,
                 render: {
                   fillStyle: '#FFFFFF',
-                  strokeStyle: `#DDDDDD`,
+                  strokeStyle: '#DDDDDD',
                   lineWidth: 2
                 }
               });
@@ -132,11 +133,11 @@ export default {
 
           var circle = Bodies.circle(x, y, Common.random(2, 30), {
                 mass: 0.2,
-                friction: 0.3,
-                frictionAir: 0.5,
+                friction: 0.1,
+                frictionAir: 0.1,
                 render: {
                   fillStyle: '#FFFFFF',
-                  strokeStyle: `#DDDDDD`,
+                  strokeStyle: '#DDDDDD',
                   lineWidth: 3
                 }
               });
@@ -167,11 +168,27 @@ export default {
   height: 100%;
   position: relative;
 }
-#top-name {
+#top-bgcolor {
   position: absolute;
-}
-#top-bg-canvas {
   width: 100%;
   height: 100%;
+  z-index: 1;
+  background-color: rgb(240, 240, 240);
+}
+#top-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #82b349;
+  font-size: xxx-large;
+  z-index: 2;
+}
+#top-bg-canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
 }
 </style>

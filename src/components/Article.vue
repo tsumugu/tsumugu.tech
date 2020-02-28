@@ -6,9 +6,9 @@
   <div v-if="error">
   NotFound
   </div>
-  <div id="contents" v-else>
+  <div id="article-contents" v-else>
     <p><a v-bind:href="writeUrl" v-show="isLogin">edit</a></p>
-    <div id="body" v-html="body"></div>
+    <div id="article-contents-body" v-html="body"></div>
   </div>
 </div>
 </template>
