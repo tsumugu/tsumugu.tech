@@ -48,7 +48,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 html,body {
   font-size: 16px;
 }
@@ -153,6 +153,10 @@ th {
   color: #55acee;
 }
 iframe {
+  width: 100%;
+  height: 100%;
+}
+.iframe-wrapper {
   margin: 0 !important;
   max-width: 100%;
   height: 360px;
