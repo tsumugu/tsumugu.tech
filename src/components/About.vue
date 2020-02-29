@@ -6,8 +6,8 @@
       </div>
       <div id="bgitems">
         <div id="bgtree">
-          <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-show="!isToggle"></Tree>
-          <AboutContents :pageNum="pageNum" v-show="isToggle"></AboutContents>
+          <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-if="!isToggle"></Tree>
+          <AboutContents :pageNumMinus2="pageNumMinus2" v-if="isToggle"></AboutContents>
         </div>
         <div id="tree-spacer" ref="treespacer"></div>
       </div>
@@ -27,13 +27,13 @@ export default {
     return {
       pageNum: 0,
       pageWcNum: 0,
+      pageNumMinus2: 0,
       scrollY: 0,
       px: 15,
       beforeScrollLv: 0,
       handleScrollCallCt: 0,
       isAnimating: false,
       isMoved: false,
-      isBack: false,
       isToggle: false,
       topText: 'About Me'
     }
@@ -53,31 +53,34 @@ export default {
           if ((ScrollLv - this.beforeScrollLv) > 0) {
             this.pageNum += 1
             this.pageWcNum = this.pageNum * 10 + 1
+            this.pageNumMinus2 = this.pageNum-2
           } else {
             this.pageNum -= 1
             this.pageWcNum = this.pageNum * 10 + 2
+            this.pageNumMinus2 = this.pageNum-2
           }
+          // do hogehoge here.
+          if (!this.isMoved) {
+            if (this.pageNum === 2) {
+              //Toggle display contents
+              this.topText = ''
+              this.isToggle = true
+            } else if (this.pageNum === 8) {
+              // jump to TimeLine
+              this.$router.push('/Works')
+              this.isMoved = true
+            }
+          }
+          //
         }
         this.beforeScrollLv = ScrollLv
       }
       this.handleScrollCallCt++
-      if (!this.isMoved && !this.isBack) {
-        if (this.pageNum === 2) {
-          //Toggle display contents
-          this.topText = ''
-          this.isToggle = true
-        } else if (this.pageNum === 8) {
-          // jump to TimeLine
-          this.$router.push('/Works')
-          this.isMoved = true
-        }
-      }
     }
   },
   mounted() {
     // Worksから戻ってきてたらfutureに
     if (this.$route.params.f === "t") {
-      this.isBack = true
       this.pageNum = 2
       this.pageWcNum = 21
       var _this = this

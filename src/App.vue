@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import './assets/css/works-colors-test-green.css'
+
 export default {
   name: 'App'
 }

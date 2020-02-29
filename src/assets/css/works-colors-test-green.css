@@ -8,8 +8,9 @@
 .card-left-circle {
   background-color: #82b349 !important;
 }
+
 /* timeline -> bg-color */
-#timeline {
+#app, #timeline {
   color: #2c3e50;
   background-color: #f4f5f7;
 }

@@ -1,6 +1,6 @@
 <template>
 <div id="timeline">
-  <div v-if="loading">
+  <div id="loading" v-if="loading">
   Loading
   </div>
   <div v-else>
@@ -66,8 +66,6 @@
 <script>
 var firebase = require('firebase')
 var axios = require('axios')
-/* #2 change lang theme */
-import '../assets/css/works-colors-test-green.css'
 
 export default {
   data () {
@@ -430,7 +428,11 @@ a {
 .stop-scroll {
   overflow: hidden !important;
 }
-
+#loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
 #bottom-menu {
   position: fixed;
   display: none;

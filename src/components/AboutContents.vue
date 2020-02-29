@@ -7,7 +7,7 @@
 <script>
 export default {
   props: {
-    pageNum: {
+    pageNumMinus2: {
       type: Number,
       default: 0
     }
@@ -15,21 +15,24 @@ export default {
   data: function () {
     return {
       mes: 'プログラミング始める前',
-      mes_arr: ['(最初-invisible)','(はっぱ表示-invisible)','生まれる', '入学前', '小学校入学', '小3 (初PC)', '小6 (ハッカー)', '中1 (プログラミングスクール)']
+      mes_arr: ['生まれる', '入学前', '小学校入学', '小3 (初PC)', '小6 (ハッカー)', '中1 (プログラミングスクール)']
     }
   },
   watch: {
-    pageNum() {
-      this.draw(this.pageNum)
+    pageNumMinus2() {
+      this.draw(this.pageNumMinus2)
     }
   },
   methods: {
-    draw(pageNum) {
-      this.mes = this.mes_arr[pageNum]
+    draw(pageNumMinus2) {
+      if (pageNumMinus2 > 0) {
+        console.log(pageNumMinus2)
+        this.mes = this.mes_arr[pageNumMinus2]
+      }
     }
   },
   mounted() {
-    this.draw(this.pageNum)
+    this.draw(this.pageNumMinus2)
   }
 }
 </script>
