@@ -2,15 +2,12 @@
   <div id="page1">
     <div id="items">
       <div id="topcontents">
-        <div id="topcontents-text"><Bubble :pageNum="pageNum"></Bubble></div>
+        <div id="topcontents-text">{{topText}}</div>
       </div>
       <div id="bgitems">
         <div id="bgtree">
-          <div id="links">
-            <Years :pageNum="pageNum"></Years>
-            <!--<router-link to="/Info" id="info_router_link">info</router-link>-->
-          </div>
-          <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt"></Tree>
+          <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-show="!isToggle"></Tree>
+          <AboutContents :pageNum="pageNum" v-show="isToggle"></AboutContents>
         </div>
         <div id="tree-spacer" ref="treespacer"></div>
       </div>
@@ -20,13 +17,11 @@
 
 <script>
 import Tree from './Tree.vue'
-import Bubble from './Bubble.vue'
-import Years from './Years.vue'
+import AboutContents from './AboutContents.vue'
 export default {
   components: {
     Tree,
-    Bubble,
-    Years
+    AboutContents
   },
   data() {
     return {
@@ -38,7 +33,9 @@ export default {
       handleScrollCallCt: 0,
       isAnimating: false,
       isMoved: false,
-      isBack: false
+      isBack: false,
+      isToggle: false,
+      topText: 'About Me'
     }
   },
   methods: {
@@ -64,12 +61,16 @@ export default {
         this.beforeScrollLv = ScrollLv
       }
       this.handleScrollCallCt++
-
-      if (this.pageNum === 2 && !this.isMoved && !this.isBack) {
-        // jump to TimeLine(Info.vue)
-        // XXX: router.pushがrouter.replaceの挙動をするバグ(と思われる、router-linkでは発生しない)
-        this.$router.push('/Works')
-        this.isMoved = true
+      if (!this.isMoved && !this.isBack) {
+        if (this.pageNum === 2) {
+          //Toggle display contents
+          this.topText = ''
+          this.isToggle = true
+        } else if (this.pageNum === 8) {
+          // jump to TimeLine
+          this.$router.push('/Works')
+          this.isMoved = true
+        }
       }
     }
   },
@@ -136,9 +137,9 @@ img {
   height: 100%;
 }
 #topcontents-text {
-  position: absolute;
-  right: 30px;
-  top: 30px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: xx-large;
 }
 #bgtree {
   position: sticky;

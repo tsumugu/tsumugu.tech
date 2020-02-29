@@ -48,83 +48,92 @@ export default {
   }
 }
 </script>
-<style>
-html,body {
-  font-size: 16px;
+<style scoped>
+>>> * {
+  font-size: large;
 }
-h1,h2,h3,h4,h5,h6 {
+>>> #article-contents {
+  margin: 10px !important;
+}
+>>> p {
+    margin: 3px 3px 3px;
+}
+>>> iframe {
+  margin: 0 !important;
+  max-width: 100%;
+  height: 360px;
+}
+
+>>> h1,h2,h3,h4,h5,h6 {
   margin: 1px 1px 1px !important;
 }
-hr,.h1hr {
+>>> hr, .h1hr {
   border: 1px solid #eaecef;
   margin: 1px 1px 2px;
 }
-.hhr {
+>>> .hhr {
   border: 0.5px solid #eaecef;
   margin: 1px 1px 2px;
 }
-a {
+>>> a {
   width:100%;
 }
-img {
+>>> img {
   border: 0.5px solid #eaecef;
   height: auto;
 }
 @media (max-width: 3000px) and (min-width: 768px) {
-  img {
+  >>> img {
     width: 30%;
   }
 }
 @media (max-width: 767px) {
-  img {
+  >>> img {
     width: 100%;
   }
 }
-img.emojione {
+img >>> .emojione {
   height: 16px !important;
   width: 16px !important;
   border-style: none !important;
 }
-img.emojione_h1 {
+img >>>  .emojione_h1 {
   height: 32px !important;
   width: 32px !important;
   border-style: none !important;
 }
-img.emojione_h2 {
+img >>>  .emojione_h2 {
   height: 25px !important;
   width: 25px !important;
   border-style: none !important;
 }
-img.emojione_h3 {
+img >>>  .emojione_h3 {
   height: 18px !important;
   width: 18px !important;
   border-style: none !important;
 }
-img.emojione_h4 {
+img >>>  .emojione_h4 {
   height: 14px !important;
   width: 14px !important;
   border-style: none !important;
 }
-img.emojione_h5 {
+img >>>  .emojione_h5 {
   height: 12px !important;
   width: 12px !important;
   border-style: none !important;
 }
-img.emojione_h6 {
+img >>> .emojione_h6 {
   height: 10px !important;
   width: 10px !important;
   border-style: none !important;
 }
-p {
-  margin: 3px 3px 3px;
-}
-code {
+>>> code {
   border-radius: 3px;
   margin: 1em 0;
   background-color: #f7f7f7;
   line-height: 0;
 }
-pre {
+>>> pre {
   border-radius: 3px;
   border: 0;
   margin: 0;
@@ -135,33 +144,23 @@ pre {
   word-wrap: normal;
   white-space: pre;
 }
-
-blockquote {
+>>> blockquote {
   border-left: 5px solid #dddddd;
 }
-table {
+>>> table {
   border-collapse: collapse;
   border: 2px #dddddd solid;
 }
-td, th {
+>>> td, th {
   border: 1px #dddddd solid;
 }
-th {
+>>> th {
   background-color: #87CEFA;
 }
-.twitter-color {
+>>> .twitter-color {
   color: #55acee;
 }
-iframe {
-  width: 100%;
-  height: 100%;
-}
-.iframe-wrapper {
-  margin: 0 !important;
-  max-width: 100%;
-  height: 360px;
-}
-.com_a {
+>>> .com_a {
   color: #55acee;
   text-decoration: none;
 }

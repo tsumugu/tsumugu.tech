@@ -499,6 +499,7 @@ a {
   border-radius: 10px;
 }
 .card-title {
+  margin: 0 5px 0;
 }
 .card-main-lang {
   display: inline-block;
@@ -506,6 +507,7 @@ a {
   border-radius: 25px;
   color: #ffffff;
   background-color: brown;
+  margin: 0;
 }
 .card-all-lang {
   display: inline-block;
@@ -513,6 +515,7 @@ a {
 }
 .card-description {
   font-size: large;
+  margin: 0 5px 5px;
 }
 .card-kdwr {
 }

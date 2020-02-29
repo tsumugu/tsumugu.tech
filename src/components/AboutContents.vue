@@ -1,5 +1,5 @@
 <template>
-<div id="Years_wrap">
+<div id="Bubble_wrap">
   <p id="mes">{{mes}}</p>
 </div>
 </template>
@@ -14,8 +14,8 @@ export default {
   },
   data: function () {
     return {
-      mes: '～2015',
-      year_arr: ['～2015', '2015', '2021～'],
+      mes: 'プログラミング始める前',
+      mes_arr: ['(最初-invisible)','(はっぱ表示-invisible)','生まれる', '入学前', '小学校入学', '小3 (初PC)', '小6 (ハッカー)', '中1 (プログラミングスクール)']
     }
   },
   watch: {
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     draw(pageNum) {
-      this.mes = this.year_arr[pageNum]
+      this.mes = this.mes_arr[pageNum]
     }
   },
   mounted() {
