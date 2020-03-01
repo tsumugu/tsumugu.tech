@@ -5,11 +5,11 @@
     <div id="years">
       <div class="year year-margin"><div class="year-circle year-text year-padding">{{year}}</div></div>
       <div class="year mandd-margin"><div class="year-circle year-text mandd-padding">{{mpd}}</div></div>
-      <p id="mes">{{mes}}</p>
+      <p id="mes" v-html="mes"></p>
     </div>
     <div id="imgAndDes">
       <div id="imgWrap"><img v-bind:src="imgUrl"></div>
-      <div id="desWrap"><p>{{des}}</p></div>
+      <div id="desWrap"><p v-html="des"></p></div>
     </div>
   </div>
 </div>
