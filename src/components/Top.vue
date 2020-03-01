@@ -181,7 +181,8 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: #82b349;
+  /*color: #82b349;*/
+  color: #ffffff;
   font-size: xxx-large;
   z-index: 2;
 }

@@ -7,7 +7,7 @@
       <div id="bgitems">
         <div id="bgtree">
           <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-if="!isToggle"></Tree>
-          <AboutContents :pageNumMinus2="pageNumMinus2" v-if="isToggle"></AboutContents>
+          <AboutContents :mesArr="mesArr" :aboutLoading="aboutLoading" :pageNumMinus2="pageNumMinus2" v-if="isToggle"></AboutContents>
         </div>
         <div id="tree-spacer" ref="treespacer"></div>
       </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+var firebase = require('firebase')
 import Tree from './Tree.vue'
 import AboutContents from './AboutContents.vue'
 export default {
@@ -35,7 +36,10 @@ export default {
       isAnimating: false,
       isMoved: false,
       isToggle: false,
-      topText: 'About Me'
+      topText: 'About Me',
+      mesArr: [],
+      aboutLoading: true,
+      moveLim: 100
     }
   },
   methods: {
@@ -57,15 +61,18 @@ export default {
           } else {
             this.pageNum -= 1
             this.pageWcNum = this.pageNum * 10 + 2
-            this.pageNumMinus2 = this.pageNum-2
+            this.pageNumMinus2 = this.pageNum - 2
           }
           // do hogehoge here.
           if (!this.isMoved) {
+            if (!this.aboutLoading) {
+              this.moveLim = this.mesArr.length + 2
+            }
             if (this.pageNum === 2) {
               //Toggle display contents
               this.topText = ''
               this.isToggle = true
-            } else if (this.pageNum === 8) {
+            } else if (this.pageNum === this.moveLim) {
               // jump to TimeLine
               this.$router.push('/Works')
               this.isMoved = true
@@ -103,6 +110,31 @@ export default {
       beforeScrollHeight = scrollHeight
     }
     setInterval(checkScroll, 100)
+
+    // Load data
+    firebase.firestore().collection('about').orderBy("year", "asc").get().then((querySnapshot) => {
+      var _this = this
+      querySnapshot.forEach((doc) => {
+        let data = {
+          'id': doc.id,
+          'title': doc.data().title,
+          'des': doc.data().des,
+          'imgUrl': doc.data().imgUrl,
+          'year': doc.data().year,
+          'month': doc.data().month,
+          'day': doc.data().day
+        }
+        _this.mesArr.push(data)
+      })
+      _this.aboutLoading = false
+      // DEBUG
+      /*
+      this.topText = ''
+      this.isToggle = true
+      */
+      //
+    })
+    //
   }
 }
 </script>

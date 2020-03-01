@@ -1,10 +1,17 @@
 <template>
 <div id="Bubble_wrap">
-  <div id="years">
-    <div class="year year-margin"><div class="year-circle year-text year-padding">{{year}}</div></div>
-    <div class="year mandd-margin"><div class="year-circle year-text mandd-padding">{{mpd}}</div></div>
+  <div v-if="aboutLoading">Loading</div>
+  <div v-else>
+    <div id="years">
+      <div class="year year-margin"><div class="year-circle year-text year-padding">{{year}}</div></div>
+      <div class="year mandd-margin"><div class="year-circle year-text mandd-padding">{{mpd}}</div></div>
+      <p id="mes">{{mes}}</p>
+    </div>
+    <div id="imgAndDes">
+      <div id="imgWrap"><img v-bind:src="imgUrl"></div>
+      <div id="desWrap"><p>{{des}}</p></div>
+    </div>
   </div>
-  <p id="mes">{{mes}}</p>
 </div>
 </template>
 
@@ -14,59 +21,25 @@ export default {
     pageNumMinus2: {
       type: Number,
       default: 0
+    },
+    mesArr: {
+      type: Array,
+      default: []
+    },
+    aboutLoading: {
+      type: Boolean,
+      default: true
     }
   },
   data: function () {
     return {
       mes: '',
+      imgUrl: '',
+      des: '',
       year: 2000,
       mpd: '',
       month: 1,
-      day: 1,
-      mes_arr: [
-        {
-          'title': '生まれる',
-          'des': null,
-          'year': 2003,
-          'month': 1,
-          'day': 5
-        },
-        {
-          'title': '小学校入学前',
-          'des': null,
-          'year': 2005,
-          'month': 1,
-          'day': null
-        },
-        {
-          'title': '小学校入学',
-          'des': null,
-          'year': 2009,
-          'month': 4,
-          'day': null
-        },
-        {
-          'title': '小3',
-          'des': '初PC',
-          'year': 2011,
-          'month': 4,
-          'day': null
-        },
-        {
-          'title': '小6',
-          'des': 'ハッカー',
-          'year': 2014,
-          'month': 8,
-          'day': null
-        },
-        {
-          'title': '中1',
-          'des': 'プログラミングスクール',
-          'year': 2015,
-          'month': 8,
-          'day': null
-        }
-      ]
+      day: 1
     }
   },
   watch: {
@@ -76,7 +49,7 @@ export default {
   },
   methods: {
     setInfo(index) {
-      var infoDic = this.mes_arr[index]
+      var infoDic = this.mesArr[index]
       this.mes = infoDic['title']
       this.year = infoDic['year']
       this.month = infoDic['month']
@@ -88,6 +61,8 @@ export default {
         mpdTxt = this.month
       }
       this.mpd = mpdTxt
+      this.imgUrl = infoDic['imgUrl']
+      this.des = infoDic['des']
     },
     draw(pageNumMinus2) {
       //console.log(pageNumMinus2)
@@ -116,7 +91,7 @@ p {
 }
 #Bubble_wrap {
   width: 100%;
-  margin: 10px;
+  margin: 10px 10px 10px 10px;
 }
 #mes, #years, .year {
   display: table-cell;
@@ -124,6 +99,22 @@ p {
 }
 #mes {
   font-size: x-large;
+  padding-left: 10px;
+}
+#imgAndDes {
+  margin-top: 10px;
+}
+#imgWrap > img {
+  width: 100%;
+}
+#imgWrap {
+  float: left;
+  width: 60%;
+  margin-right: 10px
+}
+#desWrap {
+  float: left;
+  width: 35%;
 }
 .year-text {
   display: table-cell;
