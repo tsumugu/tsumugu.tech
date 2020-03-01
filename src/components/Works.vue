@@ -9,15 +9,9 @@
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
         <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
-            <div v-if="summaryLoading">Loading</div>
-            <div v-else>
-              <div class="summary" v-for="(item, key) in cardSummary" :key="key">
-              <p>{{item}}</p>
-              </div>
-            </div>
-            <button @click="goToArticle(cardArticleId)">Open Article</button>
             <button @click="goToSite(cardSiteUrl)" v-show="isDispGotoSiteButton">Go to Site</button>
             <button @click="closeBottomMenu()">Close</button>
+            <Article :cardArticleId="cardArticleId"></Article>
           </div>
         </div>
       </div>
@@ -52,7 +46,7 @@
               <p class="card-description">{{item.description}}</p>
               <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
               <p class="card-kdwr">{{item.kdwr}}</p>
-              <button @click="cardButtonEv(item.siteurl, item.id)">Open Bottom Menu</button>
+              <button @click="cardButtonEv(item.siteurl, item.id)">Read Article</button>
               <button @click="oepnEdit(item.id)" v-show="isLogin">Edit</button>
             <!--</a>-->
           </div>
@@ -66,8 +60,12 @@
 <script>
 var firebase = require('firebase')
 var axios = require('axios')
+import Article from './Article.vue'
 
 export default {
+  components: {
+    Article
+  },
   data () {
     return {
       db: null,
@@ -87,14 +85,12 @@ export default {
       cardSiteUrl: null,
       cardArticleId: null,
       summaryLoading: true,
-      cardSummary: null,
       isDispGotoSiteButton: true,
       isLogin: false
     }
   },
   methods: {
     cardButtonEv(siteUrl, articleId) {
-      this.getSummary(articleId)
       this.cardSiteUrl = siteUrl
       this.cardArticleId = articleId
       this.isDispGotoSiteButton = (siteUrl !== null)
@@ -124,19 +120,6 @@ export default {
     },
     oepnEdit(articleId) {
       window.open("http://readme.tsumugu2626.xyz/view/tsumugu-tech/"+articleId);
-    },
-    getSummary(articleId) {
-      var _this = this
-      axios.get('https://tsumugu.tech/getcontent.php?id='+articleId+'&c=s')
-      .then(function (response) {
-        var post = response.data.posts[0]
-        _this.cardSummary = post.summary
-      })
-      .catch(function (error) {
-        _this.cardSummary = ['[ 取得に失敗しました ]']
-      }).then(function () {
-        _this.summaryLoading = false
-      })
     },
     detectCollision(rect1, rect2) {
       if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
@@ -455,7 +438,7 @@ a {
 #bottom-menu-inner-abs {
   position: absolute;
   width: 100%;
-  height: 60%;
+  height: 80%;
   border-radius: 15px 15px 0 0;
   background-color: white;
 }

@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import top from '@/components/Top'
 import about from '@/components/About'
 import works from '@/components/Works'
-import article from '@/components/Article'
 import addworks from '@/components/AddWorks'
 import auth from '@/components/Auth'
 import info from '@/components/Info'
@@ -33,10 +32,6 @@ export default new Router({
     {
       path: '/Auth',
       component: auth
-    },
-    {
-      path: '/Article/:id',
-      component: article
     },
     {
       path: '/add-works',
