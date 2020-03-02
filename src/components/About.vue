@@ -4,14 +4,14 @@
     <div id="items">
       <div id="topcontents">
         <div id="topcontents-text">{{topText}}</div>
-        <progress max="100" :value="scrollPer"></progress>
       </div>
       <div id="bgitems">
         <div id="bgtree">
           <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-if="!isToggle"></Tree>
           <AboutContents :mesArr="mesArr" :aboutLoading="aboutLoading" :pageNumMinus2="pageNumMinus2" v-if="isToggle"></AboutContents>
+          <progress max="100" :value="scrollPer" v-if="isToggle"></progress>
         </div>
-        <div id="tree-spacer" ref="treespacer"></div>
+        <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner" v-bind:class="{ topZero:resetPos }"></div></div>
       </div>
     </div>
   </div>
@@ -43,10 +43,11 @@ export default {
       isAnimating: false,
       isMoved: false,
       isToggle: false,
-      topText: 'About Me',
+      topText: 'About',
       mesArr: [],
       aboutLoading: true,
-      moveLim: 100
+      moveLim: 100,
+      resetPos: false
     }
   },
   watch: {
@@ -91,6 +92,7 @@ export default {
               //Toggle display contents
               this.topText = ''
               this.isToggle = true
+              this.resetPos = true
             } else if (this.pageNum === this.moveLim) {
               // jump to TimeLine
               this.$router.push('/Works')
@@ -114,6 +116,8 @@ export default {
         _this.pageWcNum = 31
       }, 5000)
     }
+    this.pageNum = 1
+    this.pageWcNum = 11
     //
     var _this = this
     const targetElement = this.$refs.treespacer
@@ -192,6 +196,7 @@ img {
   display: inline-block;
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
   overflow-y: scroll;
   float: left;
 }
@@ -218,6 +223,22 @@ img {
   left: 30px;
 }
 #tree-spacer {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+#tree-spacer:before {
+    display: block;
+    padding-top: 100%;
+}
+#tree-spacer-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 10000px;
+}
+.topZero {
+  top: 1000px !important;
 }
 </style>
