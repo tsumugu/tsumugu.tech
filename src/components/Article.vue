@@ -35,9 +35,10 @@ export default {
     return {
       loading: true,
       error: false,
+      cardSummary: null,
       body: null,
       isLogin: false,
-      writeUrl: null
+      writeUrl: null,
     }
   },
   methods: {

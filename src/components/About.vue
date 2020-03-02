@@ -1,8 +1,10 @@
 <template>
   <div id="page1">
+    <div id="scrollguard" v-show="isAnimating"><div id="scrollguard-inner"></div></div>
     <div id="items">
       <div id="topcontents">
         <div id="topcontents-text">{{topText}}</div>
+        <progress max="100" :value="scrollPer"></progress>
       </div>
       <div id="bgitems">
         <div id="bgtree">
@@ -29,10 +31,15 @@ export default {
       pageNum: 0,
       pageWcNum: 0,
       pageNumMinus2: 0,
+      scrollPer: 0,
       scrollY: 0,
+      scrollYBeforeAnimate: 0,
+      scrollYDiff: 0,
+      scrollYMinusDiff: 0,
       px: 15,
       beforeScrollLv: 0,
       handleScrollCallCt: 0,
+      //DEBUG
       isAnimating: false,
       isMoved: false,
       isToggle: false,
@@ -42,17 +49,29 @@ export default {
       moveLim: 100
     }
   },
+  watch: {
+    isAnimating() {
+      if (!this.isAnimating) {
+        this.scrollYDiff = this.scrollY - this.scrollYBeforeAnimate
+      }
+    }
+  },
   methods: {
     treeUpdateEvt: function(value) {
       // Tree.vue Update Event
+      //DEBUG
       this.isAnimating = value
     },
     handleScroll: function(y) {
-      if (this.handleScrollCallCt > 0) {
-        this.scrollY = y
-        var ScrollLv = Math.floor(Math.floor(this.scrollY / this.px) / 10)
-        // console.log(this.scrollY, ScrollLv)
-        if (this.beforeScrollLv !== ScrollLv && !this.isAnimating) {
+      this.scrollY = y
+      if (this.handleScrollCallCt > 0 && !this.isAnimating) {
+        this.scrollYBeforeAnimate = y
+        this.scrollYMinusDiff = this.scrollY-this.scrollYDiff
+        var ScrollLv = Math.floor(Math.floor(this.scrollYMinusDiff / this.px) / 10)
+        var scrollPer = Math.floor(((this.scrollYMinusDiff / this.px)-(ScrollLv * 10))*10)
+        this.scrollPer = scrollPer
+        console.log(scrollPer)
+        if (this.beforeScrollLv !== ScrollLv) {
           // 正負で前後を切り替え
           if ((ScrollLv - this.beforeScrollLv) > 0) {
             this.pageNum += 1
@@ -154,7 +173,18 @@ img {
   width: 100%;
   height: 100%;
 }
+#scrollguard {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+#scrollguard-inner {
+  width: 100%;
+  height: 100%;
+}
 #items {
+  position: fixed;
   width: 100%;
   height: 100%;
 }

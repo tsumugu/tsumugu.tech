@@ -41,7 +41,7 @@
           <!-- Card -->
           <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
             <!--<a :href="item.siteurl" >-->
-              <img class="card-img" :src="item.thumbnail">
+              <img class="card-img" v-bind:src="item.thumbnail">
               <h2 class="card-title">{{item.title}}</h2>
               <p class="card-description">{{item.description}}</p>
               <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
