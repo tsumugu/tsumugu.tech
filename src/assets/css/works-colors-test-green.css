@@ -10,9 +10,13 @@
 }
 
 /* timeline -> bg-color */
-#app, #timeline {
+#app {
   color: #2c3e50;
   background-color: #fdfcfc;
+}
+#timeline {
+  color: #2c3e50;
+  background-color: #f4f5f7;
 }
 .year-text {
   color: #ffffff;

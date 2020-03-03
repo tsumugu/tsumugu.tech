@@ -10,7 +10,7 @@
         <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
             <button @click="goToSite(cardSiteUrl)" v-show="isDispGotoSiteButton">Go to Site</button>
-            <button @click="closeBottomMenu()">Close</button>
+            <button @click="closeBottomMenu()" class="button b-close"><font-awesome-icon icon="times" size="lg" /></button>
             <Article :cardArticleId="cardArticleId"></Article>
           </div>
         </div>
@@ -44,10 +44,10 @@
               <img class="card-img" v-bind:src="item.thumbnail">
               <h2 class="card-title">{{item.title}}</h2>
               <p class="card-description">{{item.description}}</p>
-              <p class="card-main-lang">{{item.genle}} <p class="card-all-lang">({{item.allLang}})</p></p>
+              <p class="card-main-lang">{{item.genle}} ({{item.allLang}})</p>
               <p class="card-kdwr">{{item.kdwr}}</p>
-              <button @click="cardButtonEv(item.siteurl, item.id)">Read Article</button>
-              <button @click="oepnEdit(item.id)" v-show="isLogin">Edit</button>
+              <div v-show="isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
+              <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read"><font-awesome-icon icon="book-reader" /> 解説を読む</button>
             <!--</a>-->
           </div>
         </div>
@@ -357,8 +357,21 @@ export default {
 h1, h2, p {
   margin: 5px;
 }
-img {
-  height: 200px;
+@media (max-width: 3000px) and (min-width: 600px) {
+  img, .b-read {
+    width: 450px;
+  }
+  .card {
+    margin: 10px 10px 10px 60px;
+  }
+}
+@media (max-width: 600px) {
+  img, .b-read {
+    width: 100%;
+  }
+  .card {
+    margin: 10px 10px 10px 50px;
+  }
 }
 a {
  text-decoration: none;
@@ -403,6 +416,26 @@ a {
 @keyframes BMOut {
     0% {bottom: 0;opacity: 1;}
     100% {bottom: -100%;opacity: 0;}
+}
+.button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+.b-close {
+  height: 35px;
+  width: 35px;
+  margin-bottom: 10px;
+}
+.b-edit {
+}
+.b-read {
+  height: 50px;
+  border-radius: 25px;
+  background-color: #82b349;
+  color: white;
+  font-size: large;
 }
 #timeline {
   width: 100%;
@@ -471,8 +504,6 @@ a {
 .card {
   position: relative;
   width: 80%;
-  margin: 10px;
-  margin-left: 60px;
   padding: 10px;
   border-radius: 25px;
 }
@@ -494,13 +525,9 @@ a {
   display: inline-block;
   padding: 10px;
   border-radius: 25px;
-  color: #ffffff;
-  background-color: brown;
+  color: #78a644;
+  border: 2px solid #82b349;
   margin: 0;
-}
-.card-all-lang {
-  display: inline-block;
-  font-size: large;
 }
 .card-description {
   font-size: large;

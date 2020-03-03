@@ -110,7 +110,7 @@ p {
   margin-right: 10px
 }
 
-@media (max-width: 3000px) and (min-width: 500px) {
+@media (max-width: 3000px) and (min-width: 600px) {
   #Bubble_wrap {
     padding: 10px 10px 10px 10px;
   }
@@ -124,7 +124,7 @@ p {
     width: 35%;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   #Bubble_wrap {
     padding: 0;
   }

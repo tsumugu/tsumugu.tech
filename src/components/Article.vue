@@ -101,12 +101,12 @@ export default {
   border: 0.5px solid #eaecef;
   height: auto;
 }
-@media (max-width: 3000px) and (min-width: 768px) {
+@media (max-width: 3000px) and (min-width: 600px) {
   >>> img {
     width: 30%;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 600px) {
   >>> img {
     width: 100%;
   }
