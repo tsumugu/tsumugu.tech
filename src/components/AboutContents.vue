@@ -91,7 +91,7 @@ p {
 }
 #Bubble_wrap {
   width: 100%;
-  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
 }
 #mes, #years, .year {
   display: table-cell;
@@ -108,14 +108,26 @@ p {
   width: 100%;
 }
 #imgWrap {
-  float: left;
-  width: 60%;
   margin-right: 10px
 }
-#desWrap {
-  float: left;
-  width: 35%;
+
+@media (max-width: 3000px) and (min-width: 500px) {
+  #imgWrap {
+    float: left;
+    width: 60%;
+    margin-right: 10px
+  }
+  #desWrap {
+    float: left;
+    width: 35%;
+  }
 }
+@media (max-width: 500px) {
+  #imgWrap, #desWrap {
+    width: 100%;
+  }
+}
+
 .year-text {
   display: table-cell;
   text-align: center;
@@ -141,4 +153,93 @@ p {
 }
 .mandd-margin {
 }
+
+/*
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display:none;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+#Bubble_wrap {
+  width: 95%;
+  height: 90%;
+  padding: 10px 10px 10px 10px;
+  border: medium solid red;
+}
+#mes, #years, .year {
+  vertical-align: middle;
+}
+.year {
+  float: left
+}
+#mes {
+  font-size: x-large;
+  padding-left: 10px;
+}
+#imgAndDes {
+  margin-top: 10px;
+  border: medium solid yellow;
+  height: 300px;
+}
+#imgWrap {
+  margin-right: 10px;
+  border: medium solid red;
+  height: 100%;
+}
+img {
+  height: 100%;
+}
+#desWrap {
+  width: 35%;
+}
+@media (max-width: 3000px) and (min-width: 768px) {
+  #imgWrap {
+    width: 60%;
+    height: 100%;
+  }
+  #desWrap {
+    width: 35%;
+  }
+}
+@media (max-width: 767px) {
+  #imgWrap {
+    width: 100%;
+    height: 100%;
+  }
+  #desWrap {
+    width: 100%;
+  }
+}
+.year-text {
+  display: inline-block;
+  text-align: center;
+	vertical-align: middle;
+  font-size: x-large;
+}
+.year-circle {
+  border-radius: 50px;
+}
+.year-padding {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.year-margin {
+}
+.mandd-padding {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.mandd-margin {
+}
+*/
 </style>

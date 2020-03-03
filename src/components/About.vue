@@ -1,6 +1,5 @@
 <template>
   <div id="page1">
-    <div id="scrollguard" v-show="isAnimating"><div id="scrollguard-inner"></div></div>
     <div id="items">
       <div id="topcontents">
         <div id="topcontents-text">{{topText}}</div>
@@ -9,10 +8,10 @@
         <div id="bgtree">
           <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-if="!isToggle"></Tree>
           <AboutContents :mesArr="mesArr" :aboutLoading="aboutLoading" :pageNumMinus2="pageNumMinus2" v-if="isToggle"></AboutContents>
-          <progress max="100" :value="scrollPer" v-if="isToggle"></progress>
         </div>
         <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner" v-bind:class="{ topZero:resetPos }"></div></div>
       </div>
+      <div id="progbar"><progress max="100" :value="scrollPer"></progress></div>
     </div>
   </div>
 </template>
@@ -151,10 +150,8 @@ export default {
       })
       _this.aboutLoading = false
       // DEBUG
-      /*
-      this.topText = ''
-      this.isToggle = true
-      */
+      //this.topText = ''
+      //this.isToggle = true
       //
     })
     //
@@ -173,19 +170,17 @@ export default {
 img {
   width: 100%;
 }
+progress {
+  width: 100%;
+}
 #page1 {
   width: 100%;
   height: 100%;
 }
-#scrollguard {
+#progbar {
   position: absolute;
+  bottom: 0;
   width: 100%;
-  height: 100%;
-  z-index: 10;
-}
-#scrollguard-inner {
-  width: 100%;
-  height: 100%;
 }
 #items {
   position: fixed;
