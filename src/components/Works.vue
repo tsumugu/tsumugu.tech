@@ -278,6 +278,8 @@ export default {
 
     //
     this.supportTouch = 'ontouchend' in document
+    //debug
+    this.supportTouch = true
     if (this.supportTouch) {
       var bottommenuswipe = this.$refs.bottommenuswipe
       bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
@@ -474,14 +476,13 @@ a {
   display: inline-block;
   height: 35px;
   width: 100%;
-  margin-bottom: 10px;
-  padding: 10px 0px 0px 0px;
+  padding: 10px 0px 10px 0px;
   text-align: center;
 }
 #bottom-menu-swipe-bar-inner {
   display: inline-block;
   width: 20%;
-  height: 25px;
+  height: 15px;
   border-radius: 25px;
   background-color: #e6e6e6;
 }
