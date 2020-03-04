@@ -252,13 +252,6 @@ export default {
           el_count++
           before_madeYear = now_madeYear
         })
-        _this.items.push({
-          'madeYear': '将来について',
-          'isTitle': true,
-          'isSkelton': false,
-          'color': '#ffffff',
-          'isEnd': true
-        })
 
         // v-forが描画され終ったときに実行されるイベント
         this.$nextTick(() => {
@@ -474,7 +467,7 @@ a {
   display: inline-block;
   height: 35px;
   width: 100%;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px 0px 0px;
   text-align: center;
 }
 #bottom-menu-swipe-bar-inner {
