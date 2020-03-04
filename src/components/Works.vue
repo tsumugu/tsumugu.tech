@@ -9,10 +9,8 @@
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
         <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
-            <!--
-            <button @click="closeBottomMenu()" class="button b-close"><font-awesome-icon icon="times" size="lg" /></button>
-            -->
-            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe"><p>------</p></div>
+            <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
+            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
             <Article :cardArticleId="cardArticleId"></Article>
           </div>
         </div>
@@ -91,7 +89,8 @@ export default {
       cardArticleId: null,
       summaryLoading: true,
       isLogin: false,
-      swipeY: 0
+      swipeY: 0,
+      supportTouch: false
     }
   },
   methods: {
@@ -102,19 +101,17 @@ export default {
       this.openBottomMenu()
     },
     openBottomMenu() {
-      this.isHideBottomMenu = false
       this.isShowBottomMenu = true
       this.isShowBottomMenuInner = true
+      this.isHideBottomMenu = false
     },
     closeBottomMenu() {
       this.isShowBottomMenuInner = false
+      this.isShowBottomMenu = false
       setTimeout(() => {
-        this.isShowBottomMenu = false
-        setTimeout(() => {
-          this.isHideBottomMenu = true
-          this.summaryLoading = true
-        }, 700)
-      }, 400)
+        this.isHideBottomMenu = true
+        this.summaryLoading = true
+      }, 500)
     },
     goToSite(siteUrl) {
       window.open(siteUrl);
@@ -144,7 +141,7 @@ export default {
     touchHandlerE(event) {
       // Height 80%
       // console.log(this.swipeY, window.innerHeight*0.2, window.innerHeight)
-      if (this.swipeY > window.innerHeight*0.2) {
+      if ((this.swipeY - window.innerHeight*0.2) > 50) {
         this.closeBottomMenu();
       }
     },
@@ -280,9 +277,12 @@ export default {
     this.db = firebase.firestore()
 
     //
-    var bottommenuswipe = this.$refs.bottommenuswipe
-    bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
-    bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
+    this.supportTouch = 'ontouchend' in document
+    if (this.supportTouch) {
+      var bottommenuswipe = this.$refs.bottommenuswipe
+      bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
+      bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
+    }
     //
 
     var isDidNowCol = false
@@ -371,14 +371,6 @@ export default {
               this.nextYear = "2019"
             }
           }
-          /*
-          if (this.colChild === undefined) {
-            // 将来についてのページに飛ばす
-            setTimeout(() => {
-              this.$router.push({ name: 'Top', params: { f: 't' } })
-            }, 200)
-          }
-          */
           this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
         }
       }
@@ -426,7 +418,7 @@ a {
 }
 .fadeout {
   transform: translateY(-10px);
-  animation: fadeOut 1000ms ease 0s 1 forwards;
+  animation: fadeOut 500ms ease 0s 1 forwards;
 }
 @keyframes fadeIn {
     0% {opacity: 0}
@@ -460,6 +452,7 @@ a {
   height: 35px;
   width: 35px;
   margin-bottom: 10px;
+  background-color: #e6e6e6;
 }
 .b-edit {
 }
@@ -481,7 +474,16 @@ a {
   display: inline-block;
   height: 35px;
   width: 100%;
-  background-color: orange;
+  margin-bottom: 10px;
+  padding: 10px 0px 0px 0px;
+  text-align: center;
+}
+#bottom-menu-swipe-bar-inner {
+  display: inline-block;
+  width: 20%;
+  height: 25px;
+  border-radius: 25px;
+  background-color: #e6e6e6;
 }
 #timeline {
   width: 100%;
