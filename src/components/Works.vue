@@ -278,8 +278,6 @@ export default {
 
     //
     this.supportTouch = 'ontouchend' in document
-    //debug
-    this.supportTouch = true
     if (this.supportTouch) {
       var bottommenuswipe = this.$refs.bottommenuswipe
       bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
