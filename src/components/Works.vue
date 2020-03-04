@@ -1,16 +1,18 @@
 <template>
 <div id="timeline">
-  <div id="loading" v-if="loading">
+  <div id="loading" v-show="loading">
   Loading
   </div>
-  <div v-else>
+  <div v-show="!loading">
     <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
       <div id="bottom-menu-inner-rel">
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
-        <div id="bottom-menu-inner-abs" class="pos-zero" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+        <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
-            <button @click="goToSite(cardSiteUrl)" v-show="isDispGotoSiteButton">Go to Site</button>
+            <!--
             <button @click="closeBottomMenu()" class="button b-close"><font-awesome-icon icon="times" size="lg" /></button>
+            -->
+            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe"><p>------</p></div>
             <Article :cardArticleId="cardArticleId"></Article>
           </div>
         </div>
@@ -47,7 +49,10 @@
               <p class="card-main-lang">{{item.genle}} ({{item.allLang}})</p>
               <p class="card-kdwr">{{item.kdwr}}</p>
               <div v-show="isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
-              <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read"><font-awesome-icon icon="book-reader" /> 解説を読む</button>
+              <div id="card-button-wrapper">
+                <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read" v-bind:class="{ wid50per: item.isDispGotoSiteButton, wid100per: !item.isDispGotoSiteButton }"><font-awesome-icon icon="book-reader" /> 解説を読む</button>
+                <button @click="goToSite(item.siteurl)" class="button b-gosite" v-bind:class="{ wid50per: item.isDispGotoSiteButton }" v-show="item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
+              </div>
             <!--</a>-->
           </div>
         </div>
@@ -85,15 +90,14 @@ export default {
       cardSiteUrl: null,
       cardArticleId: null,
       summaryLoading: true,
-      isDispGotoSiteButton: true,
-      isLogin: false
+      isLogin: false,
+      swipeY: 0
     }
   },
   methods: {
     cardButtonEv(siteUrl, articleId) {
       this.cardSiteUrl = siteUrl
       this.cardArticleId = articleId
-      this.isDispGotoSiteButton = (siteUrl !== null)
       // call open func here
       this.openBottomMenu()
     },
@@ -113,13 +117,36 @@ export default {
       }, 400)
     },
     goToSite(siteUrl) {
-      alert(siteUrl)
+      window.open(siteUrl);
     },
     goToArticle(articleId) {
       this.$router.push({ path: `/Article/${articleId}` })
     },
     oepnEdit(articleId) {
       window.open("http://readme.tsumugu2626.xyz/view/tsumugu-tech/"+articleId);
+    },
+    touchHandlerM(event) {
+      var x = 0, y = 0;
+
+      if (event.touches && event.touches[0]) {
+        x = event.touches[0].clientX;
+        y = event.touches[0].clientY;
+      } else if (event.originalEvent && event.originalEvent.changedTouches[0]) {
+        x = event.originalEvent.changedTouches[0].clientX;
+        y = event.originalEvent.changedTouches[0].clientY;
+      } else if (event.clientX && event.clientY) {
+        x = event.clientX;
+        y = event.clientY;
+      }
+      this.swipeY = y
+      // console.log('y : ' + y);
+    },
+    touchHandlerE(event) {
+      // Height 80%
+      // console.log(this.swipeY, window.innerHeight*0.2, window.innerHeight)
+      if (this.swipeY > window.innerHeight*0.2) {
+        this.closeBottomMenu();
+      }
     },
     detectCollision(rect1, rect2) {
       if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
@@ -221,7 +248,8 @@ export default {
             'isTitle': false,
             'color': _this.lang_color[doc.data().mainLang],
             'isEnd': false,
-            'isFixed': (el_count==0)
+            'isFixed': (el_count==0),
+            'isDispGotoSiteButton': (doc.data().siteurl !== null)
           }
           _this.items.push(data)
           el_count++
@@ -244,13 +272,19 @@ export default {
       })
     }
   },
-  created () {
+  mounted() {
     var _this = this
     firebase.auth().onAuthStateChanged((user) => {
       _this.isLogin = user
-    });
-
+    })
     this.db = firebase.firestore()
+
+    //
+    var bottommenuswipe = this.$refs.bottommenuswipe
+    bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
+    bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
+    //
+
     var isDidNowCol = false
     var before_col_obj = null
     setInterval(() => {
@@ -349,7 +383,6 @@ export default {
         }
       }
     }, 10)
-
   }
 }
 </script>
@@ -358,7 +391,7 @@ h1, h2, p {
   margin: 5px;
 }
 @media (max-width: 3000px) and (min-width: 600px) {
-  img, .b-read {
+  img, #card-button-wrapper {
     width: 450px;
   }
   .card {
@@ -366,7 +399,7 @@ h1, h2, p {
   }
 }
 @media (max-width: 600px) {
-  img, .b-read {
+  img, #card-button-wrapper {
     width: 100%;
   }
   .card {
@@ -430,12 +463,25 @@ a {
 }
 .b-edit {
 }
-.b-read {
+.b-read, .b-gosite {
+  display: inline-block;
   height: 50px;
   border-radius: 25px;
   background-color: #82b349;
   color: white;
   font-size: large;
+}
+.wid50per {
+  width: 49%;
+}
+.wid100per {
+  width: 100%;
+}
+#bottom-menu-swipe-bar {
+  display: inline-block;
+  height: 35px;
+  width: 100%;
+  background-color: orange;
 }
 #timeline {
   width: 100%;
@@ -475,6 +521,7 @@ a {
 #bottom-menu-inner-abs {
   position: absolute;
   width: 100%;
+  /* Change with touchHandlerE */
   height: 80%;
   border-radius: 15px 15px 0 0;
   background-color: white;
