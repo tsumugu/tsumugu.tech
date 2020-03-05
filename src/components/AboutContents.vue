@@ -145,8 +145,8 @@ p {
     width: 100%;
   }
   #desWrap > p {
-    width: 100%;
-    margin: 0 10px 0 10px;
+    width: 92%;
+    margin: auto;
   }
 }
 
