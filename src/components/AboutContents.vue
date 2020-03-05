@@ -105,11 +105,18 @@ p {
 }
 #imgWrap > img {
   width: 100%;
+  border-radius: 10px;
 }
 #imgWrap {
   margin-right: 10px
 }
-
+#desWrap > p {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #9699a0;
+  font-size: large;
+}
 @media (max-width: 3000px) and (min-width: 600px) {
   #Bubble_wrap {
     padding: 10px 10px 10px 10px;
@@ -121,7 +128,10 @@ p {
   }
   #desWrap {
     float: left;
-    width: 35%;
+    width: 33%;
+  }
+  #desWrap > p {
+    display: inline-block;
   }
 }
 @media (max-width: 600px) {
@@ -133,6 +143,10 @@ p {
   }
   #imgWrap, #desWrap {
     width: 100%;
+  }
+  #desWrap > p {
+    width: 100%;
+    margin: 0 10px 0 10px;
   }
 }
 

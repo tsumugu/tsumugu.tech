@@ -2,7 +2,7 @@
   <div id="page1">
     <div id="items">
       <div id="topcontents">
-        <div id="topcontents-text">{{topText}}</div>
+        <div id="topcontents-text" v-bind:class="{ fadein: isFadein }">{{topText}}</div>
       </div>
       <div id="bgitems">
         <div id="bgtree">
@@ -46,10 +46,19 @@ export default {
       mesArr: [],
       aboutLoading: true,
       moveLim: 100,
-      resetPos: false
+      resetPos: false,
+      isFadein: false
     }
   },
   watch: {
+    pageNum() {
+      if (this.pageNum === 1) {
+        // fadein #topcontents-text
+        setTimeout(() => {
+          this.isFadein = true
+        }, 3000)
+      }
+    },
     isAnimating() {
       if (!this.isAnimating) {
         this.scrollYDiff = this.scrollY - this.scrollYBeforeAnimate
@@ -203,8 +212,16 @@ progress {
 }
 #topcontents-text {
   margin-top: 20px;
+  opacity: 0;
   text-align: center;
-  font-size: xx-large;
+  font-size: xxx-large;
+}
+.fadein {
+  animation: fadeIn 2000ms ease 0s 1 forwards;
+}
+@keyframes fadeIn {
+    0% {opacity: 0}
+    100% {opacity: 1}
 }
 #bgtree {
   position: sticky;
