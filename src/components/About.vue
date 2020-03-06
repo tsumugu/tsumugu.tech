@@ -20,6 +20,7 @@
 var firebase = require('firebase')
 import Tree from './Tree.vue'
 import AboutContents from './AboutContents.vue'
+
 export default {
   components: {
     Tree,
@@ -47,7 +48,8 @@ export default {
       aboutLoading: true,
       moveLim: 100,
       resetPos: false,
-      isFadein: false
+      isFadein: false,
+      windowHeight: 0
     }
   },
   watch: {
@@ -70,6 +72,9 @@ export default {
       // Tree.vue Update Event
       //DEBUG
       this.isAnimating = value
+    },
+    handleResize: function() {
+      this.windowHeight = window.innerHeight
     },
     handleScroll: function(y) {
       this.scrollY = y
@@ -130,17 +135,20 @@ export default {
     var _this = this
     const targetElement = this.$refs.treespacer
     var beforeScrollHeight = 0
+    var beforeWindowHeight = 0
     var checkScroll = function() {
       var ScreenHeight = window.innerHeight
       var clientRect = targetElement.getBoundingClientRect()
       var y = clientRect.top
       var scrollHeight = ScreenHeight - y
-      if (scrollHeight !== beforeScrollHeight) {
+      if (scrollHeight !== beforeScrollHeight && _this.windowHeight == beforeWindowHeight) {
         _this.handleScroll(scrollHeight)
       }
       beforeScrollHeight = scrollHeight
+      beforeWindowHeight = _this.windowHeight
     }
     setInterval(checkScroll, 100)
+    window.addEventListener('resize', this.handleResize)
 
     // Load data
     firebase.firestore().collection('about').orderBy("year", "asc").get().then((querySnapshot) => {

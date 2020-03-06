@@ -4,11 +4,11 @@
   <div v-else>
     <div id="years">
       <div class="year year-margin"><div class="year-circle year-text year-padding">{{year}}</div></div>
-      <div class="year mandd-margin"><div class="year-circle year-text mandd-padding">{{mpd}}</div></div>
+      <div class="year mandd-margin"><div class="year-circle year-text mandd-padding" v-html="mpd"></div></div>
       <p id="mes" v-html="mes"></p>
     </div>
     <div id="imgAndDes">
-      <div id="imgWrap"><img v-bind:src="imgUrl"></div>
+      <div id="imgWrap"><progressive-img v-bind:src="imgUrl" /></div>
       <div id="desWrap"><p v-html="des"></p></div>
     </div>
   </div>
@@ -58,7 +58,8 @@ export default {
       if (this.day !== null) {
         mpdTxt = this.month+' / '+this.day
       } else {
-        mpdTxt = this.month
+        // 日付が指定されている時と横幅をそろえるため前後にスペースを挿入
+        mpdTxt = '&nbsp;&nbsp;'+this.month+'&nbsp;&nbsp;'
       }
       this.mpd = mpdTxt
       this.imgUrl = infoDic['imgUrl']

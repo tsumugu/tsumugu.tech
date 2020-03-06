@@ -4,11 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import firebase from 'firebase'
-import Vue2TouchEvents from 'vue2-touch-events'
 const snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`)
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import VueProgressiveImage from 'vue-progressive-image'
+
 library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -28,11 +29,14 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 firebase.analytics()
 
+Vue.use(VueProgressiveImage, {
+  blur: 30
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   snap,
-  Vue2TouchEvents,
   router,
   components: { App },
   template: '<App/>'

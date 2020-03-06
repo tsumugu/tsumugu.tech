@@ -49,7 +49,7 @@ export default {
       var clientRect = targetElement.getBoundingClientRect()
       var y = clientRect.top
       var scrollHeight = ScreenHeight - y
-      console.log(scrollHeight, beforeScrollHeight, _this.windowHeight, beforeWindowHeight)
+      // console.log(scrollHeight, beforeScrollHeight, _this.windowHeight, beforeWindowHeight)
       if (scrollHeight !== beforeScrollHeight && _this.windowHeight == beforeWindowHeight) {
         _this.handleScroll(scrollHeight)
       }
