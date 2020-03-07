@@ -41,7 +41,7 @@
           <!-- Card -->
           <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
             <!--<a :href="item.siteurl" >-->
-              <img class="card-img" v-bind:src="item.thumbnail">
+              <progressive-img class="card-img" v-bind:src="item.thumbnail" />
               <h2 class="card-title">{{item.title}}</h2>
               <p class="card-description">{{item.description}}</p>
               <p class="card-main-lang">{{item.genle}} ({{item.allLang}})</p>
@@ -376,7 +376,7 @@ h1, h2, p {
   margin: 5px;
 }
 @media (max-width: 3000px) and (min-width: 600px) {
-  img, #card-button-wrapper {
+  .progressive-image, #card-button-wrapper {
     width: 450px;
   }
   .card {
@@ -384,7 +384,7 @@ h1, h2, p {
   }
 }
 @media (max-width: 600px) {
-  img, #card-button-wrapper {
+  .progressive-image, #card-button-wrapper {
     width: 100%;
   }
   .card {
