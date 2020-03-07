@@ -372,8 +372,14 @@ export default {
 }
 </script>
 <style scoped>
-h1, h2, p {
+h1, h2 {
   margin: 5px;
+}
+p {
+  padding: 0;
+}
+a {
+ text-decoration: none;
 }
 @media (max-width: 3000px) and (min-width: 600px) {
   .progressive-image, #card-button-wrapper {
@@ -390,9 +396,6 @@ h1, h2, p {
   .card {
     margin: 10px 10px 10px 50px;
   }
-}
-a {
- text-decoration: none;
 }
 .show {
   display: block !important;
@@ -572,9 +575,10 @@ a {
 }
 .card-description {
   font-size: large;
-  margin: 0 5px 5px;
+  margin: 0px 5px 5px 5px;
 }
 .card-kdwr {
+  margin: 5px;
 }
 .card-left-circle {
   position: absolute;
