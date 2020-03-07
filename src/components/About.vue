@@ -6,7 +6,7 @@
       </div>
       <div id="bgitems">
         <div id="bgtree">
-          <Tree :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-if="!isToggle"></Tree>
+          <TreeSingle2 :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-if="!isToggle"></TreeSingle2>
           <AboutContents :mesArr="mesArr" :aboutLoading="aboutLoading" :pageNumMinus2="pageNumMinus2" v-if="isToggle"></AboutContents>
         </div>
         <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner" v-bind:class="{ topZero:resetPos }"></div></div>
@@ -18,12 +18,12 @@
 
 <script>
 var firebase = require('firebase')
-import Tree from './Tree.vue'
+import TreeSingle2 from './TreeSingle2.vue'
 import AboutContents from './AboutContents.vue'
 
 export default {
   components: {
-    Tree,
+    TreeSingle2,
     AboutContents
   },
   data() {
