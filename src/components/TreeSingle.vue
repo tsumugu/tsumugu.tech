@@ -180,7 +180,7 @@ export default {
   opacity: 0;
 }
 .cls-1{fill:#f9ebb4;}
-.cls-2{fill:#8a0003;opacity:0.2;}
+.cls-2{fill:#8a0003;opacity:0.3;}
 .cls-3{fill:#3bdb00;opacity:0.85;}
 .cls-4{fill:#72303a;}
 .cls-5{fill:#422500;opacity:0.56;}

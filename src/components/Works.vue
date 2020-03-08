@@ -536,7 +536,7 @@ a {
 #left-line {
   display: inline-block;
   width: 15px;
-  height: 10000px;
+  height: 12700px;
   margin-top: 10px;
   margin-left: 19px;
   float: left;

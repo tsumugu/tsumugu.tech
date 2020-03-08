@@ -1,9 +1,22 @@
 <template>
 <div>
-  <button v-on:click="logout()">logout</button><br>
-  <input type="email" v-model="mail" placeholder="mail"><br>
-  <input type="password" v-model="pw" placeholder="password"><br>
-  <button v-on:click="login(mail, pw)">submit</button>
+  <div v-if="isLoading">
+    Loading
+  </div>
+  <div v-else>
+    <div v-if="!isLogin">
+      <input type="email" v-model="mail" placeholder="mail"><br>
+      <input type="password" v-model="pw" placeholder="password"><br>
+      <button v-on:click="login(mail, pw)">submit</button>
+    </div>
+    <div v-else>
+      <button v-on:click="logout()">logout</button><br>
+      <label><input type="radio" v-model="isPresenMode" value="true" :checked="isPresenModeBool">Presentation</label>
+      <label><input type="radio" v-model="isPresenMode" value="false" :checked="isPresenModeBool">Normal</label><br>
+      <button @click="getModeCookieVal">Check Mode</button><br>
+      <button @click="removeMadeCookie">remove Cookie</button>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -14,7 +27,24 @@ export default {
   data: function () {
     return {
       mail: null,
-      pw: null
+      pw: null,
+      isLoading: true,
+      isLogin: false,
+      isPresenMode: "false",
+      isPresenModeBool: false
+    }
+  },
+  watch: {
+    isPresenMode() {
+      this.isPresenModeBool = (this.isPresenMode == 'true') ? true : false;
+      if (this.isPresenModeBool) {
+        this.setModeCookie(true)
+      } else {
+        this.setModeCookie(false)
+      }
+    },
+    isPresenModeBool() {
+      this.isPresenMode = this.isPresenModeBool.toString()
     }
   },
   methods: {
@@ -39,9 +69,27 @@ export default {
         console.log(error)
         alert('error')
       });
+    },
+    setModeCookie(val) {
+      this.$cookies.set("mode", val)
+    },
+    getModeCookieVal() {
+      alert(this.$cookies.get("mode"))
+    },
+    removeMadeCookie() {
+      this.$cookies.remove("mode")
+      this.isPresenMode = null
+      this.isPresenModeBool = null
+      alert('removed')
     }
   },
   created () {
+    var _this = this
+    firebase.auth().onAuthStateChanged((user) => {
+      _this.isLogin = user
+      _this.isLoading = false
+    })
+    this.isPresenModeBool = this.$cookies.get("mode")
   }
 }
 </script>
