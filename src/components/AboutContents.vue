@@ -94,6 +94,10 @@ p {
   margin: 0;
   padding: 0;
 }
+>>> h1,
+>>> h2 {
+  margin: 1px 1px 1px !important;
+}
 #Bubble_wrap {
   width: 100%;
 }

@@ -452,6 +452,9 @@ a {
 }
 .b-edit {
 }
+.b-read {
+  margin-top: 10px;
+}
 .b-read, .b-gosite {
   display: inline-block;
   height: 50px;
