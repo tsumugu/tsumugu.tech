@@ -8,12 +8,12 @@
         <div id="bgtree">
           <TreeSingle :pageWcNum="pageWcNum"  @updated="treeUpdateEvt" v-if="!isToggle"></TreeSingle>
           <div v-if="isToggle">
-            <AboutContentsPresen :mesArr="mesArr" :aboutLoading="aboutLoading" :pageNumMinus2="pageNumMinus2"></AboutContentsPresen>
+            <AboutContents :mesArr="mesArr" :aboutLoading="aboutLoading" :pageNumMinus2="pageNumMinus2" :isPresenMode="isPresenMode"></AboutContents>
           </div>
         </div>
         <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner" v-bind:class="{ topZero:resetPos }"></div></div>
       </div>
-      <div id="progbar"><progress max="100" :value="scrollPer"></progress></div>
+      <div id="progbar" v-show="!isPresenMode"><progress max="100" :value="scrollPer"></progress></div>
     </div>
   </div>
 </template>
@@ -105,10 +105,6 @@ export default {
               this.moveLim = this.mesArr.length + 2
             }
             if (this.pageNum === 2) {
-              //Jump
-              if (!this.isPresenMode) {
-                this.$router.push('/AboutMe')
-              }
               //Toggle display contents
               this.topText = ''
               this.isToggle = true
@@ -130,8 +126,13 @@ export default {
     this.pageNum = 1
     this.pageWcNum = 11
     // Check Mode
-    if (this.$cookies.get("mode").toString() === "true") {
-      this.isPresenMode = true
+    var cookie = this.$cookies.get("mode")
+    if (cookie !== null) {
+      if (cookie.toString() === "true") {
+        this.isPresenMode = true
+      } else {
+        this.isPresenMode = false
+      }
     } else {
       this.isPresenMode = false
     }

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import top from '@/components/Top'
 import about from '@/components/About'
-import aboutme from '@/components/AboutMe'
 import works from '@/components/Works'
 import addworks from '@/components/AddWorks'
 import auth from '@/components/Auth'
@@ -25,10 +24,6 @@ export default new Router({
       path: '/About#:f',
       name: 'About',
       component: about
-    },
-    {
-      path: '/AboutMe',
-      component: aboutme
     },
     {
       path: '/Works',

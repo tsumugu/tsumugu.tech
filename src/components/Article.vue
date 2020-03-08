@@ -68,14 +68,12 @@ export default {
 }
 </script>
 <style scoped>
->>> * {
-  font-size: large;
-}
 >>> #article-contents {
   margin: 10px !important;
 }
 >>> p {
-    margin: 3px 3px 3px;
+  font-size: large;
+  margin: 3px 3px 3px;
 }
 >>> iframe {
   margin: 0 !important;
@@ -83,10 +81,16 @@ export default {
   height: 360px;
 }
 
->>> h1,h2,h3,h4,h5,h6 {
+>>> h1,
+>>> h2,
+>>> h3,
+>>> h4,
+>>> h5,
+>>> h6 {
   margin: 1px 1px 1px !important;
 }
->>> hr, .h1hr {
+>>> hr,
+>>> .h1hr {
   border: 1px solid #eaecef;
   margin: 1px 1px 2px;
 }

@@ -9,7 +9,7 @@
     </div>
     <div id="imgAndDes">
       <div id="imgWrap"><progressive-img v-bind:src="imgUrl" /></div>
-      <div id="desWrap"><p v-html="des"></p></div>
+      <div id="desWrap" v-show="!isPresenMode"><p v-html="des"></p></div>
     </div>
   </div>
 </div>
@@ -29,6 +29,10 @@ export default {
     aboutLoading: {
       type: Boolean,
       default: true
+    },
+    isPresenMode: {
+      type: Boolean,
+      default: false
     }
   },
   data: function () {
@@ -150,7 +154,6 @@ p {
     margin: auto;
   }
 }
-
 .year-text {
   display: table-cell;
   text-align: center;
