@@ -19,27 +19,37 @@
     <div id="tl-wrap">
       <div id="left-line"></div>
       <div id="tl-items">
-        <!-- Year -->
+
+        <!-- Year
         <div class="tl-item">
           <div class="year yearFixed colBase">
-          <div class="year-circle"></div>
-          <div class="year-text">2015</div>
+            <div class="year-circle"></div>
+            <div class="year-text">2015</div>
           </div>
         </div>
+        -->
+
         <!-- v-for -->
         <div class="tl-item" v-for="(item, key) in items" :key="key">
+          <!-- Year About -->
+          <div class="year-about" v-bind:class="{ hide: item.isTitle||item.isItem }">
+            <div class="year-text">{{item.year}}</div>
+            <progressive-img class="year-about-img" v-bind:src="item.thumbnail" />
+            <h2 class="year-about-title">{{item.title}}</h2>
+            <p class="year-about-description">{{item.description}}</p>
+          </div>
           <!-- Year -->
-          <div class="year" v-bind:class="{ hide: !item.isTitle, skelton: item.isSkelton }">
-            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle, yearCircleEnd: item.isEnd }"></div>
+          <div class="year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart, colBase: item.isStart }">
+            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: !item.isStart, yearCircleEnd: item.isEnd }"></div>
             <div class="year-text">{{item.madeYear}}</div>
           </div>
           <!-- Left Line -->
-          <div class="card-left" v-bind:class="{ hide: item.isTitle }">
+          <div class="card-left" v-bind:class="{ hide: item.isTitle||item.isAbout }">
             <div class="card-left-circle"></div>
             <div class="card-left-line"></div>
           </div>
           <!-- Card -->
-          <div class="card" v-bind:class="{ hide: item.isTitle, cardMarginTop: item.isFixed }">
+          <div class="card" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
             <!--<a :href="item.siteurl" >-->
               <progressive-img class="card-img" v-bind:src="item.thumbnail" />
               <h2 class="card-title">{{item.title}}</h2>
@@ -74,6 +84,7 @@ export default {
       db: null,
       loading: true,
       items: [],
+      abouts: [],
       lang_color: [],
       years_color: [],
       colBase: null,
@@ -214,52 +225,123 @@ export default {
     drawTL(arg_lang_color) {
       this.lang_color = arg_lang_color
       var _this = this
-      this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
-        _this.items = []
+      this.items = []
+      this.abouts = []
+
+      //Get Deta from Firebase
+      var querySnapshotArr = []
+      //About
+      var getAbout = new Promise(function(resolve, reject) {
+        //
+        querySnapshotArr.push({
+          'isSkelton': false,
+          'isEnd': false,
+          'isAbout': true,
+          'isTitle': false,
+          'isItem': false,
+          'madeYear': 2003,
+          'thumbnail': "https://tsumugu.s3-ap-northeast-1.amazonaws.com/2560_1440.jpg",
+          'title': "生まれる",
+          'description': "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm"
+        })
+        //
+        resolve();
+        //
+      })
+      // Works
+      var getWorks = new Promise(function(resolve, reject) {
+        _this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            querySnapshotArr.push(doc.data())
+          })
+          resolve();
+        })
+        .catch(function(error) {
+          reject();
+        })
+      })
+      // Sort, Add items
+      Promise.all([getAbout, getWorks]).then(function () {
         _this.loading = false
+        // Sort [querySnapshotArr] by madeYear
+        querySnapshotArr.sort(function(a,b){
+          var aa = a.madeYear;
+          var bb = b.madeYear;
+          if(aa > bb){return 1;}
+          if(aa < bb){return -1;}
+          return 0;
+        });
+        // Push this.items
         var before_madeYear = 0
         var el_count = 0
-        querySnapshot.forEach((doc) => {
-          var now_madeYear = doc.data().madeYear
+        querySnapshotArr.forEach((docData) => {
+          console.log(docData)
+          var now_madeYear = docData.madeYear
           if (before_madeYear !== now_madeYear) {
             _this.items.push({
-              'madeYear': doc.data().madeYear,
+              'madeYear': docData.madeYear,
+              'isAbout': false,
               'isTitle': true,
-              'isSkelton': (el_count==0),
-              'color': _this.lang_color[doc.data().mainLang],
+              'isItem': false,
+              'isSkelton': false,
+              'isStart': (el_count==0),
               'isEnd': false
             })
           }
-          var thumbnailUrl = doc.data().thumbnail==null ? doc.data().thumbnail : 'https://via.placeholder.com/2560x1480'
-          let data = {
-            'id': doc.id,
-            'thumbnail': thumbnailUrl,
-            'title': doc.data().title,
-            'siteurl': doc.data().siteurl,
-            'description': doc.data().description,
-            'genle': doc.data().genle,
-            'allLang': doc.data().allLang,
-            'madeYear': doc.data().madeYear,
-            'madeMonth': doc.data().madeMonth,
-            'kdwr': doc.data().kdwr,
-            'isTitle': false,
-            'color': _this.lang_color[doc.data().mainLang],
-            'isEnd': false,
-            'isFixed': (el_count==0),
-            'isDispGotoSiteButton': (doc.data().siteurl !== null)
+          if (!docData.isAbout) {
+            var thumbnailUrl = docData.thumbnail==null ? docData.thumbnail : 'https://via.placeholder.com/2560x1480'
+            let data = {
+              'thumbnail': thumbnailUrl,
+              'title': docData.title,
+              'siteurl': docData.siteurl,
+              'description': docData.description,
+              'genle': docData.genle,
+              'allLang': docData.allLang,
+              'madeYear': docData.madeYear,
+              'madeMonth': docData.madeMonth,
+              'kdwr': docData.kdwr,
+              'isAbout': false,
+              'isTitle': false,
+              'isItem': true,
+              'color': _this.lang_color[docData.mainLang],
+              'isEnd': false,
+              'isFixed': (el_count==0),
+              'isDispGotoSiteButton': (docData.siteurl !== null)
+            }
+            _this.items.push(data)
+          } else {
+            // If about
+            let data = {
+              'isSkelton': docData.isSkelton,
+              'isEnd': docData.isEnd,
+              'isAbout': docData.isAbout,
+              'isTitle': docData.isTitle,
+              'isItem': docData.isItem,
+              'madeYear': docData.madeYear,
+              'madeMonth': docData.madeMonth,
+              'madeDay': docData.madeDay,
+              'thumbnail': docData.thumbnail,
+              'title': docData.title,
+              'description': docData.description
+            }
+            _this.items.push(data)
           }
-          _this.items.push(data)
           el_count++
           before_madeYear = now_madeYear
         })
+        //
+      }).catch(function () {
+        alert('データの取得に失敗しました');
+      });
+      //
 
-        // v-forが描画され終ったときに実行されるイベント
-        this.$nextTick(() => {
-          this.colBase = document.getElementsByClassName('colBase')[0];
-          this.setcolChild(0, true)
-        });
-
+      // v-forが描画され終ったときに実行されるイベント
+      this.$nextTick(() => {
+        this.colBase = document.getElementsByClassName('colBase')[0];
+        this.setcolChild(0, true)
+        //console.log(this.items)
       })
+
     }
   },
   mounted() {
