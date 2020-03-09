@@ -19,28 +19,17 @@
     <div id="tl-wrap">
       <div id="left-line"></div>
       <div id="tl-items">
-
-        <!-- Year
-        <div class="tl-item">
-          <div class="year yearFixed colBase">
-            <div class="year-circle"></div>
-            <div class="year-text">2015</div>
-          </div>
-        </div>
-        -->
-
         <!-- v-for -->
         <div class="tl-item" v-for="(item, key) in items" :key="key">
           <!-- Year About -->
-          <div class="year-about" v-bind:class="{ hide: item.isTitle||item.isItem }">
-            <div class="year-text">{{item.year}}</div>
+          <div class="year-about" v-bind:class="{ hide: item.isTitle||item.isItem, aboutMarginTopMax: item.isFirst, aboutMarginTopMin: !item.isFirst }">
             <progressive-img class="year-about-img" v-bind:src="item.thumbnail" />
             <h2 class="year-about-title">{{item.title}}</h2>
-            <p class="year-about-description">{{item.description}}</p>
+            <p class="year-about-description" v-html="item.description"></p>
           </div>
           <!-- Year -->
-          <div class="year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart, colBase: item.isStart }">
-            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: !item.isStart, yearCircleEnd: item.isEnd }"></div>
+          <div class="year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart&&item.isTitle, colBase: item.isStart&&item.isTitle }">
+            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle&&!item.isStart , yearCircleEnd: item.isEnd }"></div>
             <div class="year-text">{{item.madeYear}}</div>
           </div>
           <!-- Left Line -->
@@ -53,7 +42,7 @@
             <!--<a :href="item.siteurl" >-->
               <progressive-img class="card-img" v-bind:src="item.thumbnail" />
               <h2 class="card-title">{{item.title}}</h2>
-              <p class="card-description">{{item.description}}</p>
+              <p class="card-description" v-html="item.description"></p>
               <p class="card-main-lang">{{item.genle}} ({{item.allLang}})</p>
               <p class="card-kdwr">{{item.kdwr}}</p>
               <div v-show="isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
@@ -198,17 +187,17 @@ export default {
       // n==0のとき常に当たり判定がtrueになるため除外
       if (isFirst) {
         this.colChildBefore = null
-        //2016
+        //2005
         this.colChild = document.getElementsByClassName('colChild')[1]
       } else {
         this.colChildBefore = document.getElementsByClassName('colChild')[n]
         this.colChildNow = document.getElementsByClassName('colChild')[n+1]
         this.colChild = document.getElementsByClassName('colChild')[n+2]
       }
-      // console.log(n, isFirst, this.colChildBefore, this.colChildNow, this.colChild)
+      // console.log(n, isFirst, document.getElementsByClassName('colChild'), this.colChildBefore, this.colChildNow, this.colChild)
     },
     toggleFadeinAndOut(e) {
-      if (e.getAttribute('data-year') === "2015") {
+      if (e.getAttribute('data-year') === "2003") {
         return;
       }
       var parentsClassList = e.parentNode.classList
@@ -244,6 +233,28 @@ export default {
           'title': "生まれる",
           'description': "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm"
         })
+        querySnapshotArr.push({
+          'isSkelton': false,
+          'isEnd': false,
+          'isAbout': true,
+          'isTitle': false,
+          'isItem': false,
+          'madeYear': 2005,
+          'thumbnail': "https://tsumugu.s3-ap-northeast-1.amazonaws.com/2560_1440.jpg",
+          'title': "生まれる",
+          'description': "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm"
+        })
+        querySnapshotArr.push({
+          'isSkelton': false,
+          'isEnd': false,
+          'isAbout': true,
+          'isTitle': false,
+          'isItem': false,
+          'madeYear': 2015,
+          'thumbnail': "https://tsumugu.s3-ap-northeast-1.amazonaws.com/2560_1440.jpg",
+          'title': "生まれる",
+          'description': "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm"
+        })
         //
         resolve();
         //
@@ -275,7 +286,6 @@ export default {
         var before_madeYear = 0
         var el_count = 0
         querySnapshotArr.forEach((docData) => {
-          console.log(docData)
           var now_madeYear = docData.madeYear
           if (before_madeYear !== now_madeYear) {
             _this.items.push({
@@ -287,6 +297,18 @@ export default {
               'isStart': (el_count==0),
               'isEnd': false
             })
+            //first -> double
+            if (el_count==0) {
+              _this.items.push({
+                'madeYear': docData.madeYear,
+                'isAbout': false,
+                'isTitle': true,
+                'isItem': false,
+                'isSkelton': true,
+                'isStart': false,
+                'isEnd': false
+              })
+            }
           }
           if (!docData.isAbout) {
             var thumbnailUrl = docData.thumbnail==null ? docData.thumbnail : 'https://via.placeholder.com/2560x1480'
@@ -317,6 +339,7 @@ export default {
               'isAbout': docData.isAbout,
               'isTitle': docData.isTitle,
               'isItem': docData.isItem,
+              'isFirst': (el_count==0),
               'madeYear': docData.madeYear,
               'madeMonth': docData.madeMonth,
               'madeDay': docData.madeDay,
@@ -329,18 +352,19 @@ export default {
           el_count++
           before_madeYear = now_madeYear
         })
+        // v-forが描画され終ったときに実行されるイベント
+        _this.$nextTick(() => {
+          // XXX: うまく呼ばれてない？
+          setTimeout(() => {
+            _this.colBase = document.getElementsByClassName('colBase')[0]
+            _this.setcolChild(0, true)
+          }, 1000)
+        })
         //
       }).catch(function () {
         alert('データの取得に失敗しました');
       });
       //
-
-      // v-forが描画され終ったときに実行されるイベント
-      this.$nextTick(() => {
-        this.colBase = document.getElementsByClassName('colBase')[0];
-        this.setcolChild(0, true)
-        //console.log(this.items)
-      })
 
     }
   },
@@ -586,7 +610,7 @@ a {
   display: none;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 4;
 }
 #bottom-menu-inner-rel {
   position: relative;
@@ -629,6 +653,31 @@ a {
 #tl-items {
   position: absolute;
   width: 100%;
+}
+.year-about {
+  position: relative;
+  margin-left: 32px;
+  margin-bottom: 10px;
+  width: 84.5%;
+  padding: 10px;
+  border-radius: 0 25px 25px 0;
+  border-left: none;
+}
+.aboutMarginTopMax {
+  margin-top: -10px;
+}
+.aboutMarginTopMin {
+  margin-top: -20px;
+}
+.year-about-img {
+  border-radius: 10px;
+}
+.year-about-title {
+  margin: 5px;
+}
+.year-about-description {
+  font-size: large;
+  margin: 5px;
 }
 .card {
   position: relative;
@@ -683,6 +732,7 @@ a {
 }
 .year {
   position: relative;
+  z-index: 2;
 }
 .colBase {
   margin-top: 10px;
@@ -709,6 +759,6 @@ a {
 .yearFixed {
   position: fixed;
   width: 100%;
-  z-index: 2;
+  z-index: 3;
 }
 </style>

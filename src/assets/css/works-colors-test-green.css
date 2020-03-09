@@ -27,8 +27,11 @@
   border: 1px solid #9699a0;
 }
 /* timeline-left-line -> bg-color */
-#left-line {
+#left-line, .year-about {
   background-color: #c7c7c7;
+}
+.year-about {
+  border: 1px solid #9699a0;
 }
 /* timeline-left-line-circle -> bg-color and border-color */
 .year-circle {
