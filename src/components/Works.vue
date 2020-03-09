@@ -223,7 +223,6 @@ export default {
       var getAbout = new Promise(function(resolve, reject) {
         _this.db.collection('about').orderBy("year", "asc").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log(doc.data())
             querySnapshotArr.push({
               'isSkelton': false,
               'isEnd': false,
@@ -246,7 +245,18 @@ export default {
       var getWorks = new Promise(function(resolve, reject) {
         _this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            querySnapshotArr.push(doc.data())
+            querySnapshotArr.push({
+              'id': doc.id,
+              'thumbnail': doc.data().thumbnail,
+              'title': doc.data().title,
+              'siteurl': doc.data().siteurl,
+              'description': doc.data().description,
+              'genle': doc.data().genle,
+              'allLang': doc.data().allLang,
+              'madeYear': doc.data().madeYear,
+              'madeMonth': doc.data().madeMonth,
+              'kdwr': doc.data().kdwr
+            })
           })
           resolve();
         })
@@ -296,6 +306,7 @@ export default {
           if (!docData.isAbout) {
             var thumbnailUrl = docData.thumbnail==null ? docData.thumbnail : 'https://via.placeholder.com/2560x1480'
             let data = {
+              'id': docData.id,
               'thumbnail': thumbnailUrl,
               'title': docData.title,
               'siteurl': docData.siteurl,
