@@ -221,43 +221,26 @@ export default {
       var querySnapshotArr = []
       //About
       var getAbout = new Promise(function(resolve, reject) {
-        //
-        querySnapshotArr.push({
-          'isSkelton': false,
-          'isEnd': false,
-          'isAbout': true,
-          'isTitle': false,
-          'isItem': false,
-          'madeYear': 2003,
-          'thumbnail': "https://tsumugu.s3-ap-northeast-1.amazonaws.com/2560_1440.jpg",
-          'title': "生まれる",
-          'description': "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm"
+        _this.db.collection('about').orderBy("year", "asc").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data())
+            querySnapshotArr.push({
+              'isSkelton': false,
+              'isEnd': false,
+              'isAbout': true,
+              'isTitle': false,
+              'isItem': false,
+              'madeYear': doc.data().year,
+              'thumbnail': doc.data().imgUrl,
+              'title': doc.data().title,
+              'description': doc.data().des
+            })
+          })
+          resolve();
         })
-        querySnapshotArr.push({
-          'isSkelton': false,
-          'isEnd': false,
-          'isAbout': true,
-          'isTitle': false,
-          'isItem': false,
-          'madeYear': 2005,
-          'thumbnail': "https://tsumugu.s3-ap-northeast-1.amazonaws.com/2560_1440.jpg",
-          'title': "生まれる",
-          'description': "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm"
+        .catch(function(error) {
+          reject();
         })
-        querySnapshotArr.push({
-          'isSkelton': false,
-          'isEnd': false,
-          'isAbout': true,
-          'isTitle': false,
-          'isItem': false,
-          'madeYear': 2015,
-          'thumbnail': "https://tsumugu.s3-ap-northeast-1.amazonaws.com/2560_1440.jpg",
-          'title': "生まれる",
-          'description': "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm"
-        })
-        //
-        resolve();
-        //
       })
       // Works
       var getWorks = new Promise(function(resolve, reject) {
