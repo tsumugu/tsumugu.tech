@@ -183,6 +183,12 @@ export default {
         yEnd: yEnd
       };
     },
+    getAttribute(e, name) {
+      if (e == null) {
+        return null
+      }
+      return e.getAttribute(name)
+    },
     setcolChild(n, isFirst) {
       // n==0のとき常に当たり判定がtrueになるため除外
       if (isFirst) {
@@ -197,7 +203,7 @@ export default {
       // console.log(n, isFirst, document.getElementsByClassName('colChild'), this.colChildBefore, this.colChildNow, this.colChild)
     },
     toggleFadeinAndOut(e) {
-      if (e.getAttribute('data-year') === "2003") {
+      if (this.getAttribute(e, 'data-year') === "2003") {
         return;
       }
       var parentsClassList = e.parentNode.classList
@@ -399,7 +405,7 @@ export default {
         if  (isNowCollision) {
           if (!isDidNowCol) {
             // colChildNowの衝突回数を記録
-            var dcn = this.colChildNow.getAttribute('data-col-num')
+            var dcn = this.getAttribute(this.colChildNow, 'data-col-num')
             if (dcn === null) {
               dcn = 0
             }
@@ -409,7 +415,7 @@ export default {
             // 2回目以降のcollにだけ反応
             if (dcn >= 2) {
               if (dcn % 2 == 0) {
-                if (this.colChildNow.getAttribute('data-year') === "2019") {
+                if (this.getAttribute(this.colChildNow, 'data-year') === "2019") {
                   // 2019が2回目にcollしたとき2018に書き換え
                   this.colBase.getElementsByClassName('year-text')[0].innerText = "2018"
                   // fadein
@@ -425,7 +431,7 @@ export default {
                   if (parentsClassList.contains("fadeout")) {
                     parentsClassList.add("fadein")
                     parentsClassList.remove("fadeout")
-                    this.colBase.getElementsByClassName('year-text')[0].innerText = this.colChildBefore.getAttribute('data-year')
+                    this.colBase.getElementsByClassName('year-text')[0].innerText = this.getAttribute(this.colChildBefore, 'data-year')
                     this.colCounter--
                   }
                 }
@@ -454,10 +460,10 @@ export default {
             if (this.colChildBefore === undefined) {
               this.colCounter++
             } else {
-              this.nextYear = this.colChildBefore.getAttribute('data-year')
+              this.nextYear = this.getAttribute(this.colChildBefore, 'data-year')
             }
           } else {
-            this.nextYear = this.colChildNow.getAttribute('data-year')
+            this.nextYear = this.getAttribute(this.colChildNow, 'data-year')
             this.colCounter++
             if (this.colChild === undefined) {
               this.colCounter-=2

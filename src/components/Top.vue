@@ -50,6 +50,7 @@ export default {
       var y = clientRect.top
       var scrollHeight = ScreenHeight - y
       // console.log(scrollHeight, beforeScrollHeight, _this.windowHeight, beforeWindowHeight)
+      // FIXME: 背景画像が切り替わった時に飛んでしまう
       if (scrollHeight !== beforeScrollHeight && _this.windowHeight == beforeWindowHeight) {
         _this.handleScroll(scrollHeight)
       }
@@ -107,12 +108,14 @@ export default {
   background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/2560_1440.jpg");
   background-size: cover;
   background-attachment: fixed;
+  /* background-position: right bottom */
   background-position: center center;
 }
 /* SP */
 @media screen and (max-width:600px) {
   #top-bg-img {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/1242_2688.jpg");
+    background-position: center center
   }
 }
 

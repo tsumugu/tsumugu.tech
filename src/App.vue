@@ -31,7 +31,8 @@ body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  overflow: scroll !important;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
 }
 
 .v-enter-active, .v-leave-active {
