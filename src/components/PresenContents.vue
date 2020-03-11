@@ -1,6 +1,6 @@
 <template>
 <div id="Bubble_wrap">
-  <div v-if="aboutLoading">Loading</div>
+  <div v-if="isLoading">Loading</div>
   <div v-else>
     <div id="years">
       <div class="year year-margin"><div class="year-circle year-text year-padding">{{year}}</div></div>
@@ -9,51 +9,44 @@
     </div>
     <div id="imgAndDes">
       <div id="imgWrap"><progressive-img v-bind:src="imgUrl" /></div>
-      <div id="desWrap" v-show="!isPresenMode"><p v-html="des"></p></div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+var firebase = require('firebase')
 export default {
   props: {
-    pageNumMinus2: {
-      type: Number,
-      default: 0
-    },
-    mesArr: {
-      type: Array,
-      default: []
-    },
-    aboutLoading: {
-      type: Boolean,
-      default: true
-    },
-    isPresenMode: {
-      type: Boolean,
-      default: false
+    pageNum: {
+      type: Number
     }
   },
   data: function () {
     return {
       mes: '',
+      mesArr: [],
+      mesArrLength: 0,
+      worksArr: [],
+      worksArrLength: 0,
+      readArr: null,
       imgUrl: '',
       des: '',
       year: 2000,
       mpd: '',
       month: 1,
-      day: 1
+      day: 1,
+      isLoading: true
     }
   },
   watch: {
-    pageNumMinus2() {
-      this.draw(this.pageNumMinus2)
+    pageNum() {
+      this.draw(this.pageNum)
     }
   },
   methods: {
-    setInfo(index) {
-      var infoDic = this.mesArr[index]
+    setInfo(arr, index) {
+      var infoDic = arr[index]
       this.mes = infoDic['title']
       this.year = infoDic['year']
       this.month = infoDic['month']
@@ -69,15 +62,71 @@ export default {
       this.imgUrl = infoDic['imgUrl']
       this.des = infoDic['des']
     },
-    draw(pageNumMinus2) {
-      //console.log(pageNumMinus2)
-      if (pageNumMinus2 >= 0) {
-        this.setInfo(pageNumMinus2)
+    draw(pageNum) {
+      if (pageNum > 0) {
+        var pn = pageNum
+        if (pageNum > this.mesArrLength) {
+          this.readArr = this.worksArr
+          pn = pn-this.mesArrLength
+        }
+        console.log(pn+"/"+this.readArr.length)
+        this.setInfo(this.readArr, pn)
       }
     }
   },
   mounted() {
-    this.setInfo(0)
+    var _this = this
+    this.readArr = this.mesArr
+    //
+    var getAbout = new Promise(function(resolve, reject) {
+      firebase.firestore().collection('about').orderBy("year", "asc").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let data = {
+            'id': doc.id,
+            'title': doc.data().title,
+            'des': doc.data().des,
+            'imgUrl': doc.data().imgUrl,
+            'year': doc.data().year,
+            'month': doc.data().month,
+            'day': doc.data().day
+          }
+          _this.mesArr.push(data)
+        })
+        resolve();
+      })
+      .catch(function(error) {
+        reject();
+      })
+    })
+    // Works
+    var getWorks = new Promise(function(resolve, reject) {
+      firebase.firestore().collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let data = {
+            'id': doc.id,
+            'title': doc.data().title,
+            'des': doc.data().description,
+            'imgUrl': doc.data().thumbnail,
+            'year': doc.data().madeYear,
+            'month': doc.data().madeMonth,
+            'day': null
+          }
+          _this.worksArr.push(data)
+        })
+        resolve();
+      })
+      .catch(function(error) {
+        reject();
+      })
+    })
+    Promise.all([getAbout, getWorks]).then(function () {
+      _this.setInfo(_this.readArr, 0)
+      _this.mesArrLength = _this.mesArr.length
+      _this.worksArrLength = _this.worksArr.length
+      _this.isLoading = false
+    }).catch(function () {
+      alert('データの取得に失敗しました');
+    });
   }
 }
 </script>
@@ -112,19 +161,12 @@ p {
 #imgAndDes {
   margin-top: 10px;
 }
+#imgWrap {
+  width: 100%;
+}
 #imgWrap > img {
   width: 100%;
   border-radius: 10px;
-}
-#imgWrap {
-  margin-right: 10px
-}
-#desWrap > p {
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #ffffff;
-  border: 1px solid #9699a0;
-  font-size: large;
 }
 @media (max-width: 3000px) and (min-width: 600px) {
   #Bubble_wrap {
