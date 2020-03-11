@@ -105,10 +105,14 @@ export default {
               this.moveLim = this.mesArr.length + 2
             }
             if (this.pageNum === 2) {
-              //Toggle display contents
-              this.topText = ''
-              this.isToggle = true
-              this.resetPos = true
+              if (!this.isPresenMode) {
+                this.$router.push('/Works')
+              } else {
+                //Toggle display contents
+                this.topText = ''
+                this.isToggle = true
+                this.resetPos = true
+              }
             } else if (this.pageNum === this.moveLim) {
               // jump to TimeLine
               this.$router.push('/Works')

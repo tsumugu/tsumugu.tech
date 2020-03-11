@@ -1,27 +1,21 @@
 <template>
-  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent" :px="px"></PresenScrollCounter>
+  <div id="top-wrap">
+    <div id="top-main-wrap">
+      <div id="top-bgcolor"></div>
+      <div id="top-bg-img"></div>
+      <div id="top-name">Tsumugu Yamaguchi</div>
+      <div id="top-cover"></div>
+    </div>
+  </div>
 </template>
 
 <script>
-import PresenScrollCounter from './PresenScrollCounter.vue'
-import PresenContentsTop from './PresenContentsTop.vue'
 export default {
-  components: {
-    PresenScrollCounter,
-    PresenContentsTop
-  },
   data() {
     return {
-      currentComponent: PresenContentsTop,
-      px: 10
     }
   },
   methods: {
-    onUpdatePageNum: function(pageNum) {
-      if (pageNum === 1) {
-        this.$router.push('/About')
-      }
-    }
   },
   mounted() {
   }
@@ -29,16 +23,10 @@ export default {
 </script>
 
 <style scoped>
-#top-wrap, #top-main-wrap {
-  width: 100%;
-  height: 100%;
-  overflow: srcroll;
-}
 #top-wrap {
   position: relative;
-}
-#top-main-wrap {
-  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 #top-bgcolor {
   position: absolute;
