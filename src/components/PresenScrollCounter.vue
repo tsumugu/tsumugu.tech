@@ -5,7 +5,7 @@
         <div id="bgtree">
           <!-- Child Components Area -->
           <keep-alive>
-            <component v-bind:is="currentComponent" id="childComponent"></component>
+            <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" @updated="treeUpdateEvt"></component>
           </keep-alive>
           <!---->
         </div>
@@ -19,6 +19,14 @@
 <script>
 export default {
   props: {
+    pageNum: {
+      type: Number,
+      default: 0
+    },
+    pageWcNum: {
+      type: Number,
+      default: 0
+    },
     currentComponent: {
       type: Object
     },
@@ -34,7 +42,6 @@ export default {
   data() {
     return {
       isShowProgBar: false,
-      pageNum: 0,
       scrollPer: 0,
       scrollY: 0,
       scrollYBeforeAnimate: 0,
@@ -43,8 +50,7 @@ export default {
       beforeScrollLv: 0,
       handleScrollCallCt: 0,
       windowHeight: 0,
-      resetPos: false,
-      isPresenMode: false
+      resetPos: false
     }
   },
   watch: {
@@ -73,28 +79,21 @@ export default {
           // 正負で前後を切り替え
           if ((ScrollLv - this.beforeScrollLv) > 0) {
             this.pageNum += 1
+            this.pageWcNum = (this.pageNum*10)+1
           } else {
             this.pageNum -= 1
+            this.pageWcNum = (this.pageNum*10)+1
           }
         }
         this.beforeScrollLv = ScrollLv
       }
       this.handleScrollCallCt++
+    },
+    treeUpdateEvt: function(value) {
+      this.isAnimating = value
     }
   },
   mounted() {
-    // Check Mode
-    var cookie = this.$cookies.get("mode")
-    if (cookie !== null) {
-      if (cookie.toString() === "true") {
-        this.isPresenMode = true
-      } else {
-        this.isPresenMode = false
-      }
-    } else {
-      this.isPresenMode = false
-    }
-    //
     var _this = this
     const targetElement = this.$refs.treespacer
     var beforeScrollHeight = 0
