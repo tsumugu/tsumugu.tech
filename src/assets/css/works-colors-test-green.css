@@ -31,7 +31,8 @@
 }
 /* timeline-left-line-circle -> bg-color and border-color */
 .year-circle {
-  background-color: #c7c7c7;
+  background-color: #95989e;
+  opacity: 0.7;
 }
 .colBase > .year-circle {
   border: 1px solid #9699a0;

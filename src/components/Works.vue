@@ -500,6 +500,9 @@ p {
 a {
  text-decoration: none;
 }
+hr {
+  border: none;
+}
 @media (max-width: 3000px) and (min-width: 600px) {
   .progressive-image, #card-button-wrapper {
     width: 450px;
@@ -509,9 +512,6 @@ a {
   }
 }
 @media (max-width: 600px) {
-  hr {
-    border: none;
-  }
   .card-left-circle {
     display: none;
   }
@@ -676,7 +676,7 @@ a {
   display: inline-block;
   width: 10px;
   height: 12700px;
-  margin-top: 10px;
+  margin-top: 40px;
   margin-left: 21.5px;
   float: left;
 }
@@ -690,7 +690,7 @@ a {
   margin-bottom: 10px;
   width: 83%;
   padding: 10px;
-  border-radius: 25px 25px 25px 25px;
+  border-radius: 0px 25px 25px 0px;
 }
 .aboutMarginTopMax {
   margin-top: -10px;
@@ -699,7 +699,8 @@ a {
   margin-top: -20px;
 }
 .year-about-img {
-  border-radius: 10px;
+  border-radius: 25px;
+  margin-top: 10px;
 }
 .year-about-title {
   margin: 5px;
