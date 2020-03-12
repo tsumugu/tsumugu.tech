@@ -11,10 +11,16 @@
     </div>
     <div v-else>
       <button v-on:click="logout()">logout</button><br>
+      <h1>モード</h1>
       <label><input type="radio" v-model="isPresenMode" value="true" :checked="isPresenModeBool">Presentation</label>
       <label><input type="radio" v-model="isPresenMode" value="false" :checked="isPresenModeBool">Normal</label><br>
-      <button @click="getModeCookieVal">Check Mode</button><br>
-      <button @click="removeMadeCookie">remove Cookie</button>
+      <button @click="getCookieVal('mode')">Check Mode</button><br>
+      <button @click="removeCookie('mode')">remove Cookie</button>
+      <h1>編集ボタン</h1>
+      <label><input type="radio" v-model="isEditMode" value="true" :checked="isEditModeBool">表示</label>
+      <label><input type="radio" v-model="isEditMode" value="false" :checked="isEditModeBool">非表示</label><br>
+      <button @click="getCookieVal('edit')">Check Mode</button><br>
+      <button @click="removeCookie('edit')">remove Cookie</button>
     </div>
   </div>
 </div>
@@ -31,20 +37,33 @@ export default {
       isLoading: true,
       isLogin: false,
       isPresenMode: "false",
-      isPresenModeBool: false
+      isPresenModeBool: false,
+      isEditMode: "false",
+      isEditModeBool: false
     }
   },
   watch: {
     isPresenMode() {
       this.isPresenModeBool = (this.isPresenMode == 'true') ? true : false;
       if (this.isPresenModeBool) {
-        this.setModeCookie(true)
+        this.setCookie('mode', true)
       } else {
-        this.setModeCookie(false)
+        this.setCookie('mode', false)
       }
     },
     isPresenModeBool() {
       this.isPresenMode = this.isPresenModeBool.toString()
+    },
+    isEditMode() {
+      this.isEditModeBool = (this.isEditMode == 'true') ? true : false;
+      if (this.isEditModeBool) {
+        this.setCookie('edit', true)
+      } else {
+        this.setCookie('edit', false)
+      }
+    },
+    isEditModeBool() {
+      this.isEditMode = this.isEditModeBool.toString()
     }
   },
   methods: {
@@ -70,16 +89,18 @@ export default {
         alert('error')
       });
     },
-    setModeCookie(val) {
-      this.$cookies.set("mode", val)
+    setCookie(name, val) {
+      this.$cookies.set(name, val)
     },
-    getModeCookieVal() {
-      alert(this.$cookies.get("mode"))
+    getCookieVal(name) {
+      alert(this.$cookies.get(name))
     },
-    removeMadeCookie() {
-      this.$cookies.remove("mode")
+    removeCookie(name) {
+      this.$cookies.remove(name)
       this.isPresenMode = null
       this.isPresenModeBool = null
+      this.isEditMode = null
+      this.isEditModeBool = null
       alert('removed')
     }
   },

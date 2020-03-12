@@ -45,13 +45,15 @@
               <p class="card-description" v-html="item.description"></p>
               <p class="card-main-lang">{{item.genle}} ({{item.allLang}})</p>
               <p class="card-kdwr">{{item.kdwr}}</p>
-              <div v-show="isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
+              <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
               <div id="card-button-wrapper">
                 <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read" v-bind:class="{ wid50per: item.isDispGotoSiteButton, wid100per: !item.isDispGotoSiteButton }"><font-awesome-icon icon="book-reader" /> 解説を読む</button>
                 <button @click="goToSite(item.siteurl)" class="button b-gosite" v-bind:class="{ wid50per: item.isDispGotoSiteButton }" v-show="item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
               </div>
             <!--</a>-->
           </div>
+          <!-- Card HairLine -->
+          <hr v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
         </div>
       </div>
     </div>
@@ -88,6 +90,7 @@ export default {
       cardSiteUrl: null,
       cardArticleId: null,
       summaryLoading: true,
+      isDispEdit: false,
       isLogin: false,
       swipeY: 0,
       supportTouch: false
@@ -370,6 +373,16 @@ export default {
   },
   mounted() {
     var _this = this
+    var cookie = this.$cookies.get("edit")
+    if (cookie !== null) {
+      if (cookie.toString() === "true") {
+        this.isDispEdit = true
+      } else {
+        this.isDispEdit = false
+      }
+    } else {
+      this.isDispEdit = false
+    }
     firebase.auth().onAuthStateChanged((user) => {
       _this.isLogin = user
     })
@@ -492,15 +505,32 @@ a {
     width: 450px;
   }
   .card {
-    margin: 10px 10px 10px 60px;
+    margin: 10px 10px 10px 55px;
   }
 }
 @media (max-width: 600px) {
+  hr {
+    border: none;
+  }
+  .card-left-circle {
+    display: none;
+  }
   .progressive-image, #card-button-wrapper {
     width: 100%;
   }
+  .year-about, .card {
+    width: auto !important;
+  }
+  .year-about {
+    margin-left: 10px!important;
+    margin-right: 10px !important;
+  }
   .card {
-    margin: 10px 10px 10px 50px;
+    margin: 0px 10px 0px 10px !important;
+    border: 1px solid #9699a0;
+  }
+  .card-left-line {
+    display: none;
   }
 }
 .show {
@@ -610,7 +640,7 @@ a {
   display: none;
   width: 100%;
   height: 100%;
-  z-index: 4;
+  z-index: 999;
 }
 #bottom-menu-inner-rel {
   position: relative;
@@ -644,10 +674,10 @@ a {
 }
 #left-line {
   display: inline-block;
-  width: 15px;
+  width: 10px;
   height: 12700px;
   margin-top: 10px;
-  margin-left: 19px;
+  margin-left: 21.5px;
   float: left;
 }
 #tl-items {
@@ -656,12 +686,11 @@ a {
 }
 .year-about {
   position: relative;
-  margin-left: 32px;
+  margin-left: 30px;
   margin-bottom: 10px;
-  width: 84.5%;
+  width: 83%;
   padding: 10px;
-  border-radius: 0 25px 25px 0;
-  border-left: none;
+  border-radius: 25px 25px 25px 25px;
 }
 .aboutMarginTopMax {
   margin-top: -10px;
@@ -684,11 +713,6 @@ a {
   width: 80%;
   padding: 10px;
   border-radius: 25px;
-}
-.card:hover {
-  transition-duration: 300ms;
-  transform: scale(1.03, 1.03);
-  box-shadow: 3px 3px rgba(50, 50, 50, 0.1);
 }
 .cardMarginTop {
   margin-top: 20px;
@@ -716,22 +740,24 @@ a {
 }
 .card-left-circle {
   position: absolute;
-  width: 27px;
-  height: 27px;
+  width: 40px;
+  height: 40px;
   margin-top: 23px;
-  margin-left: 13px;
+  margin-left: 6px;
   background-color: white;
   border-radius: 50px;
+  z-index: 3;
 }
 .card-left-line {
   width: 40px;
-  height: 14px;
+  height: 10px;
   float: left;
-  margin-top: 30px;
+  margin-top: 37px;
   margin-left: 20px;
 }
 .year {
   position: relative;
+  margin-bottom: 10px;
   z-index: 2;
 }
 .colBase {
@@ -759,6 +785,6 @@ a {
 .yearFixed {
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: 4;
 }
 </style>
