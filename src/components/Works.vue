@@ -512,8 +512,8 @@ hr {
   }
 }
 @media (max-width: 600px) {
-  .card-left-circle {
-    display: none;
+  #left-line, .card-left-circle {
+    display: none !important;
   }
   .progressive-image, #card-button-wrapper {
     width: 100%;
@@ -522,12 +522,13 @@ hr {
     width: auto !important;
   }
   .year-about {
-    margin-left: 10px!important;
+    border-radius: 0px 25px 25px 25px !important;
+    margin-left: 10px !important;
     margin-right: 10px !important;
   }
   .card {
     margin: 0px 10px 0px 10px !important;
-    border: 1px solid #9699a0;
+    /*border: 1px solid #9699a0;*/
   }
   .card-left-line {
     display: none;
@@ -688,7 +689,8 @@ hr {
   position: relative;
   margin-left: 30px;
   margin-bottom: 10px;
-  width: 83%;
+  /*width: 83%;*/
+  width: auto;
   padding: 10px;
   border-radius: 0px 25px 25px 0px;
 }
@@ -711,7 +713,8 @@ hr {
 }
 .card {
   position: relative;
-  width: 80%;
+  /*width: 80%;*/
+  width: auto;
   padding: 10px;
   border-radius: 25px;
 }
@@ -719,7 +722,7 @@ hr {
   margin-top: 20px;
 }
 .card-img {
-  border-radius: 10px;
+  border-radius: 25px;
 }
 .card-title {
   margin: 0 5px 0;
