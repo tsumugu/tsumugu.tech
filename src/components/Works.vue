@@ -396,7 +396,6 @@ export default {
       bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
     }
     //
-
     var isDidNowCol = false
     var before_col_obj = null
     setInterval(() => {
@@ -438,14 +437,26 @@ export default {
                     parentsClassList.remove("fadeout")
                   }
                 } else {
+                  if (this.getAttribute(this.colChildNow, 'data-year') !== "2003") {
+                    //nowで戻った時
+                    var parentsClassList = this.colChildNow.parentNode.classList
+                    if (parentsClassList.contains("fadeout")) {
+                      parentsClassList.add("fadein")
+                      parentsClassList.remove("fadeout")
+                      this.colBase.getElementsByClassName('year-text')[0].innerText = this.getAttribute(this.colChildBefore, 'data-year')
+                      this.colCounter--
+                    }
+                  }
+                }
+              } else {
+                if (this.getAttribute(this.colChildNow, 'data-year') !== "2003") {
                   //nowで戻った時
-                  // fadein
                   var parentsClassList = this.colChildNow.parentNode.classList
-                  if (parentsClassList.contains("fadeout")) {
-                    parentsClassList.add("fadein")
-                    parentsClassList.remove("fadeout")
-                    this.colBase.getElementsByClassName('year-text')[0].innerText = this.getAttribute(this.colChildBefore, 'data-year')
-                    this.colCounter--
+                  if (parentsClassList.contains("fadein")) {
+                    parentsClassList.add("fadeout")
+                    parentsClassList.remove("fadein")
+                    this.colBase.getElementsByClassName('year-text')[0].innerText = this.getAttribute(this.colChildNow, 'data-year')
+                    this.colCounter++
                   }
                 }
               }
@@ -486,7 +497,8 @@ export default {
           this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
         }
       }
-    }, 10)
+    }, 1)
+    //
   }
 }
 </script>
@@ -622,7 +634,8 @@ hr {
 }
 #timeline {
   width: 100%;
-  height: 10000px;
+  /* This value must same as #left-line  */
+  height: 17000px;
 }
 .stop-scroll {
   overflow: hidden !important;
@@ -676,7 +689,7 @@ hr {
 #left-line {
   display: inline-block;
   width: 10px;
-  height: 12700px;
+  height: 17000px;
   margin-top: 40px;
   margin-left: 21.5px;
   float: left;
