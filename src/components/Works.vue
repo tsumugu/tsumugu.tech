@@ -29,8 +29,7 @@
           </div>
           <!-- Year -->
           <div class="year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart&&item.isTitle, colBase: item.isStart&&item.isTitle }">
-            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle&&!item.isStart , yearCircleEnd: item.isEnd }"></div>
-            <div class="year-text">{{item.madeYear}}</div>
+            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle&&!item.isStart , yearCircleEnd: item.isEnd }"><span class="year-text">{{item.madeYear}}</span></div>
           </div>
           <!-- Left Line -->
           <div class="card-left" v-bind:class="{ hide: item.isTitle||item.isAbout }">
@@ -784,16 +783,13 @@ hr {
   width: 190px !important;
 }
 .year-text {
-  position: absolute;
-  top: 50%;
-  left: 30px;
-  transform: translate(0,-50%);
-  display: inline-block;
   font-size: x-large;
 }
 .year-circle {
-	vertical-align: middle;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100px;
   height: 40px;
   margin-left: 5px;
