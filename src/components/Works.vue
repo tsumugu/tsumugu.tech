@@ -518,6 +518,9 @@ a {
 hr {
   border: none;
 }
+.progressive-image {
+  max-width: auto !important;
+}
 @media (max-width: 3000px) and (min-width: 630px) {
   #timeline {
     text-align: center;
@@ -531,6 +534,9 @@ hr {
   }
   .progressive-image, #card-button-wrapper {
     width: 450px;
+  }
+  .year-about {
+    padding: 10px 20px 10px 10px;
   }
   .card {
     margin: 10px 0px 10px 0px;
@@ -717,7 +723,7 @@ hr {
   position: relative;
   margin-left: 30px;
   margin-bottom: 10px;
-  padding: 10px 20px 10px 10px;
+  padding: 10px 10px 10px 10px;
   width: 87.5%;
   border-radius: 0px 25px 25px 0px;
 }

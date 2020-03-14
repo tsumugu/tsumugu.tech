@@ -122,6 +122,14 @@ export default {
 </script>
 
 <style scoped>
+#ground {
+  display: none;
+}
+#sl_svg {
+  bottom: -35% !important;
+  left: 30px;
+}
+
 #svgs {
   position: relative;
   width: 100%;

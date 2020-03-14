@@ -67,10 +67,12 @@ export default {
   height: 100%;
 }
 #topcontents-text {
-  margin-top: 20px;
+  position: absolute;
+  top: 25%;
+  width: 100%;
   opacity: 0;
   text-align: center;
-  font-size: xxx-large;
+  font-size: 5.5rem;
 }
 .fadein {
   animation: fadeIn 2000ms ease 0s 1 forwards;
