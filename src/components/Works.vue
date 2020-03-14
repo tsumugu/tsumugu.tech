@@ -23,9 +23,11 @@
         <div class="tl-item" v-for="(item, key) in items" :key="key">
           <!-- Year About -->
           <div class="year-about" v-bind:class="{ hide: item.isTitle||item.isItem, aboutMarginTopMax: item.isFirst, aboutMarginTopMin: !item.isFirst }">
-            <progressive-img class="year-about-img" v-bind:src="item.thumbnail" />
-            <h2 class="year-about-title">{{item.title}}</h2>
-            <p class="year-about-description" v-html="item.description"></p>
+            <div class="tl-item-contents-wrapper">
+              <progressive-img class="year-about-img" v-bind:src="item.thumbnail" />
+              <h2 class="year-about-title">{{item.title}}</h2>
+              <p class="year-about-description" v-html="item.description"></p>
+            </div>
           </div>
           <!-- Year -->
           <div class="year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart&&item.isTitle, colBase: item.isStart&&item.isTitle }">
@@ -39,6 +41,7 @@
           <!-- Card -->
           <div class="card" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
             <!--<a :href="item.siteurl" >-->
+            <div class="tl-item-contents-wrapper">
               <progressive-img class="card-img" v-bind:src="item.thumbnail" />
               <h2 class="card-title">{{item.title}}</h2>
               <p class="card-description" v-html="item.description"></p>
@@ -49,6 +52,7 @@
                 <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read" v-bind:class="{ wid50per: item.isDispGotoSiteButton, wid100per: !item.isDispGotoSiteButton }"><font-awesome-icon icon="book-reader" /> 解説を読む</button>
                 <button @click="goToSite(item.siteurl)" class="button b-gosite" v-bind:class="{ wid50per: item.isDispGotoSiteButton }" v-show="item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
               </div>
+            </div>
             <!--</a>-->
           </div>
           <!-- Card HairLine -->
@@ -514,7 +518,7 @@ a {
 hr {
   border: none;
 }
-@media (max-width: 3000px) and (min-width: 600px) {
+@media (max-width: 3000px) and (min-width: 630px) {
   #timeline {
     text-align: center;
   }
@@ -523,25 +527,23 @@ hr {
   }
   #timeline-wrapper {
     display: inline-block;
-    width: 550px;
+    width: 90%;
   }
   .progressive-image, #card-button-wrapper {
     width: 450px;
-  }
-  .year-about {
-    width: 470px !important;
   }
   .card {
     margin: 10px 0px 10px 0px;
     display: inline-block;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 630px) {
   #left-line, .card-left-circle {
     display: none !important;
   }
   .progressive-image, #card-button-wrapper {
     width: 100%;
+    display: block !important;
   }
   .year-about, .card {
     width: auto !important;
@@ -716,8 +718,7 @@ hr {
   margin-left: 30px;
   margin-bottom: 10px;
   padding: 10px 20px 10px 10px;
-  /*width: 83%;*/
-  width: auto;
+  width: 87.5%;
   border-radius: 0px 25px 25px 0px;
 }
 .aboutMarginTopMax {
@@ -739,8 +740,7 @@ hr {
 }
 .card {
   position: relative;
-  /*width: 80%;*/
-  width: auto;
+  width: 85%;
   padding: 10px;
   border-radius: 25px;
 }
