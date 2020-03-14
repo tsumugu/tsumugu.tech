@@ -3,7 +3,7 @@
   <div id="loading" v-show="loading">
   Loading
   </div>
-  <div v-show="!loading">
+  <div id="timeline-wrapper" v-show="!loading">
     <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
       <div id="bottom-menu-inner-rel">
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
@@ -515,11 +515,25 @@ hr {
   border: none;
 }
 @media (max-width: 3000px) and (min-width: 600px) {
+  #timeline {
+    text-align: center;
+  }
+  #loading, #timeline-wrapper {
+    text-align: left;
+  }
+  #timeline-wrapper {
+    display: inline-block;
+    width: 550px;
+  }
   .progressive-image, #card-button-wrapper {
     width: 450px;
   }
+  .year-about {
+    width: 470px !important;
+  }
   .card {
-    margin: 10px 10px 10px 55px;
+    margin: 10px 0px 10px 0px;
+    display: inline-block;
   }
 }
 @media (max-width: 600px) {
@@ -701,9 +715,9 @@ hr {
   position: relative;
   margin-left: 30px;
   margin-bottom: 10px;
+  padding: 10px 20px 10px 10px;
   /*width: 83%;*/
   width: auto;
-  padding: 10px;
   border-radius: 0px 25px 25px 0px;
 }
 .aboutMarginTopMax {
