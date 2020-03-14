@@ -5,15 +5,17 @@
 <script>
 import PresenScrollCounter from './PresenScrollCounter.vue'
 import AboutAnime from './AboutAnime.vue'
+import AboutContents from './AboutContents.vue'
 export default {
   components: {
     PresenScrollCounter,
-    AboutAnime
+    AboutAnime,
+    AboutContents
   },
   data() {
     return {
-      currentComponent: AboutAnime,
-      px: 10,
+      currentComponent: AboutContents,
+      px: 25,
       isPresenMode: false,
       pageNum: 0
     }

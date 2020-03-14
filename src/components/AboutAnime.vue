@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      topText: 'About',
+      topText: 'Profile',
       isFadein: false
     }
   },
