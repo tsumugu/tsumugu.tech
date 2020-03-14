@@ -6,7 +6,6 @@
       <div id="top-name"></div>
       <div id="top-cover"></div>
     </div>
-    <script type="application/javascript" defer src="//typesquare.com/3/tsst/script/ja/typesquare.js?5e1fd0c408604aa6a5883decac1e0217" charset="utf-8"></script>
   </div>
 </template>
 <script>
@@ -48,6 +47,7 @@ export default {
 #top-name {
   position: absolute;
   color: #ffffff;
+  font-family: "A1 Mincho";
   font-size: 2.5em;
   opacity: 0.9;
   z-index: 3;
