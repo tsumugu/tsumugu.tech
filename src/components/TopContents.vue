@@ -6,9 +6,9 @@
       <div id="top-name"></div>
       <div id="top-cover"></div>
     </div>
+    <script type="application/javascript" defer src="//typesquare.com/3/tsst/script/ja/typesquare.js?5e1fd0c408604aa6a5883decac1e0217" charset="utf-8"></script>
   </div>
 </template>
-
 <script>
 export default {
   data() {
