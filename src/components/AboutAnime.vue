@@ -34,9 +34,7 @@ export default {
     pageNum: function() {
       if (this.pageNum === 1) {
         // fadein #topcontents-text
-        setTimeout(() => {
-          this.isFadein = true
-        }, 3000)
+        this.isFadein = true
       }
     }
   },
@@ -68,14 +66,14 @@ export default {
 }
 #topcontents-text {
   position: absolute;
-  top: 25%;
+  bottom: 50%;
   width: 100%;
   opacity: 0;
   text-align: center;
   font-size: 5.5rem;
 }
 .fadein {
-  animation: fadeIn 2000ms ease 0s 1 forwards;
+  animation: fadeIn 3000ms ease 0s 1 forwards;
 }
 @keyframes fadeIn {
     0% {opacity: 0}
