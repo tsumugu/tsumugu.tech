@@ -2,10 +2,10 @@
   <div id="aboutcontents-wrap">
     <div id="aboutcontents-main-wrap">
       <div id="aboutcontents-bgcolor"></div>
-      <div id="aboutcontents-bg-img"></div>
+      <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
       <div id="aboutcontents-text">
-        <div id="profile-text-wrapper" v-if="fadeinText" v-bind:class="{fadein: fadeinText}">
-          <div id="profile-text">
+        <div id="profile-text-wrapper" v-if="fadeinText">
+          <div id="profile-text" v-bind:class="{fadein: fadeinText}">
             <h1>Profile</h1>
             <p>2003年1月5日生まれ。現在高校2年生。幼い頃からレゴなどものづくりが好きだった。。小6で中二病を発症、ハッカーに憧れる。それを見た母の勧めで中学1年生からプログラミングを始める。。今までにスマホアプリ、3Dゲーム、Webサイト、Webサービス、IoTなど様々な物を制作してきた。その数は優に100を超える。</p>
             <h2>コンテスト</h2>
@@ -45,8 +45,11 @@ export default {
 
 <style scoped>
 >>> p {
+  display: inline-block;
   font-size: large;
   margin: 3px 3px 3px;
+  padding: 10px;
+  background-color: rgba(240, 240, 240, 0.8);
 }
 >>> h1,
 >>> h2,
@@ -54,6 +57,7 @@ export default {
 >>> h4,
 >>> h5,
 >>> h6 {
+  color: white;
   margin: 1px 1px 1px !important;
 }
 #aboutcontents-wrap {
@@ -95,19 +99,16 @@ export default {
   width: 100%;
   text-align: center;
   background-color: white;
-  font-size: 5.5rem;
-}
-#profile-text-wrapper {
-  padding: 10px;
-  opacity: 0;
-  background-color: white;
+  font-size: 4rem;
 }
 #profile-text {
   padding: 10px;
-  opacity: 1 !important;
 }
 .fadein {
   animation: fadeIn 2000ms ease 0s 1 forwards;
+}
+.fadeinbg {
+  animation: fadeInBG 2000ms ease 0s 1 forwards;
 }
 .fadeout {
   animation: fadeOut 3000ms ease 0s 1 forwards;
@@ -115,6 +116,10 @@ export default {
 @keyframes fadeIn {
     0% {opacity: 0}
     100% {opacity: 1}
+}
+@keyframes fadeInBG {
+    0% {filter: none}
+    100% {filter: blur(1.5px)}
 }
 @keyframes fadeOut {
     0% {opacity: 1}
