@@ -110,7 +110,7 @@ export default {
 #title-text {
   width: 100%;
   text-align: center;
-  background-color: white;
+  background-color: rgba(240, 240, 240, 0.8);
   font-size: 4rem;
 }
 #profile-text {

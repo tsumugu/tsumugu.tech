@@ -47,13 +47,7 @@ export default {
 #top-name {
   position: absolute;
   color: #ffffff;
-  /*
   font-family: 'Sen', sans-serif;
-  */
-  /*
-  font-family: 'Roboto Slab', serif;
-  */
-  font-family: 'Cousine', monospace;
   font-size: 2.5em;
   opacity: 0.9;
   z-index: 3;
