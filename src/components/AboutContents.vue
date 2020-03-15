@@ -5,12 +5,7 @@
       <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
       <div id="aboutcontents-text">
         <div id="profile-text-wrapper" v-if="fadeinText">
-          <div id="profile-text" v-bind:class="{fadein: fadeinText}">
-            <h1>Profile</h1>
-            <p>2003年1月5日生まれ。現在高校2年生。幼い頃からレゴなどものづくりが好きだった。。小6で中二病を発症、ハッカーに憧れる。それを見た母の勧めで中学1年生からプログラミングを始める。。今までにスマホアプリ、3Dゲーム、Webサイト、Webサービス、IoTなど様々な物を制作してきた。その数は優に100を超える。</p>
-            <h2>コンテスト</h2>
-            <p>・アプリ甲子園2019 決勝進出(入選)</p>
-          </div>
+          <div id="profile-text" v-bind:class="{fadein: fadeinText}" v-html="aboutText"></div>
         </div>
         <div id="title-text-wrapper">
           <span id="title-text" v-bind:class="{fadeout: fadeoutText}">Profile</span>
@@ -20,19 +15,33 @@
   </div>
 </template>
 <script>
+var axios = require('axios')
+
 export default {
   data() {
     return {
       fadeinText: false,
-      fadeoutText: false
+      fadeoutText: false,
+      aboutText: null
     }
   },
   methods: {
   },
   mounted() {
     //TODO: fadeout with fin img loadimg
-    //TODO: Load from FireStore
     var _this = this
+    // Load about
+    axios.get('https://tsumugu.tech/getcontent.php?id=aG59wLtmrgwDD77Exsqu')
+    .then(function (response) {
+      var post = response.data.posts[0]
+      _this.aboutText = post.html
+    })
+    .catch(function (error) {
+      alert("情報の取得に失敗しました。再読み込みしてください")
+    })
+    .then(function () {
+    })
+    //
     setTimeout(() => {
       _this.fadeoutText = true
       setTimeout(() => {
@@ -59,6 +68,9 @@ export default {
 >>> h6 {
   color: white;
   margin: 1px 1px 1px !important;
+}
+>>> hr {
+  display: none;
 }
 #aboutcontents-wrap {
   position: relative;
