@@ -3,11 +3,15 @@
     <div id="top-main-wrap">
       <div id="top-bgcolor"></div>
       <div id="top-bg-img"></div>
-      <div id="top-contents">
-        <div id="top-name"></div>
-        <div id="top-scroll"><font-awesome-icon icon="chevron-down" size="lg" /></div>
+      <div id="top-name"></div>
+      <div id="top-scroll" v-show="!isMenuOpen"><font-awesome-icon icon="chevron-down" size="lg" /></div>
+      <div id="top-button"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
+      <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
+        <ul id="top-menu-links" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
+          <li><router-link to="About">Profile</router-link></li>
+          <li><router-link to="Works">Works</router-link></li>
+        </ul>
       </div>
-      <div id="top-cover"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
     </div>
   </div>
 </template>
@@ -15,11 +19,13 @@
 export default {
   data() {
     return {
-      isMenuOpen: false
+      isMenuOpen: false,
+      isFirst: true
     }
   },
   methods: {
     toggle() {
+      this.isFirst = false
       this.isMenuOpen = !this.isMenuOpen
     }
   },
@@ -50,30 +56,45 @@ export default {
   background-size: cover;
   background-attachment: fixed;
 }
-#top-contents {
-  position: absolute;
-  z-index: 3;
-  text-align: center;
-}
 #top-name, #top-scroll {
+  position: absolute;
   color: #ffffff;
   font-family: 'Sen', sans-serif;
+  z-index: 3;
 }
 #top-name {
-  font-size: 3em;
+  font-size: 3rem;
   opacity: 0.9;
-  text-align: left;
 }
 #top-scroll {
   font-size: 2em;
   opacity: 0.7;
-  margin-top: 25%;
+  bottom: 12px;
+  margin-left: 50%;
+  animation: vertical 1700ms ease-in-out infinite alternate;
 }
-#top-cover {
+#top-button {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  z-index: 5;
+}
+#top-menu {
+  position: absolute;
+  background-color: white;
+  opacity: 0.9;
   z-index: 4;
+}
+#top-menu-links {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  font-size: 2rem;
+  opacity: 0;
+}
+.fadein {
+  animation: fadeIn 500ms ease 0s 1 forwards;
+}
+.fadeout {
+  animation: fadeOut 500ms ease 0s 1 forwards;
 }
 
 /**/
@@ -123,7 +144,38 @@ export default {
 .menu-trigger.active span:nth-of-type(3) {
   transform: translateY(-15px) rotate(45deg);
 }
+.menu-trigger.active span {
+  background-color: gray;
+}
 /**/
+@keyframes vertical {
+  0% {transform:translateY(-12px)}
+  100% {transform:translateY(0px)}
+}
+@keyframes fadeIn {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
+@keyframes fadeOut {
+  0% {opacity: 1}
+  100% {opacity: 0}
+}
+@keyframes openPC {
+  0% {width: 0}
+  100% {width: 300px}
+}
+@keyframes closePC {
+  0% {width: 300px}
+  100% {width: 0}
+}
+@keyframes openSP {
+  0% {height: 0}
+  100% {height: 100%}
+}
+@keyframes closeSP {
+  0% {height: 100%}
+  100% {height: 0}
+}
 
 @media (max-width: 3000px) and (min-width: 600px) {
   #top-bg-img {
@@ -131,12 +183,24 @@ export default {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");
     background-position: center top;
   }
-  #top-contents {
+  #top-name {
     top: 50%;
     margin-left: 10%;
+    text-align: left;
   }
   #top-name:before {
     content: "Tsumugu Yamaguchi";
+  }
+  /* Menu */
+  #top-menu {
+    width: 0;
+    height: 100%;
+  }
+  .openMenu {
+    animation: openPC 800ms ease 0s 1 forwards;
+  }
+  .closeMenu {
+    animation: closePC 800ms ease 0s 1 forwards;
   }
 }
 /* SP */
@@ -145,13 +209,25 @@ export default {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPSP.jpg");
     background-position: center center
   }
-  #top-contents {
-    bottom: 25%;
+  #top-name {
+    bottom: 35%;
     margin-left: 5%;
+    text-align: left;
   }
   #top-name:before {
     content: "Tsumugu\AYamaguchi";
     white-space: pre;
+  }
+  /* Menu */
+  #top-menu {
+    width: 100%;
+    height: 0;
+  }
+  .openMenu {
+    animation: openSP 800ms ease 0s 1 forwards;
+  }
+  .closeMenu {
+    animation: closeSP 800ms ease 0s 1 forwards;
   }
 }
 </style>
