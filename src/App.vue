@@ -16,7 +16,8 @@ export default {
 
 <style>
 * :not(#top-name) {
-  font-family: "UD Shin Maru Go Medium" !important;
+  font-family: "TBUDGothic R";
+  font-family: 'Noto Sans JP', sans-serif;
 }
 body, html {
   /*height: 10000px !important;*/
@@ -30,7 +31,6 @@ body, html {
   margin: 0;
   width: 100%;
   height: 100%;
-  font-family: "UD Shin Maru Go Medium" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;

@@ -8,8 +8,9 @@
       <div id="top-button"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <ul id="top-menu-links" v-show="isMenuOpen" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
-          <li><router-link to="About">Profile</router-link></li>
+          <li><router-link to="Profile">Profile</router-link></li>
           <li><router-link to="Works">Works</router-link></li>
+          <li><router-link to="Timeline">Timeline</router-link></li>
         </ul>
       </div>
     </div>

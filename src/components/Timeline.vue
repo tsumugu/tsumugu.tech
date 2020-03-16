@@ -1,16 +1,15 @@
 <template>
 <div id="Info_wrap">
-  <Works ref="works"></Works>
+  <TimelineContents ref="TimelineContents"></TimelineContents>
 </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-import Info from './Info.vue'
-import Works from './Works.vue'
+import TimelineContents from './TimelineContents.vue'
 export default {
   components: {
-    Works
+    TimelineContents
   },
   data: function () {
     return {
@@ -48,7 +47,7 @@ export default {
       })
       _this.$set(_this.gData, 'labels', _this.langs)
       _this.$set(_this.gData, 'datasets', [{data: _this.count_data, backgroundColor: _this.colors}])
-      _this.$refs.works.drawTL(_this.lang_color)
+      _this.$refs.TimelineContents.drawTL(_this.lang_color)
     })
   }
 }

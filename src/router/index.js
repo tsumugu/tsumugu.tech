@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import top from '@/components/Top'
-import about from '@/components/About'
+import profile from '@/components/Profile'
 import works from '@/components/Works'
-import presen from '@/components/Presen'
+import tl from '@/components/Timeline'
 import addworks from '@/components/AddWorks'
 import auth from '@/components/Auth'
-import info from '@/components/Info'
 import notfoundcomponent from '@/components/NotFoundComponent'
 Vue.use(Router)
 
@@ -18,16 +17,16 @@ export default new Router({
       component: top
     },
     {
-      path: '/About',
-      component: about
-    },
-    {
-      path: '/Presen',
-      component: presen
+      path: '/Profile',
+      component: profile
     },
     {
       path: '/Works',
-      component: info
+      component: works
+    },
+    {
+      path: '/Timeline',
+      component: tl
     },
     {
       path: '/Auth',

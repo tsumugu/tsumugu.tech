@@ -19,7 +19,7 @@ export default {
   methods: {
     onUpdatePageNum: function(pageNum) {
       if (pageNum === 1) {
-        this.$router.push('/About')
+        this.$router.push('/Profile')
       }
     }
   },

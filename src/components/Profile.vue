@@ -4,17 +4,15 @@
 
 <script>
 import PresenScrollCounter from './PresenScrollCounter.vue'
-import AboutAnime from './AboutAnime.vue'
-import AboutContents from './AboutContents.vue'
+import ProfileContents from './ProfileContents.vue'
 export default {
   components: {
     PresenScrollCounter,
-    AboutAnime,
-    AboutContents
+    ProfileContents
   },
   data() {
     return {
-      currentComponent: AboutContents,
+      currentComponent: ProfileContents,
       px: 25,
       isPresenMode: false,
       pageNum: 0
@@ -22,14 +20,6 @@ export default {
   },
   methods: {
     onUpdatePageNum: function(pageNum) {
-      this.pageNum = pageNum
-      if (pageNum === 2) {
-        if (this.isPresenMode) {
-          this.$router.push('/Presen')
-        } else {
-          this.$router.push('/Works')
-        }
-      }
     }
   },
   mounted() {
