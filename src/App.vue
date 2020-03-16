@@ -22,13 +22,12 @@ body, html {
   margin: 0;
   /*overflow: scroll !important;*/
   overflow: hidden;
-  font-family: "UD Shin Maru Go Medium" !important;
 }
 #app {
   margin: 0;
   width: 100%;
   height: 100%;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "UD Shin Maru Go Medium" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
