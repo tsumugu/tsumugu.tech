@@ -4,11 +4,10 @@
       <div id="top-bgcolor"></div>
       <div id="top-bg-img"></div>
       <div id="top-name"></div>
-      <div id="top-scroll" v-show="!isMenuOpen"><font-awesome-icon icon="chevron-down" size="md" /></div>
-      <div id="top-button"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
+      <div id="top-scroll" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon icon="chevron-down" size="md" /></div>
+      <div id="top-button" v-show="isMenuOpen"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <ul id="top-menu-links" v-show="isMenuOpen" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
-          <li><router-link to="Profile">Profile</router-link></li>
           <li><router-link to="Works">Works</router-link></li>
           <li><router-link to="Timeline">Timeline</router-link></li>
         </ul>
@@ -29,6 +28,12 @@ export default {
     }
   },
   watch: {
+    isMenuOpen() {
+      if (!this.isMenuOpen) {
+        this.$parent.pageNum = 0
+        this.$parent.pageWcNum = 0
+      }
+    },
     isMenuOpenP() {
       this.isMenuOpen = this.isMenuOpenP
     },
@@ -99,6 +104,16 @@ a {
   bottom: 12px;
   margin-left: 50%;
   animation: vertical 1700ms ease-in-out infinite alternate;
+  text-align: center;
+  z-index: 99;
+}
+#top-scroll-text {
+  margin-bottom: -15px;
+  cursor: default;
+  opacity: 0;
+}
+.topScrollOpenBg {
+  color: gray !important;
 }
 #top-button {
   position: absolute;
@@ -111,8 +126,10 @@ a {
   z-index: 4;
 }
 #top-menu {
+  position: absolute;
+  bottom: -100%;
   width: 100%;
-  height: 0;
+  height: 100%;
 }
 #top-menu-links {
   position: absolute;
@@ -126,8 +143,20 @@ a {
 .fadeout {
   animation: fadeOut 500ms ease 0s 1 forwards;
 }
+.openMenu {
+  animation: open 800ms ease 0s 1 forwards;
+}
+.closeMenu {
+  animation: close 800ms ease 0s 1 forwards;
+}
 
 /**/
+.menu-trigger {
+  opacity: 0 !important;
+}
+.menu-trigger.active {
+  opacity: 1 !important;
+}
 .menu-trigger,
 .menu-trigger span {
   display: inline-block;
@@ -177,6 +206,9 @@ a {
 .menu-trigger.active span {
   background-color: gray;
 }
+.menu-trigger.active:hover {
+  transform: scale(0.8);
+}
 /**/
 @keyframes vertical {
   0% {transform:translateY(-12px)}
@@ -191,12 +223,12 @@ a {
   100% {opacity: 0}
 }
 @keyframes open {
-  0% {height: 0}
-  100% {height: 100%}
+  0% {bottom: -100%}
+  100% {bottom: 0}
 }
 @keyframes close {
-  0% {height: 100%}
-  100% {height: 0}
+  0% {bottom: 0}
+  100% {bottom: -100%}
 }
 
 @media (max-width: 3000px) and (min-width: 600px) {
@@ -216,13 +248,6 @@ a {
   #top-name:before {
     content: "Tsumugu Yamaguchi";
   }
-  /* Menu */
-  .openMenu {
-    animation: open 800ms ease 0s 1 forwards;
-  }
-  .closeMenu {
-    animation: close 800ms ease 0s 1 forwards;
-  }
 }
 /* SP */
 @media screen and (max-width:600px) {
@@ -238,13 +263,6 @@ a {
   #top-name:before {
     content: "Tsumugu\AYamaguchi";
     white-space: pre;
-  }
-  /* Menu */
-  .openMenu {
-    animation: open 800ms ease 0s 1 forwards;
-  }
-  .closeMenu {
-    animation: close 800ms ease 0s 1 forwards;
   }
 }
 </style>

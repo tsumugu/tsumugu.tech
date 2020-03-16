@@ -4,9 +4,7 @@
       <div id="bgitems">
         <div id="bgtree">
           <!-- Child Components Area -->
-          <keep-alive>
-            <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP" @updated="treeUpdateEvt"></component>
-          </keep-alive>
+          <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP" @updated="treeUpdateEvt"></component>
           <!---->
         </div>
         <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner" v-bind:class="{ topZero:resetPos }"></div></div>
@@ -58,7 +56,8 @@ export default {
       beforeScrollLv: 0,
       handleScrollCallCt: 0,
       windowHeight: 0,
-      resetPos: false
+      resetPos: false,
+      beforeCalltime: 0
     }
   },
   watch: {
@@ -77,7 +76,18 @@ export default {
     },
     handleScroll: function(y) {
       this.scrollY = y
-      if (this.handleScrollCallCt > 0 && !this.isAnimating) {
+      var isOver = true
+      /*
+      //前回から200ms経ってるかチェック
+      if (this.beforeCalltime != 0) {
+        var nowtimestamp = new Date().getTime()
+        var defTime = nowtimestamp-this.beforeCalltime
+        if (defTime < 200) {
+          isOver = false
+        }
+      }
+      */
+      if (this.handleScrollCallCt > 0 && isOver && !this.isAnimating) {
         this.scrollYBeforeAnimate = y
         this.scrollYMinusDiff = this.scrollY-this.scrollYDiff
         var ScrollLv = Math.floor(Math.floor(this.scrollYMinusDiff / this.px) / 10)
@@ -86,16 +96,21 @@ export default {
         if (this.beforeScrollLv !== ScrollLv) {
           // 正負で前後を切り替え
           if ((ScrollLv - this.beforeScrollLv) > 0) {
-            this.pageNum += 1
-            this.pageWcNum = (this.pageNum*10)+1
+            if (2>this.pageNum&&this.pageNum>=0) {
+              this.pageNum += 1
+              this.pageWcNum = (this.pageNum*10)+1
+            }
           } else {
-            this.pageNum -= 1
-            this.pageWcNum = (this.pageNum*10)+1
+            if (2>=this.pageNum&&this.pageNum>0) {
+              this.pageNum -= 1
+              this.pageWcNum = (this.pageNum*10)+1
+            }
           }
         }
         this.beforeScrollLv = ScrollLv
       }
       this.handleScrollCallCt++
+      //this.beforeCalltime = new Date().getTime()
     },
     treeUpdateEvt: function(value) {
       this.isAnimating = value
