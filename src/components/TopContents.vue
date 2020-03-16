@@ -18,10 +18,22 @@
 </template>
 <script>
 export default {
+  props: {
+    isMenuOpenP: false,
+    isFirstP: true,
+  },
   data() {
     return {
       isMenuOpen: false,
       isFirst: true
+    }
+  },
+  watch: {
+    isMenuOpenP() {
+      this.isMenuOpen = this.isMenuOpenP
+    },
+    isFirstP() {
+      this.isFirst = this.isFirstP
     }
   },
   methods: {
@@ -41,8 +53,7 @@ ul {
   user-select: none;
 }
 li:before {
-  content: '→ ';
-  color: skyblue;
+  content: '';
 }
 li {
   margin: 10px;
@@ -98,6 +109,10 @@ a {
   background-color: white;
   opacity: 0.9;
   z-index: 4;
+}
+#top-menu {
+  width: 100%;
+  height: 0;
 }
 #top-menu-links {
   position: absolute;
@@ -175,19 +190,11 @@ a {
   0% {opacity: 1}
   100% {opacity: 0}
 }
-@keyframes openPC {
-  0% {width: 0}
-  100% {width: 300px}
-}
-@keyframes closePC {
-  0% {width: 300px}
-  100% {width: 0}
-}
-@keyframes openSP {
+@keyframes open {
   0% {height: 0}
   100% {height: 100%}
 }
-@keyframes closeSP {
+@keyframes close {
   0% {height: 100%}
   100% {height: 0}
 }
@@ -210,15 +217,11 @@ a {
     content: "Tsumugu Yamaguchi";
   }
   /* Menu */
-  #top-menu {
-    width: 0;
-    height: 100%;
-  }
   .openMenu {
-    animation: openPC 800ms ease 0s 1 forwards;
+    animation: open 800ms ease 0s 1 forwards;
   }
   .closeMenu {
-    animation: closePC 800ms ease 0s 1 forwards;
+    animation: close 800ms ease 0s 1 forwards;
   }
 }
 /* SP */
@@ -237,15 +240,11 @@ a {
     white-space: pre;
   }
   /* Menu */
-  #top-menu {
-    width: 100%;
-    height: 0;
-  }
   .openMenu {
-    animation: openSP 800ms ease 0s 1 forwards;
+    animation: open 800ms ease 0s 1 forwards;
   }
   .closeMenu {
-    animation: closeSP 800ms ease 0s 1 forwards;
+    animation: close 800ms ease 0s 1 forwards;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent" :px="px"></PresenScrollCounter>
+  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent" :px="px" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP"></PresenScrollCounter>
 </template>
 
 <script>
@@ -13,13 +13,19 @@ export default {
   data() {
     return {
       currentComponent: TopContents,
-      px: 10
+      px: 25,
+      isMenuOpenP: false,
+      isFirstP: true
     }
   },
   methods: {
     onUpdatePageNum: function(pageNum) {
-      if (pageNum === 1) {
-        this.$router.push('/Profile')
+      if (pageNum >= 1) {
+        this.isMenuOpenP = true
+        this.isFirstP = false
+        //this.$router.push('/Profile')
+      } else {
+        this.isMenuOpenP = false
       }
     }
   },

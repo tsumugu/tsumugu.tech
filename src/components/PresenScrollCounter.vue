@@ -5,7 +5,7 @@
         <div id="bgtree">
           <!-- Child Components Area -->
           <keep-alive>
-            <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" @updated="treeUpdateEvt"></component>
+            <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP" @updated="treeUpdateEvt"></component>
           </keep-alive>
           <!---->
         </div>
@@ -37,6 +37,14 @@ export default {
     isAnimating: {
       type: Boolean,
       default: false
+    },
+    isMenuOpenP: {
+      type: Boolean,
+      default: false
+    },
+    isFirstP: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -158,11 +166,14 @@ progress {
   top: 0;
   width: 100%;
   height: 100%;
+  z-index: 9;
 }
 #tree-spacer {
+  background-color: red;
   position: relative;
   width: 100%;
   height: 10000px;
+  z-index: 1;
 }
 #tree-spacer:before {
     display: block;
