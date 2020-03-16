@@ -22,7 +22,7 @@ body, html {
   margin: 0;
   /*overflow: scroll !important;*/
   overflow: hidden;
-  font-family: UD Reimin Medium;
+  font-family: "UD Shin Maru Go Medium" !important;
 }
 #app {
   margin: 0;
