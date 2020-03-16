@@ -4,10 +4,10 @@
       <div id="top-bgcolor"></div>
       <div id="top-bg-img"></div>
       <div id="top-name"></div>
-      <div id="top-scroll" v-show="!isMenuOpen"><font-awesome-icon icon="chevron-down" size="lg" /></div>
+      <div id="top-scroll" v-show="!isMenuOpen"><font-awesome-icon icon="chevron-down" size="md" /></div>
       <div id="top-button"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
-        <ul id="top-menu-links" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
+        <ul id="top-menu-links" v-show="isMenuOpen" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
           <li><router-link to="About">Profile</router-link></li>
           <li><router-link to="Works">Works</router-link></li>
         </ul>
@@ -35,6 +35,21 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  list-style: none;
+  user-select: none;
+}
+li:before {
+  content: '→ ';
+  color: skyblue;
+}
+li {
+  margin: 10px;
+}
+a {
+  text-decoration: none;
+  color: #2c3e50;
+}
 #top-wrap {
   position: relative;
   width: 100%;
@@ -86,7 +101,6 @@ export default {
 #top-menu-links {
   position: absolute;
   top: 40px;
-  left: 20px;
   font-size: 2rem;
   opacity: 0;
 }
@@ -178,6 +192,9 @@ export default {
 }
 
 @media (max-width: 3000px) and (min-width: 600px) {
+  a:hover {
+    color: gray;
+  }
   #top-bg-img {
     /* TOPPC-RSZD.jpg */
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");
@@ -210,7 +227,7 @@ export default {
     background-position: center center
   }
   #top-name {
-    bottom: 35%;
+    bottom: 22%;
     margin-left: 5%;
     text-align: left;
   }
