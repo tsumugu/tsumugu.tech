@@ -74,11 +74,11 @@ a {
 #top-name, #top-scroll {
   position: absolute;
   color: #ffffff;
-  font-family: 'Sen', sans-serif;
   z-index: 3;
 }
 #top-name {
   font-size: 3rem;
+  font-family: 'Sen', sans-serif;
   opacity: 0.9;
 }
 #top-scroll {

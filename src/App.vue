@@ -15,6 +15,9 @@ export default {
 </script>
 
 <style>
+* :not(#top-name) {
+  font-family: "UD Shin Maru Go Medium" !important;
+}
 body, html {
   /*height: 10000px !important;*/
   width: 100%;
