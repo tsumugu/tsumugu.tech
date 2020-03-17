@@ -7,9 +7,8 @@
           <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP" @updated="treeUpdateEvt"></component>
           <!---->
         </div>
-        <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner" v-bind:class="{ topZero:resetPos }"></div></div>
+        <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner"></div></div>
       </div>
-      <div id="progbar" v-if="isShowProgBar"><progress max="100" :value="scrollPer"></progress></div>
     </div>
   </div>
 </template>
@@ -28,10 +27,6 @@ export default {
     currentComponent: {
       type: Object
     },
-    px: {
-      type: Number,
-      default: 15
-    },
     isAnimating: {
       type: Boolean,
       default: false
@@ -47,17 +42,8 @@ export default {
   },
   data() {
     return {
-      isShowProgBar: false,
-      scrollPer: 0,
-      scrollY: 0,
-      scrollYBeforeAnimate: 0,
-      scrollYDiff: 0,
-      scrollYMinusDiff: 0,
-      beforeScrollLv: 0,
-      handleScrollCallCt: 0,
-      windowHeight: 0,
-      resetPos: false,
-      beforeCalltime: 0
+      beforeCalltime: 0,
+      beforeTypo: 0
     }
   },
   watch: {
@@ -65,53 +51,12 @@ export default {
       this.$emit('updatePageNum',this.pageNum)
     },
     isAnimating() {
-      if (!this.isAnimating) {
-        this.scrollYDiff = this.scrollY - this.scrollYBeforeAnimate
+      if (this.isAnimating) {
+        // Do in Animating
       }
     }
   },
   methods: {
-    handleResize: function() {
-      this.windowHeight = window.innerHeight
-    },
-    handleScroll: function(y) {
-      this.scrollY = y
-      var isOver = true
-      /*
-      //前回から200ms経ってるかチェック
-      if (this.beforeCalltime != 0) {
-        var nowtimestamp = new Date().getTime()
-        var defTime = nowtimestamp-this.beforeCalltime
-        if (defTime < 200) {
-          isOver = false
-        }
-      }
-      */
-      if (this.handleScrollCallCt > 0 && isOver && !this.isAnimating) {
-        this.scrollYBeforeAnimate = y
-        this.scrollYMinusDiff = this.scrollY-this.scrollYDiff
-        var ScrollLv = Math.floor(Math.floor(this.scrollYMinusDiff / this.px) / 10)
-        var scrollPer = Math.floor(((this.scrollYMinusDiff / this.px)-(ScrollLv * 10))*10)
-        this.scrollPer = scrollPer
-        if (this.beforeScrollLv !== ScrollLv) {
-          // 正負で前後を切り替え
-          if ((ScrollLv - this.beforeScrollLv) > 0) {
-            if (2>this.pageNum&&this.pageNum>=0) {
-              this.pageNum += 1
-              this.pageWcNum = (this.pageNum*10)+1
-            }
-          } else {
-            if (2>=this.pageNum&&this.pageNum>0) {
-              this.pageNum -= 1
-              this.pageWcNum = (this.pageNum*10)+1
-            }
-          }
-        }
-        this.beforeScrollLv = ScrollLv
-      }
-      this.handleScrollCallCt++
-      //this.beforeCalltime = new Date().getTime()
-    },
     treeUpdateEvt: function(value) {
       this.isAnimating = value
     }
@@ -119,22 +64,37 @@ export default {
   mounted() {
     var _this = this
     const targetElement = this.$refs.treespacer
-    var beforeScrollHeight = 0
-    var beforeWindowHeight = 0
-    var checkScroll = function() {
-      var ScreenHeight = window.innerHeight
-      var clientRect = targetElement.getBoundingClientRect()
-      var y = clientRect.top
-      var scrollHeight = ScreenHeight - y
-      if (scrollHeight !== beforeScrollHeight && _this.windowHeight == beforeWindowHeight) {
-        _this.handleScroll(scrollHeight)
+    // TODO: wheelに対応しているかチェックする
+    window.addEventListener('wheel', function(event) {
+      //前回から時間経ってるかチェック
+      var nowtimestamp = new Date().getTime()
+      var defTime = nowtimestamp-_this.beforeCalltime
+      //400, 100
+      if (defTime > 400 && Math.abs(event.deltaY)>90) {
+        console.log(event.deltaY, event)
+        var dis = null
+        if (event.deltaY == -0) {
+          dis = -1
+        } else {
+          dis = event.deltaY
+        }
+        if (dis > 0) {
+          //console.log("Plus")
+          if (2>_this.pageNum&&_this.pageNum>=0) {
+            _this.pageNum += 1
+            _this.pageWcNum = (_this.pageNum*10)+1
+          }
+        } else {
+          //console.log("Minus")
+          if (2>=_this.pageNum&&_this.pageNum>0) {
+            _this.pageNum -= 1
+            _this.pageWcNum = (_this.pageNum*10)+1
+          }
+        }
       }
-      beforeScrollHeight = scrollHeight
-      beforeWindowHeight = _this.windowHeight
-    }
-    setInterval(checkScroll, 100)
-    window.addEventListener('resize', this.handleResize)
-    //
+      _this.beforeCalltime = new Date().getTime()
+      //
+    }, { passive: false })
   }
 }
 </script>
@@ -189,6 +149,7 @@ progress {
   width: 100%;
   height: 10000px;
   z-index: 1;
+  /*z-index: 999;*/
 }
 #tree-spacer:before {
     display: block;
@@ -200,8 +161,5 @@ progress {
   left: 0;
   width: 100%;
   height: 10000px;
-}
-.topZero {
-  top: 1000px !important;
 }
 </style>

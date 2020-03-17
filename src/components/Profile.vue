@@ -1,5 +1,5 @@
 <template>
-  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :px="px" :currentComponent="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum"></PresenScrollCounter>
+  <PresenScrollCounter :currentComponent="currentComponent"></PresenScrollCounter>
 </template>
 
 <script>
@@ -13,18 +13,12 @@ export default {
   data() {
     return {
       currentComponent: ProfileContents,
-      px: 25,
-      isPresenMode: false,
-      pageNum: 0
+      isPresenMode: false
     }
   },
   methods: {
-    onUpdatePageNum: function(pageNum) {
-    }
   },
   mounted() {
-    this.pageNum = 1
-    this.pageWcNum = 11
     // Check Mode
     var cookie = this.$cookies.get("mode")
     if (cookie !== null) {
@@ -36,7 +30,6 @@ export default {
     } else {
       this.isPresenMode = false
     }
-    // Load data
   }
 }
 </script>

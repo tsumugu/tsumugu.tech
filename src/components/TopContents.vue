@@ -104,10 +104,10 @@ a {
   bottom: 12px;
   margin-left: 50%;
   animation: vertical 1700ms ease-in-out infinite alternate;
-  text-align: center;
   z-index: 99;
 }
 #top-scroll-text {
+  margin-left: -35%;
   margin-bottom: -15px;
   cursor: default;
   opacity: 0;
