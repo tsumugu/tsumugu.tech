@@ -4,7 +4,7 @@
       <div id="top-bgcolor"></div>
       <div id="top-bg-img"></div>
       <div id="top-name"></div>
-      <div id="top-scroll" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon icon="chevron-down" size="md" /></div>
+      <div id="top-scroll" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
       <div id="top-button" v-show="isMenuOpen"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <ul id="top-menu-links" v-show="isMenuOpen" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
@@ -45,6 +45,10 @@ export default {
     toggle() {
       this.isFirst = false
       this.isMenuOpen = !this.isMenuOpen
+    },
+    onClickScrollIcon() {
+      this.$parent.pageNum += 1
+      this.$parent.pageWcNum = (this.$parent.pageNum*10)+1
     }
   },
   mounted() {
@@ -114,6 +118,9 @@ a {
 }
 .topScrollOpenBg {
   color: gray !important;
+}
+.scrollIcon {
+  cursor: pointer;
 }
 #top-button {
   position: absolute;

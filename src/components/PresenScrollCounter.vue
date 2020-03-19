@@ -7,7 +7,6 @@
           <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP" @updated="treeUpdateEvt"></component>
           <!---->
         </div>
-        <div id="tree-spacer" ref="treespacer"><div id="tree-spacer-inner"></div></div>
       </div>
     </div>
   </div>
@@ -45,12 +44,19 @@ export default {
       beforeCalltime: 0,
       swipeY: 0,
       swipeY_S: 0,
+      touchedElementName: null,
       beforeTypo: 0
     }
   },
   watch: {
     pageNum() {
       this.$emit('updatePageNum',this.pageNum)
+    },
+    isMenuOpenP() {
+      if (this.isMenuOpenP) {
+        this.pageNum = 1
+        this.pageWcNum = 11
+      }
     },
     isAnimating() {
       if (this.isAnimating) {
@@ -63,6 +69,7 @@ export default {
       this.isAnimating = value
     },
     touchHandlerS(event) {
+      this.touchedElementName = event.touches[0].target.tagName
       var x = 0, y = 0;
       if (event.touches && event.touches[0]) {
         x = event.touches[0].clientX;
@@ -92,13 +99,19 @@ export default {
       // console.log('y : ' + y);
     },
     touchHandlerE(event) {
-      this.scrollCountEvent(this.swipeY_S-this.swipeY)
+      // A or SVG or PATH じゃなかったら
+      var ngLists = ["A", "SVG", "PATH"]
+      if (ngLists.indexOf(this.touchedElementName) == -1){
+        //NGListに含まれていないとき
+        this.scrollCountEvent(this.swipeY_S-this.swipeY)
+      }
       this.touchHandlerR()
     },
     touchHandlerR() {
       //reset
       this.swipeY = 0
       this.swipeY_S = 0
+      this.touchedElementName = null
     },
     scrollCountEvent: function(deltaY) {
       //前回から時間経ってるかチェック
@@ -106,7 +119,7 @@ export default {
       var defTime = nowtimestamp-this.beforeCalltime
       //400, 100
       if (defTime > 400 && Math.abs(deltaY)>90) {
-        console.log(deltaY, event)
+        // console.log(deltaY, event)
         var dis = null
         if (deltaY == -0) {
           dis = -1
@@ -114,13 +127,13 @@ export default {
           dis = deltaY
         }
         if (dis > 0) {
-          //console.log("Plus")
+          // console.log("Plus")
           if (2>this.pageNum&&this.pageNum>=0) {
             this.pageNum += 1
             this.pageWcNum = (this.pageNum*10)+1
           }
         } else {
-          //console.log("Minus")
+          // console.log("Minus")
           if (2>=this.pageNum&&this.pageNum>0) {
             this.pageNum -= 1
             this.pageWcNum = (this.pageNum*10)+1
@@ -137,10 +150,10 @@ export default {
     var isAvailableTouch = 'ontouchend' in window
     // isAvailableTouchがTrueだったらそっちを優先
     if (isAvailableTouch) {
-      window.addEventListener('touchstart', this.touchHandlerS, false);
-      window.addEventListener('touchmove', this.touchHandlerM, false);
-      window.addEventListener('touchend', this.touchHandlerE, false);
-      window.addEventListener('touchcancel', this.touchHandlerR, false);
+      window.addEventListener('touchstart', this.touchHandlerS, { passive: false });
+      window.addEventListener('touchmove', this.touchHandlerM, { passive: false });
+      window.addEventListener('touchend', this.touchHandlerE, { passive: false });
+      window.addEventListener('touchcancel', this.touchHandlerR, { passive: false });
     } else {
       window.addEventListener('wheel', function(event) {
         _this.scrollCountEvent(event.deltaY)
@@ -193,24 +206,5 @@ progress {
   width: 100%;
   height: 100%;
   z-index: 9;
-}
-#tree-spacer {
-  background-color: red;
-  position: relative;
-  width: 100%;
-  height: 10000px;
-  z-index: 1;
-  /*z-index: 999;*/
-}
-#tree-spacer:before {
-    display: block;
-    padding-top: 100%;
-}
-#tree-spacer-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 10000px;
 }
 </style>

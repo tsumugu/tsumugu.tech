@@ -18,6 +18,15 @@ export default {
       isFirstP: true
     }
   },
+  beforeRouteEnter(to, from, next) {
+    var dispMenuLists = ["/Works", "/Timeline"]
+    next(vm => {
+      if (~dispMenuLists.indexOf(from.path)){
+        vm.isFirstP = false
+        vm.isMenuOpenP = true
+      }
+    })
+  },
   methods: {
     onUpdatePageNum: function(pageNum) {
       console.log(pageNum)
