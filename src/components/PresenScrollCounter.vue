@@ -45,7 +45,8 @@ export default {
       swipeY: 0,
       swipeY_S: 0,
       touchedElementName: null,
-      beforeTypo: 0
+      beforeTypo: 0,
+      timeoutId: null
     }
   },
   watch: {
@@ -102,8 +103,10 @@ export default {
       // A or SVG or PATH じゃなかったら
       var ngLists = ["A", "SVG", "PATH"]
       if (ngLists.indexOf(this.touchedElementName) == -1){
-        //NGListに含まれていないとき
-        this.scrollCountEvent(this.swipeY_S-this.swipeY)
+        //0じゃなかったら
+        if (this.swipeY_S !==0 && this.swipeY !==0) {
+          this.scrollCountEvent(this.swipeY_S-this.swipeY)
+        }
       }
       this.touchHandlerR()
     },
@@ -156,7 +159,10 @@ export default {
       window.addEventListener('touchcancel', this.touchHandlerR, { passive: false });
     } else {
       window.addEventListener('wheel', function(event) {
-        _this.scrollCountEvent(event.deltaY)
+        window.clearTimeout(_this.timeoutId);
+        _this.timeoutId = window.setTimeout(function() {
+          _this.scrollCountEvent(event.deltaY)
+        }, 100);
       }, { passive: false })
     }
   }
