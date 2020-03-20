@@ -140,7 +140,7 @@ a {
 }
 #top-menu-links {
   position: absolute;
-  top: 20%;
+  top: 40px;
   font-size: 2rem;
   opacity: 0;
 }

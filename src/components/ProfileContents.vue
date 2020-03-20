@@ -4,7 +4,7 @@
       <div id="aboutcontents-bgcolor"></div>
       <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
       <div id="aboutcontents-text">
-        <div id="profile-text-back"><font-awesome-icon class="scrollIcon" icon="chevron-up" size="md" /></div>
+        <div id="profile-text-back"><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-up" size="md" /></div>
         <div id="profile-text-wrapper" v-if="fadeinText">
           <div id="profile-text" v-bind:class="{fadein: fadeinText}" v-html="aboutText"></div>
         </div>
@@ -27,6 +27,9 @@ export default {
     }
   },
   methods: {
+    onClickScrollIcon() {
+      this.$router.push('/')
+    }
   },
   mounted() {
     //TODO: fadeout with fin img loadimg
@@ -103,7 +106,6 @@ export default {
 #profile-text-wrapper {
   position: absolute;
   height: 100%;
-  top: 15px;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -175,6 +177,7 @@ export default {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg");
   }
   #profile-text-wrapper {
+    top: 15px;
     width: 45%;
   }
 }
@@ -184,6 +187,7 @@ export default {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg");
   }
   #profile-text-wrapper {
+    top: 30px;
     width: 100%;
   }
 }

@@ -37,11 +37,10 @@ body, html {
   overflow-x: hidden !important;
   overflow-y: scroll !important;
 }
-
-.v-enter-active {
-  transition: all 1.5s;
+.v-enter-active, .v-leave-active {
+  transition: opacity .5s;
 }
-.v-enter {
-  transform: translateY(100%);
+.v-enter, .v-leave-to {
+  opacity: 0;
 }
 </style>
