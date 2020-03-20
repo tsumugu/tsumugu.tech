@@ -4,6 +4,7 @@
       <div id="aboutcontents-bgcolor"></div>
       <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
       <div id="aboutcontents-text">
+        <div id="profile-text-back"><font-awesome-icon class="scrollIcon" icon="chevron-up" size="md" /></div>
         <div id="profile-text-wrapper" v-if="fadeinText">
           <div id="profile-text" v-bind:class="{fadein: fadeinText}" v-html="aboutText"></div>
         </div>
@@ -99,6 +100,37 @@ export default {
   height: 100%;
   z-index: 3;
 }
+#profile-text-wrapper {
+  position: absolute;
+  height: 100%;
+  top: 15px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#profile-text-wrapper::-webkit-scrollbar {
+  display:none;
+}
+#profile-text {
+  height: 200%;
+}
+#profile-text-back {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}
+.scrollIcon {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 2em;
+  opacity: 0.7;
+  animation: vertical 1700ms ease-in-out infinite alternate;
+  cursor: pointer;
+}
+@keyframes vertical {
+  0% {transform:translateY(-10px)}
+  100% {transform:translateY(0px)}
+}
 #title-text-wrapper {
   display: flex;
   flex-direction: column;
@@ -114,6 +146,7 @@ export default {
   font-size: 4rem;
 }
 #profile-text {
+  padding-top: 0px;
   padding: 10px;
 }
 .fadein {
@@ -143,7 +176,6 @@ export default {
   }
   #profile-text-wrapper {
     width: 45%;
-    height: 100%;
   }
 }
 /* SP */
@@ -153,7 +185,6 @@ export default {
   }
   #profile-text-wrapper {
     width: 100%;
-    height: 100%;
   }
 }
 </style>

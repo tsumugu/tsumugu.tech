@@ -4,7 +4,7 @@
       <div id="top-bgcolor"></div>
       <div id="top-bg-img"></div>
       <div id="top-name"></div>
-      <div id="top-scroll" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
+      <div id="top-scroll" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
       <div id="top-button" v-show="isMenuOpen"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <ul id="top-menu-links" v-show="isMenuOpen" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
@@ -113,7 +113,7 @@ a {
 #top-scroll-text {
   margin-left: -35%;
   margin-bottom: -15px;
-  cursor: default;
+  cursor: pointer;
   opacity: 0;
 }
 .topScrollOpenBg {
@@ -140,7 +140,7 @@ a {
 }
 #top-menu-links {
   position: absolute;
-  top: 40px;
+  top: 20%;
   font-size: 2rem;
   opacity: 0;
 }

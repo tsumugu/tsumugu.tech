@@ -1,5 +1,5 @@
 <template>
-  <PresenScrollCounter :currentComponent="currentComponent"></PresenScrollCounter>
+  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent"></PresenScrollCounter>
 </template>
 
 <script>
@@ -17,6 +17,11 @@ export default {
     }
   },
   methods: {
+    onUpdatePageNum: function(pageNum) {
+      if (pageNum == -1) {
+        this.$router.push('/')
+      }
+    }
   },
   mounted() {
     // Check Mode
