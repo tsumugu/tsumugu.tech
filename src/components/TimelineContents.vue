@@ -518,13 +518,14 @@ hr {
     display: inline-block;
     width: 90%;
   }
-  .progressive-image, #card-button-wrapper {
+  >>> .progressive-image,
+  >>> #card-button-wrapper {
     width: 450px;
   }
-  .year-about {
+  >>> .year-about {
     padding: 10px 20px 10px 10px;
   }
-  .card {
+  >>> .card {
     margin: 10px 0px 10px 0px;
     display: inline-block;
   }
@@ -533,19 +534,21 @@ hr {
   #left-line, .card-left-circle {
     display: none !important;
   }
-  .progressive-image, #card-button-wrapper {
+  >>> .progressive-image,
+  >>> #card-button-wrapper {
     width: 100%;
     display: block !important;
   }
-  .year-about, .card {
+  >>> .year-about,
+  >>> .card {
     width: auto !important;
   }
-  .year-about {
+  >>> .year-about {
     border-radius: 0px 25px 25px 25px !important;
     margin-left: 10px !important;
     margin-right: 10px !important;
   }
-  .card {
+  >>> .card {
     margin: 0px 10px 0px 10px !important;
     /*border: 1px solid #9699a0;*/
   }
@@ -593,37 +596,6 @@ hr {
 @keyframes BMOut {
     0% {bottom: 0;opacity: 1;}
     100% {bottom: -100%;opacity: 0;}
-}
-.button {
-  border: none;
-  cursor: pointer;
-  outline: none;
-  appearance: none;
-}
-.b-close {
-  height: 35px;
-  width: 35px;
-  margin-bottom: 10px;
-  background-color: #e6e6e6;
-}
-.b-edit {
-}
-.b-read {
-  margin-top: 10px;
-}
-.b-read, .b-gosite {
-  display: inline-block;
-  height: 50px;
-  border-radius: 25px;
-  background-color: #82b349;
-  color: white;
-  font-size: large;
-}
-.wid50per {
-  width: 49%;
-}
-.wid100per {
-  width: 100%;
 }
 #bottom-menu-swipe-bar {
   display: inline-block;
@@ -734,31 +706,9 @@ hr {
   position: relative;
   width: 85%;
   padding: 10px;
-  border-radius: 25px;
 }
 .cardMarginTop {
   margin-top: 20px;
-}
-.card-img {
-  border-radius: 25px;
-}
-.card-title {
-  margin: 0 5px 0;
-}
-.card-main-lang {
-  display: inline-block;
-  padding: 10px;
-  border-radius: 25px;
-  color: #78a644;
-  border: 2px solid #82b349;
-  margin: 0;
-}
-.card-description {
-  font-size: large;
-  margin: 0px 5px 5px 5px;
-}
-.card-kdwr {
-  margin: 5px;
 }
 .card-left-circle {
   position: absolute;

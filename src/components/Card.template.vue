@@ -31,4 +31,59 @@ export default {
 }
 </script>
 <style scoped>
+.card {
+  border-radius: 25px;
+}
+.card-img {
+  border-radius: 25px;
+}
+.card-title {
+  margin: 0 5px 0;
+}
+.card-main-lang {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 25px;
+  color: #78a644;
+  border: 2px solid #82b349;
+  margin: 0;
+}
+.card-description {
+  font-size: large;
+  margin: 0px 5px 5px 5px;
+}
+.card-kdwr {
+  margin: 5px;
+}
+.button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+.b-close {
+  height: 35px;
+  width: 35px;
+  margin-bottom: 10px;
+  background-color: #e6e6e6;
+}
+.b-edit {
+}
+.b-read {
+  margin-top: 10px;
+}
+.b-read, .b-gosite {
+  display: inline-block;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #82b349;
+  color: white;
+  font-size: large;
+}
+.wid50per {
+  width: 49%;
+}
+.wid100per {
+  width: 100%;
+}
 </style>
