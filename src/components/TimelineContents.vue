@@ -39,22 +39,7 @@
             <div class="card-left-line"></div>
           </div>
           <!-- Card -->
-          <div class="card" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
-            <!--<a :href="item.siteurl" >-->
-            <div class="tl-item-contents-wrapper">
-              <progressive-img class="card-img" v-bind:src="item.thumbnail" />
-              <h2 class="card-title">{{item.title}}</h2>
-              <p class="card-description" v-html="item.description"></p>
-              <p class="card-main-lang">{{item.genle}} ({{item.allLang}})</p>
-              <p class="card-kdwr">{{item.kdwr}}</p>
-              <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
-              <div id="card-button-wrapper">
-                <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read" v-bind:class="{ wid50per: item.isDispGotoSiteButton, wid100per: !item.isDispGotoSiteButton }"><font-awesome-icon icon="book-reader" /> 解説を読む</button>
-                <button @click="goToSite(item.siteurl)" class="button b-gosite" v-bind:class="{ wid50per: item.isDispGotoSiteButton }" v-show="item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
-              </div>
-            </div>
-            <!--</a>-->
-          </div>
+          <Card :item="item" :isDispEdit="isDispEdit" :isLogin="isLogin" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }"></Card>
           <!-- Card HairLine -->
           <hr v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
         </div>
@@ -68,10 +53,11 @@
 var firebase = require('firebase')
 var axios = require('axios')
 import Article from './Article.vue'
-
+import Card from './Card.template.vue'
 export default {
   components: {
-    Article
+    Article,
+    Card
   },
   data () {
     return {
