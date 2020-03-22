@@ -28,6 +28,17 @@ export default {
       type: Boolean
     }
   },
+  methods: {
+    cardButtonEv(siteUrl, articleId) {
+      this.$emit('cardButtonEv', {"siteUrl": siteUrl, "articleId": articleId})
+    },
+    goToSite(siteUrl) {
+      this.$emit('goToSite', siteUrl)
+    },
+    oepnEdit(articleId) {
+      this.$emit('oepnEdit', articleId)
+    }
+  }
 }
 </script>
 <style scoped>

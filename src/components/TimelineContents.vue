@@ -39,7 +39,7 @@
             <div class="card-left-line"></div>
           </div>
           <!-- Card -->
-          <Card :item="item" :isDispEdit="isDispEdit" :isLogin="isLogin" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }"></Card>
+          <Card @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :item="item" :isDispEdit="isDispEdit" :isLogin="isLogin" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }"></Card>
           <!-- Card HairLine -->
           <hr v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
         </div>
@@ -86,10 +86,12 @@ export default {
     }
   },
   methods: {
-    cardButtonEv(siteUrl, articleId) {
+    cardButtonEv(argObj) {
+      var siteUrl = argObj.siteUrl
+      var articleId = argObj.articleId
+      
       this.cardSiteUrl = siteUrl
       this.cardArticleId = articleId
-      // call open func here
       this.openBottomMenu()
     },
     openBottomMenu() {
