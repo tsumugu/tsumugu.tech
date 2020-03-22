@@ -4,13 +4,17 @@
     <tbody>
       <tr>
         <td id="worksControl" colspan="3">
-          <div>
+          <div id="worksControl-genle">
             <ul>
               <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedGenle">{{val.key}}</label></li>
             </ul>
           </div>
-          <div id="worksControl-filter">filter</div>
-          <div id="worksControl-sort">Sort</div>
+          <div id="worksControl-filter">
+            <ul>
+              <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedYear">{{val.key}}</label></li>
+            </ul>
+            <div><input type="text" placeholder="検索" v-model="searchWord"></div>
+          </div>
         </td>
       </tr>
       <tr v-for="items in itemDivThree">
@@ -34,22 +38,36 @@ export default {
     return {
       db: null,
       checkedGenle: [],
+      checkedYear: [],
+      searchWord: "",
       cardItems: [],
       itemDivThree: [],
       skillsStr: [],
       skillsCount: [],
       genleStr: [],
       genleCount: [],
-      genleCountFor: []
+      genleCountFor: [],
+      yearStr: [],
+      yearCount: [],
+      yearCountFor: []
     }
   },
   watch: {
     checkedGenle() {
-      // TODO: itemDivThreeから条件に合わないものは非表示
-      this.divideThree(this.cardItems.filter(doc => this.checkedGenle.includes(doc.genle)))
+      this.doFiltering()
+    },
+    checkedYear() {
+      this.doFiltering()
+    },
+    searchWord() {
+      this.divideThree(this.cardItems.filter(doc => (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1))
     }
   },
   methods: {
+    doFiltering() {
+      console.log(this.checkedGenle, this.checkedYear)
+      this.divideThree(this.cardItems.filter(doc => this.checkedGenle.includes(doc.genle)&&this.checkedYear.includes(String(doc.madeYear)) ))
+    },
     divideThree(list) {
       var _this = this
       this.itemDivThree = []
@@ -73,6 +91,9 @@ export default {
       this.genleStr = []
       this.genleCount = []
       this.genleCountFor = []
+      this.yearStr = []
+      this.yearCount = []
+      this.yearCountFor = []
       this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var docVal = {
@@ -90,6 +111,7 @@ export default {
           }
           doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
           _this.genleStr.push(doc.data().genle)
+          _this.yearStr.push(doc.data().madeYear)
           _this.cardItems.push(docVal)
         })
         _this.divideThree(_this.cardItems)
@@ -123,6 +145,26 @@ export default {
           if(aa < bb){return 1;}
           return 0;
         })
+        _this.yearStr.forEach(element => {
+          var currntCount = _this.yearCount[element]
+          if (currntCount == undefined) {
+            currntCount = 1
+          } else {
+            currntCount += 1
+          }
+          _this.yearCount[element] = currntCount
+        })
+        Object.keys(_this.yearCount).forEach(function(key) {
+          _this.yearCountFor.push({"key": key, "count": _this.yearCount[key]})
+          _this.checkedYear.push(key)
+        })
+        _this.yearCountFor.sort(function(a,b){
+          var aa = a.key;
+          var bb = b.key;
+          if(aa > bb){return 1;}
+          if(aa < bb){return -1;}
+          return 0;
+        })
         //
       })
       .catch(function(error) {
@@ -151,26 +193,22 @@ table, th, td {
   text-align: center;
   vertical-align: bottom;
 }
-table {
+table, th {
   width: 100%;
 }
 td {
   padding: 10px;
   background-color: #fcfcfc;
 }
-.card {
+>>> .card {
   width: 100%;
-  border-radius: 25px;
   text-align: left;
 }
 #worksControl {
   text-align: left;
   padding: 0;
 }
-#worksControl-filter, #worksControl-sort {
-  display: inline-block;
-  width: 50%;
-  text-align: center;
-  float: left;
+#worksControl-filter, #worksControl-genle {
+  text-align: left;
 }
 </style>
