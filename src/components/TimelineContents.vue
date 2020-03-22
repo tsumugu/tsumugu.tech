@@ -89,7 +89,7 @@ export default {
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
-      
+
       this.cardSiteUrl = siteUrl
       this.cardArticleId = articleId
       this.openBottomMenu()
@@ -133,9 +133,9 @@ export default {
       // console.log('y : ' + y);
     },
     touchHandlerE(event) {
-      // Height 80%
-      // console.log(this.swipeY, window.innerHeight*0.2, window.innerHeight)
-      if ((this.swipeY - window.innerHeight*0.2) > 50) {
+      // Height 90%
+      // console.log(this.swipeY, window.innerHeight*0.1, window.innerHeight)
+      if ((this.swipeY - window.innerHeight*0.1) > 50) {
         this.closeBottomMenu();
       }
     },
@@ -518,7 +518,7 @@ hr {
   }
   #timeline-wrapper {
     display: inline-block;
-    width: 90%;
+    width: 100%;
   }
   >>> .progressive-image,
   >>> #card-button-wrapper {
@@ -653,7 +653,7 @@ hr {
   position: absolute;
   width: 100%;
   /* Change with touchHandlerE */
-  height: 80%;
+  height: 90%;
   border-radius: 15px 15px 0 0;
   background-color: white;
 }
