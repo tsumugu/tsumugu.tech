@@ -13,7 +13,7 @@
             <ul>
               <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedYear">{{val.key}}</label></li>
             </ul>
-            <div><input type="text" placeholder="検索" v-model="searchWord"></div>
+            <div>{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
           </div>
         </td>
       </tr>
@@ -40,6 +40,7 @@ export default {
       checkedGenle: [],
       checkedYear: [],
       searchWord: "",
+      searchRes: 0,
       cardItems: [],
       itemDivThree: [],
       skillsStr: [],
@@ -60,20 +61,26 @@ export default {
       this.doFiltering()
     },
     searchWord() {
-      this.divideThree(this.cardItems.filter(doc => (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1))
+      this.doFiltering()
     }
   },
   methods: {
     doFiltering() {
       console.log(this.checkedGenle, this.checkedYear)
-      this.divideThree(this.cardItems.filter(doc => this.checkedGenle.includes(doc.genle)&&this.checkedYear.includes(String(doc.madeYear)) ))
+      this.divideThree(this.cardItems.filter(doc =>
+        this.checkedGenle.includes(doc.genle)
+        && this.checkedYear.includes(String(doc.madeYear))
+        && (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1
+      ))
     },
     divideThree(list) {
       var _this = this
       this.itemDivThree = []
+      this.searchRes = 0
       var tmpArr = []
       var divLim = 3
       list.forEach(doc => {
+        this.searchRes += 1
         tmpArr.push(doc)
         if (tmpArr.length == divLim) {
           _this.itemDivThree.push(tmpArr)
