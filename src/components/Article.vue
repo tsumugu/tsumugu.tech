@@ -7,9 +7,6 @@
   NotFound
   </div>
   <div id="article-contents" v-else>
-    <div class="summary" v-for="(item, key) in cardSummary" :key="key">
-      <p>{{item}}</p>
-    </div>
     <div id="article-contents-body" v-html="body"></div>
   </div>
 </div>

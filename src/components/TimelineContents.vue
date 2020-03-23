@@ -114,7 +114,7 @@ export default {
       this.$router.push({ path: `/Article/${articleId}` })
     },
     oepnEdit(articleId) {
-      window.open("http://readme.tsumugu2626.xyz/view/tsumugu-tech/"+articleId);
+      window.open("https://tsumugu.tech/edit/"+articleId);
     },
     touchHandlerM(event) {
       var x = 0, y = 0;
@@ -255,7 +255,8 @@ export default {
               'allLang': doc.data().allLang,
               'madeYear': doc.data().madeYear,
               'madeMonth': doc.data().madeMonth,
-              'kdwr': doc.data().kdwr
+              'kdwr': doc.data().kdwr,
+              'isDispReadButton': doc.data().isDispReadButton
             })
           })
           resolve();
@@ -304,7 +305,9 @@ export default {
             }
           }
           if (!docData.isAbout) {
-            var thumbnailUrl = docData.thumbnail==null ? docData.thumbnail : 'https://via.placeholder.com/2560x1480'
+            var thumbnailUrl = docData.thumbnail==null ? 'https://via.placeholder.com/2560x1480' : docData.thumbnail
+            var isDispRead = docData.isDispReadButton==undefined ? true : docData.isDispReadButton
+            console.log(docData.isDispReadButton, isDispRead)
             let data = {
               'id': docData.id,
               'thumbnail': thumbnailUrl,
@@ -322,7 +325,8 @@ export default {
               'color': _this.lang_color[docData.mainLang],
               'isEnd': false,
               'isFixed': (el_count==0),
-              'isDispGotoSiteButton': (docData.siteurl !== null)
+              'isDispGotoSiteButton': (docData.siteurl !== null),
+              'isDispReadButton': isDispRead
             }
             _this.items.push(data)
           } else {
@@ -652,13 +656,13 @@ hr {
 #bottom-menu-inner-abs {
   position: absolute;
   width: 100%;
-  /* Change with touchHandlerE */
+  /* Change with touchHandlerE & #bmi-a-contents */
   height: 90%;
   border-radius: 15px 15px 0 0;
   background-color: white;
 }
 #bmi-a-contents {
-  height: 100%;
+  height: 90%;
   margin: 15px;
 }
 

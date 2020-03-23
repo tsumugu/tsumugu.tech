@@ -6,6 +6,7 @@ import works from '@/components/Works'
 import tl from '@/components/Timeline'
 import addworks from '@/components/AddWorks'
 import auth from '@/components/Auth'
+import edit from '@/components/Edit'
 import notfoundcomponent from '@/components/NotFoundComponent'
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
     {
       path: '/Auth',
       component: auth
+    },
+    {
+      path: '/Edit/:id',
+      component: edit
     },
     {
       path: '/add-works',

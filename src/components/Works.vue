@@ -114,7 +114,9 @@ export default {
             'madeYear': doc.data().madeYear,
             'madeMonth': doc.data().madeMonth,
             'kdwr': doc.data().kdwr,
-            'isShow': true
+            'isShow': true,
+            'isDispGotoSiteButton': (doc.data().siteurl !== null),
+            'isDispReadButton': true
           }
           doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
           _this.genleStr.push(doc.data().genle)
