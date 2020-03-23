@@ -4,8 +4,8 @@
       <div id="top-bgcolor"></div>
       <div id="top-bg-img"></div>
       <div id="top-name"></div>
-      <div id="top-scroll" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
-      <div id="top-button" v-show="isMenuOpen"><div class="menu-trigger" v-bind:class="{active: isMenuOpen}" v-on:click="toggle"><span></span><span></span><span></span></div></div>
+      <div id="top-scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
+      <div id="top-button" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" size="md" /></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <ul id="top-menu-links" v-show="isMenuOpen" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
           <li><router-link to="Works">Works</router-link></li>
@@ -102,13 +102,14 @@ a {
   font-family: 'Sen', sans-serif;
   opacity: 0.9;
 }
-#top-scroll {
+#top-scroll, #top-button {
   font-size: 2em;
   opacity: 0.7;
+  z-index: 99;
+}
+#top-scroll {
   bottom: 12px;
   margin-left: 50%;
-  animation: vertical 1700ms ease-in-out infinite alternate;
-  z-index: 99;
 }
 #top-scroll-text {
   margin-left: -35%;
@@ -124,7 +125,10 @@ a {
 }
 #top-button {
   position: absolute;
+  width: 100%;
+  top: 12px;
   z-index: 5;
+  text-align: center;
 }
 #top-menu {
   position: absolute;
@@ -144,6 +148,9 @@ a {
   font-size: 2rem;
   opacity: 0;
 }
+.fuwafuwa {
+  animation: vertical 1700ms ease-in-out infinite alternate;
+}
 .fadein {
   animation: fadeIn 500ms ease 0s 1 forwards;
 }
@@ -156,67 +163,6 @@ a {
 .closeMenu {
   animation: close 800ms ease 0s 1 forwards;
 }
-
-/**/
-.menu-trigger {
-  opacity: 0 !important;
-}
-.menu-trigger.active {
-  opacity: 1 !important;
-}
-.menu-trigger,
-.menu-trigger span {
-  display: inline-block;
-  cursor: pointer;
-  transition: all .4s;
-  box-sizing: border-box;
-  opacity: 0.9;
-}
-.menu-trigger {
-  position: relative;
-  width: 40px;
-  height: 34px;
-  margin: 20px;
-}
-.menu-trigger span {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #fff;
-  border-radius: 4px;
-}
-.menu-trigger span:nth-of-type(1) {
-  top: 0;
-}
-.menu-trigger span:nth-of-type(2) {
-  top: 15px;
-}
-.menu-trigger span:nth-of-type(3) {
-  bottom: 0;
-}
-.menu-trigger:not(.active):hover span:nth-of-type(1) {
-  top: 6px;
-}
-.menu-trigger:not(.active):hover span:nth-of-type(3) {
-  bottom: 6px;
-}
-.menu-trigger.active span:nth-of-type(1) {
-  transform: translateY(15px) rotate(-45deg);
-}
-.menu-trigger.active span:nth-of-type(2) {
-  opacity: 0;
-}
-.menu-trigger.active span:nth-of-type(3) {
-  transform: translateY(-15px) rotate(45deg);
-}
-.menu-trigger.active span {
-  background-color: gray;
-}
-.menu-trigger.active:hover {
-  transform: scale(0.8);
-}
-/**/
 @keyframes vertical {
   0% {transform:translateY(-12px)}
   100% {transform:translateY(0px)}

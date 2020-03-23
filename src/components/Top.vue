@@ -19,7 +19,7 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    var dispMenuLists = ["/Works", "/Timeline"]
+    var dispMenuLists = ["/Works", "/Timeline", "/Profile"]
     next(vm => {
       if (~dispMenuLists.indexOf(from.path)){
         vm.isFirstP = false
