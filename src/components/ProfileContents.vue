@@ -1,5 +1,7 @@
 <template>
   <div id="aboutcontents-wrap">
+    <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg" v-on:load="loadendPC" v-show="isShowImg">
+    <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg" v-on:load="loadendSP" v-show="isShowImg">
     <div id="aboutcontents-main-wrap">
       <div id="aboutcontents-bgcolor"></div>
       <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
@@ -23,16 +25,38 @@ export default {
     return {
       fadeinText: false,
       fadeoutText: false,
-      aboutText: null
+      aboutText: null,
+      isShowImg: false,
+      isFinPC: false,
+      isFinSP: false
     }
   },
   methods: {
     onClickScrollIcon() {
       this.$router.push('/')
+    },
+    loadendPC() {
+      this.isFinPC = true
+      this.checkLoad()
+    },
+    loadendSP() {
+      this.isFinSP = true
+      this.checkLoad()
+    },
+    checkLoad() {
+      if (this.isFinPC&&this.isFinSP) {
+        // Fadein text When finLoad
+        this.doFadeText()
+      }
+    },
+    doFadeText() {
+      this.fadeoutText = true
+      setTimeout(() => {
+        this.fadeinText = true
+      }, 2500)
     }
   },
   mounted() {
-    //TODO: fadeout with fin img loadimg
     var _this = this
     // Load about
     axios.get('https://tsumugu.tech/getcontent.php?id=aG59wLtmrgwDD77Exsqu')
@@ -45,13 +69,10 @@ export default {
     })
     .then(function () {
     })
-    //
+    // timeout
     setTimeout(() => {
-      _this.fadeoutText = true
-      setTimeout(() => {
-        _this.fadeinText = true
-      }, 2500)
-    }, 2000)
+      this.doFadeText()
+    }, 3000)
   }
 }
 </script>

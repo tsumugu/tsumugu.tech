@@ -492,7 +492,7 @@ export default {
           this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
         }
       }
-    }, 1)
+    }, 50)
     //
   }
 }

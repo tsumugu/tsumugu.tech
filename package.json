@@ -11,6 +11,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
+    "analyze": "webpack-bundle-analyzer build/bundle-stats.json",
     "build": "node build/build.js"
   },
   "dependencies": {
@@ -89,7 +90,7 @@
     "vue-svg-loader": "^0.15.0",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.41.6",
-    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-dev-server": "^3.1.11",
     "webpack-merge": "^4.1.0"
   },
