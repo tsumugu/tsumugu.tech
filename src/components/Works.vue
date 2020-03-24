@@ -4,6 +4,7 @@
     <tbody>
       <tr>
         <td id="worksControl" colspan="3">
+          <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
           <div id="worksControl-genle">
             <ul>
               <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedGenle">{{val.key}}</label></li>
@@ -30,13 +31,16 @@
 <script>
 var firebase = require('firebase')
 import Card from './Card.template.vue'
+import Chart from './Chart.vue'
 export default {
   components: {
-    Card
+    Card,
+    Chart
   },
   data() {
     return {
       db: null,
+      chartData: null,
       checkedGenle: [],
       checkedYear: [],
       searchWord: "",
@@ -50,7 +54,16 @@ export default {
       genleCountFor: [],
       yearStr: [],
       yearCount: [],
-      yearCountFor: []
+      yearCountFor: [],
+      themeColors: {
+        'web':'#e34f26',
+        'マイコン': '#00878F',
+        'Android': '#a4c639',
+        'Bot': '#00c300',
+        'Unity': '#222c37',
+        'iOS':'#8e8e93',
+        'Other':'#F2F2F2'
+      }
     }
   },
   watch: {
@@ -66,14 +79,50 @@ export default {
   },
   methods: {
     doFiltering() {
-      console.log(this.checkedGenle, this.checkedYear)
       this.divideThree(this.cardItems.filter(doc =>
         this.checkedGenle.includes(doc.genle)
         && this.checkedYear.includes(String(doc.madeYear))
         && (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1
       ))
     },
+    dispChart(list) {
+      var genleList = []
+      list.forEach(element => {
+        var currntCount = genleList[element.genle]
+        if (currntCount == undefined) {
+          currntCount = 1
+        } else {
+          currntCount += 1
+        }
+        genleList[element.genle] = currntCount
+      })
+      var labels = []
+      var data = []
+      var bgColor = []
+      var genleListSorted = []
+      for(let k of Object.keys(this.themeColors)) {
+        genleListSorted[k] = genleList[k]
+      }
+      for(let k of Object.keys(genleListSorted)) {
+        labels.push(k)
+        data.push(genleList[k])
+        bgColor.push(this.themeColors[k])
+      }
+      this.chartData = {
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: bgColor,
+            borderColor: 'transparent'
+          }
+        ]
+      }
+      //
+    },
     divideThree(list) {
+      this.dispChart(list)
+
       var _this = this
       this.itemDivThree = []
       this.searchRes = 0
@@ -219,5 +268,11 @@ td {
 }
 #worksControl-filter, #worksControl-genle {
   text-align: left;
+}
+#worksControl-chart-wrap {
+  width: 30%;
+}
+#worksControl-chart {
+  width: 100%;
 }
 </style>
