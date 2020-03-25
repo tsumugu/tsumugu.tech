@@ -1,30 +1,22 @@
 <template>
 <div id="timeline">
-  <table>
-    <tbody>
-      <tr>
-        <td id="worksControl" colspan="3">
-          <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
-          <div id="worksControl-genle">
-            <ul>
-              <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedGenle">{{val.key}}</label></li>
-            </ul>
-          </div>
-          <div id="worksControl-filter">
-            <ul>
-              <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedYear">{{val.key}}</label></li>
-            </ul>
-            <div>{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
-          </div>
-        </td>
-      </tr>
-      <tr v-for="items in itemDivThree">
-        <td v-for="item in items">
-          <Card v-show="item.isShow" :item="item" :isDispEdit=false :isLogin=false></Card>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div id="worksControl">
+    <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
+    <div id="worksControl-genle">
+      <ul>
+        <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedGenle">{{val.key}}</label></li>
+      </ul>
+    </div>
+    <div id="worksControl-filter">
+      <ul>
+        <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedYear">{{val.key}}</label></li>
+      </ul>
+      <div>{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
+    </div>
+  </div>
+  <div id="card-wrapper">
+    <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" :isDispEdit=false :isLogin=false></Card>
+  </div>
 </div>
 </template>
 
@@ -62,7 +54,7 @@ export default {
         'Bot': '#00c300',
         'Unity': '#222c37',
         'iOS':'#8e8e93',
-        'Other':'#F2F2F2'
+        'Other':'#cacbca'
       }
     }
   },
@@ -122,22 +114,8 @@ export default {
     },
     divideThree(list) {
       this.dispChart(list)
-
-      var _this = this
-      this.itemDivThree = []
-      this.searchRes = 0
-      var tmpArr = []
-      var divLim = 3
-      list.forEach(doc => {
-        this.searchRes += 1
-        tmpArr.push(doc)
-        if (tmpArr.length == divLim) {
-          _this.itemDivThree.push(tmpArr)
-          tmpArr = []
-        }
-      })
-      _this.itemDivThree.push(tmpArr)
-      tmpArr = []
+      this.itemDivThree = list
+      this.searchRes = list.length
     },
     getItems() {
       var _this = this
@@ -246,33 +224,31 @@ ul {
 li{
   display: inline;
 }
-table, th, td {
-  border: 1px solid black;
-  text-align: center;
-  vertical-align: bottom;
-}
-table, th {
-  width: 100%;
-}
-td {
-  padding: 10px;
-  background-color: #fcfcfc;
-}
 >>> .card {
-  width: 100%;
-  text-align: left;
-}
-#worksControl {
-  text-align: left;
-  padding: 0;
-}
-#worksControl-filter, #worksControl-genle {
-  text-align: left;
-}
-#worksControl-chart-wrap {
-  width: 30%;
+  align-self: end;
+  margin: 10px;
+  margin-right: 0px;
+  padding: 10px;
 }
 #worksControl-chart {
   width: 100%;
+}
+@media (max-width: 3000px) and (min-width: 630px) {
+  #card-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #worksControl-chart-wrap {
+    width: 30%;
+  }
+}
+@media (max-width: 630px) {
+  #card-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  #worksControl-chart-wrap {
+    width: 50%;
+  }
 }
 </style>
