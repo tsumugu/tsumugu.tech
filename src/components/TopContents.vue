@@ -7,10 +7,11 @@
       <div id="top-scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
       <div id="top-button" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" size="md" /></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
-        <ul id="top-menu-links" v-show="isMenuOpen" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">
-          <li><router-link to="Works">Works</router-link></li>
-          <li><router-link to="Timeline">Timeline</router-link></li>
-        </ul>
+        <div id="top-menu-links-wrapper">
+          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon v-on:click="onClickScrollIcon" icon="chevron-left" size="md" />  Works</router-link></div>
+          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon v-on:click="onClickScrollIcon" icon="chevron-right" size="md" /></router-link></div>
+          <div id="top-menu-links-bgborder"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -109,7 +110,7 @@ a {
 }
 #top-scroll {
   bottom: 12px;
-  margin-left: 50%;
+  margin-left: 48%;
 }
 #top-scroll-text {
   margin-left: -35%;
@@ -132,21 +133,41 @@ a {
 }
 #top-menu {
   position: absolute;
+  bottom: -100%;
+  width: 100%;
+  height: 100%;
   background-color: white;
   opacity: 0.9;
   z-index: 4;
 }
-#top-menu {
+#top-menu-links-wrapper {
   position: absolute;
-  bottom: -100%;
-  width: 100%;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  width: 360px;
 }
-#top-menu-links {
+.top-menu-scrollicon {
+  font-size: 2.5rem;
+  color: gray;
+  opacity: 0.7;
+  cursor: pointer;
+}
+#top-menu-link-works {
+  width: 50%;
+}
+#top-menu-link-tl {
+  text-align: right;
+}
+#top-menu-links-bgborder {
   position: absolute;
-  top: 40px;
-  font-size: 2rem;
-  opacity: 0;
+  left: 100px;
+  bottom: 15px;
+  width:135px;
+  border-top: 2px solid gray;
+  transform: rotate(-36deg);
+  transform-origin: 0% 0%;
 }
 .fuwafuwa {
   animation: vertical 1700ms ease-in-out infinite alternate;
