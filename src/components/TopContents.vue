@@ -5,11 +5,11 @@
       <div id="top-bg-img"></div>
       <div id="top-name"></div>
       <div id="top-scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
-      <div id="top-button" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" size="md" /></div>
+      <div id="top-button" class="scrollIcon" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" size="md" /></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <div id="top-menu-links-wrapper">
-          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon v-on:click="onClickScrollIcon" icon="chevron-left" size="md" />  Works</router-link></div>
-          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon v-on:click="onClickScrollIcon" icon="chevron-right" size="md" /></router-link></div>
+          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" size="md" />  Works</router-link></div>
+          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" size="md" /></router-link></div>
           <div id="top-menu-links-bgborder"></div>
         </div>
       </div>
@@ -70,6 +70,15 @@ li {
 }
 a {
   text-decoration: none;
+  /**/
+  color: gray;
+}
+a:hover {
+  /**/
+  color: #2c3e50;
+}
+#top-scroll-text:hover {
+  /**/
   color: #2c3e50;
 }
 #top-wrap {
@@ -105,7 +114,6 @@ a {
 }
 #top-scroll, #top-button {
   font-size: 2em;
-  opacity: 0.7;
   z-index: 99;
 }
 #top-scroll {
@@ -116,13 +124,12 @@ a {
   margin-left: -35%;
   margin-bottom: -15px;
   cursor: pointer;
+  /**/
+  color: gray;
   opacity: 0;
 }
 .topScrollOpenBg {
   color: gray !important;
-}
-.scrollIcon {
-  cursor: pointer;
 }
 #top-button {
   position: absolute;
@@ -150,9 +157,18 @@ a {
 }
 .top-menu-scrollicon {
   font-size: 2.5rem;
+  /**/
+  color: gray;
+  opacity: 1;
+  cursor: pointer;
+}
+.top-menu-opacity {
   color: gray;
   opacity: 0.7;
+}
+.scrollIcon {
   cursor: pointer;
+  opacity: 0.7;
 }
 #top-menu-link-works {
   width: 50%;
@@ -166,6 +182,7 @@ a {
   bottom: 15px;
   width:135px;
   border-top: 2px solid gray;
+  opacity: 0.7;
   transform: rotate(-36deg);
   transform-origin: 0% 0%;
 }
@@ -206,9 +223,6 @@ a {
 }
 
 @media (max-width: 3000px) and (min-width: 600px) {
-  a:hover {
-    color: gray;
-  }
   #top-bg-img {
     /* TOPPC-RSZD.jpg */
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");

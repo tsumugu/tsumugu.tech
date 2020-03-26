@@ -1,5 +1,6 @@
 <script>
 import { Doughnut } from 'vue-chartjs'
+import 'chartjs-plugin-labels';
 export default {
   extends: Doughnut,
   props: {
@@ -11,6 +12,13 @@ export default {
         responsive: true,
         legend: {
           display: false
+        },
+        plugins: {
+          labels: {
+            render: 'label',
+            fontSize: '16',
+            fontColor: '#fff'
+          }
         }
       }
     }

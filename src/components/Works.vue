@@ -48,13 +48,13 @@ export default {
       yearCount: [],
       yearCountFor: [],
       themeColors: {
-        'web':'#e34f26',
-        'マイコン': '#00878F',
-        'Android': '#a4c639',
-        'Bot': '#00c300',
-        'Unity': '#222c37',
-        'iOS':'#8e8e93',
-        'Other':'#cacbca'
+        'web': 'rgba(227, 79, 38, 0.8)',
+        'マイコン': 'rgba(0, 135, 143, 0.8)',
+        'Android': 'rgba(164, 198, 57, 0.8)',
+        'Bot': 'rgba(0, 195, 0, 0.8)',
+        'Unity': 'rgba(34, 44, 55, 0.8)',
+        'iOS': 'rgba(142, 142, 147, 0.8)',
+        'Other': 'rgba(202, 203, 202, 0.8)'
       }
     }
   },
@@ -237,9 +237,10 @@ li{
   #card-wrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    width: 100%;
   }
   #worksControl-chart-wrap {
-    width: 30%;
+    width: 35%;
   }
 }
 @media (max-width: 630px) {
