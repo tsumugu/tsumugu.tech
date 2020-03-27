@@ -1,9 +1,6 @@
 <template>
   <div id="contents">
     <div id="sky">
-      <div id="sky-sun">
-        <img src="//tsumugu.tech/images/sun.png" alt="太陽" width="100px">
-      </div>
       <div id="sky-mes">
         <h1>404 Not Found</h1>
         <p>お探しのページは存在しないか削除されています</p>

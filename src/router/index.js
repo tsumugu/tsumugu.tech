@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import top from '@/components/Top'
 import profile from '@/components/Profile'
 import works from '@/components/Works'
+import article from '@/components/Article'
 import tl from '@/components/Timeline'
 import addworks from '@/components/AddWorks'
 import auth from '@/components/Auth'
@@ -24,6 +25,10 @@ export default new Router({
     {
       path: '/Works',
       component: works
+    },
+    {
+      path: '/Article/:id',
+      component: article
     },
     {
       path: '/Timeline',

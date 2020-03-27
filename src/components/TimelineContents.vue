@@ -11,7 +11,7 @@
           <div id="bmi-a-contents">
             <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
             <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
-            <Article :cardArticleId="cardArticleId"></Article>
+            <ArticleContents :cardArticleId="cardArticleId"></ArticleContents>
           </div>
         </div>
       </div>
@@ -52,11 +52,11 @@
 <script>
 var firebase = require('firebase')
 var axios = require('axios')
-import Article from './Article.vue'
+import ArticleContents from './ArticleContents.vue'
 import Card from './Card.template.vue'
 export default {
   components: {
-    Article,
+    ArticleContents,
     Card
   },
   data () {
@@ -110,11 +110,8 @@ export default {
     goToSite(siteUrl) {
       window.open(siteUrl);
     },
-    goToArticle(articleId) {
-      this.$router.push({ path: `/Article/${articleId}` })
-    },
     oepnEdit(articleId) {
-      window.open("https://tsumugu.tech/edit/"+articleId);
+      window.open("https://tsumugu.tech/edit/"+articleId)
     },
     touchHandlerM(event) {
       var x = 0, y = 0;

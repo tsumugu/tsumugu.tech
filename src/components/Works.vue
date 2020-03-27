@@ -19,7 +19,7 @@
       </div>
     </div>
     <div id="card-wrapper">
-      <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" :isDispEdit=false :isLogin=false></Card>
+      <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
     </div>
   </div>
 </div>
@@ -76,6 +76,17 @@ export default {
     }
   },
   methods: {
+    cardButtonEv(argObj) {
+      var siteUrl = argObj.siteUrl
+      var articleId = argObj.articleId
+      window.open("https://tsumugu.tech/Article/"+articleId)
+    },
+    goToSite(siteUrl) {
+      window.open(siteUrl);
+    },
+    oepnEdit(articleId) {
+      window.open("https://tsumugu.tech/edit/"+articleId);
+    },
     doFiltering() {
       this.divideThree(this.cardItems.filter(doc =>
         this.checkedGenle.includes(doc.genle)
@@ -298,6 +309,7 @@ li{
   }
   #worksControl-chart-wrap {
     width: 80%;
+    margin: auto;
   }
 }
 </style>
