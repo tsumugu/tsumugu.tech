@@ -53,6 +53,35 @@ export default {
     }
   },
   mounted() {
+    window.addEventListener("keydown", (event)=>{
+      var keyName = event.key
+      var isNotPressedCtrlShiftAlt = !event.ctrlKey && !event.shiftKey && !event.altKey
+      if (isNotPressedCtrlShiftAlt) {
+        if (keyName==="ArrowUp") {
+          // PageNum Down
+          if (2>=this.$parent.pageNum&&this.$parent.pageNum>=0) {
+            this.$parent.pageNum -= 1
+            this.$parent.pageWcNum = (this.$parent.pageNum*10)+1
+          }
+        } else if (keyName==="ArrowDown") {
+          // PageNum Up
+          if (2>this.$parent.pageNum&&this.$parent.pageNum>=-1) {
+            this.$parent.pageNum += 1
+            this.$parent.pageWcNum = (this.$parent.pageNum*10)+1
+          }
+        } else {
+          if (this.$parent.pageNum === 1) {
+            if (keyName==="ArrowLeft") {
+              // Left
+              this.$router.push('/Works')
+            } else if (keyName==="ArrowRight") {
+              // Right
+              this.$router.push('/Timeline')
+            }
+          }
+        }
+      }
+    })
   }
 }
 </script>
@@ -175,11 +204,13 @@ a:hover {
 }
 #top-menu-link-tl {
   text-align: right;
+  margin-top: 20px;
 }
 #top-menu-links-bgborder {
   position: absolute;
-  left: 100px;
-  bottom: 15px;
+  left: 110px;
+  /* 15 + (#top-menu-link-tls margin top) */
+  bottom: 35px;
   width:135px;
   border-top: 2px solid gray;
   opacity: 0.7;
@@ -224,7 +255,6 @@ a:hover {
 
 @media (max-width: 3000px) and (min-width: 600px) {
   #top-bg-img {
-    /* TOPPC-RSZD.jpg */
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");
     background-position: center top;
   }

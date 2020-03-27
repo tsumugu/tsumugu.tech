@@ -4,12 +4,12 @@
     <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
     <div id="worksControl-genle">
       <ul>
-        <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedGenle">{{val.key}}</label></li>
+        <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
       </ul>
     </div>
     <div id="worksControl-filter">
       <ul>
-        <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" :name="val.key" :value="val.key" v-model="checkedYear">{{val.key}}</label></li>
+        <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
       </ul>
       <div>{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
     </div>
@@ -217,6 +217,41 @@ export default {
 </script>
 
 <style scoped>
+.checkbox-input {
+  display: none;
+}
+.checkbox-parts {
+  padding-left: 20px;
+  position:relative;
+  margin-right: 20px;
+}
+.checkbox-parts::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #c7c7c7;
+  border-radius: 4px;
+}
+.checkbox-input:checked {
+  color: #82b349;
+}
+.checkbox-input:checked + .checkbox-parts::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 5px;
+  width: 7px;
+  height: 14px;
+  transform: rotate(40deg);
+  border-bottom: 3px solid #82b349;
+  border-right: 3px solid #82b349;
+}
+
 ul {
   list-style: none;
   padding: 0;
