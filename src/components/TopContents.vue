@@ -50,10 +50,8 @@ export default {
     onClickScrollIcon() {
       this.$parent.pageNum += 1
       this.$parent.pageWcNum = (this.$parent.pageNum*10)+1
-    }
-  },
-  mounted() {
-    window.addEventListener("keydown", (event)=>{
+    },
+    keydownHandler(event) {
       var keyName = event.key
       var isNotPressedCtrlShiftAlt = !event.ctrlKey && !event.shiftKey && !event.altKey
       if (isNotPressedCtrlShiftAlt) {
@@ -81,7 +79,13 @@ export default {
           }
         }
       }
-    })
+    }
+  },
+  mounted() {
+    window.addEventListener("keydown", this.keydownHandler)
+  },
+  destroyed() {
+    window.removeEventListener("keydown", this.keydownHandler)
   }
 }
 </script>

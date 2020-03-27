@@ -494,6 +494,11 @@ export default {
       }
     }, 50)
     //
+  },
+  destroyed() {
+    var bottommenuswipe = this.$refs.bottommenuswipe
+    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false);
+    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false);
   }
 }
 </script>

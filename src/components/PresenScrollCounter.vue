@@ -116,6 +116,13 @@ export default {
       this.swipeY_S = 0
       this.touchedElementName = null
     },
+    wheelHandler: function(event) {
+      var _this = this
+      window.clearTimeout(this.timeoutId)
+      _this.timeoutId = window.setTimeout(function() {
+        _this.scrollCountEvent(event.deltaY)
+      }, 100)
+    },
     scrollCountEvent: function(deltaY) {
       //前回から時間経ってるかチェック
       var nowtimestamp = new Date().getTime()
@@ -158,13 +165,15 @@ export default {
       window.addEventListener('touchend', this.touchHandlerE, { passive: false });
       window.addEventListener('touchcancel', this.touchHandlerR, { passive: false });
     } else {
-      window.addEventListener('wheel', function(event) {
-        window.clearTimeout(_this.timeoutId);
-        _this.timeoutId = window.setTimeout(function() {
-          _this.scrollCountEvent(event.deltaY)
-        }, 100);
-      }, { passive: false })
+      window.addEventListener('wheel', this.wheelHandler, { passive: false })
     }
+  },
+  destroyed() {
+    window.removeEventListener('touchstart', this.touchHandlerS, { passive: false });
+    window.removeEventListener('touchmove', this.touchHandlerM, { passive: false });
+    window.removeEventListener('touchend', this.touchHandlerE, { passive: false });
+    window.removeEventListener('touchcancel', this.touchHandlerR, { passive: false });
+    window.removeEventListener('wheel', this.wheelHandler, { passive: false })
   }
 }
 </script>
