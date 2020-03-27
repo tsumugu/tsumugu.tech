@@ -1,21 +1,26 @@
 <template>
 <div id="timeline">
-  <div id="worksControl">
-    <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
-    <div id="worksControl-genle">
-      <ul>
-        <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
-      </ul>
-    </div>
-    <div id="worksControl-filter">
-      <ul>
-        <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
-      </ul>
-      <div>{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
-    </div>
+  <div id="loading" v-show="loading">
+  Loading
   </div>
-  <div id="card-wrapper">
-    <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" :isDispEdit=false :isLogin=false></Card>
+  <div id="timeline-wrapper" v-show="!loading">
+    <div id="worksControl">
+      <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
+      <div id="worksControl-genle">
+        <ul>
+          <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
+        </ul>
+      </div>
+      <div id="worksControl-filter">
+        <ul>
+          <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
+        </ul>
+        <div>{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
+      </div>
+    </div>
+    <div id="card-wrapper">
+      <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" :isDispEdit=false :isLogin=false></Card>
+    </div>
   </div>
 </div>
 </template>
@@ -33,6 +38,7 @@ export default {
     return {
       db: null,
       chartData: null,
+      loading: true,
       checkedGenle: [],
       checkedYear: [],
       searchWord: "",
@@ -202,6 +208,7 @@ export default {
           return 0;
         })
         //
+        this.loading = false
       })
       .catch(function(error) {
         //onError
@@ -271,6 +278,9 @@ li{
 #worksControl-chart {
   width: 100%;
 }
+>>> .card {
+  margin-right: 10px !important;
+}
 @media (max-width: 3000px) and (min-width: 630px) {
   #card-wrapper {
     display: grid;
@@ -285,9 +295,6 @@ li{
   #card-wrapper {
     display: block;
     width: 100%;
-  }
-  >>> .card {
-    margin-right: 10px !important;
   }
   #worksControl-chart-wrap {
     width: 80%;
