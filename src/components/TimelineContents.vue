@@ -513,6 +513,9 @@ hr {
 .progressive-image {
   max-width: auto !important;
 }
+>>> .card-inview {
+  background-color: red !important;
+}
 @media (max-width: 3000px) and (min-width: 630px) {
   #timeline {
     text-align: center;

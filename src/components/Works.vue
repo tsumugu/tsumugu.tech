@@ -265,6 +265,9 @@ li{
   margin-right: 0px;
   padding: 10px;
 }
+#worksControl {
+  padding: 10px;
+}
 #worksControl-chart {
   width: 100%;
 }
@@ -280,11 +283,14 @@ li{
 }
 @media (max-width: 630px) {
   #card-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: block;
+    width: 100%;
+  }
+  >>> .card {
+    margin-right: 10px !important;
   }
   #worksControl-chart-wrap {
-    width: 50%;
+    width: 80%;
   }
 }
 </style>
