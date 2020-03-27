@@ -1,6 +1,6 @@
 <template>
 <div id="article_wrap">
-  <ArticleContents :cardArticleId="cardArticleId" />
+  <ArticleContents :cardArticleId="cardArticleId"></ArticleContents>
 </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
       cardArticleId: null
     }
   },
-  created () {
+  created() {
     this.cardArticleId = this.$route.params.id
   }
 }

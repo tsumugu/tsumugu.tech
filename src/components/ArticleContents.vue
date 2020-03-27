@@ -19,8 +19,7 @@ var axios = require('axios')
 export default {
   props: {
     cardArticleId: {
-      type: String,
-      default: null
+      type: String
     }
   },
   watch: {
@@ -34,8 +33,7 @@ export default {
       error: false,
       cardSummary: null,
       body: null,
-      isLogin: false,
-      writeUrl: null,
+      isLogin: false
     }
   },
   methods: {
@@ -53,7 +51,6 @@ export default {
       .then(function () {
         _this.loading = false
       })
-      this.writeUrl = "http://readme.tsumugu2626.xyz/view/tsumugu-tech/"+this.$route.params.id
       //firebase
       firebase.auth().onAuthStateChanged((user) => {
         _this.isLogin = user
@@ -61,6 +58,7 @@ export default {
     }
   },
   created () {
+    this.loadArticle(this.cardArticleId)
   }
 }
 </script>
