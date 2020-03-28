@@ -66,9 +66,6 @@ export default {
       db: null,
       loading: true,
       items: [],
-      abouts: [],
-      lang_color: [],
-      years_color: [],
       colBase: null,
       colChild: null,
       colChildNow: null,
@@ -240,11 +237,9 @@ export default {
         parentsClassList.add("fadeout")
       }
     },
-    drawTL(arg_lang_color) {
-      this.lang_color = arg_lang_color
+    drawTL() {
       var _this = this
       this.items = []
-      this.abouts = []
 
       //Get Deta from Firebase
       var querySnapshotArr = []
@@ -350,7 +345,6 @@ export default {
               'isAbout': false,
               'isTitle': false,
               'isItem': true,
-              'color': _this.lang_color[docData.mainLang],
               'isEnd': false,
               'isFixed': (el_count==0),
               'isDispGotoSiteButton': (docData.siteurl !== null),
@@ -392,6 +386,9 @@ export default {
     }
   },
   mounted() {
+    this.db = firebase.firestore()
+    this.drawTL()
+
     var _this = this
     var cookie = this.$cookies.get("edit")
     if (cookie !== null) {
@@ -408,7 +405,6 @@ export default {
         _this.isLogin = true
       }
     })
-    this.db = firebase.firestore()
 
     //
     this.supportTouch = 'ontouchend' in document

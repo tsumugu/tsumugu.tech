@@ -42,6 +42,9 @@ export default {
   },
   methods: {
     loadArticle(articleId) {
+      if (articleId == null) {
+        return false
+      }
       var _this = this
       this.loading = true
       this.error = false
