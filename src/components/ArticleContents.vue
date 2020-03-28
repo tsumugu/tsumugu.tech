@@ -39,6 +39,8 @@ export default {
   methods: {
     loadArticle(articleId) {
       var _this = this
+      this.loading = true
+      this.error = false
       axios.get('https://tsumugu.tech/getcontent.php?id='+articleId)
       .then(function (response) {
         var post = response.data.posts[0]

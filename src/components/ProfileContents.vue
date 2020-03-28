@@ -53,7 +53,7 @@ export default {
       this.fadeoutText = true
       setTimeout(() => {
         this.fadeinText = true
-      }, 2500)
+      }, 3000)
     }
   },
   mounted() {
