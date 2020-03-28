@@ -1,7 +1,7 @@
 <template>
 <div id="timeline">
   <div id="loading" v-show="loading">
-  Loading
+  <Loading></Loading>
   </div>
   <div id="timeline-wrapper" v-show="!loading">
     <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
@@ -54,10 +54,12 @@ var firebase = require('firebase')
 var axios = require('axios')
 import ArticleContents from './ArticleContents.vue'
 import Card from './Card.template.vue'
+import Loading from './Loading.vue'
 export default {
   components: {
     ArticleContents,
-    Card
+    Card,
+    Loading
   },
   data () {
     return {

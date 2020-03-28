@@ -1,7 +1,7 @@
 <template>
 <div id="article">
   <div v-if="loading">
-  Loading
+  <Loading></Loading>
   </div>
   <div v-if="error">
   NotFound
@@ -15,8 +15,12 @@
 <script>
 var firebase = require('firebase')
 var axios = require('axios')
+import Loading from './Loading.vue'
 
 export default {
+  components: {
+    Loading
+  },
   props: {
     cardArticleId: {
       type: String

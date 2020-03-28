@@ -1,7 +1,7 @@
 <template>
 <div id="timeline">
   <div id="loading" v-show="loading">
-  Loading
+  <Loading></Loading>
   </div>
   <div id="timeline-wrapper" v-show="!loading">
     <div id="worksControl">
@@ -29,10 +29,12 @@
 var firebase = require('firebase')
 import Card from './Card.template.vue'
 import Chart from './Chart.vue'
+import Loading from './Loading.vue'
 export default {
   components: {
     Card,
-    Chart
+    Chart,
+    Loading
   },
   data() {
     return {
@@ -219,7 +221,7 @@ export default {
           return 0;
         })
         //
-        this.loading = false
+        // this.loading = false
       })
       .catch(function(error) {
         //onError
@@ -235,6 +237,11 @@ export default {
 </script>
 
 <style scoped>
+#loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
 .checkbox-input {
   display: none;
 }
