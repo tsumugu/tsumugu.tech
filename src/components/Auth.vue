@@ -107,7 +107,9 @@ export default {
   created () {
     var _this = this
     firebase.auth().onAuthStateChanged((user) => {
-      _this.isLogin = user
+      if (user != null) {
+        _this.isLogin = true
+      }
       _this.isLoading = false
     })
     this.isPresenModeBool = this.$cookies.get("mode")

@@ -59,7 +59,9 @@ export default {
       })
       //firebase
       firebase.auth().onAuthStateChanged((user) => {
-        _this.isLogin = user
+        if (user != null) {
+          _this.isLogin = true
+        }
       });
     }
   },

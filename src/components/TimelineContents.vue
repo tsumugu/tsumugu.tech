@@ -74,7 +74,6 @@ export default {
       colChildNow: null,
       colChildBefore: null,
       colCounter: 0,
-      nextYear: 0,
       isShowBottomMenu: false,
       isHideBottomMenu: true,
       isShowBottomMenuInner: false,
@@ -195,6 +194,37 @@ export default {
       }
       // console.log(n, isFirst, document.getElementsByClassName('colChild'), this.colChildBefore, this.colChildNow, this.colChild)
     },
+    setYearText(str) {
+      if (this.colBase != undefined) {
+        this.colBase.getElementsByClassName('year-text')[0].innerText = str
+      }
+    },
+    checkPosAndChangeCount() {
+      var crB = this.createBoundingClientRect(this.colChildBefore)
+      var crN = this.createBoundingClientRect(this.colChildNow)
+      var cr = this.createBoundingClientRect(this.colChild)
+      if (this.colChildBefore != undefined) {
+        var posB = crB.rect.y
+      }
+      if (this.colChildNow != undefined) {
+        var posN = crN.rect.y
+      }
+      if (this.colChild != undefined) {
+        var pos = cr.rect.y
+      }
+      // console.log(this.colChildBefore, this.colChildNow, this.colChild)
+      // console.log(posB, posN, pos)
+      if (10>pos) {
+        this.setcolChild(this.colCounter, false)
+        this.colCounter++
+        this.toggleFadeinAndOut(this.colChildNow)
+      }
+      if (0<posN) {
+        this.colCounter--
+        this.setcolChild(this.colCounter, false)
+        this.toggleFadeinAndOut(this.colChildNow)
+      }
+    },
     toggleFadeinAndOut(e) {
       if (this.getAttribute(e, 'data-year') === "2003") {
         return;
@@ -306,7 +336,6 @@ export default {
           if (!docData.isAbout) {
             var thumbnailUrl = docData.thumbnail==null ? 'https://via.placeholder.com/2560x1480' : docData.thumbnail
             var isDispRead = docData.isDispReadButton==undefined ? true : docData.isDispReadButton
-            console.log(docData.isDispReadButton, isDispRead)
             let data = {
               'id': docData.id,
               'thumbnail': thumbnailUrl,
@@ -351,7 +380,6 @@ export default {
         })
         // v-forが描画され終ったときに実行されるイベント
         _this.$nextTick(() => {
-          // XXX: うまく呼ばれてない？
           setTimeout(() => {
             _this.colBase = document.getElementsByClassName('colBase')[0]
             _this.setcolChild(0, true)
@@ -361,8 +389,6 @@ export default {
       }).catch(function () {
         alert('データの取得に失敗しました');
       });
-      //
-
     }
   },
   mounted() {
@@ -378,7 +404,9 @@ export default {
       this.isDispEdit = false
     }
     firebase.auth().onAuthStateChanged((user) => {
-      _this.isLogin = user
+      if (user != null) {
+        _this.isLogin = true
+      }
     })
     this.db = firebase.firestore()
 
@@ -390,107 +418,26 @@ export default {
       bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
     }
     //
-    var isDidNowCol = false
-    var before_col_obj = null
     setInterval(() => {
-      if (this.colBase !== null && this.colChild !== null) {
-        var colBaseRect = this.createBoundingClientRect(this.colBase);
-        //触れた時点でbeforeに触れているobjがsetされて死ぬ
-        if (this.colChildBefore !== null) {
-          var colChildBeforeRect = this.createBoundingClientRect(this.colChildBefore)
-          var isBeforeCollision = this.detectCollision(colBaseRect, colChildBeforeRect)
-        }
-        if (this.colChildNow !== null) {
-          var colChildNowRect = this.createBoundingClientRect(this.colChildNow)
-          var isNowCollision = this.detectCollision(colBaseRect, colChildNowRect)
-        }
-        if (this.colChild !== null) {
-          var colChildRect = this.createBoundingClientRect(this.colChild)
-          var isAfterCollision = this.detectCollision(colBaseRect, colChildRect)
-        }
-        if  (isNowCollision) {
-          if (!isDidNowCol) {
-            // colChildNowの衝突回数を記録
-            var dcn = this.getAttribute(this.colChildNow, 'data-col-num')
-            if (dcn === null) {
-              dcn = 0
-            }
-            dcn = Number(dcn)
-            dcn += 1
-            this.colChildNow.setAttribute('data-col-num', dcn)
-            // 2回目以降のcollにだけ反応
-            if (dcn >= 2) {
-              if (dcn % 2 == 0) {
-                if (this.getAttribute(this.colChildNow, 'data-year') === "2019") {
-                  // 2019が2回目にcollしたとき2018に書き換え
-                  this.colBase.getElementsByClassName('year-text')[0].innerText = "2018"
-                  // fadein
-                  var parentsClassList = this.colChildNow.parentNode.classList
-                  if (parentsClassList.contains("fadeout")) {
-                    parentsClassList.add("fadein")
-                    parentsClassList.remove("fadeout")
-                  }
-                } else {
-                  if (this.getAttribute(this.colChildNow, 'data-year') !== "2003") {
-                    //nowで戻った時
-                    var parentsClassList = this.colChildNow.parentNode.classList
-                    if (parentsClassList.contains("fadeout")) {
-                      parentsClassList.add("fadein")
-                      parentsClassList.remove("fadeout")
-                      this.colBase.getElementsByClassName('year-text')[0].innerText = this.getAttribute(this.colChildBefore, 'data-year')
-                      this.colCounter--
-                    }
-                  }
-                }
-              } else {
-                if (this.getAttribute(this.colChildNow, 'data-year') !== "2003") {
-                  //nowで戻った時
-                  var parentsClassList = this.colChildNow.parentNode.classList
-                  if (parentsClassList.contains("fadein")) {
-                    parentsClassList.add("fadeout")
-                    parentsClassList.remove("fadein")
-                    this.colBase.getElementsByClassName('year-text')[0].innerText = this.getAttribute(this.colChildNow, 'data-year')
-                    this.colCounter++
-                  }
-                }
-              }
-            }
-            //
-            isDidNowCol = true
+      if (this.colChild != undefined) {
+        //
+        var dispYear
+        if (this.colChildNow != undefined) {
+          dispYear = this.getAttribute(this.colChildNow, 'data-year')
+          if (dispYear == undefined) {
+            dispYear = 2003
           }
         } else {
-          isDidNowCol = false
+          dispYear = 2003
         }
-        if(isBeforeCollision || isAfterCollision){
-          var col_obj = null
-          if (isBeforeCollision && !isAfterCollision) {
-            col_obj = this.colChildBefore
-          } else {
-            col_obj = this.colChild
-          }
-          if (col_obj !== before_col_obj) {
-            this.toggleFadeinAndOut(col_obj)
-            before_col_obj = col_obj
-          }
-          this.setcolChild(this.colCounter, false)
-          if (isBeforeCollision && !isAfterCollision) {
-            this.colCounter--
-            if (this.colChildBefore === undefined) {
-              this.colCounter++
-            } else {
-              this.nextYear = this.getAttribute(this.colChildBefore, 'data-year')
-            }
-          } else {
-            this.nextYear = this.getAttribute(this.colChildNow, 'data-year')
-            this.colCounter++
-            if (this.colChild === undefined) {
-              this.colCounter-=2
-              this.nextYear = "2019"
-            }
-          }
-          this.colBase.getElementsByClassName('year-text')[0].innerText = this.nextYear
-        }
+        this.setYearText(dispYear)
+        //
+      } else {
+        //
+        this.setYearText(2019)
+        //
       }
+      this.checkPosAndChangeCount()
     }, 50)
     //
   },
