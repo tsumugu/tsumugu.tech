@@ -221,7 +221,7 @@ export default {
           return 0;
         })
         //
-        // this.loading = false
+        this.loading = false
       })
       .catch(function(error) {
         //onError
