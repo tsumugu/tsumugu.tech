@@ -35,7 +35,6 @@ export default {
     return {
       loading: true,
       error: false,
-      cardSummary: null,
       body: null,
       isLogin: false
     }
@@ -48,10 +47,10 @@ export default {
       var _this = this
       this.loading = true
       this.error = false
+      _this.body = ""
       axios.get('https://tsumugu.tech/getcontent.php?id='+articleId)
       .then(function (response) {
         var post = response.data.posts[0]
-        _this.cardSummary = post.summary
         _this.body = post.html
       })
       .catch(function (error) {
