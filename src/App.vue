@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 import './assets/css/works-colors-test-green.css'
 
 export default {

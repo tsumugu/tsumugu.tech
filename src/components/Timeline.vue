@@ -50,7 +50,6 @@
 </template>
 
 <script>
-var firebase = require('firebase')
 var axios = require('axios')
 import ArticleContents from './ArticleContents.vue'
 import Card from './Card.template.vue'
@@ -588,8 +587,7 @@ hr {
 
 #timeline {
   width: 100%;
-  /* This value must same as #left-line  */
-  height: 17000px;
+  height: auto;
 }
 .stop-scroll {
   overflow: hidden !important;
@@ -606,12 +604,14 @@ hr {
 #tl-wrap {
   position: relative;
   width: 100%;
-  height: 10000px;
+  /* same #left-line */
+  height: 20000px;
 }
 #left-line {
   display: inline-block;
   width: 10px;
-  height: 17000px;
+  /* same #tl-wrap */
+  height: 20000px;
   margin-top: 40px;
   margin-left: 21.5px;
   float: left;

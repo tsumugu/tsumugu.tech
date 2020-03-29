@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 import ArticleContents from './ArticleContents.vue'
 export default {
   components: {

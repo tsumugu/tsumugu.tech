@@ -39,6 +39,7 @@ new Vue({
   el: '#app',
   snap,
   router,
+  firebase,
   components: { App },
   template: '<App/>'
 })
