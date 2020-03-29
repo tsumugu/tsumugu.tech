@@ -4,6 +4,18 @@
   <Loading></Loading>
   </div>
   <div id="timeline-wrapper" v-show="!loading">
+    <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
+      <div id="bottom-menu-inner-rel">
+        <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
+        <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+          <div id="bmi-a-contents">
+            <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
+            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
+            <ArticleContents :cardArticleId="cardArticleId"></ArticleContents>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="worksControl">
       <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
       <div id="worksControl-genle">
@@ -30,11 +42,13 @@ var firebase = require('firebase')
 import Card from './Card.template.vue'
 import Chart from './Chart.vue'
 import Loading from './Loading.vue'
+import ArticleContents from './ArticleContents.vue'
 export default {
   components: {
     Card,
     Chart,
-    Loading
+    Loading,
+    ArticleContents
   },
   data() {
     return {
@@ -63,7 +77,13 @@ export default {
         'Unity': 'rgba(34, 44, 55, 0.8)',
         'iOS': 'rgba(142, 142, 147, 0.8)',
         'Other': 'rgba(202, 203, 202, 0.8)'
-      }
+      },
+      cardArticleId: null,
+      isShowBottomMenu: false,
+      isHideBottomMenu: true,
+      isShowBottomMenuInner: false,
+      swipeY: 0,
+      supportTouch: false
     }
   },
   watch: {
@@ -81,13 +101,49 @@ export default {
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
-      window.open("https://tsumugu.tech/Article/"+articleId)
+      this.cardArticleId = articleId
+      this.openBottomMenu()
     },
     goToSite(siteUrl) {
       window.open(siteUrl);
     },
     oepnEdit(articleId) {
       window.open("https://tsumugu.tech/edit/"+articleId);
+    },
+    openBottomMenu() {
+      this.isShowBottomMenu = true
+      this.isShowBottomMenuInner = true
+      this.isHideBottomMenu = false
+    },
+    closeBottomMenu() {
+      this.isShowBottomMenuInner = false
+      this.isShowBottomMenu = false
+      setTimeout(() => {
+        this.isHideBottomMenu = true
+      }, 500)
+    },
+    touchHandlerM(event) {
+      var x = 0, y = 0;
+
+      if (event.touches && event.touches[0]) {
+        x = event.touches[0].clientX;
+        y = event.touches[0].clientY;
+      } else if (event.originalEvent && event.originalEvent.changedTouches[0]) {
+        x = event.originalEvent.changedTouches[0].clientX;
+        y = event.originalEvent.changedTouches[0].clientY;
+      } else if (event.clientX && event.clientY) {
+        x = event.clientX;
+        y = event.clientY;
+      }
+      this.swipeY = y
+      // console.log('y : ' + y);
+    },
+    touchHandlerE(event) {
+      // Height 90%
+      // console.log(this.swipeY, window.innerHeight*0.1, window.innerHeight)
+      if ((this.swipeY - window.innerHeight*0.1) > 50) {
+        this.closeBottomMenu();
+      }
     },
     doFiltering() {
       this.divideThree(this.cardItems.filter(doc =>
@@ -232,6 +288,18 @@ export default {
   mounted() {
     this.db = firebase.firestore()
     this.getItems()
+
+    this.supportTouch = 'ontouchend' in document
+    if (this.supportTouch) {
+      var bottommenuswipe = this.$refs.bottommenuswipe
+      bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
+      bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
+    }
+  },
+  destroyed() {
+    var bottommenuswipe = this.$refs.bottommenuswipe
+    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false);
+    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false);
   }
 }
 </script>
@@ -318,5 +386,91 @@ li{
     width: 80%;
     margin: auto;
   }
+}
+#bottom-menu {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+#bottom-menu-inner-rel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#bottom-menu-close-div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 40%;
+}
+#bottom-menu-inner-abs {
+  position: absolute;
+  width: 100%;
+  /* Change with touchHandlerE & #bmi-a-contents */
+  height: 90%;
+  border-radius: 15px 15px 0 0;
+  background-color: white;
+}
+#bmi-a-contents {
+  height: 90%;
+  margin: 15px;
+}
+#bottom-menu-swipe-bar {
+  display: inline-block;
+  height: 35px;
+  width: 100%;
+  padding: 10px 0px 0px 0px;
+  text-align: center;
+}
+#bottom-menu-swipe-bar-inner {
+  display: inline-block;
+  width: 20%;
+  height: 15px;
+  border-radius: 25px;
+  background-color: #e6e6e6;
+}
+.show {
+  display: block !important;
+}
+.hide {
+  display: none !important;
+}
+.skelton {
+  opacity: 0;
+}
+.pos-zero {
+  bottom: -100%;
+}
+.fadein {
+  animation: fadeIn 500ms ease 0s 1 forwards;
+}
+.fadeout {
+  transform: translateY(-10px);
+  animation: fadeOut 500ms ease 0s 1 forwards;
+}
+@keyframes fadeIn {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+@keyframes fadeOut {
+    0% {opacity: 1}
+    100% {opacity: 0}
+}
+.bottommenuin {
+  animation: BMIn 1000ms ease 0s 1 forwards;
+}
+.bottommenuout {
+  animation: BMOut 700ms ease 0s 1 forwards;
+}
+@keyframes BMIn {
+    0% {bottom: -100%;opacity: 0;}
+    100% {bottom: 0;opacity: 1;}
+}
+@keyframes BMOut {
+    0% {bottom: 0;opacity: 1;}
+    100% {bottom: -100%;opacity: 0;}
 }
 </style>

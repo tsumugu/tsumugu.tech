@@ -76,7 +76,6 @@ export default {
       isShowBottomMenuInner: false,
       cardSiteUrl: null,
       cardArticleId: null,
-      summaryLoading: true,
       isDispEdit: false,
       isLogin: false,
       swipeY: 0,
@@ -102,7 +101,6 @@ export default {
       this.isShowBottomMenu = false
       setTimeout(() => {
         this.isHideBottomMenu = true
-        this.summaryLoading = true
       }, 500)
     },
     goToSite(siteUrl) {
@@ -132,17 +130,6 @@ export default {
       // console.log(this.swipeY, window.innerHeight*0.1, window.innerHeight)
       if ((this.swipeY - window.innerHeight*0.1) > 50) {
         this.closeBottomMenu();
-      }
-    },
-    detectCollision(rect1, rect2) {
-      if( ((rect1.xStart <= rect2.xStart && rect2.xStart <= rect1.xEnd) ||
-           (rect1.xStart <= rect2.xEnd && rect2.xEnd <= rect1.xEnd)) &&
-          ((rect1.yStart <= rect2.yStart && rect2.yStart <= rect1.yEnd) ||
-           (rect1.yStart <= rect2.yEnd && rect2.yEnd <= rect1.yEnd))
-      ) {
-        return true;
-      } else {
-        return false;
       }
     },
     createBoundingClientRect(e) {
@@ -512,6 +499,37 @@ hr {
     display: none;
   }
 }
+#bottom-menu {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+#bottom-menu-inner-rel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#bottom-menu-close-div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 40%;
+}
+#bottom-menu-inner-abs {
+  position: absolute;
+  width: 100%;
+  /* Change with touchHandlerE & #bmi-a-contents */
+  height: 90%;
+  border-radius: 15px 15px 0 0;
+  background-color: white;
+}
+#bmi-a-contents {
+  height: 90%;
+  margin: 15px;
+}
 .show {
   display: block !important;
 }
@@ -567,6 +585,7 @@ hr {
   border-radius: 25px;
   background-color: #e6e6e6;
 }
+
 #timeline {
   width: 100%;
   /* This value must same as #left-line  */
@@ -584,38 +603,6 @@ hr {
   height: 100%;
   overflow: scroll;
 }
-#bottom-menu {
-  position: fixed;
-  display: none;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-}
-#bottom-menu-inner-rel {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-}
-#bottom-menu-close-div {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 40%;
-}
-#bottom-menu-inner-abs {
-  position: absolute;
-  width: 100%;
-  /* Change with touchHandlerE & #bmi-a-contents */
-  height: 90%;
-  border-radius: 15px 15px 0 0;
-  background-color: white;
-}
-#bmi-a-contents {
-  height: 90%;
-  margin: 15px;
-}
-
 #tl-wrap {
   position: relative;
   width: 100%;
