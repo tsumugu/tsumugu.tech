@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 import Card from './Card.template.vue'
 import Chart from './Chart.vue'
 import Loading from './Loading.vue'

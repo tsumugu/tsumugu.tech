@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 var axios = require('axios')
 import ArticleContents from './ArticleContents.vue'
 import Card from './Card.template.vue'

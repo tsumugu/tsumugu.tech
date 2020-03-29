@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 var axios = require('axios')
 import Loading from './Loading.vue'
 
