@@ -33,15 +33,16 @@
           <div class="year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart&&item.isTitle, colBase: item.isStart&&item.isTitle }">
             <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle&&!item.isStart , yearCircleEnd: item.isEnd }"><span class="year-text">{{item.madeYear}}</span></div>
           </div>
-          <!-- Left Line -->
-          <div class="card-left" v-bind:class="{ hide: item.isTitle||item.isAbout }">
-            <div class="card-left-circle"></div>
-            <div class="card-left-line"></div>
-          </div>
           <!-- Card -->
-          <Card @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :item="item" :isDispEdit="isDispEdit" :isLogin="isLogin" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }"></Card>
-          <!-- Card HairLine -->
-          <hr v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
+          <div class="skelton" v-bind:class="{ cardCol: item.isItem&&!item.isAbout&&!item.isTitle }">
+            <div class="card-left" v-bind:class="{ hide: item.isTitle||item.isAbout }">
+              <div class="card-left-circle"></div>
+              <div class="card-left-line"></div>
+            </div>
+            <Card @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :item="item" :isDispEdit="isDispEdit" :isLogin="isLogin" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }"></Card>
+            <!-- Card HairLine -->
+            <hr v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }">
+          </div>
         </div>
       </div>
     </div>
@@ -70,7 +71,11 @@ export default {
       colChild: null,
       colChildNow: null,
       colChildBefore: null,
+      cardCol: null,
+      cardColNow: null,
+      cardColBefore: null,
       colCounter: 0,
+      cardColCounter: 0,
       isShowBottomMenu: false,
       isHideBottomMenu: true,
       isShowBottomMenuInner: false,
@@ -178,6 +183,24 @@ export default {
       }
       // console.log(n, isFirst, document.getElementsByClassName('colChild'), this.colChildBefore, this.colChildNow, this.colChild)
     },
+    setCardCol(n, isFirst) {
+      if (isFirst) {
+        this.cardColBefore = null
+        this.cardCol = document.getElementsByClassName('cardCol')[0]
+        this.cardColNow = null
+      } else {
+        this.cardColBefore = document.getElementsByClassName('cardCol')[n-2]
+        this.cardColNow = document.getElementsByClassName('cardCol')[n-1]
+        this.cardCol = document.getElementsByClassName('cardCol')[n]
+      }
+      // console.log(n, isFirst, this.cardColCounter, this.cardCol)
+      /*
+      console.log("Before: ", this.cardColBefore)
+      console.log("Now: ", this.cardColNow)
+      console.log("After: ", this.cardCol)
+      console.log("------")
+      */
+    },
     setYearText(str) {
       if (this.colBase != undefined) {
         this.colBase.getElementsByClassName('year-text')[0].innerText = str
@@ -207,6 +230,29 @@ export default {
         this.colCounter--
         this.setcolChild(this.colCounter, false)
         this.toggleFadeinAndOut(this.colChildNow)
+      }
+    },
+    checkCardPosAndChangeCount() {
+      var crB = this.createBoundingClientRect(this.cardColBefore)
+      var crN = this.createBoundingClientRect(this.cardColNow)
+      var cr = this.createBoundingClientRect(this.cardCol)
+      if (this.cardColBefore != undefined) {
+        var posB = crB.rect.y
+      }
+      if (this.cardColNow != undefined) {
+        var posN = crN.rect.y
+      }
+      if (this.cardCol != undefined) {
+        var pos = cr.rect.y
+      }
+      if (170 > pos) {
+        this.cardColCounter++
+        this.setCardCol(this.cardColCounter, false)
+        if (this.cardColNow != undefined) {
+          var classList = this.cardColNow.classList
+          classList.add("fadeincard")
+          classList.remove("skelton")
+        }
       }
     },
     toggleFadeinAndOut(e) {
@@ -364,6 +410,7 @@ export default {
           setTimeout(() => {
             _this.colBase = document.getElementsByClassName('colBase')[0]
             _this.setcolChild(0, true)
+            _this.setCardCol(0, true)
           }, 1000)
         })
         //
@@ -403,7 +450,6 @@ export default {
     //
     setInterval(() => {
       if (this.colChild != undefined) {
-        //
         var dispYear
         if (this.colChildNow != undefined) {
           dispYear = this.getAttribute(this.colChildNow, 'data-year')
@@ -414,13 +460,11 @@ export default {
           dispYear = 2003
         }
         this.setYearText(dispYear)
-        //
       } else {
-        //
         this.setYearText(2019)
-        //
       }
       this.checkPosAndChangeCount()
+      this.checkCardPosAndChangeCount()
     }, 50)
     //
   },
@@ -544,6 +588,9 @@ hr {
 }
 .fadein {
   animation: fadeIn 500ms ease 0s 1 forwards;
+}
+.fadeincard {
+  animation: fadeIn 1000ms ease 0s 1 forwards;
 }
 .fadeout {
   transform: translateY(-10px);
