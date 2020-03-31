@@ -387,6 +387,10 @@ li{
     margin: auto;
   }
 }
+#article {
+    height: 100%;
+    overflow: scroll;
+}
 #bottom-menu {
   position: fixed;
   display: none;

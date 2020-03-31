@@ -67,13 +67,13 @@ export default {
       db: null,
       loading: true,
       items: [],
+      itemCount: 0,
       colBase: null,
       colChild: null,
       colChildNow: null,
       colChildBefore: null,
       cardCol: null,
       cardColNow: null,
-      cardColBefore: null,
       colCounter: 0,
       cardColCounter: 0,
       isShowBottomMenu: false,
@@ -84,7 +84,8 @@ export default {
       isDispEdit: false,
       isLogin: false,
       swipeY: 0,
-      supportTouch: false
+      supportTouch: false,
+      cardColborder: 0
     }
   },
   methods: {
@@ -137,6 +138,9 @@ export default {
         this.closeBottomMenu();
       }
     },
+    windowResizedHandler() {
+      this.cardColborder = window.innerHeight*0.8
+    },
     createBoundingClientRect(e) {
       if (e == undefined) {
         return false;
@@ -185,17 +189,14 @@ export default {
     },
     setCardCol(n, isFirst) {
       if (isFirst) {
-        this.cardColBefore = null
         this.cardCol = document.getElementsByClassName('cardCol')[0]
         this.cardColNow = null
       } else {
-        this.cardColBefore = document.getElementsByClassName('cardCol')[n-2]
         this.cardColNow = document.getElementsByClassName('cardCol')[n-1]
         this.cardCol = document.getElementsByClassName('cardCol')[n]
       }
       // console.log(n, isFirst, this.cardColCounter, this.cardCol)
       /*
-      console.log("Before: ", this.cardColBefore)
       console.log("Now: ", this.cardColNow)
       console.log("After: ", this.cardCol)
       console.log("------")
@@ -233,19 +234,11 @@ export default {
       }
     },
     checkCardPosAndChangeCount() {
-      var crB = this.createBoundingClientRect(this.cardColBefore)
-      var crN = this.createBoundingClientRect(this.cardColNow)
       var cr = this.createBoundingClientRect(this.cardCol)
-      if (this.cardColBefore != undefined) {
-        var posB = crB.rect.y
-      }
-      if (this.cardColNow != undefined) {
-        var posN = crN.rect.y
-      }
       if (this.cardCol != undefined) {
         var pos = cr.rect.y
       }
-      if (170 > pos) {
+      if (this.cardColborder > pos) {
         this.cardColCounter++
         this.setCardCol(this.cardColCounter, false)
         if (this.cardColNow != undefined) {
@@ -316,6 +309,7 @@ export default {
               'isDispReadButton': doc.data().isDispReadButton
             })
           })
+          _this.itemCount = querySnapshot.size
           resolve();
         })
         .catch(function(error) {
@@ -444,9 +438,11 @@ export default {
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
       var bottommenuswipe = this.$refs.bottommenuswipe
-      bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
-      bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
+      bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false)
+      bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false)
     }
+    window.addEventListener('resize', this.windowResizedHandler, false)
+    this.windowResizedHandler()
     //
     setInterval(() => {
       if (this.colChild != undefined) {
@@ -464,14 +460,19 @@ export default {
         this.setYearText(2019)
       }
       this.checkPosAndChangeCount()
-      this.checkCardPosAndChangeCount()
+
+      //　最後まで表示されてるかチェック
+      if (this.itemCount > this.cardColCounter) {
+        this.checkCardPosAndChangeCount()
+      }
     }, 50)
     //
   },
   destroyed() {
     var bottommenuswipe = this.$refs.bottommenuswipe
-    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false);
-    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false);
+    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false)
+    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false)
+    window.removeEventListener('resize', this.windowResizedHandler, false)
   }
 }
 </script>
