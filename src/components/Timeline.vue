@@ -212,16 +212,17 @@ export default {
       var crN = this.createBoundingClientRect(this.colChildNow)
       var cr = this.createBoundingClientRect(this.colChild)
       if (this.colChildBefore != undefined) {
-        var posB = crB.rect.y
+        var posB = crB.rect.top
       }
       if (this.colChildNow != undefined) {
-        var posN = crN.rect.y
+        var posN = crN.rect.top
       }
       if (this.colChild != undefined) {
-        var pos = cr.rect.y
+        var pos = cr.rect.top
       }
       // console.log(this.colChildBefore, this.colChildNow, this.colChild)
-      // console.log(posB, posN, pos)
+      // console.log(crB, crN, cr)
+      //console.log(posB, posN, pos)
       if (10>pos) {
         this.setcolChild(this.colCounter, false)
         this.colCounter++
@@ -236,7 +237,7 @@ export default {
     checkCardPosAndChangeCount() {
       var cr = this.createBoundingClientRect(this.cardCol)
       if (this.cardCol != undefined) {
-        var pos = cr.rect.y
+        var pos = cr.rect.top
       }
       if (this.cardColborder > pos) {
         this.cardColCounter++

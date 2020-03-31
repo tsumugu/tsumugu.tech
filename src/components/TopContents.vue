@@ -4,12 +4,12 @@
       <div id="top-bgcolor"></div>
       <div id="top-bg-img"></div>
       <div id="top-name"></div>
-      <div id="top-scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" size="md" /></div>
-      <div id="top-button" class="scrollIcon" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" size="md" /></div>
+      <div id="top-scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" /></div>
+      <div id="top-button" class="scrollIcon" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" /></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <div id="top-menu-links-wrapper">
-          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" size="md" />  Works</router-link></div>
-          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" size="md" /></router-link></div>
+          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" />  Works</router-link></div>
+          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" /></router-link></div>
           <div id="top-menu-links-bgborder"></div>
         </div>
       </div>
