@@ -127,8 +127,12 @@ export default {
       //前回から時間経ってるかチェック
       var nowtimestamp = new Date().getTime()
       var defTime = nowtimestamp-this.beforeCalltime
-      //400, 100
-      if (defTime > 400 && Math.abs(deltaY)>90) {
+      // Chrome&&Opera&&edge: 70, FireFox: 10
+      var scrollPwr = 70
+      if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        scrollPwr = 10
+      }
+      if (defTime > 100 && Math.abs(deltaY)>scrollPwr) {
         // console.log(deltaY, event)
         var dis = null
         if (deltaY == -0) {

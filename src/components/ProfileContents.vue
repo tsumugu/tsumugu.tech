@@ -135,7 +135,7 @@ export default {
   display:none;
 }
 #profile-text {
-  height: 200%;
+  height: 110%;
 }
 #profile-text-back {
   width: 100%;

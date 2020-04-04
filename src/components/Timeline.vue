@@ -359,6 +359,7 @@ export default {
           if (!docData.isAbout) {
             var thumbnailUrl = docData.thumbnail==null ? 'https://via.placeholder.com/2560x1480' : docData.thumbnail
             var isDispRead = docData.isDispReadButton==undefined ? true : docData.isDispReadButton
+            var isDispGoSite = (docData.siteurl === undefined || docData.siteurl == null || docData.siteurl == "") ? false : true
             let data = {
               'id': docData.id,
               'thumbnail': thumbnailUrl,
@@ -375,7 +376,7 @@ export default {
               'isItem': true,
               'isEnd': false,
               'isFixed': (el_count==0),
-              'isDispGotoSiteButton': (docData.siteurl !== null),
+              'isDispGotoSiteButton': isDispGoSite,
               'isDispReadButton': isDispRead
             }
             _this.items.push(data)
