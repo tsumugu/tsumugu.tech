@@ -192,4 +192,10 @@ img >>> .emojione_h6 {
   color: #55acee;
   text-decoration: none;
 }
+>>> .emojione {
+    height: 1.25em;
+    width: 1.25em;
+    border: none;
+    vertical-align: -.2em;
+}
 </style>

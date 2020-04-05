@@ -85,7 +85,8 @@ export default {
       isLogin: false,
       swipeY: 0,
       supportTouch: false,
-      cardColborder: 0
+      cardColborder: 0,
+      beforeDispYear: 0
     }
   },
   methods: {
@@ -203,8 +204,9 @@ export default {
       */
     },
     setYearText(str) {
-      if (this.colBase != undefined) {
+      if (this.colBase != undefined && str != this.beforeDispYear) {
         this.colBase.getElementsByClassName('year-text')[0].innerText = str
+        this.beforeDispYear = str
       }
     },
     checkPosAndChangeCount() {

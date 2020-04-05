@@ -36,6 +36,7 @@ body, html {
   color: #2c3e50;
   overflow-x: hidden !important;
   overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch;
 }
 .v-enter-active, .v-leave-active {
   transition: opacity .5s;
