@@ -44,9 +44,11 @@ export default {
 <style scoped>
 .card {
   border-radius: 25px;
+  padding: 20px;
 }
 .card-img {
   border-radius: 25px;
+  z-index: 1;
 }
 .card-title {
   margin: 0 5px 0;
@@ -57,11 +59,11 @@ export default {
   border-radius: 25px;
   color: #78a644;
   border: 2px solid #82b349;
-  margin: 0;
+  margin: 5px 0 0 0;
 }
 .card-description {
   font-size: large;
-  margin: 0px 5px 5px 5px;
+  margin: 0px 5px 0px 5px;
 }
 .card-kdwr {
   margin: 5px;
@@ -78,9 +80,7 @@ export default {
   margin-bottom: 10px;
   background-color: #e6e6e6;
 }
-.b-edit {
-}
-.b-read {
+.b-gosite, .b-read {
   margin-top: 10px;
 }
 .b-read, .b-gosite {

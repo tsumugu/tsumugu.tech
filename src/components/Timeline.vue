@@ -510,6 +510,9 @@ hr {
     display: inline-block;
     width: 100%;
   }
+  >>> .tl-item-contents-wrapper {
+    width: 450px;
+  }
   >>> .progressive-image,
   >>> #card-button-wrapper {
     width: 450px;
@@ -652,7 +655,8 @@ hr {
 }
 #article {
   height: 100%;
-  overflow: scroll;
+  /*overflow: scroll;*/
+  overflow: auto;
 }
 #tl-wrap {
   position: relative;
@@ -689,6 +693,7 @@ hr {
 }
 .year-about-img {
   border-radius: 25px;
+  z-index: 1;
   margin-top: 10px;
 }
 .year-about-title {
@@ -701,7 +706,6 @@ hr {
 .card {
   position: relative;
   width: 85%;
-  padding: 10px;
 }
 .cardMarginTop {
   margin-top: 20px;

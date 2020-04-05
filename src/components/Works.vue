@@ -356,7 +356,6 @@ li{
   align-self: end;
   margin: 10px;
   margin-right: 0px;
-  padding: 10px;
 }
 #worksControl {
   padding: 10px;
