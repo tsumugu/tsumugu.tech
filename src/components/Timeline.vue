@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    <div id="tl-left-col-wrap"><div id="tl-left-col-inner">aaa</div></div>
     <div id="tl-wrap">
       <div id="left-line"></div>
       <div id="tl-items">
@@ -507,8 +508,10 @@ hr {
     text-align: left;
   }
   #timeline-wrapper {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 100%;
+    display: grid;
+    grid-template-columns: 200px 1fr;
   }
   >>> .tl-item-contents-wrapper {
     width: 450px;
@@ -526,6 +529,12 @@ hr {
   }
 }
 @media (max-width: 630px) {
+  #timeline-wrapper {
+    display: block;
+  }
+  #tl-left-col-wrap {
+    display: none;
+  }
   #left-line, .card-left-circle {
     display: none !important;
   }
@@ -658,9 +667,17 @@ hr {
   /*overflow: scroll;*/
   overflow: auto;
 }
+#tl-left-col-inner {
+  display: inline-block;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 200px;
+  /*background-color: #c7c7c7;*/
+  background: red;
+}
 #tl-wrap {
   position: relative;
-  width: 100%;
   /* same #left-line */
   height: 20000px;
 }
@@ -682,7 +699,7 @@ hr {
   margin-left: 30px;
   margin-bottom: 10px;
   padding: 10px 10px 10px 10px;
-  width: 87.5%;
+  /*width: 87.5%;*/
   border-radius: 0px 25px 25px 0px;
 }
 .aboutMarginTopMax {
@@ -705,7 +722,7 @@ hr {
 }
 .card {
   position: relative;
-  width: 85%;
+  /*width: 85%;*/
 }
 .cardMarginTop {
   margin-top: 20px;
