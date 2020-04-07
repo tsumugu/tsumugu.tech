@@ -16,18 +16,24 @@
         </div>
       </div>
     </div>
-    <div id="tl-left-col-wrap"><div id="tl-left-col-inner">aaa</div></div>
+    <div id="tl-left-col-wrap">
+      <div id="tl-left-col-inner" ref="tlLeftColInner">
+        <img v-show="tlLeftAboutThumbnail!=null" class="tl-left-col-img" v-bind:src="tlLeftAboutThumbnail" />
+        <h2 class="tl-left-col-title">{{tlLeftAboutTitle}}</h2>
+        <div class="tl-left-col-description" v-html="tlLeftAboutDescription"></div>
+      </div>
+    </div>
     <div id="tl-wrap">
       <div id="left-line"></div>
       <div id="tl-items">
         <!-- v-for -->
         <div class="tl-item" v-for="(item, key) in items" :key="key">
           <!-- Year About -->
-          <div class="year-about" v-bind:class="{ hide: item.isTitle||item.isItem, aboutMarginTopMax: item.isFirst, aboutMarginTopMin: !item.isFirst }">
+          <div class="year-about" v-bind:class="{ aboutCol: !item.isTitle&&!item.isItem, hide: item.isTitle||item.isItem, aboutMarginTopMax: item.isFirst, aboutMarginTopMin: !item.isFirst }">
             <div class="tl-item-contents-wrapper">
-              <progressive-img class="year-about-img" v-bind:src="item.thumbnail" />
+              <progressive-img class="year-about-img" v-bind:class="{hide: item.thumbnail==null}" v-bind:data-src="item.thumbnail" v-bind:src="item.thumbnail" />
               <h2 class="year-about-title">{{item.title}}</h2>
-              <p class="year-about-description" v-html="item.description"></p>
+              <div class="year-about-description" v-html="item.description"></div>
             </div>
           </div>
           <!-- Year -->
@@ -72,11 +78,13 @@ export default {
       colBase: null,
       colChild: null,
       colChildNow: null,
+      colChildNowIndex: 0,
       colChildBefore: null,
       cardCol: null,
       cardColNow: null,
       colCounter: 0,
       cardColCounter: 0,
+      aboutCol: null,
       isShowBottomMenu: false,
       isHideBottomMenu: true,
       isShowBottomMenuInner: false,
@@ -87,7 +95,11 @@ export default {
       swipeY: 0,
       supportTouch: false,
       cardColborder: 0,
-      beforeDispYear: 0
+      beforeDispYear: 0,
+      tlLeftColInner: null,
+      tlLeftAboutThumbnail: null,
+      tlLeftAboutTitle: null,
+      tlLeftAboutDescription: null
     }
   },
   methods: {
@@ -142,6 +154,7 @@ export default {
     },
     windowResizedHandler() {
       this.cardColborder = window.innerHeight*0.8
+      this.tlLeftColInner.style.height = (window.innerHeight)+"px"
     },
     createBoundingClientRect(e) {
       if (e == undefined) {
@@ -181,10 +194,13 @@ export default {
       if (isFirst) {
         this.colChildBefore = null
         //2005
+        this.colChildNow = document.getElementsByClassName('colChild')[0]
+        this.colChildNowIndex = 0
         this.colChild = document.getElementsByClassName('colChild')[1]
       } else {
         this.colChildBefore = document.getElementsByClassName('colChild')[n]
         this.colChildNow = document.getElementsByClassName('colChild')[n+1]
+        this.colChildNowIndex = n+1
         this.colChild = document.getElementsByClassName('colChild')[n+2]
       }
       // console.log(n, isFirst, document.getElementsByClassName('colChild'), this.colChildBefore, this.colChildNow, this.colChild)
@@ -206,9 +222,23 @@ export default {
     },
     setYearText(str) {
       if (this.colBase != undefined && str != this.beforeDispYear) {
+        // Leftのほうも書き換え(indexと同じやつを取得)
+        this.getAboutContents()
         this.colBase.getElementsByClassName('year-text')[0].innerText = str
         this.beforeDispYear = str
       }
+    },
+    getAboutContents() {
+      var node = this.aboutCol[this.colChildNowIndex]
+      var src = this.getAttribute(node.getElementsByClassName('year-about-img')[0], 'data-src')
+      var title = node.getElementsByClassName('year-about-title')[0].innerText
+      var description = node.getElementsByClassName('year-about-description')[0].innerHTML
+      this.setTlLeftAboutText(src, title, description)
+    },
+    setTlLeftAboutText(tmb, title, desc) {
+      this.tlLeftAboutThumbnail = tmb
+      this.tlLeftAboutTitle = title
+      this.tlLeftAboutDescription = desc
     },
     checkPosAndChangeCount() {
       var crB = this.createBoundingClientRect(this.colChildBefore)
@@ -408,6 +438,7 @@ export default {
         _this.$nextTick(() => {
           setTimeout(() => {
             _this.colBase = document.getElementsByClassName('colBase')[0]
+            _this.aboutCol = document.getElementsByClassName('aboutCol')
             _this.setcolChild(0, true)
             _this.setCardCol(0, true)
           }, 1000)
@@ -447,7 +478,12 @@ export default {
       bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false)
     }
     window.addEventListener('resize', this.windowResizedHandler, false)
+    this.tlLeftColInner = this.$refs.tlLeftColInner
     this.windowResizedHandler()
+    //DEBUG
+    //this.setTlLeftAboutText("https://lh3.googleusercontent.com/7xHdjVvaCofIKTk-mCyY9cnyBV0cYYAGi1UV1kB7VyGX-xzBdbVj1FSvNFdNLrIXmI-12NuWG2G9gHeVB9fHj6LARFRoz2-259Vo0ONAG01BlOC5FkoB1sGJyBxy2htl4OclBqhQsuoBkuYmBHcnqwtbvillKmJeIgkgv1FOGVqmYqiAWSwM8P5rQus1HTax5-LUNTB_eCQUwVMIK467ZwgxVLddN2cPaMnGsDv1euKwqIwxukmV6vI6efoQcYRTGi6yaJtienbV_BHHVxbA0s2S_M7fC4xPCksu7llxAz8G7lTAL8xsN46Vbj0i2S7coQiT96DvHICFLHRAMeYzmKEkCWDc6RtG2VtL31TRMk_le80G-N7bMQu4TZHYFEHLHkqkh3tWM2msGbeIlqzOF-1YvHFxP8CzpZAFcI3xBRqgnOrS-AzdDI2OsH9ByRRCEE75RBbVf4HdJJGek2Kw82jWh-inKimqeQu4ZSkGcAJ0rul5RviNVerhCL8oPMsYur7nT5U6tNgM_AKvYUrOzdTKt_KcysXn57n-CCLF2XrLoDkbaJPpZoZ_-4-R69IqFTlDjVf7cmu2RbA-8KeMHDSsHsSOJi8-STNm3d6L5v3D78X3p37vwYQ9K7Mszt0muQD6goMS_Le95tS9uWP7mYEIabbqUhzfVaP4ATj6nR8k-8uqb5YsTcPpIxvg8HnYmnHC6HSlJqQTjrVREITQdnUSzWPeCNZQ8afGIkVbEEpeCcYK9w=w512-h384-no", "生まれる", "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm")
+    //
+
     //
     setInterval(() => {
       if (this.colChild != undefined) {
@@ -482,7 +518,9 @@ export default {
 }
 </script>
 <style scoped>
-h1, h2 {
+>>> h1,
+>>> h2,
+>>> h3 {
   margin: 5px;
 }
 p {
@@ -511,7 +549,7 @@ hr {
     /*display: inline-block;*/
     width: 100%;
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 300px 1fr;
   }
   >>> .tl-item-contents-wrapper {
     width: 450px;
@@ -521,7 +559,12 @@ hr {
     width: 450px;
   }
   >>> .year-about {
+    display: inline-block;
     padding: 10px 20px 10px 10px;
+  }
+  >>> .year-about-img,
+  >>> .year-about-description{
+    display: none;
   }
   >>> .card {
     margin: 10px 0px 10px 0px;
@@ -548,9 +591,14 @@ hr {
     width: auto !important;
   }
   >>> .year-about {
+    display: block;
     border-radius: 0px 25px 25px 25px !important;
     margin-left: 10px !important;
     margin-right: 10px !important;
+  }
+  >>> .year-about-img,
+  >>> .year-about-description{
+    display: block;
   }
   >>> .card {
     margin: 0px 10px 0px 10px !important;
@@ -672,9 +720,16 @@ hr {
   position: sticky;
   top: 0;
   width: 100%;
-  height: 200px;
-  /*background-color: #c7c7c7;*/
-  background: red;
+  background-color: #c7c7c7;
+}
+.tl-left-col-img {
+  width: 100%;
+}
+.tl-left-col-title {
+  margin: 5px;
+}
+.tl-left-col-description {
+  margin: 5px;
 }
 #tl-wrap {
   position: relative;
@@ -714,6 +769,7 @@ hr {
   margin-top: 10px;
 }
 .year-about-title {
+  display: inline-block;
   margin: 5px;
 }
 .year-about-description {
