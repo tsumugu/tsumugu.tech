@@ -539,6 +539,9 @@ hr {
   background-color: red !important;
 }
 @media (max-width: 3000px) and (min-width: 630px) {
+  hr {
+    margin: 0;
+  }
   #timeline {
     text-align: center;
   }
@@ -572,6 +575,9 @@ hr {
   }
 }
 @media (max-width: 630px) {
+  hr {
+    margin: 8px;
+  }
   #timeline-wrapper {
     display: block;
   }
@@ -721,6 +727,7 @@ hr {
   top: 0;
   width: 100%;
   background-color: #c7c7c7;
+  overflow: scroll;
 }
 .tl-left-col-img {
   width: 100%;
