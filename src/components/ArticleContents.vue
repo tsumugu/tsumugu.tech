@@ -7,6 +7,7 @@
   NotFound
   </div>
   <div id="article-contents" v-else>
+    <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(cardArticleId)">Edit</button></div>
     <div id="article-contents-body" v-html="body"></div>
   </div>
 </div>
@@ -24,6 +25,12 @@ export default {
   props: {
     cardArticleId: {
       type: String
+    },
+    isDispEdit: {
+      type: Boolean
+    },
+    isLogin: {
+      type: Boolean
     }
   },
   watch: {
@@ -40,6 +47,9 @@ export default {
     }
   },
   methods: {
+    oepnEdit(articleId) {
+      window.open("http://readme.tsumugu2626.xyz/edit/?author=tsumugu-tech&rip="+articleId)
+    },
     loadArticle(articleId) {
       if (articleId == null) {
         return false

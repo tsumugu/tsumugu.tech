@@ -11,7 +11,7 @@
           <div id="bmi-a-contents">
             <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
             <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
-            <ArticleContents :cardArticleId="cardArticleId"></ArticleContents>
+            <ArticleContents :cardArticleId="cardArticleId" :isDispEdit=false :isLogin=false></ArticleContents>
           </div>
         </div>
       </div>
