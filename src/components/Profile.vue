@@ -253,6 +253,9 @@ export default {
 }
 /* SP */
 @media screen and (max-width:600px) {
+  >>> p {
+    display: block;
+  }
   #aboutcontents-bg-img {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg");
   }
