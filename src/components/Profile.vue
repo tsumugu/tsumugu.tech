@@ -1,5 +1,5 @@
 <template>
-  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent"></PresenScrollCounter>
+<PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent"></PresenScrollCounter>
 </template>
 
 <script>

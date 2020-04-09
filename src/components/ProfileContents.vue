@@ -78,13 +78,56 @@ export default {
 </script>
 
 <style scoped>
+>>> .devicon-wrap > svg,
+>>> .devicon-line {
+  width: 100px;
+  padding: 5px;
+  background-color: rgba(240, 240, 240, 0.8);
+}
+>>> .devicon-unity,
+>>> .devicon-of {
+  height: 100px;
+}
+>>> .devicon-wrap {
+  display: inline-block;
+  padding-top: 10px;
+}
+>>> .iframe-wrapper {
+  padding: 5px;
+}
+>>> .iframe-wrapper > iframe {
+  width: 100%;
+}
+>>> p,
+>>> ol > li {
+  background-color: rgba(240, 240, 240, 0.8);
+}
 >>> p {
   display: inline-block;
   font-size: large;
   margin: 3px 3px 3px;
   padding: 10px;
-  background-color: rgba(240, 240, 240, 0.8);
 }
+>>> ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ol_li;
+}
+>>> ol > li:before {
+  margin-right: .25em;
+  counter-increment: ol_li;
+  content: counter(ol_li);
+  color: #2c3e50;
+}
+>>> li > p {
+  background-color: transparent !important;
+}
+>>> ol > li {
+  margin: 5px;
+  padding: 10px;
+}
+
 >>> h1,
 >>> h2,
 >>> h3,
