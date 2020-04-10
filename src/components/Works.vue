@@ -224,20 +224,20 @@ export default {
         "java": "Java",
         "swift": "Swift",
         "python": "Python",
-        "c_sharp": "C#",
-        "c_plus_plus": "C++",
+        "c sharp": "C#",
+        "c plus plus": "C++",
 
         "web": "web",
         "android": "Android",
         "ios": "iOS",
-        "line bot": "bot",
+        "line bot": "Bot",
         "openframeworks": "openFrameworks",
         "vue.js": "Vue.js",
         "マイコン": "マイコン",
         "unity": "Unity",
       }
       arg.split(",").forEach((el) => {
-        var elSmall = el.toLowerCase()
+        var elSmall = decodeURI(el.toLowerCase())
         var renamedEl = renameDicObj[elSmall]
         if (renamedEl != undefined) {
           retArray.push(renamedEl)

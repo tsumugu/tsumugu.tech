@@ -86,7 +86,7 @@ export default {
       _this.aboutText = post.html
       setTimeout(() => {
         var baseElm = _this.$refs.aboutText
-        _this.deviconElms = Array.from(baseElm.getElementsByClassName('devicon-wrap'))
+        _this.deviconElms = Array.from(baseElm.getElementsByClassName('devicon-click'))
         _this.deviconElms.forEach(function (element) {
 	        element.addEventListener('click', _this.onClickDevivonEve, false)
         })
