@@ -8,7 +8,7 @@
       <div id="aboutcontents-text">
         <div id="profile-text-back"><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-up" size="md" /></div>
         <div id="profile-text-wrapper" v-if="fadeinText">
-          <div id="profile-text" v-bind:class="{fadein: fadeinText}" v-html="aboutText"></div>
+          <div id="profile-text" v-bind:class="{fadein: fadeinText}" v-html="aboutText" ref="aboutText"></div>
         </div>
         <div id="title-text-wrapper">
           <span id="title-text" v-show="!hideText" v-bind:class="{fadeout: fadeoutText}">Profile</span>
@@ -30,6 +30,7 @@ export default {
       isFinPC: false,
       isFinSP: false,
       hideText: false,
+      deviconElms: null
     }
   },
   methods: {
@@ -56,6 +57,24 @@ export default {
         this.fadeinText = true
         this.hideText = true
       }, 3000)
+    },
+    onClickDevivonEve(e) {
+      var title = null;
+      var query = null;
+      e.path.forEach(function (data) {
+        var etitle = data.title
+        if (etitle != undefined && etitle != "" && title == null) {
+          title = data.title
+          query = data.dataset.query
+        }
+      })
+      if (title != null && query != null) {
+        this.goToWorks(title, query)
+      }
+    },
+    goToWorks(title, query) {
+      var routePath = "https://tsumugu.tech/Works?"+query+"="+title
+      window.open(routePath)
     }
   },
   mounted() {
@@ -65,6 +84,13 @@ export default {
     .then(function (response) {
       var post = response.data.posts[0]
       _this.aboutText = post.html
+      setTimeout(() => {
+        var baseElm = _this.$refs.aboutText
+        _this.deviconElms = Array.from(baseElm.getElementsByClassName('devicon-wrap'))
+        _this.deviconElms.forEach(function (element) {
+	        element.addEventListener('click', _this.onClickDevivonEve, false)
+        })
+      }, 3500)
     })
     .catch(function (error) {
       alert("情報の取得に失敗しました。再読み込みしてください")
@@ -75,6 +101,12 @@ export default {
     setTimeout(() => {
       this.doFadeText()
     }, 3000)
+  },
+  destroyed() {
+    var _this = this
+    this.deviconElms.forEach(function (element) {
+      element.removeEventListener('click', _this.onClickDevivonEve, false);
+    })
   }
 }
 </script>
@@ -92,7 +124,9 @@ export default {
 }
 >>> .devicon-wrap {
   display: inline-block;
-  padding-top: 10px;
+  padding-top: 3px;
+  padding-left: 3px;
+  cursor: pointer;
 }
 >>> .iframe-wrapper {
   padding: 5px;

@@ -23,6 +23,11 @@
           <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
         </ul>
       </div>
+      <div id="worksControl-skill">
+        <ul>
+          <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
+        </ul>
+      </div>
       <div id="worksControl-filter">
         <ul>
           <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
@@ -55,6 +60,7 @@ export default {
       db: null,
       chartData: null,
       loading: true,
+      checkedSkills: [],
       checkedGenle: [],
       checkedYear: [],
       searchWord: "",
@@ -63,6 +69,7 @@ export default {
       itemDivThree: [],
       skillsStr: [],
       skillsCount: [],
+      skillsCountFor: [],
       genleStr: [],
       genleCount: [],
       genleCountFor: [],
@@ -75,6 +82,7 @@ export default {
         'Android': 'rgba(164, 198, 57, 0.8)',
         'Bot': 'rgba(0, 195, 0, 0.8)',
         'Unity': 'rgba(34, 44, 55, 0.8)',
+        'oF': 'rgba(51, 51, 51, 0.8)',
         'iOS': 'rgba(142, 142, 147, 0.8)',
         'Other': 'rgba(202, 203, 202, 0.8)'
       },
@@ -87,6 +95,9 @@ export default {
     }
   },
   watch: {
+    checkedSkills() {
+      this.doFiltering()
+    },
     checkedGenle() {
       this.doFiltering()
     },
@@ -145,10 +156,19 @@ export default {
         this.closeBottomMenu();
       }
     },
+    checkIsSkillIncludes(allLang) {
+      var _this = this
+      var res = []
+      allLang.split("/").forEach((element) => {
+        res.push(_this.checkedSkills.includes(element))
+      })
+      return res.includes(true)
+    },
     doFiltering() {
       this.divideThree(this.cardItems.filter(doc =>
         this.checkedGenle.includes(doc.genle)
         && this.checkedYear.includes(String(doc.madeYear))
+        && this.checkIsSkillIncludes(doc.allLang)
         && (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1
       ))
     },
@@ -168,12 +188,14 @@ export default {
       var bgColor = []
       var genleListSorted = []
       for(let k of Object.keys(this.themeColors)) {
-        genleListSorted[k] = genleList[k]
+        var ck = k=="oF" ? "openFrameworks" : k
+        genleListSorted[ck] = genleList[ck]
       }
       for(let k of Object.keys(genleListSorted)) {
-        labels.push(k)
+        var ck = k=="openFrameworks" ? "oF" : k
+        labels.push(ck)
         data.push(genleList[k])
-        bgColor.push(this.themeColors[k])
+        bgColor.push(this.themeColors[ck])
       }
       this.chartData = {
         labels: labels,
@@ -191,6 +213,37 @@ export default {
       this.dispChart(list)
       this.itemDivThree = list
       this.searchRes = list.length
+    },
+    renameAndMakeArray(arg) {
+      var retArray = []
+      var renameDicObj = {
+        "html": "HTML",
+        "javascript": "JavaScript",
+        "css": "CSS",
+        "php": "PHP",
+        "java": "Java",
+        "swift": "Swift",
+        "python": "Python",
+        "c_sharp": "C#",
+        "c_plus_plus": "C++",
+
+        "web": "web",
+        "android": "Android",
+        "ios": "iOS",
+        "line bot": "bot",
+        "openframeworks": "openFrameworks",
+        "vue.js": "Vue.js",
+        "マイコン": "マイコン",
+        "unity": "Unity",
+      }
+      arg.split(",").forEach((el) => {
+        var elSmall = el.toLowerCase()
+        var renamedEl = renameDicObj[elSmall]
+        if (renamedEl != undefined) {
+          retArray.push(renamedEl)
+        }
+      })
+      return retArray
     },
     getItems() {
       var _this = this
@@ -245,6 +298,17 @@ export default {
           }
           _this.genleCount[element] = currntCount
         })
+        Object.keys(_this.skillsCount).forEach(function(key) {
+          _this.skillsCountFor.push({"key": key, "count": _this.skillsCount[key]})
+          _this.checkedSkills.push(key)
+        })
+        _this.skillsCountFor.sort(function(a,b){
+          var aa = a.count;
+          var bb = b.count;
+          if(aa > bb){return -1;}
+          if(aa < bb){return 1;}
+          return 0;
+        })
         Object.keys(_this.genleCount).forEach(function(key) {
           _this.genleCountFor.push({"key": key, "count": _this.genleCount[key]})
           _this.checkedGenle.push(key)
@@ -276,6 +340,15 @@ export default {
           if(aa < bb){return -1;}
           return 0;
         })
+        // Set Checked
+        var querySkills = this.$route.query.lang
+        var queryGenle = this.$route.query.pf
+        if (querySkills != undefined) {
+          this.checkedSkills = this.renameAndMakeArray(querySkills)
+        }
+        if (queryGenle != undefined) {
+          this.checkedGenle = this.renameAndMakeArray(queryGenle)
+        }
         //
         this.loading = false
       })
@@ -288,7 +361,6 @@ export default {
   mounted() {
     this.db = firebase.firestore()
     this.getItems()
-
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
       var bottommenuswipe = this.$refs.bottommenuswipe
