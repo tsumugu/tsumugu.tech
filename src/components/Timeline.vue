@@ -444,7 +444,8 @@ export default {
           }, 1000)
         })
         //
-      }).catch(function () {
+      }).catch(function (error) {
+        console.log(error)
         alert('データの取得に失敗しました');
       });
     }

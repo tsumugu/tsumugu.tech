@@ -157,6 +157,9 @@ export default {
       }
     },
     checkIsSkillIncludes(allLang) {
+      if (allLang==undefined) {
+        return false
+      }
       var _this = this
       var res = []
       allLang.split("/").forEach((element) => {
@@ -215,6 +218,9 @@ export default {
       this.searchRes = list.length
     },
     renameAndMakeArray(arg) {
+      if (arg==undefined) {
+        return undefined
+      }
       var retArray = []
       var renameDicObj = {
         "html": "HTML",
@@ -273,7 +279,9 @@ export default {
             'isDispGotoSiteButton': (doc.data().siteurl !== null),
             'isDispReadButton': true
           }
-          doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
+          if (doc.data().allLang != undefined) {
+            doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
+          }
           _this.genleStr.push(doc.data().genle)
           _this.yearStr.push(doc.data().madeYear)
           _this.cardItems.push(docVal)
@@ -354,6 +362,7 @@ export default {
       })
       .catch(function(error) {
         //onError
+        console.log(error)
         alert("情報の取得に失敗しました。再読み込みしてください")
       })
     }

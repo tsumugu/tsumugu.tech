@@ -118,7 +118,6 @@ export default {
   padding: 5px;
   background-color: rgba(240, 240, 240, 0.8);
 }
->>> .devicon-unity,
 >>> .devicon-of {
   height: 100px;
 }
@@ -249,8 +248,8 @@ export default {
   font-size: 4rem;
 }
 #profile-text {
-  padding-top: 0px;
   padding: 10px;
+  padding-top: 0px;
 }
 .fadein {
   animation: fadeIn 2000ms ease 0s 1 forwards;
@@ -281,7 +280,7 @@ export default {
     width: 45%;
   }
   #profile-text-wrapper {
-    top: 15px;
+    top: 30px;
     width: 100%;
   }
 }
