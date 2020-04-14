@@ -33,6 +33,7 @@ Vue.use(VueProgressiveImage, {
   blur: 30
 });
 Vue.use(VueCookies)
+Vue.$cookies.config('30d')
 
 /* eslint-disable no-new */
 new Vue({

@@ -89,7 +89,7 @@ export default {
       });
     },
     setCookie(name, val) {
-      this.$cookies.set(name, val, { expires: 1 })
+      this.$cookies.set(name, val)
     },
     getCookieVal(name) {
       alert(this.$cookies.get(name))
