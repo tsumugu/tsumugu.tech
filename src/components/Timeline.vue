@@ -19,7 +19,7 @@
     <div id="tl-left-col-wrap">
       <div id="tl-left-col-inner" ref="tlLeftColInner">
         <img v-show="tlLeftAboutThumbnail!=null" class="tl-left-col-img" v-bind:src="tlLeftAboutThumbnail" />
-        <h2 class="tl-left-col-title">{{tlLeftAboutTitle}}</h2>
+        <h2 class="tl-left-col-title">{{tlLeftAboutYear}} / {{tlLeftAboutTitle}}</h2>
         <div class="tl-left-col-description" v-html="tlLeftAboutDescription"></div>
       </div>
     </div>
@@ -99,6 +99,7 @@ export default {
       tlLeftColInner: null,
       tlLeftAboutThumbnail: null,
       tlLeftAboutTitle: null,
+      tlLeftAboutYear: null,
       tlLeftAboutDescription: null
     }
   },
@@ -223,21 +224,22 @@ export default {
     setYearText(str) {
       if (this.colBase != undefined && str != this.beforeDispYear) {
         // Leftのほうも書き換え(indexと同じやつを取得)
-        this.getAboutContents()
+        this.getAboutContents(str)
         this.colBase.getElementsByClassName('year-text')[0].innerText = str
         this.beforeDispYear = str
       }
     },
-    getAboutContents() {
+    getAboutContents(year) {
       var node = this.aboutCol[this.colChildNowIndex]
       var src = this.getAttribute(node.getElementsByClassName('year-about-img')[0], 'data-src')
       var title = node.getElementsByClassName('year-about-title')[0].innerText
       var description = node.getElementsByClassName('year-about-description')[0].innerHTML
-      this.setTlLeftAboutText(src, title, description)
+      this.setTlLeftAboutText(src, year, title, description)
     },
-    setTlLeftAboutText(tmb, title, desc) {
+    setTlLeftAboutText(tmb, year, title, desc) {
       this.tlLeftAboutThumbnail = tmb
       this.tlLeftAboutTitle = title
+      this.tlLeftAboutYear = year
       this.tlLeftAboutDescription = desc
     },
     checkPosAndChangeCount() {
