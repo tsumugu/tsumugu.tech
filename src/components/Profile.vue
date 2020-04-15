@@ -6,7 +6,6 @@
       <div id="aboutcontents-bgcolor"></div>
       <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
       <div id="aboutcontents-text">
-        <div id="profile-text-back"><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-up" size="md" /></div>
         <div id="profile-text-wrapper" v-if="fadeinText">
           <div id="profile-text" v-bind:class="{fadein: fadeinText}" v-html="aboutText" ref="aboutText"></div>
         </div>
@@ -130,9 +129,6 @@ export default {
 >>> .iframe-wrapper {
   padding: 5px;
 }
->>> .iframe-wrapper > iframe {
-  width: 100%;
-}
 >>> p,
 >>> ol > li {
   background-color: rgba(240, 240, 240, 0.8);
@@ -144,6 +140,7 @@ export default {
   padding: 10px;
 }
 >>> ol {
+  display: inline-block;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -273,14 +270,16 @@ export default {
     100% {opacity: 0}
 }
 @media (max-width: 3000px) and (min-width: 600px) {
+  >>> .iframe-wrapper > iframe {
+    width: 80%;
+  }
   #aboutcontents-bg-img {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg");
   }
   #profile-text {
-    width: 45%;
+    width: 80%;
   }
   #profile-text-wrapper {
-    top: 30px;
     width: 100%;
   }
 }
@@ -289,11 +288,13 @@ export default {
   >>> p {
     display: block;
   }
+  >>> .iframe-wrapper > iframe {
+    width: 100%;
+  }
   #aboutcontents-bg-img {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg");
   }
   #profile-text-wrapper {
-    top: 30px;
     width: 100%;
   }
 }
