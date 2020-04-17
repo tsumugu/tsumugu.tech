@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import './assets/css/works-colors-test-green.css'
+import './assets/css/works-colors-test-blue.css'
 
 export default {
   name: 'App'

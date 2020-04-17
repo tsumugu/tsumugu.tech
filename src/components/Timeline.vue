@@ -729,7 +729,7 @@ hr {
   position: sticky;
   top: 0;
   width: 100%;
-  background-color: #c7c7c7;
+  background-color: #dbdbdb;
   overflow: scroll;
 }
 .tl-left-col-img {

@@ -1,0 +1,48 @@
+/* define colors #test */
+
+/* text-color */
+.card > a {
+  color: #2c3e50;
+}
+/* card */
+.card-left-circle {
+  background-color: #60bece !important;
+}
+
+/* timeline -> bg-color */
+#app {
+  color: #2c3e50;
+  background-color: #fdfcfc;
+}
+#timeline {
+  color: #2c3e50;
+  background-color: #f2f2f5;
+}
+.year-text {
+  color: #ffffff;
+}
+/* card -> bg-color and border-color */
+.card {
+  background-color: #fcfcfc;
+}
+/* timeline-left-line -> bg-color */
+#left-line, .year-about {
+  background-color: #dbdbdb;
+}
+/* timeline-left-line-circle -> bg-color and border-color */
+.year-circle {
+  background-color: #bababa;
+  opacity: 0.85;
+}
+.colBase > .year-circle {
+  border: 1px solid #bababa;
+  opacity: 0.7;
+}
+/* card-img -> border-color */
+.card-img {
+  border: 1px solid #dbdbdb;
+}
+/* card-line -> bg-color */
+.card-left-line {
+  background-color: #dbdbdb;
+}

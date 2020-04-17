@@ -57,8 +57,8 @@ export default {
   display: inline-block;
   padding: 10px;
   border-radius: 25px;
-  color: #78a644;
-  border: 2px solid #82b349;
+  color: #22a8bf;
+  border: 2px solid #22a8bf;
   margin: 5px 0 0 0;
 }
 .card-description {
@@ -87,7 +87,7 @@ export default {
   display: inline-block;
   height: 50px;
   border-radius: 25px;
-  background-color: #82b349;
+  background-color: #22a8bf;
   color: white;
   font-size: large;
 }

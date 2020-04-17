@@ -116,6 +116,7 @@ export default {
   width: 100px;
   padding: 5px;
   background-color: rgba(240, 240, 240, 0.8);
+  border-radius: 15px;
 }
 >>> .devicon-of {
   height: 100px;
@@ -132,6 +133,7 @@ export default {
 >>> p,
 >>> ol > li {
   background-color: rgba(240, 240, 240, 0.8);
+  border-radius: 15px;
 }
 >>> p {
   display: inline-block;

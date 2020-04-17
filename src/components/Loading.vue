@@ -18,7 +18,8 @@
   animation: load7 1.8s infinite ease-in-out;
 }
 .loader {
-  color: #82b349;
+  color: #22a8bf;
+  /*#25b6cf;*/
   font-size: 10px;
   margin: 80px auto;
   position: relative;
