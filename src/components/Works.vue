@@ -19,16 +19,19 @@
     <div id="worksControl">
       <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
       <div id="worksControl-genle">
+        <p class="check-title">プラットフォーム</p>
         <ul>
           <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
         </ul>
       </div>
       <div id="worksControl-skill">
+        <p class="check-title">言語</p>
         <ul>
           <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
         </ul>
       </div>
       <div id="worksControl-filter">
+        <p class="check-title">制作年</p>
         <ul>
           <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
         </ul>
@@ -411,7 +414,7 @@ export default {
   border-radius: 4px;
 }
 .checkbox-input:checked {
-  color: #82b349;
+  color: #60bece;
 }
 .checkbox-input:checked + .checkbox-parts::after {
   content: "";
@@ -422,12 +425,14 @@ export default {
   width: 7px;
   height: 14px;
   transform: rotate(40deg);
-  border-bottom: 3px solid #82b349;
-  border-right: 3px solid #82b349;
+  border-bottom: 3px solid #60bece;
+  border-right: 3px solid #60bece;
 }
 
 ul {
   list-style: none;
+  margin: 0;
+  margin-bottom: 16px;
   padding: 0;
 }
 li{
@@ -444,6 +449,11 @@ li{
 #worksControl-chart {
   width: 100%;
 }
+.check-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
 >>> .card {
   margin-right: 10px !important;
 }
