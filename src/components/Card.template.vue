@@ -87,7 +87,7 @@ export default {
   display: inline-block;
   height: 50px;
   border-radius: 25px;
-  background-color: #22a8bf;
+  background-color: #21b5cf;
   color: white;
   font-size: large;
 }
