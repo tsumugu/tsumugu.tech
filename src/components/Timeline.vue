@@ -19,8 +19,10 @@
     <div id="tl-left-col-wrap">
       <div id="tl-left-col-inner" ref="tlLeftColInner">
         <img v-show="tlLeftAboutThumbnail!=null" class="tl-left-col-img" v-bind:src="tlLeftAboutThumbnail" />
-        <h2 class="tl-left-col-title">{{tlLeftAboutYear}} / {{tlLeftAboutTitle}}</h2>
-        <div class="tl-left-col-description" v-html="tlLeftAboutDescription"></div>
+        <div id="tl-left-col-inner-c">
+          <h2 class="tl-left-col-title" v-show="tlLeftAboutYear!=undefined&&tlLeftAboutTitle!=undefined">{{tlLeftAboutYear}} / {{tlLeftAboutTitle}}</h2>
+          <div class="tl-left-col-description" v-html="tlLeftAboutDescription"></div>
+        </div>
       </div>
     </div>
     <div id="tl-wrap">
@@ -555,7 +557,7 @@ hr {
     /*display: inline-block;*/
     width: 100%;
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 250px 1fr;
   }
   >>> .tl-item-contents-wrapper {
     width: 450px;
@@ -731,6 +733,10 @@ hr {
   width: 100%;
   background-color: #dbdbdb;
   overflow: scroll;
+}
+#tl-left-col-inner-c {
+  padding: 15px;
+  padding-top: 0;
 }
 .tl-left-col-img {
   width: 100%;

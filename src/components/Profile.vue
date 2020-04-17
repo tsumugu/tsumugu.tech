@@ -293,6 +293,9 @@ export default {
   >>> .iframe-wrapper > iframe {
     width: 100%;
   }
+  >>> .apli-2019 {
+    margin-top: 7px;
+  }
   #aboutcontents-bg-img {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg");
   }
