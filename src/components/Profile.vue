@@ -248,7 +248,6 @@ export default {
 }
 #profile-text {
   padding: 10px;
-  padding-top: 0px;
 }
 .fadein {
   animation: fadeIn 2000ms ease 0s 1 forwards;

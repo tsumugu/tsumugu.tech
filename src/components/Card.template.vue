@@ -8,8 +8,8 @@
       <p class="card-kdwr" v-show="item.kdwr!=''&&item.kdwr!=null">{{item.kdwr}}</p>
       <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
       <div id="card-button-wrapper">
-        <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read" v-bind:class="{ wid50per: item.isDispGotoSiteButton, wid100per: !item.isDispGotoSiteButton }" v-show="item.isDispReadButton"><font-awesome-icon icon="book-reader" /> 詳しく読む</button>
-        <button @click="goToSite(item.siteurl)" class="button b-gosite" v-bind:class="{ wid50per: item.isDispGotoSiteButton, wid100per: !item.isDispReadButton }" v-show="item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
+        <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read wid50per" v-bind:disabled="!item.isDispReadButton"><font-awesome-icon icon="book-reader" /> 詳しく読む</button>
+        <button @click="goToSite(item.siteurl)" class="button b-gosite wid50per" v-bind:disabled="!item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@ export default {
 <style scoped>
 .card {
   border-radius: 25px;
-  padding: 20px;
+  padding: 10px;
 }
 .card-img {
   border-radius: 25px;
@@ -73,6 +73,10 @@ export default {
   cursor: pointer;
   outline: none;
   appearance: none;
+}
+.button:disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 .b-close {
   height: 35px;

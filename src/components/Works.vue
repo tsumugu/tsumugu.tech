@@ -267,6 +267,7 @@ export default {
       this.yearCountFor = []
       this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
           var docVal = {
             'id': doc.id,
             'thumbnail': doc.data().thumbnail,
@@ -280,7 +281,7 @@ export default {
             'kdwr': doc.data().kdwr,
             'isShow': true,
             'isDispGotoSiteButton': (doc.data().siteurl !== null),
-            'isDispReadButton': true
+            'isDispReadButton': isDispRead
           }
           if (doc.data().allLang != undefined) {
             doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
