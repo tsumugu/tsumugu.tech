@@ -637,6 +637,7 @@ hr {
   top: 0;
   width: 100%;
   height: 40%;
+  cursor: pointer;
 }
 #bottom-menu-inner-abs {
   position: absolute;
@@ -649,6 +650,9 @@ hr {
 #bmi-a-contents {
   height: 90%;
   margin: 15px;
+}
+.button {
+  cursor: pointer;
 }
 .show {
   display: block !important;

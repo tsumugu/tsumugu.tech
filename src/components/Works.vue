@@ -500,6 +500,7 @@ li{
   top: 0;
   width: 100%;
   height: 40%;
+  cursor: pointer;
 }
 #bottom-menu-inner-abs {
   position: absolute;
@@ -526,6 +527,9 @@ li{
   height: 15px;
   border-radius: 25px;
   background-color: #e6e6e6;
+}
+.button {
+  cursor: pointer;
 }
 .show {
   display: block !important;

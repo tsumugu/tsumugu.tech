@@ -1,7 +1,22 @@
 <template>
   <div id="aboutcontents-wrap">
+    <!--hide img for load progress-->
     <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg" v-on:load="loadendPC" v-show="isShowImg">
     <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg" v-on:load="loadendSP" v-show="isShowImg">
+    <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadeinBM: isShowBottomMenu, fadeoutBM: !isShowBottomMenu }">
+      <div id="bottom-menu-inner-rel">
+        <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
+        <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+          <div id="bmi-a-contents">
+            <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
+            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
+            <h1>{{skillName}}</h1>
+            <p>{{skillDesc}}</p>
+            <button @click="goToWorks()" class="button">作品を見る</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="aboutcontents-main-wrap">
       <div id="aboutcontents-bgcolor"></div>
       <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
@@ -29,7 +44,15 @@ export default {
       isFinPC: false,
       isFinSP: false,
       hideText: false,
-      deviconElms: null
+      deviconElms: null,
+      isShowBottomMenu: false,
+      isHideBottomMenu: true,
+      isShowBottomMenuInner: false,
+      swipeY: 0,
+      supportTouch: false,
+      skillName: null,
+      skillDesc: null,
+      skillQuery: null
     }
   },
   methods: {
@@ -68,12 +91,54 @@ export default {
         }
       })
       if (title != null && query != null) {
-        this.goToWorks(title, query)
+        /*this.goToWorks(title, query)*/
+        this.dispSkillInfo(title, query);
+        this.openBottomMenu();
       }
     },
-    goToWorks(title, query) {
-      var routePath = "https://tsumugu.tech/Works?"+query+"="+title
+    dispSkillInfo(title, query) {
+      this.skillName = title
+      this.skillQuery = query
+      this.skillDesc = "せつめい"
+    },
+    goToWorks() {
+      var routePath = "https://tsumugu.tech/Works?"+this.skillQuery+"="+this.skillName
       window.open(routePath)
+    },
+    openBottomMenu() {
+      this.isShowBottomMenu = true
+      this.isShowBottomMenuInner = true
+      this.isHideBottomMenu = false
+    },
+    closeBottomMenu() {
+      this.isShowBottomMenuInner = false
+      this.isShowBottomMenu = false
+      setTimeout(() => {
+        this.isHideBottomMenu = true
+      }, 500)
+    },
+    touchHandlerM(event) {
+      var x = 0, y = 0;
+
+      if (event.touches && event.touches[0]) {
+        x = event.touches[0].clientX;
+        y = event.touches[0].clientY;
+      } else if (event.originalEvent && event.originalEvent.changedTouches[0]) {
+        x = event.originalEvent.changedTouches[0].clientX;
+        y = event.originalEvent.changedTouches[0].clientY;
+      } else if (event.clientX && event.clientY) {
+        x = event.clientX;
+        y = event.clientY;
+      }
+      this.swipeY = y
+      // console.log('y : ' + y);
+    },
+    touchHandlerE(event) {
+      // Height 50% (1 - 0.x)
+      // console.log(this.swipeY, window.innerHeight*0.5, window.innerHeight)
+      if ((this.swipeY - window.innerHeight*0.1) > 50) {
+        this.closeBottomMenu();
+      }
     }
   },
   mounted() {
@@ -100,12 +165,22 @@ export default {
     setTimeout(() => {
       this.doFadeText()
     }, 3000)
+    //
+    this.supportTouch = 'ontouchend' in document
+    if (this.supportTouch) {
+      var bottommenuswipe = this.$refs.bottommenuswipe
+      bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
+      bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
+    }
   },
   destroyed() {
     var _this = this
     this.deviconElms.forEach(function (element) {
       element.removeEventListener('click', _this.onClickDevivonEve, false);
     })
+    var bottommenuswipe = this.$refs.bottommenuswipe
+    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false);
+    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false);
   }
 }
 </script>
@@ -249,6 +324,76 @@ export default {
 #profile-text {
   padding: 10px;
 }
+
+#bottom-menu {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+#bottom-menu-inner-rel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#bottom-menu-close-div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+#bottom-menu-inner-abs {
+  position: absolute;
+  width: 100%;
+  /* Change with touchHandlerE & #bmi-a-contents */
+  height: 50%;
+  border-radius: 15px 15px 0 0;
+  background-color: white;
+}
+#bmi-a-contents {
+  height: 50%;
+  margin: 15px;
+}
+>>> #bmi-a-contents > h1 {
+  color: #2c3e50;
+}
+>>> #bmi-a-contents > p {
+  margin: 0;
+  padding: 0 0 0 10px;
+  background-color: transparent;
+}
+#bottom-menu-swipe-bar {
+  display: inline-block;
+  height: 35px;
+  width: 100%;
+  padding: 10px 0px 0px 0px;
+  text-align: center;
+}
+#bottom-menu-swipe-bar-inner {
+  display: inline-block;
+  width: 20%;
+  height: 15px;
+  border-radius: 25px;
+  background-color: #e6e6e6;
+}
+.button {
+  cursor: pointer;
+}
+.show {
+  display: block !important;
+}
+.hide {
+  display: none !important;
+}
+.skelton {
+  opacity: 0;
+}
+.pos-zero {
+  bottom: -100%;
+}
 .fadein {
   animation: fadeIn 2000ms ease 0s 1 forwards;
 }
@@ -257,6 +402,18 @@ export default {
 }
 .fadeout {
   animation: fadeOut 3000ms ease 0s 1 forwards;
+}
+.bottommenuin {
+  animation: BMIn 1000ms ease 0s 1 forwards;
+}
+.bottommenuout {
+  animation: BMOut 700ms ease 0s 1 forwards;
+}
+.fadeinBM {
+  animation: fadeIn 500ms ease 0s 1 forwards;
+}
+.fadeoutBM {
+  animation: fadeOut 500ms ease 0s 1 forwards;
 }
 @keyframes fadeIn {
     0% {opacity: 0}
@@ -269,6 +426,14 @@ export default {
 @keyframes fadeOut {
     0% {opacity: 1}
     100% {opacity: 0}
+}
+@keyframes BMIn {
+    0% {bottom: -100%;opacity: 0;}
+    100% {bottom: 0;opacity: 1;}
+}
+@keyframes BMOut {
+    0% {bottom: 0;opacity: 1;}
+    100% {bottom: -100%;opacity: 0;}
 }
 @media (max-width: 3000px) and (min-width: 600px) {
   >>> .iframe-wrapper > iframe {
