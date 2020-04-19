@@ -11,7 +11,7 @@
             <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
             <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
             <h1>{{skillName}}</h1>
-            <p>{{skillDesc}}</p>
+            <p>{{skillDesc}}</p><br>
             <button @click="goToWorks()" class="button">作品を見る</button>
           </div>
         </div>
@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+import firebase from 'firebase'
 var axios = require('axios')
 
 export default {
@@ -51,8 +52,10 @@ export default {
       swipeY: 0,
       supportTouch: false,
       skillName: null,
+      skillNameUrl: null,
       skillDesc: null,
-      skillQuery: null
+      skillQuery: null,
+      langpfObj: null
     }
   },
   methods: {
@@ -97,12 +100,14 @@ export default {
       }
     },
     dispSkillInfo(title, query) {
-      this.skillName = title
+      var info = this.langpfObj.filter(e => e.titleShort == title.toLowerCase())
+      this.skillName = info[0].title
+      this.skillNameUrl = title
       this.skillQuery = query
-      this.skillDesc = "せつめい"
+      this.skillDesc = info[0].desc
     },
     goToWorks() {
-      var routePath = "https://tsumugu.tech/Works?"+this.skillQuery+"="+this.skillName
+      var routePath = "https://tsumugu.tech/Works?"+this.skillQuery+"="+this.skillNameUrl
       window.open(routePath)
     },
     openBottomMenu() {
@@ -165,6 +170,14 @@ export default {
     setTimeout(() => {
       this.doFadeText()
     }, 3000)
+    //
+    var langpfObjLocal = []
+    firebase.firestore().collection('languages').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        langpfObjLocal.push({titleShort: doc.id, title: doc.data().title, desc: doc.data().description})
+      })
+    })
+    this.langpfObj = langpfObjLocal
     //
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
@@ -342,13 +355,13 @@ export default {
   position: absolute;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 50%;
   cursor: pointer;
 }
 #bottom-menu-inner-abs {
   position: absolute;
   width: 100%;
-  /* Change with touchHandlerE & #bmi-a-contents */
+  /* Change with touchHandlerE & #bmi-a-contents & #bottom-menu-close-div */
   height: 50%;
   border-radius: 15px 15px 0 0;
   background-color: white;

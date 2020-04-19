@@ -499,7 +499,7 @@ li{
   position: absolute;
   top: 0;
   width: 100%;
-  height: 40%;
+  height: 10%;
   cursor: pointer;
 }
 #bottom-menu-inner-abs {
