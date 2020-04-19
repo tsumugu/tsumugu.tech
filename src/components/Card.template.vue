@@ -44,7 +44,7 @@ export default {
 <style scoped>
 .card {
   border-radius: 25px;
-  padding: 10px;
+  padding: 15px 10px 15px 10px;
 }
 .card-img {
   border-radius: 25px;

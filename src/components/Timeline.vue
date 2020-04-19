@@ -786,7 +786,7 @@ hr {
 }
 .year-about-title {
   display: inline-block;
-  margin: 5px;
+  margin: 0;
 }
 .year-about-description {
   font-size: large;
