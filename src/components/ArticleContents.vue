@@ -50,6 +50,12 @@ export default {
     oepnEdit(articleId) {
       window.open("http://readme.tsumugu2626.xyz/edit/?author=tsumugu-tech&rip="+articleId)
     },
+    updateLinkBlank() {
+      for (var i=0;i<document.links.length;i++) {
+		    var e = document.links[i]
+			  e.target = "_blank"
+	    }
+    },
     loadArticle(articleId) {
       if (articleId == null) {
         return false
@@ -62,6 +68,9 @@ export default {
       .then(function (response) {
         var post = response.data.posts[0]
         _this.body = post.html
+        setTimeout(() => {
+          _this.updateLinkBlank()
+        }, 500)
       })
       .catch(function (error) {
         _this.error = true
