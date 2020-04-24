@@ -66,8 +66,17 @@ export default {
       if (isDispFlagFirebase !== undefined) {
         isDispFlag = isDispFlagFirebase
       }
-      //
       _this.isDispRead = isDispFlag
+      //
+      var isDispArticleFlag = false
+      var isDispArticleFlagFirebase = dataDoc.isDispArticle
+      if (isDispArticleFlagFirebase == undefined) {
+        isDispArticleFlag = true
+      } else {
+        isDispArticleFlag = isDispArticleFlagFirebase
+      }
+      _this.isDispArticle = isDispArticleFlag
+      //
     })
     .catch(function(error) {
       alert("Firebase Error")
