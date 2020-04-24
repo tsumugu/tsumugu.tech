@@ -4,7 +4,7 @@
     <div><input type="text" placeholder="title" v-model="title"></input></div>
     <div><input type="text" placeholder="siteurl" v-model="siteurl"></input></div>
     <div><input type="text" placeholder="thumbnail" v-model="thumbnail"></input></div>
-    <div><button v-on:click="save">Save</button><label name="isDispRead"><input type="checkbox" id="isDispRead" v-model="isDispRead">読むボタンを表示</input></label></div>
+    <div><button v-on:click="save">Save</button><label name="isDispRead"><input type="checkbox" id="isDispRead" v-model="isDispRead">読むボタンを表示</input></label><label name="isDispRead"><input type="checkbox" id="isDispArticle" v-model="isDispArticle">絞り込み時この記事を表示</input></label></div>
     <div><textarea v-model="description">{{description}}</textarea></div>
     <div><textarea v-model="kdwr">{{kdwr}}</textarea></div>
   </div>
@@ -18,6 +18,7 @@ export default {
       firebaseDoc: null,
       isLogin: false,
       isDispRead: false,
+      isDispArticle: true,
       articleId: null,
       title: null,
       siteurl: null,
@@ -29,7 +30,7 @@ export default {
   methods: {
     save() {
       // Update here
-      this.firebaseDoc.set({title: this.title, siteurl: this.siteurl, thumbnail: this.thumbnail, kdwr: this.kdwr, description: this.description, isDispReadButton: this.isDispRead}, {merge: true})
+      this.firebaseDoc.set({title: this.title, siteurl: this.siteurl, thumbnail: this.thumbnail, kdwr: this.kdwr, description: this.description, isDispReadButton: this.isDispRead, isDispArticle: this.isDispArticle}, {merge: true})
         .then(() => {
           alert("Succeed!")
         })

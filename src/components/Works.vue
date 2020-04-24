@@ -18,6 +18,10 @@
     </div>
     <div id="worksControl">
       <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
+      <div id="worksControl-other">
+        <p class="check-title">厳選</p>
+        <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">厳選する</span></label>
+      </div>
       <div id="worksControl-genle">
         <p class="check-title">プラットフォーム</p>
         <ul>
@@ -63,6 +67,7 @@ export default {
       db: null,
       chartData: null,
       loading: true,
+      checkedIsCarefullySelect: false,
       checkedSkills: [],
       checkedGenle: [],
       checkedYear: [],
@@ -98,6 +103,13 @@ export default {
     }
   },
   watch: {
+    checkedIsCarefullySelect() {
+      if (this.checkedIsCarefullySelect) {
+        this.doCarefullySelect()
+      } else {
+        this.doFiltering()
+      }
+    },
     checkedSkills() {
       this.doFiltering()
     },
@@ -169,6 +181,9 @@ export default {
         res.push(_this.checkedSkills.includes(element))
       })
       return res.includes(true)
+    },
+    doCarefullySelect() {
+      this.divideThree(this.cardItems.filter(doc => doc.isDispArticle != false))
     },
     doFiltering() {
       this.divideThree(this.cardItems.filter(doc =>
@@ -281,6 +296,7 @@ export default {
             'kdwr': doc.data().kdwr,
             'isShow': true,
             'isDispGotoSiteButton': (doc.data().siteurl !== null),
+            'isDispArticle': doc.data().isDispArticle,
             'isDispReadButton': isDispRead
           }
           if (doc.data().allLang != undefined) {
