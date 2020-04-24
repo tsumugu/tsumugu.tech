@@ -186,12 +186,14 @@ export default {
       this.divideThree(this.cardItems.filter(doc => doc.isDispArticle != false))
     },
     doFiltering() {
-      this.divideThree(this.cardItems.filter(doc =>
-        this.checkedGenle.includes(doc.genle)
-        && this.checkedYear.includes(String(doc.madeYear))
-        && this.checkIsSkillIncludes(doc.allLang)
-        && (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1
-      ))
+      if (!this.checkedIsCarefullySelect) {
+        this.divideThree(this.cardItems.filter(doc =>
+          this.checkedGenle.includes(doc.genle)
+          && this.checkedYear.includes(String(doc.madeYear))
+          && this.checkIsSkillIncludes(doc.allLang)
+          && (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1
+        ))
+      }
     },
     dispChart(list) {
       var genleList = []
