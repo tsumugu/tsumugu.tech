@@ -344,6 +344,9 @@ export default {
               'madeYear': doc.data().madeYear,
               'madeMonth': doc.data().madeMonth,
               'kdwr': doc.data().kdwr,
+              'whatLearned': doc.data().whatLearned,
+              'problem': doc.data().problem,
+              'targetUser': doc.data().targetUser,
               'isDispReadButton': doc.data().isDispReadButton
             })
           })
@@ -397,12 +400,18 @@ export default {
             var thumbnailUrl = docData.thumbnail==null ? 'https://via.placeholder.com/2560x1480' : docData.thumbnail
             var isDispRead = docData.isDispReadButton==undefined ? true : docData.isDispReadButton
             var isDispGoSite = (docData.siteurl === undefined || docData.siteurl == null || docData.siteurl == "") ? false : true
+            var whatLearned = (docData.whatLearned === undefined || docData.whatLearned == null || docData.whatLearned == "") ? '' : docData.whatLearned
+            var problem = (docData.problem === undefined || docData.problem == null || docData.problem == "") ? '' : docData.problem
+            var targetUser = (docData.targetUser === undefined || docData.targetUser == null || docData.targetUser == "") ? '' : docData.targetUser
             let data = {
               'id': docData.id,
               'thumbnail': thumbnailUrl,
               'title': docData.title,
               'siteurl': docData.siteurl,
               'description': docData.description,
+              'whatLearned': whatLearned,
+              'problem': problem,
+              'targetUser': targetUser,
               'genle': docData.genle,
               'allLang': docData.allLang,
               'madeYear': docData.madeYear,
@@ -437,6 +446,8 @@ export default {
           }
           el_count++
           before_madeYear = now_madeYear
+
+          console.log(_this.items)
         })
         // v-forが描画され終ったときに実行されるイベント
         _this.$nextTick(() => {

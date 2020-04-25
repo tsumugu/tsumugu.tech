@@ -5,8 +5,11 @@
     <div><input type="text" placeholder="siteurl" v-model="siteurl"></input></div>
     <div><input type="text" placeholder="thumbnail" v-model="thumbnail"></input></div>
     <div><button v-on:click="save">Save</button><label name="isDispRead"><input type="checkbox" id="isDispRead" v-model="isDispRead">読むボタンを表示</input></label><label name="isDispRead"><input type="checkbox" id="isDispArticle" v-model="isDispArticle">絞り込み時この記事を表示</input></label></div>
-    <div><textarea v-model="description">{{description}}</textarea></div>
-    <div><textarea v-model="kdwr">{{kdwr}}</textarea></div>
+    <div>説明:<textarea v-model="description">{{description}}</textarea></div>
+    <div>こだわり:<textarea v-model="kdwr">{{kdwr}}</textarea></div>
+    <div>ターゲット:<textarea v-model="targetUser">{{targetUser}}</textarea></div>
+    <div>課題:<textarea v-model="problem">{{problem}}</textarea></div>
+    <div>学んだこと:<textarea v-model="whatLearned">{{whatLearned}}</textarea></div>
   </div>
 </template>
 
@@ -24,13 +27,33 @@ export default {
       siteurl: null,
       thumbnail: null,
       description: null,
-      kdwr: null
+      kdwr: null,
+      targetUser: null,
+      problem: null,
+      whatLearned: null,
     }
+  },
+  watch: {
+    targetUser() {
+      if (this.targetUser == undefined) {
+        this.targetUser = ""
+      }
+    },
+    problem() {
+      if (this.problem == undefined) {
+        this.problem = ""
+      }
+    },
+    whatLearned() {
+      if (this.whatLearned == undefined) {
+        this.whatLearned = ""
+      }
+    },
   },
   methods: {
     save() {
       // Update here
-      this.firebaseDoc.set({title: this.title, siteurl: this.siteurl, thumbnail: this.thumbnail, kdwr: this.kdwr, description: this.description, isDispReadButton: this.isDispRead, isDispArticle: this.isDispArticle}, {merge: true})
+      this.firebaseDoc.set({title: this.title, siteurl: this.siteurl, thumbnail: this.thumbnail, kdwr: this.kdwr, description: this.description, targetUser: this.targetUser, problem: this.problem, whatLearned: this.whatLearned, isDispReadButton: this.isDispRead, isDispArticle: this.isDispArticle}, {merge: true})
         .then(() => {
           alert("Succeed!")
         })
@@ -58,6 +81,9 @@ export default {
       _this.title = dataDoc.title
       _this.description = dataDoc.description
       _this.kdwr = dataDoc.kdwr
+      _this.targetUser = dataDoc.targetUser
+      _this.problem = dataDoc.problem
+      _this.whatLearned = dataDoc.whatLearned
       _this.siteurl = dataDoc.siteurl
       _this.thumbnail = dataDoc.thumbnail
       //

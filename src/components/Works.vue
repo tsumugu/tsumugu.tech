@@ -285,12 +285,18 @@ export default {
       this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
+          var whatLearned = (doc.data().whatLearned === undefined || doc.data().whatLearned == null || doc.data().whatLearned == "") ? '' : doc.data().whatLearned
+          var problem = (doc.data().problem === undefined || doc.data().problem == null || doc.data().problem == "") ? '' : doc.data().problem
+          var targetUser = (doc.data().targetUser === undefined || doc.data().targetUser == null || doc.data().targetUser == "") ? '' : doc.data().targetUser
           var docVal = {
             'id': doc.id,
             'thumbnail': doc.data().thumbnail,
             'title': doc.data().title,
             'siteurl': doc.data().siteurl,
             'description': doc.data().description,
+            'whatLearned': whatLearned,
+            'problem': problem,
+            'targetUser': targetUser,
             'genle': doc.data().genle,
             'allLang': doc.data().allLang,
             'madeYear': doc.data().madeYear,

@@ -4,7 +4,13 @@
       <progressive-img class="card-img" v-bind:src="item.thumbnail" />
       <h2 class="card-title">{{item.title}}</h2>
       <p class="card-description" v-show="item.description!=''" v-html="item.description"></p>
-      <p class="card-main-lang">{{item.genle}} ({{item.allLang}})</p>
+      <div class="card-tags">
+        <div class="card-tags-wrap" v-show="item.targetUser!=''"><p class="card-tags-title">ターゲット</p><p class="card-tags-val">{{item.targetUser}}</p></div>
+        <div class="card-tags-wrap" v-show="item.problem!=''"><p class="card-tags-title">課題</p><p class="card-tags-val">{{item.problem}}</p></div>
+        <div class="card-tags-wrap" v-show="item.whatLearned!=''"><p class="card-tags-title">学んだこと</p><p class="card-tags-val">{{item.whatLearned}}</p></div>
+        <div class="card-tags-wrap" v-show="item.genle!=''"><p class="card-tags-title">環境</p><p class="card-tags-val">{{item.genle}}</p></div>
+        <div class="card-tags-wrap" v-show="item.allLang!=''"><p class="card-tags-title">言語</p><p class="card-tags-val">{{item.allLang}}</p></div>
+      </div>
       <p class="card-kdwr" v-show="item.kdwr!=''&&item.kdwr!=null">{{item.kdwr}}</p>
       <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
       <div id="card-button-wrapper">
@@ -53,20 +59,39 @@ export default {
 .card-title {
   margin: 0 5px 0;
 }
-.card-main-lang {
-  display: inline-block;
-  padding: 10px;
-  border-radius: 25px;
-  color: #60bece;
-  border: 2px solid #60bece;
-  margin: 5px 0 0 0;
-}
 .card-description {
   font-size: large;
   margin: 0px 5px 0px 5px;
 }
 .card-kdwr {
   margin: 5px;
+}
+.card-tags {
+  display: grid;
+}
+.card-tags-wrap {
+  display: inline-block;
+  border-radius: 25px;
+  color: #60bece;
+  border: 2px solid #60bece;
+  margin: 5px 0 0 0;
+}
+.card-tags-title {
+  display: inline-block;
+  width: 80px;
+  margin: 0;
+  padding: 10px;
+  color: white;
+  background-color: #60bece;
+  border-radius: 18px 0 0 18px;
+  opacity: 0.75;
+  text-align: center;
+}
+.card-tags-val {
+  display: inline-block;
+  width: calc(100% - 120px);
+  margin: 0;
+  padding: 10px;
 }
 .button {
   border: none;
