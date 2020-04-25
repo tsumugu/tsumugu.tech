@@ -18,29 +18,32 @@
     </div>
     <div id="worksControl">
       <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
-      <div id="worksControl-other">
-        <p class="check-title">厳選</p>
-        <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">厳選する</span></label>
+      <p class="check-wrap-title" v-on:click="filterToggle">絞り込み {{isDispFilterdivMark}}</p>
+      <div id="worksControlFilterdiv" v-show="isDispFilterdiv">
+        <div id="worksControl-genle">
+          <p class="check-title">プラットフォーム</p>
+          <ul>
+            <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
+          </ul>
+        </div>
+        <div id="worksControl-skill">
+          <p class="check-title">言語</p>
+          <ul>
+            <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
+          </ul>
+        </div>
+        <div id="worksControl-filter">
+          <p class="check-title">制作年</p>
+          <ul>
+            <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
+          </ul>
+        </div>
+        <div id="worksControl-other">
+          <p class="check-title">厳選</p>
+          <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">意図が明確なものだけ表示</span></label>
+        </div>
       </div>
-      <div id="worksControl-genle">
-        <p class="check-title">プラットフォーム</p>
-        <ul>
-          <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
-        </ul>
-      </div>
-      <div id="worksControl-skill">
-        <p class="check-title">言語</p>
-        <ul>
-          <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
-        </ul>
-      </div>
-      <div id="worksControl-filter">
-        <p class="check-title">制作年</p>
-        <ul>
-          <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
-        </ul>
-        <div>{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
-      </div>
+      <div id="worksControl-result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
     </div>
     <div id="card-wrapper">
       <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
@@ -99,7 +102,9 @@ export default {
       isHideBottomMenu: true,
       isShowBottomMenuInner: false,
       swipeY: 0,
-      supportTouch: false
+      supportTouch: false,
+      isDispFilterdiv: false,
+      isDispFilterdivMark: "▶"
     }
   },
   watch: {
@@ -121,9 +126,19 @@ export default {
     },
     searchWord() {
       this.doFiltering()
+    },
+    isDispFilterdiv() {
+      if (this.isDispFilterdiv) {
+        this.isDispFilterdivMark = "▼"
+      } else {
+        this.isDispFilterdivMark = "▶"
+      }
     }
   },
   methods: {
+    filterToggle() {
+      this.isDispFilterdiv = !this.isDispFilterdiv
+    },
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
@@ -474,9 +489,20 @@ li{
 #worksControl-chart {
   width: 100%;
 }
-.check-title {
+.check-wrap-title {
   margin: 0;
   font-size: 1.5rem;
+  cursor: pointer;
+}
+.check-title {
+  margin: 0;
+  font-size: 1.35rem;
+}
+#worksControlFilterdiv {
+  padding-left: 1.5rem;
+}
+#worksControl-result {
+  margin-top: 1rem;
 }
 
 >>> .card {

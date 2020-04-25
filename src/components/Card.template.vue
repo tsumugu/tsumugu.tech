@@ -91,6 +91,7 @@ export default {
   width: calc(100% - 120px);
   margin: 0;
   padding: 10px;
+  word-break: break-all;
 }
 .button {
   border: none;
