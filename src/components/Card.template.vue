@@ -68,13 +68,13 @@ export default {
 }
 .card-tags {
   display: grid;
+  gap: 5px;
+  margin-top: 5px;
 }
 .card-tags-wrap {
-  display: inline-block;
-  border-radius: 25px;
   color: #60bece;
   border: 2px solid #60bece;
-  margin: 5px 0 0 0;
+  border-radius: 25px;
 }
 .card-tags-title {
   display: inline-block;
@@ -88,7 +88,7 @@ export default {
   text-align: center;
 }
 .card-tags-val {
-  display: inline-block;
+  float: right;
   width: calc(100% - 120px);
   margin: 0;
   padding: 10px;
