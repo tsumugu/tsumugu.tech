@@ -5,11 +5,11 @@
       <h2 class="card-title">{{item.title}}</h2>
       <p class="card-description" v-show="item.description!=''" v-html="item.description"></p>
       <div class="card-tags">
-        <div class="card-tags-wrap" v-show="item.targetUser!=''"><p class="card-tags-title">ターゲット</p><p class="card-tags-val">{{item.targetUser}}</p></div>
-        <div class="card-tags-wrap" v-show="item.problem!=''"><p class="card-tags-title">課題</p><p class="card-tags-val">{{item.problem}}</p></div>
-        <div class="card-tags-wrap" v-show="item.whatLearned!=''"><p class="card-tags-title">学んだこと</p><p class="card-tags-val">{{item.whatLearned}}</p></div>
-        <div class="card-tags-wrap" v-show="item.genle!=''"><p class="card-tags-title">環境</p><p class="card-tags-val">{{item.genle}}</p></div>
-        <div class="card-tags-wrap" v-show="item.allLang!=''"><p class="card-tags-title">言語</p><p class="card-tags-val">{{item.allLang}}</p></div>
+        <div class="card-tags-wrap" v-show="item.targetUser!=''"><p class="card-tags-title">対象 <font-awesome-icon icon="user" /></p><p class="card-tags-val">{{item.targetUser}}</p></div>
+        <div class="card-tags-wrap" v-show="item.problem!=''"><p class="card-tags-title">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card-tags-val">{{item.problem}}</p></div>
+        <div class="card-tags-wrap" v-show="item.whatLearned!=''"><p class="card-tags-title">学習 <font-awesome-icon icon="school" /></p><p class="card-tags-val">{{item.whatLearned}}</p></div>
+        <div class="card-tags-wrap" v-show="item.genle!=''"><p class="card-tags-title">環境 <font-awesome-icon icon="mobile-alt" /></p><p class="card-tags-val">{{item.genle}}</p></div>
+        <div class="card-tags-wrap" v-show="item.allLang!=''"><p class="card-tags-title">言語 <font-awesome-icon icon="code" /></p><p class="card-tags-val">{{item.allLang}}</p></div>
       </div>
       <p class="card-kdwr" v-show="item.kdwr!=''&&item.kdwr!=null">{{item.kdwr}}</p>
       <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
@@ -72,7 +72,6 @@ export default {
   margin-top: 5px;
 }
 .card-tags-wrap {
-  color: #60bece;
   border: 2px solid #60bece;
   border-radius: 25px;
 }
