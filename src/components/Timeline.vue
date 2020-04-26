@@ -301,6 +301,15 @@ export default {
         parentsClassList.add("fadeout")
       }
     },
+    setTLHeight() {
+      var e = this.createBoundingClientRect(document.getElementById('tl-items'))
+
+      var tlWrap = document.getElementById('tl-wrap')
+      var tlLeftLine = document.getElementById('left-line')
+
+      tlWrap.style.height = (e.rect.height+50)+"px"
+      tlLeftLine.style.height = (e.rect.height+10)+"px"
+    },
     drawTL() {
       var _this = this
       this.items = []
@@ -446,8 +455,6 @@ export default {
           }
           el_count++
           before_madeYear = now_madeYear
-
-          console.log(_this.items)
         })
         // v-forが描画され終ったときに実行されるイベント
         _this.$nextTick(() => {
@@ -456,6 +463,7 @@ export default {
             _this.aboutCol = document.getElementsByClassName('aboutCol')
             _this.setcolChild(0, true)
             _this.setCardCol(0, true)
+            _this.setTLHeight()
           }, 1000)
         })
         //
@@ -764,14 +772,14 @@ hr {
 }
 #tl-wrap {
   position: relative;
-  /* same #left-line */
-  height: 20000px;
+  /* set height with JS */
+  height: 30000px;
 }
 #left-line {
   display: inline-block;
   width: 10px;
-  /* same #tl-wrap */
-  height: 20000px;
+  /* set height with JS */
+  height: 30000px;
   margin-top: 40px;
   margin-left: 21.5px;
   float: left;
@@ -785,7 +793,6 @@ hr {
   margin-left: 30px;
   margin-bottom: 10px;
   padding: 10px 10px 10px 10px;
-  /*width: 87.5%;*/
   border-radius: 0px 25px 25px 0px;
 }
 .aboutMarginTopMax {
@@ -809,7 +816,6 @@ hr {
 }
 .card {
   position: relative;
-  /*width: 85%;*/
 }
 .cardMarginTop {
   margin-top: 20px;
