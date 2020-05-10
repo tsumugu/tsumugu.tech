@@ -8,8 +8,8 @@
       <div id="top-button" class="scrollIcon" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" /></div>
       <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
         <div id="top-menu-links-wrapper">
-          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" />  Works</router-link></div>
-          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" /></router-link></div>
+          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" />  Works</router-link><p class="top-menu-desc-p">作品の一覧</p></div>
+          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" /></router-link><p class="top-menu-desc-p">作品やできごとを時系列で</p></div>
           <div id="top-menu-links-bgborder"></div>
         </div>
       </div>
@@ -199,6 +199,9 @@ a:hover {
   color: gray;
   opacity: 0.7;
 }
+.top-menu-desc-p {
+  margin: 0;
+}
 .scrollIcon {
   cursor: pointer;
   opacity: 0.7;
@@ -208,13 +211,12 @@ a:hover {
 }
 #top-menu-link-tl {
   text-align: right;
-  margin-top: 20px;
 }
 #top-menu-links-bgborder {
   position: absolute;
   left: 110px;
   /* 15 + (#top-menu-link-tls margin top) */
-  bottom: 35px;
+  bottom: 60px;
   width:135px;
   border-top: 2px solid gray;
   opacity: 0.7;

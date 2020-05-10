@@ -22,24 +22,27 @@
       <div id="worksControlFilterdiv" v-show="isDispFilterdiv">
         <div id="worksControl-genle">
           <p class="check-title">プラットフォーム</p>
+          <label for="resetGenle" class="checkbox-reset"><input type="checkbox" id="resetGenle" class="checkbox-input" name="resetGenle" value="resetGenle" v-model="resetGenle"><span class="checkbox-parts">リセット</span></label>
           <ul>
             <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
           </ul>
         </div>
         <div id="worksControl-skill">
           <p class="check-title">言語</p>
+          <label for="resetSkill" class="checkbox-reset"><input type="checkbox" id="resetSkill" class="checkbox-input" name="resetSkill" value="resetSkill" v-model="resetSkill"><span class="checkbox-parts">リセット</span></label>
           <ul>
             <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
           </ul>
         </div>
         <div id="worksControl-filter">
           <p class="check-title">制作年</p>
+          <label for="resetYearCount" class="checkbox-reset"><input type="checkbox" id="resetYearCount" class="checkbox-input" name="resetYearCount" value="resetYearCount" v-model="resetYearCount"><span class="checkbox-parts">リセット</span></label>
           <ul>
             <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
           </ul>
         </div>
         <div id="worksControl-other">
-          <p class="check-title">厳選</p>
+          <p class="check-title" style="display: block;">厳選</p>
           <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">意図が明確なものだけ表示</span></label>
         </div>
       </div>
@@ -87,6 +90,9 @@ export default {
       yearStr: [],
       yearCount: [],
       yearCountFor: [],
+      resetGenle: false,
+      resetSkill: false,
+      resetYearCount: false,
       themeColors: {
         'web': 'rgba(227, 79, 38, 0.8)',
         'マイコン': 'rgba(0, 135, 143, 0.8)',
@@ -123,6 +129,33 @@ export default {
     },
     checkedYear() {
       this.doFiltering()
+    },
+    resetGenle() {
+      if (this.resetGenle) {
+        this.checkedGenle = []
+      } else {
+        this.genleCountFor.forEach((e) => {
+          this.checkedGenle.push(e.key)
+        })
+      }
+    },
+    resetSkill() {
+      if (this.resetSkill) {
+        this.checkedSkills = []
+      } else {
+        this.skillsCountFor.forEach((e) => {
+          this.checkedSkills.push(e.key)
+        })
+      }
+    },
+    resetYearCount() {
+      if (this.resetYearCount) {
+        this.checkedYear = []
+      } else {
+        this.yearCountFor.forEach((e) => {
+          this.checkedYear.push(e.key)
+        })
+      }
     },
     searchWord() {
       this.doFiltering()
@@ -429,10 +462,17 @@ export default {
 </script>
 
 <style scoped>
+label {
+  cursor: pointer;
+}
 #loading {
   position: fixed;
   width: 100%;
   height: 100%;
+}
+.checkbox-reset {
+  display: inline-block;
+  margin-left: 5px;
 }
 .checkbox-input {
   display: none;
@@ -485,6 +525,7 @@ li{
 }
 #worksControl {
   padding: 10px;
+  user-select: none;
 }
 #worksControl-chart {
   width: 100%;
@@ -495,6 +536,7 @@ li{
   cursor: pointer;
 }
 .check-title {
+  display: inline-block;
   margin: 0;
   font-size: 1.35rem;
 }

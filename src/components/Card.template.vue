@@ -51,6 +51,7 @@ export default {
 .card {
   border-radius: 25px;
   padding: 15px 10px 15px 10px;
+  box-shadow: 0 0 5px 3px #cccccc;
 }
 .card-img {
   border-radius: 25px;
