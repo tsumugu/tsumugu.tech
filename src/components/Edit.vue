@@ -9,6 +9,7 @@
     <div>こだわり:<textarea v-model="kdwr">{{kdwr}}</textarea></div>
     <div>ターゲット:<textarea v-model="targetUser">{{targetUser}}</textarea></div>
     <div>課題:<textarea v-model="problem">{{problem}}</textarea></div>
+    <div>解決:<textarea v-model="solution">{{solution}}</textarea></div>
     <div>学んだこと:<textarea v-model="whatLearned">{{whatLearned}}</textarea></div>
   </div>
 </template>
@@ -30,6 +31,7 @@ export default {
       kdwr: null,
       targetUser: null,
       problem: null,
+      solution: null,
       whatLearned: null,
     }
   },
@@ -44,6 +46,11 @@ export default {
         this.problem = ""
       }
     },
+    solution() {
+      if (this.solution == undefined) {
+        this.solution = ""
+      }
+    },
     whatLearned() {
       if (this.whatLearned == undefined) {
         this.whatLearned = ""
@@ -53,7 +60,7 @@ export default {
   methods: {
     save() {
       // Update here
-      this.firebaseDoc.set({title: this.title, siteurl: this.siteurl, thumbnail: this.thumbnail, kdwr: this.kdwr, description: this.description, targetUser: this.targetUser, problem: this.problem, whatLearned: this.whatLearned, isDispReadButton: this.isDispRead, isDispArticle: this.isDispArticle}, {merge: true})
+      this.firebaseDoc.set({title: this.title, siteurl: this.siteurl, thumbnail: this.thumbnail, kdwr: this.kdwr, description: this.description, targetUser: this.targetUser, problem: this.problem, solution: this.solution, whatLearned: this.whatLearned, isDispReadButton: this.isDispRead, isDispArticle: this.isDispArticle}, {merge: true})
         .then(() => {
           alert("Succeed!")
         })
@@ -83,6 +90,7 @@ export default {
       _this.kdwr = dataDoc.kdwr
       _this.targetUser = dataDoc.targetUser
       _this.problem = dataDoc.problem
+      _this.solution = dataDoc.solution
       _this.whatLearned = dataDoc.whatLearned
       _this.siteurl = dataDoc.siteurl
       _this.thumbnail = dataDoc.thumbnail

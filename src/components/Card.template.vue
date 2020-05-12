@@ -5,15 +5,15 @@
       <h2 class="card-title">{{item.title}}</h2>
       <p class="card-description" v-show="item.description!=''" v-html="item.description"></p>
       <div class="card-tags">
-        <div class="card-tags-wrap-border" v-show="item.whatLearned!=''||item.problem!=''||item.targetUser!=''||item.solution!=''">
+        <div class="card-tags-wrap-border" v-show="item.problem!=''||item.targetUser!=''||item.solution!=''">
           <div v-bind:class="{ cardTagsWrapTaishoKadai: item.targetUser!=''&&item.problem!='' }">
             <div class="card-tags-wrap card-tags-green-border" v-show="item.targetUser!=''"><p class="card-tags-title card-tags-green-bgcolor">対象 <font-awesome-icon icon="user" /></p><p class="card-tags-val">{{item.targetUser}}</p></div>
             <div class="card-tags-wrap card-tags-green-border" v-show="item.problem!=''"><p class="card-tags-title card-tags-green-bgcolor">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card-tags-val">{{item.problem}}</p></div>
           </div>
-          <div class="card-tags-green-arrow" v-show="item.targetUser!=''&&item.problem!=''&&item.solution!=''">↓</div>
+          <div class="card-tags-green-arrow" v-show="item.solution!=''">↓</div>
           <div class="card-tags-wrap card-tags-green-border" v-show="item.solution!=''"><p class="card-tags-title card-tags-green-bgcolor">解決 <font-awesome-icon icon="grin-beam" /></p><p class="card-tags-val">{{item.solution}}</p></div>
-          <div class="card-tags-wrap card-tags-green-border" v-show="item.whatLearned!=''"><p class="card-tags-title card-tags-green-bgcolor">学習 <font-awesome-icon icon="school" /></p><p class="card-tags-val">{{item.whatLearned}}</p></div>
         </div>
+        <div class="card-tags-wrap card-tags-green-border" v-show="item.whatLearned!=''"><p class="card-tags-title card-tags-green-bgcolor">学習 <font-awesome-icon icon="school" /></p><p class="card-tags-val">{{item.whatLearned}}</p></div>
         <div class="card-tags-wrap" v-show="item.genle!=''"><p class="card-tags-title">環境 <font-awesome-icon icon="mobile-alt" /></p><p class="card-tags-val">{{item.genle}}</p></div>
         <div class="card-tags-wrap" v-show="item.allLang!=''"><p class="card-tags-title">言語 <font-awesome-icon icon="code" /></p><p class="card-tags-val">{{item.allLang}}</p></div>
       </div>
