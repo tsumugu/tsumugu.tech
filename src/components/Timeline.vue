@@ -354,6 +354,7 @@ export default {
               'madeMonth': doc.data().madeMonth,
               'kdwr': doc.data().kdwr,
               'whatLearned': doc.data().whatLearned,
+              'solution': doc.data().solution,
               'problem': doc.data().problem,
               'targetUser': doc.data().targetUser,
               'isDispReadButton': doc.data().isDispReadButton
@@ -410,6 +411,7 @@ export default {
             var isDispRead = docData.isDispReadButton==undefined ? true : docData.isDispReadButton
             var isDispGoSite = (docData.siteurl === undefined || docData.siteurl == null || docData.siteurl == "") ? false : true
             var whatLearned = (docData.whatLearned === undefined || docData.whatLearned == null || docData.whatLearned == "") ? '' : docData.whatLearned
+            var solution = (docData.solution === undefined || docData.solution == null || docData.solution == "") ? '' : docData.solution
             var problem = (docData.problem === undefined || docData.problem == null || docData.problem == "") ? '' : docData.problem
             var targetUser = (docData.targetUser === undefined || docData.targetUser == null || docData.targetUser == "") ? '' : docData.targetUser
             let data = {
@@ -419,6 +421,7 @@ export default {
               'siteurl': docData.siteurl,
               'description': docData.description,
               'whatLearned': whatLearned,
+              'solution': solution,
               'problem': problem,
               'targetUser': targetUser,
               'genle': docData.genle,

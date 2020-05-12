@@ -334,6 +334,7 @@ export default {
         querySnapshot.forEach((doc) => {
           var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
           var whatLearned = (doc.data().whatLearned === undefined || doc.data().whatLearned == null || doc.data().whatLearned == "") ? '' : doc.data().whatLearned
+          var solution = (docData.solution === undefined || docData.solution == null || docData.solution == "") ? '' : docData.solution
           var problem = (doc.data().problem === undefined || doc.data().problem == null || doc.data().problem == "") ? '' : doc.data().problem
           var targetUser = (doc.data().targetUser === undefined || doc.data().targetUser == null || doc.data().targetUser == "") ? '' : doc.data().targetUser
           var docVal = {
@@ -343,6 +344,7 @@ export default {
             'siteurl': doc.data().siteurl,
             'description': doc.data().description,
             'whatLearned': whatLearned,
+            'solution': solution,
             'problem': problem,
             'targetUser': targetUser,
             'genle': doc.data().genle,
