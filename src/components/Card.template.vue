@@ -7,11 +7,11 @@
       <div class="card-tags">
         <div class="card-tags-wrap-border" v-show="item.problem!=''||item.targetUser!=''||item.solution!=''">
           <div v-bind:class="{ cardTagsWrapTaishoKadai: item.targetUser!=''&&item.problem!='' }">
-            <div class="card-tags-wrap card-tags-green-border" v-show="item.targetUser!=''"><p class="card-tags-title card-tags-green-bgcolor">対象 <font-awesome-icon icon="user" /></p><p class="card-tags-val">{{item.targetUser}}</p></div>
-            <div class="card-tags-wrap card-tags-green-border" v-show="item.problem!=''"><p class="card-tags-title card-tags-green-bgcolor">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card-tags-val">{{item.problem}}</p></div>
+            <div class="card-tags-wrap card-tags-green-border" v-show="item.targetUser!=''"><p class="card-tags-title card-tags-green-title card-tags-green-bgcolor">対象 <font-awesome-icon icon="user" /></p><p class="card-tags-val card-tags-green-val">{{item.targetUser}}</p></div>
+            <div class="card-tags-wrap card-tags-green-border" v-show="item.problem!=''"><p class="card-tags-title card-tags-green-title card-tags-green-bgcolor">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card-tags-val card-tags-green-val">{{item.problem}}</p></div>
           </div>
-          <div class="card-tags-green-arrow" v-show="item.solution!=''">↓</div>
-          <div class="card-tags-wrap card-tags-green-border" v-show="item.solution!=''"><p class="card-tags-title card-tags-green-bgcolor">解決 <font-awesome-icon icon="grin-beam" /></p><p class="card-tags-val">{{item.solution}}</p></div>
+          <div class="card-tags-green-arrow" v-show="item.solution!=''" v-bind:class="{ cardTagsArrowMargin: item.targetUser!=''&&item.problem!='' }"><font-awesome-icon icon="arrow-down" size="lg" /></div>
+          <div class="card-tags-wrap card-tags-green-border" v-show="item.solution!=''"><p class="card-tags-title card-tags-green-title card-tags-green-bgcolor">解決 <font-awesome-icon icon="grin-beam" /></p><p class="card-tags-val card-tags-green-val">{{item.solution}}</p></div>
         </div>
         <div class="card-tags-wrap card-tags-green-border" v-show="item.whatLearned!=''"><p class="card-tags-title card-tags-green-bgcolor">学習 <font-awesome-icon icon="school" /></p><p class="card-tags-val">{{item.whatLearned}}</p></div>
         <div class="card-tags-wrap" v-show="item.genle!=''"><p class="card-tags-title">環境 <font-awesome-icon icon="mobile-alt" /></p><p class="card-tags-val">{{item.genle}}</p></div>
@@ -80,22 +80,13 @@ export default {
 }
 .cardTagsWrapTaishoKadai {
   display: grid;
+  gap: 5px;
   grid-template-columns: 0.5fr 0.5fr;
 }
 .card-tags-wrap-border {
   padding: 10px;
   border: 2px solid #94cf55;
   border-radius: 25px;
-}
-.card-tags-green-border {
-  border-color: #94cf55 !important;
-}
-.card-tags-green-bgcolor {
-  background-color:#97cf57 !important;
-}
-.card-tags-green-arrow {
-  text-align: center;
-  color: #7fb349;
 }
 .card-tags-wrap {
   border: 2px solid #60bece;
@@ -113,11 +104,35 @@ export default {
   text-align: center;
 }
 .card-tags-val {
-  float: right;
+  display: inline-block;
   width: calc(100% - 120px);
   margin: 0;
   padding: 10px;
-  word-break: break-all;
+}
+/* green */
+.card-tags-green-border {
+  border-color: #94cf55 !important;
+}
+.card-tags-green-bgcolor {
+  background-color:#97cf57 !important;
+}
+.card-tags-green-arrow {
+  text-align: center;
+  color: #7fb349;
+}
+.cardTagsArrowMargin {
+  margin-bottom: 5px;
+}
+.card-tags-green-title {
+  display: block !important;
+  width: auto !important;
+  padding: 5px !important;
+  border-radius: 18px 18px 0 0 !important;
+}
+.card-tags-green-val {
+  display: block !important;
+  width: auto !important;
+  text-align: center !important;
 }
 .button {
   border: none;
