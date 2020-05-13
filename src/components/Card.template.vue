@@ -117,11 +117,13 @@ export default {
   background-color:#97cf57 !important;
 }
 .card-tags-green-arrow {
+  margin: 5px;
   text-align: center;
   color: #7fb349;
 }
 .cardTagsArrowMargin {
-  margin-bottom: 5px;
+  margin: 0 !important;
+  margin-bottom: 5px !important;
 }
 .card-tags-green-title {
   display: block !important;
