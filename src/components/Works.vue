@@ -16,37 +16,41 @@
         </div>
       </div>
     </div>
-    <div id="worksControl">
-      <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
-      <p class="check-wrap-title" v-on:click="filterToggle">絞り込み {{isDispFilterdivMark}}</p>
-      <div id="worksControlFilterdiv" v-show="isDispFilterdiv">
-        <div id="worksControl-genle">
-          <p class="check-title">プラットフォーム</p>
-          <label for="resetGenle" class="checkbox-reset"><input type="checkbox" id="resetGenle" class="checkbox-input" name="resetGenle" value="resetGenle" v-model="resetGenle"><span class="checkbox-parts">リセット</span></label>
-          <ul>
-            <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
-          </ul>
+    <div id="worksControl-fixed">
+      <div id="worksControl">
+        <!--
+        <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
+        -->
+        <p class="check-wrap-title" v-on:click="filterToggle">絞り込む {{isDispFilterdivMark}}</p>
+        <div id="worksControlFilterdiv" v-show="isDispFilterdiv">
+          <div id="worksControl-genle">
+            <p class="check-title">プラットフォーム</p>
+            <label for="resetGenle" class="checkbox-reset"><input type="checkbox" id="resetGenle" class="checkbox-input" name="resetGenle" value="resetGenle" v-model="resetGenle"><span class="checkbox-parts">リセット</span></label>
+            <ul>
+              <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
+            </ul>
+          </div>
+          <div id="worksControl-skill">
+            <p class="check-title">言語</p>
+            <label for="resetSkill" class="checkbox-reset"><input type="checkbox" id="resetSkill" class="checkbox-input" name="resetSkill" value="resetSkill" v-model="resetSkill"><span class="checkbox-parts">リセット</span></label>
+            <ul>
+              <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
+            </ul>
+          </div>
+          <div id="worksControl-filter">
+            <p class="check-title">制作年</p>
+            <label for="resetYearCount" class="checkbox-reset"><input type="checkbox" id="resetYearCount" class="checkbox-input" name="resetYearCount" value="resetYearCount" v-model="resetYearCount"><span class="checkbox-parts">リセット</span></label>
+            <ul>
+              <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
+            </ul>
+          </div>
+          <div id="worksControl-other">
+            <p class="check-title" style="display: block;">その他</p>
+            <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">意図が明確なものだけ表示</span></label>
+          </div>
         </div>
-        <div id="worksControl-skill">
-          <p class="check-title">言語</p>
-          <label for="resetSkill" class="checkbox-reset"><input type="checkbox" id="resetSkill" class="checkbox-input" name="resetSkill" value="resetSkill" v-model="resetSkill"><span class="checkbox-parts">リセット</span></label>
-          <ul>
-            <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
-          </ul>
-        </div>
-        <div id="worksControl-filter">
-          <p class="check-title">制作年</p>
-          <label for="resetYearCount" class="checkbox-reset"><input type="checkbox" id="resetYearCount" class="checkbox-input" name="resetYearCount" value="resetYearCount" v-model="resetYearCount"><span class="checkbox-parts">リセット</span></label>
-          <ul>
-            <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
-          </ul>
-        </div>
-        <div id="worksControl-other">
-          <p class="check-title" style="display: block;">厳選</p>
-          <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">意図が明確なものだけ表示</span></label>
-        </div>
+        <div id="worksControl-result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
       </div>
-      <div id="worksControl-result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
     </div>
     <div id="card-wrapper">
       <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
@@ -525,9 +529,21 @@ li{
   margin: 10px;
   margin-right: 0px;
 }
+#worksControl-fixed {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+}
 #worksControl {
+  margin: 0 10px 0 10px;
   padding: 10px;
+  background-color: #dbdbdb;
   user-select: none;
+  box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
+  box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);
+  border-radius: 0 0 25px 25px;
 }
 #worksControl-chart {
   width: 100%;
@@ -551,6 +567,11 @@ li{
 
 >>> .card {
   margin-right: 10px !important;
+}
+
+#card-wrapper {
+  padding-top: 110px;
+  padding-bottom: 10px;
 }
 @media (max-width: 3000px) and (min-width: 630px) {
   #card-wrapper {
