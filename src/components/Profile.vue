@@ -12,7 +12,12 @@
             <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
             <h1>{{skillName}}</h1>
             <p>{{skillDesc}}</p><br>
+            <!--
             <button @click="goToWorks()" class="button">作品を見る</button>
+            -->
+            <div id="card-wrapper">
+              <Card v-for="item in itemList" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
+            </div>
           </div>
         </div>
       </div>
@@ -33,9 +38,13 @@
 </template>
 <script>
 import firebase from 'firebase'
+import Card from './Card.template.vue'
 var axios = require('axios')
 
 export default {
+  components: {
+    Card
+  },
   data() {
     return {
       fadeinText: false,
@@ -55,7 +64,9 @@ export default {
       skillNameUrl: null,
       skillDesc: null,
       skillQuery: null,
-      langpfObj: null
+      langpfObj: null,
+      itemList: [],
+      itemListAll: []
     }
   },
   methods: {
@@ -99,12 +110,65 @@ export default {
         this.openBottomMenu();
       }
     },
+    getItems() {
+      var _this = this
+      firebase.firestore().collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
+          var whatLearned = (doc.data().whatLearned === undefined || doc.data().whatLearned == null || doc.data().whatLearned == "") ? '' : doc.data().whatLearned
+          var solution = (doc.data().solution === undefined || doc.data().solution == null || doc.data().solution == "") ? '' : doc.data().solution
+          var problem = (doc.data().problem === undefined || doc.data().problem == null || doc.data().problem == "") ? '' : doc.data().problem
+          var targetUser = (doc.data().targetUser === undefined || doc.data().targetUser == null || doc.data().targetUser == "") ? '' : doc.data().targetUser
+          var allLangSplited = []
+          if (doc.data().allLang != undefined) {
+            doc.data().allLang.split("/").forEach(element => allLangSplited.push(element.toLowerCase()))
+          }
+          var docVal = {
+            'id': doc.id,
+            'thumbnail': doc.data().thumbnail,
+            'title': doc.data().title,
+            'siteurl': doc.data().siteurl,
+            'description': doc.data().description,
+            'whatLearned': whatLearned,
+            'solution': solution,
+            'problem': problem,
+            'targetUser': targetUser,
+            'genle': doc.data().genle,
+            'allLang': doc.data().allLang,
+            'allLangSplited': allLangSplited,
+            'madeYear': doc.data().madeYear,
+            'madeMonth': doc.data().madeMonth,
+            'kdwr': doc.data().kdwr,
+            'isShow': true,
+            'isDispGotoSiteButton': (doc.data().siteurl !== null),
+            'isDispArticle': doc.data().isDispArticle,
+            'isDispReadButton': isDispRead
+          }
+          _this.itemListAll.push(docVal)
+        })
+      })
+      .catch(function(error) {
+        //onError
+        console.log(error)
+        alert("情報の取得に失敗しました。再読み込みしてください")
+      })
+    },
+    getArticle(title, pf) {
+      var resList
+      if (pf == "lang") {
+        resList = this.itemListAll.filter(e => e.allLangSplited.includes(title.toLowerCase()))
+      } else {
+        resList = this.itemListAll.filter(e => e.genle == title.toLowerCase())
+      }
+      this.itemList = resList
+    },
     dispSkillInfo(title, query) {
       var info = this.langpfObj.filter(e => e.titleShort == title.toLowerCase())
       this.skillName = info[0].title
       this.skillNameUrl = title
       this.skillQuery = query
       this.skillDesc = info[0].desc
+      this.getArticle(this.skillNameUrl, query)
     },
     goToWorks() {
       var routePath = "https://tsumugu.tech/Works?"+this.skillQuery+"="+this.skillNameUrl
@@ -139,8 +203,8 @@ export default {
       // console.log('y : ' + y);
     },
     touchHandlerE(event) {
-      // Height 50% (1 - 0.x)
-      // console.log(this.swipeY, window.innerHeight*0.5, window.innerHeight)
+      // Height 90% (1 - 0.x)
+      // console.log(this.swipeY, window.innerHeight*0.1, window.innerHeight)
       if ((this.swipeY - window.innerHeight*0.1) > 50) {
         this.closeBottomMenu();
       }
@@ -171,6 +235,7 @@ export default {
       this.doFadeText()
     }, 3000)
     //
+    this.getItems()
     var langpfObjLocal = []
     firebase.firestore().collection('languages').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -355,19 +420,19 @@ export default {
   position: absolute;
   top: 0;
   width: 100%;
-  height: 50%;
+  height: 90%;
   cursor: pointer;
 }
 #bottom-menu-inner-abs {
   position: absolute;
   width: 100%;
   /* Change with touchHandlerE & #bmi-a-contents & #bottom-menu-close-div */
-  height: 50%;
+  height: 90%;
   border-radius: 15px 15px 0 0;
   background-color: white;
 }
 #bmi-a-contents {
-  height: 50%;
+  height: 90%;
   margin: 15px;
 }
 >>> #bmi-a-contents > h1 {
