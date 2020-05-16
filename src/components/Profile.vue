@@ -8,15 +8,16 @@
         <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
         <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
           <div id="bmi-a-contents">
-            <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
-            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
-            <h1>{{skillName}}</h1>
-            <p>{{skillDesc}}</p><br>
-            <!--
-            <button @click="goToWorks()" class="button">作品を見る</button>
-            -->
-            <div id="card-wrapper">
-              <Card v-for="item in itemList" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
+            <div id="title-item-wrapper-contents">
+              <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
+              <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
+              <h1>{{skillName}}</h1>
+              <p>{{skillDesc}}</p>
+            </div>
+            <div id="title-item-wrapper">
+              <div v-for="item in itemList">
+                <p class="title-item" @click="goToArticle(item.id)">{{item.title}}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -153,12 +154,18 @@ export default {
         alert("情報の取得に失敗しました。再読み込みしてください")
       })
     },
-    getArticle(title, pf) {
+    getArticle(title_r, pf) {
+      var title = title_r.toLowerCase()
+      if (title == "c sharp") {
+        title = "c#"
+      } else if (title == "c plus plus") {
+        title = "c++"
+      }
       var resList
       if (pf == "lang") {
-        resList = this.itemListAll.filter(e => e.allLangSplited.includes(title.toLowerCase()))
+        resList = this.itemListAll.filter(e => e.allLangSplited.includes(title))
       } else {
-        resList = this.itemListAll.filter(e => e.genle == title.toLowerCase())
+        resList = this.itemListAll.filter(e => e.genle == title)
       }
       this.itemList = resList
     },
@@ -170,8 +177,8 @@ export default {
       this.skillDesc = info[0].desc
       this.getArticle(this.skillNameUrl, query)
     },
-    goToWorks() {
-      var routePath = "https://tsumugu.tech/Works?"+this.skillQuery+"="+this.skillNameUrl
+    goToArticle(itemId) {
+      var routePath = "https://tsumugu.tech/Article/"+itemId
       window.open(routePath)
     },
     openBottomMenu() {
@@ -264,25 +271,6 @@ export default {
 </script>
 
 <style scoped>
->>> .devicon-wrap > svg,
->>> .devicon-line {
-  width: 100px;
-  padding: 5px;
-  background-color: rgba(240, 240, 240, 0.8);
-  border-radius: 15px;
-}
->>> .devicon-of {
-  height: 100px;
-}
->>> .devicon-wrap {
-  display: inline-block;
-  padding-top: 3px;
-  padding-left: 3px;
-  cursor: pointer;
-}
->>> .iframe-wrapper {
-  padding: 5px;
-}
 >>> p,
 >>> ol > li {
   background-color: rgba(240, 240, 240, 0.8);
@@ -326,6 +314,45 @@ export default {
 }
 >>> hr {
   display: none;
+}
+
+#title-item-wrapper > h1,
+#title-item-wrapper-contents > h1 {
+  color: #2c3e50 !important;
+  padding: 5px !important;
+}
+#title-item-wrapper > p,
+#title-item-wrapper-contents > p {
+  margin: 0 !important;
+  padding: 0 0 10px 10px !important;
+  border-radius: auto !important;
+  background-color: transparent !important;
+}
+#title-item-wrapper {
+  height: 70%;
+  overflow-y: scroll;
+}
+.title-item {
+  cursor: pointer;
+}
+>>> .devicon-wrap > svg,
+>>> .devicon-line {
+  width: 100px;
+  padding: 5px;
+  background-color: rgba(240, 240, 240, 0.8);
+  border-radius: 15px;
+}
+>>> .devicon-of {
+  height: 100px;
+}
+>>> .devicon-wrap {
+  display: inline-block;
+  padding-top: 3px;
+  padding-left: 3px;
+  cursor: pointer;
+}
+>>> .iframe-wrapper {
+  padding: 5px;
 }
 #aboutcontents-wrap {
   position: relative;

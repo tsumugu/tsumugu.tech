@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-bind:id="item.id">
     <div class="tl-item-contents-wrapper">
       <progressive-img class="card-img" v-bind:src="item.thumbnail" />
       <h2 class="card-title">{{item.title}}</h2>
@@ -58,6 +58,7 @@ export default {
   border-radius: 25px;
   padding: 15px 10px 15px 10px;
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, 0.2);
+  overflow: scroll;
 }
 .card-img {
   border-radius: 25px;

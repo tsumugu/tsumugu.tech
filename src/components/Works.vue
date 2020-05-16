@@ -21,7 +21,7 @@
         <!--
         <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
         -->
-        <p class="check-wrap-title" v-on:click="filterToggle">絞り込む {{isDispFilterdivMark}}</p>
+        <div id="worksControl-result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"> ｜ <p class="check-wrap-title" v-on:click="filterToggle">絞り込む {{isDispFilterdivMark}}</p></div>
         <div id="worksControlFilterdiv" v-show="isDispFilterdiv">
           <div id="worksControl-genle">
             <p class="check-title">プラットフォーム</p>
@@ -49,7 +49,6 @@
             <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">意図が明確なものだけ表示</span></label>
           </div>
         </div>
-        <div id="worksControl-result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"></div>
       </div>
     </div>
     <div id="card-wrapper">
@@ -537,20 +536,20 @@ li{
   width: 100%;
 }
 #worksControl {
-  margin: 0 10px 0 10px;
-  padding: 10px;
+  margin: 10px;
+  padding: 20px;
   background-color: #dbdbdb;
   user-select: none;
   box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
   box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);
-  border-radius: 0 0 25px 25px;
+  border-radius: 25px;
 }
 #worksControl-chart {
   width: 100%;
 }
 .check-wrap-title {
+  display: inline-block;
   margin: 0;
-  font-size: 1.5rem;
   cursor: pointer;
 }
 .check-title {
@@ -562,7 +561,7 @@ li{
   padding-left: 1.5rem;
 }
 #worksControl-result {
-  margin-top: 1rem;
+  font-size: 1.3rem;
 }
 
 >>> .card {
@@ -570,7 +569,7 @@ li{
 }
 
 #card-wrapper {
-  padding-top: 110px;
+  padding-top: 80px;
   padding-bottom: 10px;
 }
 @media (max-width: 3000px) and (min-width: 630px) {
