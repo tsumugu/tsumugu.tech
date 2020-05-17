@@ -670,6 +670,12 @@ hr {
   height: 90%;
   margin: 15px;
 }
+#bmi-a-contents > button {
+  background-color:transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: gray;
+}
 .button {
   cursor: pointer;
 }

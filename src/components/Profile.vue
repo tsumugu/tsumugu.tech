@@ -332,6 +332,12 @@ export default {
   height: 70%;
   overflow-y: scroll;
 }
+#title-item-wrapper-contents > button {
+  background-color:transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: gray;
+}
 .title-item {
   cursor: pointer;
 }
