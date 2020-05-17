@@ -32,7 +32,7 @@
         <div class="tl-item" v-for="(item, key) in items" :key="key">
           <!-- Year About -->
           <div class="year-about" v-bind:class="{ aboutCol: !item.isTitle&&!item.isItem, hide: item.isTitle||item.isItem, aboutMarginTopMax: item.isFirst, aboutMarginTopMin: !item.isFirst }">
-            <div class="tl-item-contents-wrapper">
+            <div class="card__contentsWrapper">
               <progressive-img class="year-about-img" v-bind:class="{hide: item.thumbnail==null}" v-bind:data-src="item.thumbnail" v-bind:src="item.thumbnail" />
               <h2 class="year-about-title">{{item.title}}</h2>
               <div class="year-about-description" v-html="item.description"></div>
@@ -307,8 +307,8 @@ export default {
       var tlWrap = document.getElementById('tl-wrap')
       var tlLeftLine = document.getElementById('left-line')
 
-      tlWrap.style.height = (e.rect.height+50)+"px"
-      tlLeftLine.style.height = (e.rect.height+10)+"px"
+      tlWrap.style.height = (e.rect.height+55)+"px"
+      tlLeftLine.style.height = (e.rect.height+15)+"px"
     },
     drawTL() {
       var _this = this
@@ -578,7 +578,7 @@ hr {
     display: grid;
     grid-template-columns: 250px 1fr;
   }
-  >>> .tl-item-contents-wrapper {
+  >>> .card__contentsWrapper {
     width: 450px;
   }
   >>> .progressive-image,

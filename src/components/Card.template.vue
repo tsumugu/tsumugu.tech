@@ -1,27 +1,29 @@
 <template>
   <div class="card" v-bind:id="item.id">
-    <div class="tl-item-contents-wrapper">
-      <progressive-img v-show="!isLimit" class="card-img" v-bind:src="item.thumbnail" />
-      <h2 class="card-title">{{item.title}}</h2>
-      <p class="card-description" v-show="!isLimit&&item.description!=''" v-html="item.description"></p>
-      <div class="card-tags">
-        <div class="card-tags-wrap-border" v-show="item.problem!=''||item.targetUser!=''||item.solution!=''">
-          <div v-bind:class="{ cardTagsWrapTaishoKadai: item.targetUser!=''&&item.problem!='' }">
-            <div class="card-tags-wrap card-tags-green-border" v-show="item.targetUser!=''"><p class="card-tags-title card-tags-green-title card-tags-green-bgcolor">対象 <font-awesome-icon icon="user" /></p><p class="card-tags-val card-tags-green-val">{{item.targetUser}}</p></div>
-            <div class="card-tags-wrap card-tags-green-border" v-show="item.problem!=''"><p class="card-tags-title card-tags-green-title card-tags-green-bgcolor">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card-tags-val card-tags-green-val">{{item.problem}}</p></div>
+    <!-- 依存あり: .tl-item-contents-wrapper -->
+    <div class="card__contentsWrapper">
+      <progressive-img v-show="!isLimit" class="card__contentsWrapper__img" v-bind:src="item.thumbnail" />
+      <h2 class="card__contentsWrapper__title">{{item.title}}</h2>
+      <p class="card__contentsWrapper__description" v-show="!isLimit&&item.description!=''" v-html="item.description"></p>
+      <div class="card__contentsWrapper__tags">
+        <div class="card__contentsWrapper__tags__wrapper" v-show="item.problem!=''||item.targetUser!=''||item.solution!=''">
+          <div v-bind:class="{ card__contentsWrapper__tags__wrapper__TaishoKadai: item.targetUser!=''&&item.problem!='' }">
+            <div class="card__tag--green" v-show="item.targetUser!=''"><p class="card__tag__title--green">対象 <font-awesome-icon icon="user" /></p><p class="card__tag__val--green">{{item.targetUser}}</p></div>
+            <div class="card__tag--green" v-show="item.problem!=''"><p class="card__tag__title--green">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card__tag__val--green">{{item.problem}}</p></div>
           </div>
-          <div class="card-tags-green-arrow" v-show="item.solution!=''" v-bind:class="{ cardTagsArrowMargin: item.targetUser!=''&&item.problem!='' }"><font-awesome-icon icon="arrow-down" size="lg" /></div>
-          <div class="card-tags-wrap card-tags-green-border" v-show="item.solution!=''"><p class="card-tags-title card-tags-green-title card-tags-green-bgcolor">解決 <font-awesome-icon icon="grin-beam" /></p><p class="card-tags-val card-tags-green-val">{{item.solution}}</p></div>
+          <div class="card__tag__arrow--green" v-show="item.solution!=''" v-bind:class="{ cardTagsArrowMargin: item.targetUser!=''&&item.problem!='' }"><font-awesome-icon icon="arrow-down" size="lg" /></div>
+          <div class="card__tag--green" v-show="item.solution!=''"><p class="card__tag__title--green">解決 <font-awesome-icon icon="grin-beam" /></p><p class="card__tag__val--green">{{item.solution}}</p></div>
         </div>
-        <div class="card-tags-wrap card-tags-green-border" v-show="item.whatLearned!=''"><p class="card-tags-title card-tags-green-bgcolor">学習 <font-awesome-icon icon="school" /></p><p class="card-tags-val">{{item.whatLearned}}</p></div>
-        <div class="card-tags-wrap" v-show="item.genle!=''"><p class="card-tags-title">環境 <font-awesome-icon icon="mobile-alt" /></p><p class="card-tags-val">{{item.genle}}</p></div>
-        <div class="card-tags-wrap" v-show="item.allLang!=''"><p class="card-tags-title">言語 <font-awesome-icon icon="code" /></p><p class="card-tags-val">{{item.allLang}}</p></div>
+        <div class="card__tag--green" v-show="item.whatLearned!=''"><p class="card__tag__title--study">学習 <font-awesome-icon icon="school" /></p><p class="card__tag__val--study">{{item.whatLearned}}</p></div>
+        <div class="card__tag" v-show="item.genle!=''"><p class="card__tag__title">環境 <font-awesome-icon icon="mobile-alt" /></p><p class="card__tag__val">{{item.genle}}</p></div>
+        <div class="card__tag" v-show="item.allLang!=''"><p class="card__tag__title">言語 <font-awesome-icon icon="code" /></p><p class="card__tag__val">{{item.allLang}}</p></div>
       </div>
-      <p class="card-kdwr" v-show="item.kdwr!=''&&item.kdwr!=null">{{item.kdwr}}</p>
-      <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
-      <div id="card-button-wrapper" v-show="!isLimit">
-        <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read wid50per" v-bind:disabled="!item.isDispReadButton"><font-awesome-icon icon="book-reader" /> 詳しく読む</button>
-        <button @click="goToSite(item.siteurl)" class="button b-gosite wid50per" v-bind:disabled="!item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
+      <p class="card__contentsWrapper__kdwr" v-show="item.kdwr!=''&&item.kdwr!=null">{{item.kdwr}}</p>
+      <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="card__button card__button--edit">Edit</button></div>
+      <!-- 依存あるかも: #card-button-wrapper -->
+      <div id="card__contentsWrapper__buttonWrapper" v-show="!isLimit">
+        <button @click="cardButtonEv(item.siteurl, item.id)" class="card__button card__button--read wid50per" v-bind:disabled="!item.isDispReadButton"><font-awesome-icon icon="book-reader" /> 詳しく読む</button>
+        <button @click="goToSite(item.siteurl)" class="card__button card__button--gosite wid50per" v-bind:disabled="!item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
       </div>
     </div>
   </div>
@@ -56,115 +58,143 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .card {
   border-radius: 25px;
   padding: 15px 10px 15px 10px;
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, 0.2);
-}
-.card-img {
-  border-radius: 25px;
-  z-index: 1;
-}
-.card-title {
-  margin: 0 5px 0;
-}
-.card-description {
-  font-size: large;
-  margin: 0px 5px 0px 5px;
-}
-.card-kdwr {
-  margin: 5px;
-}
-.card-tags {
-  display: grid;
-  gap: 5px;
-  margin-top: 5px;
-}
-.cardTagsWrapTaishoKadai {
-  display: grid;
-  gap: 5px;
-  grid-template-columns: 0.5fr 0.5fr;
-}
-.card-tags-wrap-border {
-  padding: 10px;
-  border: 2px solid #94cf55;
-  border-radius: 25px;
-}
-.card-tags-wrap {
-  border: 2px solid #60bece;
-  border-radius: 25px;
-}
-.card-tags-title {
-  display: inline-block;
-  width: 80px;
-  margin: 0;
-  padding: 10px;
-  color: white;
-  background-color: #60bece;
-  border-radius: 18px 0 0 18px;
-  opacity: 0.75;
-  text-align: center;
-}
-.card-tags-val {
-  display: inline-block;
-  width: calc(100% - 120px);
-  margin: 0;
-  padding: 10px;
-}
-/* green */
-.card-tags-green-border {
-  border-color: #94cf55 !important;
-}
-.card-tags-green-bgcolor {
-  background-color:#97cf57 !important;
-}
-.card-tags-green-arrow {
-  margin: 5px;
-  text-align: center;
-  color: #7fb349;
+  &__contentsWrapper__img {
+    border-radius: 25px;
+    z-index: 1;
+  }
+  &__contentsWrapper__title {
+    margin: 0 5px 0;
+  }
+  &__contentsWrapper__description {
+    font-size: large;
+    margin: 0px 5px 0px 5px;
+  }
+  &__contentsWrapper__kdwr {
+    margin: 5px;
+  }
+  &__contentsWrapper__tags {
+    display: grid;
+    gap: 5px;
+    margin-top: 5px;
+    &__wrapper__TaishoKadai {
+      display: grid;
+      gap: 5px;
+      grid-template-columns: 0.5fr 0.5fr;
+    }
+    &__wrapper {
+      padding: 10px;
+      border: 2px solid #94cf55;
+      border-radius: 25px;
+    }
+  }
+  &__tag {
+    border: 2px solid #60bece;
+    border-radius: 25px;
+    &__title {
+      display: inline-block;
+      width: 80px;
+      margin: 0;
+      padding: 10px;
+      color: white;
+      background-color: #60bece;
+      border-radius: 18px 0 0 18px;
+      opacity: 0.75;
+      text-align: center;
+      &--study {
+        display: inline-block;
+        width: 80px;
+        margin: 0;
+        padding: 10px;
+        color: white;
+        background-color: #97cf57;
+        border-radius: 18px 0 0 18px;
+        opacity: 0.75;
+        text-align: center;
+      }
+      &--green {
+        display: block;
+        width: auto !important;
+        margin: 0;
+        padding: 5px !important;
+        background-color:#97cf57 !important;
+        border-radius: 18px 18px 0 0 !important;
+        opacity: 0.75;
+        color: white;
+        text-align: center;
+      }
+    }
+    &__val {
+      display: inline-block;
+      width: calc(100% - 120px);
+      margin: 0;
+      padding: 10px;
+      &--study {
+        display: inline-block;
+        width: calc(100% - 120px);
+        margin: 0;
+        padding: 10px;
+      }
+      &--green {
+        display: block !important;
+        width: auto !important;
+        text-align: center !important;
+      }
+    }
+    &__arrow{
+      &--green {
+        margin: 5px;
+        text-align: center;
+        color: #7fb349;
+      }
+    }
+    &--green {
+      border: 2px solid #94cf55;
+      border-radius: 25px;
+    }
+  }
+  &__button {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+    &--close {
+      height: 35px;
+      width: 35px;
+      margin-bottom: 10px;
+      background-color: #e6e6e6;
+    }
+    &--gosite {
+      margin-top: 10px;
+      display: inline-block;
+      height: 50px;
+      border-radius: 25px;
+      background-color: #60bece;
+      color: white;
+      font-size: large;
+    }
+    &--read {
+      margin-top: 10px;
+      display: inline-block;
+      height: 50px;
+      border-radius: 25px;
+      background-color: #60bece;
+      color: white;
+      font-size: large;
+    }
+  }
 }
 .cardTagsArrowMargin {
   margin: 0 !important;
   margin-bottom: 5px !important;
-}
-.card-tags-green-title {
-  display: block !important;
-  width: auto !important;
-  padding: 5px !important;
-  border-radius: 18px 18px 0 0 !important;
-}
-.card-tags-green-val {
-  display: block !important;
-  width: auto !important;
-  text-align: center !important;
-}
-.button {
-  border: none;
-  cursor: pointer;
-  outline: none;
-  appearance: none;
-}
-.button:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-.b-close {
-  height: 35px;
-  width: 35px;
-  margin-bottom: 10px;
-  background-color: #e6e6e6;
-}
-.b-gosite, .b-read {
-  margin-top: 10px;
-}
-.b-read, .b-gosite {
-  display: inline-block;
-  height: 50px;
-  border-radius: 25px;
-  background-color: #60bece;
-  color: white;
-  font-size: large;
 }
 .wid50per {
   width: 49%;
