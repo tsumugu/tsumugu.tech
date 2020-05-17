@@ -507,9 +507,6 @@ export default {
     window.addEventListener('resize', this.windowResizedHandler, false)
     this.tlLeftColInner = this.$refs.tlLeftColInner
     this.windowResizedHandler()
-    //DEBUG
-    //this.setTlLeftAboutText("https://lh3.googleusercontent.com/7xHdjVvaCofIKTk-mCyY9cnyBV0cYYAGi1UV1kB7VyGX-xzBdbVj1FSvNFdNLrIXmI-12NuWG2G9gHeVB9fHj6LARFRoz2-259Vo0ONAG01BlOC5FkoB1sGJyBxy2htl4OclBqhQsuoBkuYmBHcnqwtbvillKmJeIgkgv1FOGVqmYqiAWSwM8P5rQus1HTax5-LUNTB_eCQUwVMIK467ZwgxVLddN2cPaMnGsDv1euKwqIwxukmV6vI6efoQcYRTGi6yaJtienbV_BHHVxbA0s2S_M7fC4xPCksu7llxAz8G7lTAL8xsN46Vbj0i2S7coQiT96DvHICFLHRAMeYzmKEkCWDc6RtG2VtL31TRMk_le80G-N7bMQu4TZHYFEHLHkqkh3tWM2msGbeIlqzOF-1YvHFxP8CzpZAFcI3xBRqgnOrS-AzdDI2OsH9ByRRCEE75RBbVf4HdJJGek2Kw82jWh-inKimqeQu4ZSkGcAJ0rul5RviNVerhCL8oPMsYur7nT5U6tNgM_AKvYUrOzdTKt_KcysXn57n-CCLF2XrLoDkbaJPpZoZ_-4-R69IqFTlDjVf7cmu2RbA-8KeMHDSsHsSOJi8-STNm3d6L5v3D78X3p37vwYQ9K7Mszt0muQD6goMS_Le95tS9uWP7mYEIabbqUhzfVaP4ATj6nR8k-8uqb5YsTcPpIxvg8HnYmnHC6HSlJqQTjrVREITQdnUSzWPeCNZQ8afGIkVbEEpeCcYK9w=w512-h384-no", "生まれる", "2003/1/5に誕生。<br>体重2412g<br>身長48.5cm")
-    //
 
     //
     setInterval(() => {

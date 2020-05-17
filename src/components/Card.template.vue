@@ -1,7 +1,7 @@
 <template>
   <div class="card" v-bind:id="item.id">
     <div class="tl-item-contents-wrapper">
-      <progressive-img class="card-img" v-bind:src="item.thumbnail" />
+      <progressive-img v-show="!isLimit" class="card-img" v-bind:src="item.thumbnail" />
       <h2 class="card-title">{{item.title}}</h2>
       <p class="card-description" v-show="item.description!=''" v-html="item.description"></p>
       <div class="card-tags">
@@ -19,7 +19,7 @@
       </div>
       <p class="card-kdwr" v-show="item.kdwr!=''&&item.kdwr!=null">{{item.kdwr}}</p>
       <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="button b-edit">Edit</button></div>
-      <div id="card-button-wrapper">
+      <div id="card-button-wrapper" v-show="!isLimit">
         <button @click="cardButtonEv(item.siteurl, item.id)" class="button b-read wid50per" v-bind:disabled="!item.isDispReadButton"><font-awesome-icon icon="book-reader" /> 詳しく読む</button>
         <button @click="goToSite(item.siteurl)" class="button b-gosite wid50per" v-bind:disabled="!item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
       </div>
@@ -37,6 +37,9 @@ export default {
       type: Boolean
     },
     isLogin: {
+      type: Boolean
+    },
+    isLimit: {
       type: Boolean
     }
   },
@@ -58,7 +61,6 @@ export default {
   border-radius: 25px;
   padding: 15px 10px 15px 10px;
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, 0.2);
-  overflow: scroll;
 }
 .card-img {
   border-radius: 25px;

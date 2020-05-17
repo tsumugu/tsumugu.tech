@@ -439,6 +439,10 @@ export default {
           this.checkedGenle = this.renameAndMakeArray(queryGenle)
         }
         //
+        setTimeout(() => {
+          this.windowResizedHandler()
+        }, 500)
+        //
         this.loading = false
       })
       .catch(function(error) {
@@ -446,6 +450,13 @@ export default {
         console.log(error)
         alert("情報の取得に失敗しました。再読み込みしてください")
       })
+    },
+    windowResizedHandler() {
+      // #worksControl-fixedのHeightを(#card-wrapperのpadding-top)+10に変える
+      var e = document.getElementById('worksControl-fixed')
+      var rect = e.getBoundingClientRect()
+      var height = rect.height
+      document.getElementById('card-wrapper').style.padding = height+"px 0 0 0"
     }
   },
   mounted() {
@@ -457,11 +468,14 @@ export default {
       bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
       bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
     }
+
+    window.addEventListener('resize', this.windowResizedHandler, false)
   },
   destroyed() {
     var bottommenuswipe = this.$refs.bottommenuswipe
-    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false);
-    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false);
+    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false)
+    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false)
+    window.removeEventListener('resize', this.windowResizedHandler, false)
   }
 }
 </script>
