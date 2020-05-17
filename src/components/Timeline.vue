@@ -472,7 +472,7 @@ export default {
         //
       }).catch(function (error) {
         console.log(error)
-        alert('データの取得に失敗しました');
+        alert("情報の取得に失敗しました。再読み込みしてください")
       });
     }
   },

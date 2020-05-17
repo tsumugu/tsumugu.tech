@@ -1,7 +1,18 @@
 <template>
 <div id="article_wrap">
-  <Card v-show="isCardExist" :item="item" :isDispEdit=false :isLogin=false :isLimit=true></Card>
-  <ArticleContents :cardArticleId="cardArticleId"></ArticleContents>
+  <div v-if="!isLoading">
+    <div v-if="isCardExist">
+      <Card :item="item" :isDispEdit=false :isLogin=false :isLimit=true></Card>
+      <ArticleContents v-show="item.isDispReadButton" :cardArticleId="cardArticleId"></ArticleContents>
+      <p v-show="!item.isDispReadButton">{{item.description}}</p>
+    </div>
+    <div v-else>
+      Article Not Found
+    </div>
+  </div>
+  <div v-else>
+    <Loading/>
+  </div>
 </div>
 </template>
 
@@ -9,16 +20,19 @@
 import firebase from 'firebase'
 import ArticleContents from './ArticleContents.vue'
 import Card from './Card.template.vue'
+import Loading from './Loading.vue'
 export default {
   components: {
     ArticleContents,
-    Card
+    Card,
+    Loading
   },
   data: function () {
     return {
       cardArticleId: null,
       item: null,
-      isCardExist: false
+      isCardExist: false,
+      isLoading: true
     }
   },
   created() {
@@ -54,10 +68,12 @@ export default {
         }
         _this.item = docVal
       }
+      _this.isLoading = false
     })
     .catch(function(error) {
       //onError
       console.log(error)
+      alert("情報の取得に失敗しました。再読み込みしてください")
     })
   }
 }

@@ -3,7 +3,7 @@
     <div class="tl-item-contents-wrapper">
       <progressive-img v-show="!isLimit" class="card-img" v-bind:src="item.thumbnail" />
       <h2 class="card-title">{{item.title}}</h2>
-      <p class="card-description" v-show="item.description!=''" v-html="item.description"></p>
+      <p class="card-description" v-show="!isLimit&&item.description!=''" v-html="item.description"></p>
       <div class="card-tags">
         <div class="card-tags-wrap-border" v-show="item.problem!=''||item.targetUser!=''||item.solution!=''">
           <div v-bind:class="{ cardTagsWrapTaishoKadai: item.targetUser!=''&&item.problem!='' }">
