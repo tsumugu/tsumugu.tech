@@ -1,6 +1,6 @@
 <template>
   <div class="card" v-bind:id="item.id">
-    <!-- 依存あり: .tl-item-contents-wrapper -->
+    <!-- 依存あり -->
     <div class="card__contentsWrapper">
       <progressive-img v-show="!isLimit" class="card__contentsWrapper__img" v-bind:src="item.thumbnail" />
       <h2 class="card__contentsWrapper__title">{{item.title}}</h2>

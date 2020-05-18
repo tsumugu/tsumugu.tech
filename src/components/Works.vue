@@ -1,58 +1,55 @@
 <template>
-<div id="timeline">
-  <div id="loading" v-show="loading">
-  <Loading></Loading>
+<div id="works">
+  <div id="works__loading" v-show="loading">
+    <Loading></Loading>
   </div>
-  <div id="timeline-wrapper" v-show="!loading">
-    <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
-      <div id="bottom-menu-inner-rel">
-        <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
-        <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
-          <div id="bmi-a-contents">
-            <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
-            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
+  <div id="works__wrapper" v-show="!loading">
+    <div id="works__bottomMenu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
+      <div id="works__bottomMenu__innerRel">
+        <div id="works__bottomMenu__closeDiv" v-on:click="closeBottomMenu"></div>
+        <div id="works__bottomMenu__innerAbs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+          <div id="works__bottomMenu__contents">
+            <button id="works__bottomMenu__contents__button" @click="closeBottomMenu()" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
+            <div id="works__bottomMenu__swipeBar" ref="bottommenuswipe" v-show="supportTouch"><span id="works__bottomMenu__swipeBarInner"></span></div>
             <ArticleContents :cardArticleId="cardArticleId" :isDispEdit=false :isLogin=false></ArticleContents>
           </div>
         </div>
       </div>
     </div>
-    <div id="worksControl-fixed">
-      <div id="worksControl">
-        <!--
-        <div id="worksControl-chart-wrap"><Chart id="worksControl-chart" :chartData="chartData"></Chart></div>
-        -->
-        <div id="worksControl-result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"> ｜ <p class="check-wrap-title" v-on:click="filterToggle">絞り込む {{isDispFilterdivMark}}</p></div>
-        <div id="worksControlFilterdiv" v-show="isDispFilterdiv">
-          <div id="worksControl-genle">
-            <p class="check-title">プラットフォーム</p>
-            <label for="resetGenle" class="checkbox-reset"><input type="checkbox" id="resetGenle" class="checkbox-input" name="resetGenle" value="resetGenle" v-model="resetGenle"><span class="checkbox-parts">リセット</span></label>
+    <div id="works__control__fixed">
+      <div id="works__control__fixed__wrapper">
+        <div id="works__control__fixed__wrapper__result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"> ｜ <p id="works__control__fixed__wrapper__result__title" v-on:click="filterToggle">絞り込む {{isDispFilterdivMark}}</p></div>
+        <div id="works__control__fixed__wrapper__filterDiv" v-show="isDispFilterdiv">
+          <div id="works__control__fixed__wrapper__genle">
+            <p class="works__control__fixed__wrapper__checkTitle">プラットフォーム</p>
+            <label for="resetGenle" class="checkbox__reset"><input type="checkbox" id="resetGenle" class="checkbox__input" name="resetGenle" value="resetGenle" v-model="resetGenle"><span class="checkbox__parts">リセット</span></label>
             <ul>
-              <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox-parts">{{val.key}}</span></label></li>
+              <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox__input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox__parts">{{val.key}}</span></label></li>
             </ul>
           </div>
-          <div id="worksControl-skill">
-            <p class="check-title">言語</p>
-            <label for="resetSkill" class="checkbox-reset"><input type="checkbox" id="resetSkill" class="checkbox-input" name="resetSkill" value="resetSkill" v-model="resetSkill"><span class="checkbox-parts">リセット</span></label>
+          <div id="works__control__fixed__wrapper__skill">
+            <p class="works__control__fixed__wrapper__checkTitle">言語</p>
+            <label for="resetSkill" class="checkbox__reset"><input type="checkbox" id="resetSkill" class="checkbox__input" name="resetSkill" value="resetSkill" v-model="resetSkill"><span class="checkbox__parts">リセット</span></label>
             <ul>
-              <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox-parts">{{val.key}}</span></label></li>
+              <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox__input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox__parts">{{val.key}}</span></label></li>
             </ul>
           </div>
-          <div id="worksControl-filter">
-            <p class="check-title">制作年</p>
-            <label for="resetYearCount" class="checkbox-reset"><input type="checkbox" id="resetYearCount" class="checkbox-input" name="resetYearCount" value="resetYearCount" v-model="resetYearCount"><span class="checkbox-parts">リセット</span></label>
+          <div id="works__control__fixed__wrapper__filter">
+            <p class="works__control__fixed__wrapper__checkTitle">制作年</p>
+            <label for="resetYearCount" class="checkbox__reset"><input type="checkbox" id="resetYearCount" class="checkbox__input" name="resetYearCount" value="resetYearCount" v-model="resetYearCount"><span class="checkbox__parts">リセット</span></label>
             <ul>
-              <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox-input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox-parts">{{val.key}}</span></label></li>
+              <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox__input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox__parts">{{val.key}}</span></label></li>
             </ul>
           </div>
-          <div id="worksControl-other">
-            <p class="check-title" style="display: block;">その他</p>
-            <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox-input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox-parts">意図が明確なものだけ表示</span></label>
+          <div id="works__control__fixed__wrapper__other">
+            <p class="works__control__fixed__wrapper__checkTitle" style="display: block;">その他</p>
+            <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox__input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox__parts">意図が明確なものだけ表示</span></label>
           </div>
         </div>
       </div>
     </div>
-    <div id="card-wrapper">
-      <Card v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
+    <div id="works__cardWrapper">
+      <Card class="works__cardWrapper__card" v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
     </div>
   </div>
 </div>
@@ -452,11 +449,11 @@ export default {
       })
     },
     windowResizedHandler() {
-      // #worksControl-fixedのHeightを(#card-wrapperのpadding-top)+10に変える
-      var e = document.getElementById('worksControl-fixed')
+      // #works__control__fixedのHeightを(#works__cardWrapperのpadding-top)+10に変える
+      var e = document.getElementById('works__control__fixed')
       var rect = e.getBoundingClientRect()
       var height = rect.height
-      document.getElementById('card-wrapper').style.padding = height+"px 0 0 0"
+      document.getElementById('works__cardWrapper').style.padding = height+"px 0 0 0"
     }
   },
   mounted() {
@@ -480,42 +477,112 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+ul {
+  list-style: none;
+  margin: 0;
+  margin-bottom: 16px;
+  padding: 0;
+}
+li{
+  display: inline;
+}
 label {
   cursor: pointer;
 }
-#loading {
+
+#works {
+  height: 100%;
+  overflow: scroll;
+  color: #2c3e50;
+  background-color: #f2f2f5;
+  &__loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+}
+#works__bottomMenu {
   position: fixed;
+  display: none;
   width: 100%;
   height: 100%;
+  z-index: 999;
+  &__innerRel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  &__closeDiv {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    cursor: pointer;
+  }
+  &__innerAbs {
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    border-radius: 15px 15px 0 0;
+    background-color: white;
+  }
+  &__contents {
+    height: 90%;
+    margin: 15px;
+  }
+  &__contents__button {
+    background-color:transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: gray;
+    cursor: pointer;
+  }
+  &__swipeBar {
+    display: inline-block;
+    height: 35px;
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    text-align: center;
+  }
+  &__swipeBarInner {
+    display: inline-block;
+    width: 20%;
+    height: 15px;
+    border-radius: 25px;
+    background-color: #e6e6e6;
+  }
 }
-.checkbox-reset {
-  display: inline-block;
-  margin-left: 5px;
+.checkbox {
+  &__reset {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  &__input {
+    display: none;
+  }
+  &__parts {
+    padding-left: 20px;
+    position:relative;
+    margin-right: 20px;
+  }
+  &__parts::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #c7c7c7;
+    border-radius: 4px;
+  }
+  &__input:checked {
+    color: #60bece;
+  }
 }
-.checkbox-input {
-  display: none;
-}
-.checkbox-parts {
-  padding-left: 20px;
-  position:relative;
-  margin-right: 20px;
-}
-.checkbox-parts::before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 5px;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #c7c7c7;
-  border-radius: 4px;
-}
-.checkbox-input:checked {
-  color: #60bece;
-}
-.checkbox-input:checked + .checkbox-parts::after {
+.checkbox__input:checked + .checkbox__parts::after {
   content: "";
   display: block;
   position: absolute;
@@ -528,142 +595,64 @@ label {
   border-right: 3px solid #60bece;
 }
 
-ul {
-  list-style: none;
-  margin: 0;
-  margin-bottom: 16px;
-  padding: 0;
-}
-li{
-  display: inline;
-}
->>> .card {
-  align-self: end;
-  margin: 10px;
-  margin-right: 0px;
-}
-#worksControl-fixed {
+#works__control__fixed {
   position: fixed !important;
   top: 0;
   left: 0;
   z-index: 3;
   width: 100%;
+  &__wrapper {
+    margin: 10px;
+    padding: 20px;
+    background-color: #dbdbdb;
+    user-select: none;
+    box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
+    box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);
+    border-radius: 25px;
+  }
+  &__wrapper__filterDiv {
+    padding-left: 1.5rem;
+  }
+  &__wrapper__result {
+    font-size: 1.3rem;
+    &__title {
+      display: inline-block;
+      margin: 0;
+      cursor: pointer;
+    }
+  }
 }
-#worksControl {
-  margin: 10px;
-  padding: 20px;
-  background-color: #dbdbdb;
-  user-select: none;
-  box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
-  box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);
-  border-radius: 25px;
-}
-#worksControl-chart {
-  width: 100%;
-}
-.check-wrap-title {
-  display: inline-block;
-  margin: 0;
-  cursor: pointer;
-}
-.check-title {
+.works__control__fixed__wrapper__checkTitle {
   display: inline-block;
   margin: 0;
   font-size: 1.35rem;
 }
-#worksControlFilterdiv {
-  padding-left: 1.5rem;
-}
-#worksControl-result {
-  font-size: 1.3rem;
+
+#article {
+  height: 100%;
+  overflow: scroll;
 }
 
->>> .card {
-  margin-right: 10px !important;
-}
-
-#card-wrapper {
+#works__cardWrapper {
   padding-top: 80px;
   padding-bottom: 10px;
 }
+.works__cardWrapper__card {
+  align-self: end;
+  margin: 10px 0 10px 20px;
+}
 @media (max-width: 3000px) and (min-width: 630px) {
-  #card-wrapper {
+  #works__cardWrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     width: 100%;
   }
-  #worksControl-chart-wrap {
-    width: 35%;
-  }
 }
 @media (max-width: 630px) {
-  #card-wrapper {
+  #works__cardWrapper {
     display: block;
     width: 100%;
   }
-  #worksControl-chart-wrap {
-    width: 80%;
-    margin: auto;
-  }
-}
-#article {
-    height: 100%;
-    overflow: scroll;
-}
-#bottom-menu {
-  position: fixed;
-  display: none;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-}
-#bottom-menu-inner-rel {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-}
-#bottom-menu-close-div {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 10%;
-  cursor: pointer;
-}
-#bottom-menu-inner-abs {
-  position: absolute;
-  width: 100%;
-  /* Change with touchHandlerE & #bmi-a-contents */
-  height: 90%;
-  border-radius: 15px 15px 0 0;
-  background-color: white;
-}
-#bmi-a-contents {
-  height: 90%;
-  margin: 15px;
-}
-#bmi-a-contents > button {
-  background-color:transparent;
-  border: none;
-  font-size: 1.2rem;
-  color: gray;
-}
-#bottom-menu-swipe-bar {
-  display: inline-block;
-  height: 35px;
-  width: 100%;
-  padding: 10px 0px 0px 0px;
-  text-align: center;
-}
-#bottom-menu-swipe-bar-inner {
-  display: inline-block;
-  width: 20%;
-  height: 15px;
-  border-radius: 25px;
-  background-color: #e6e6e6;
-}
-.button {
-  cursor: pointer;
 }
 .show {
   display: block !important;
