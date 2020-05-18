@@ -633,13 +633,9 @@ label {
   overflow: scroll;
 }
 
-#works__cardWrapper {
-  padding-top: 80px;
-  padding-bottom: 10px;
-}
 .works__cardWrapper__card {
   align-self: end;
-  margin: 10px 0 10px 20px;
+  margin:10px;
 }
 @media (max-width: 3000px) and (min-width: 630px) {
   #works__cardWrapper {
