@@ -1,52 +1,55 @@
 <template>
 <div id="timeline">
-  <div id="loading" v-show="loading">
+  <div id="timeline__loading" v-show="loading">
   <Loading></Loading>
   </div>
-  <div id="timeline-wrapper" v-show="!loading">
-    <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
-      <div id="bottom-menu-inner-rel">
-        <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
-        <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
-          <div id="bmi-a-contents">
-            <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
-            <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
+  <div id="timeline__wrapper" v-show="!loading">
+    <!-- bottm menu -->
+    <div id="timeline__bottomMenu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadein: isShowBottomMenu, fadeout: !isShowBottomMenu }">
+      <div id="timeline__bottomMenu__innerRel">
+        <div id="timeline__bottomMenu__closeDiv" v-on:click="closeBottomMenu"></div>
+        <div id="timeline__bottomMenu__innerAbs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+          <div id="timeline__bottomMenu__contents">
+            <button id="timeline__bottomMenu__contents__button" @click="closeBottomMenu()" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
+            <div id="timeline__bottomMenu__swipeBar" ref="bottommenuswipe" v-show="supportTouch"><span id="timeline__bottomMenu__swipeBar__inner"></span></div>
             <ArticleContents :cardArticleId="cardArticleId" :isDispEdit="isDispEdit" :isLogin="isLogin"></ArticleContents>
           </div>
         </div>
       </div>
     </div>
-    <div id="tl-left-col-wrap">
-      <div id="tl-left-col-inner" ref="tlLeftColInner">
-        <img v-show="tlLeftAboutThumbnail!=null" class="tl-left-col-img" v-bind:src="tlLeftAboutThumbnail" />
-        <div id="tl-left-col-inner-c">
-          <h2 class="tl-left-col-title" v-show="tlLeftAboutYear!=undefined&&tlLeftAboutTitle!=undefined">{{tlLeftAboutYear}} / {{tlLeftAboutTitle}}</h2>
-          <div class="tl-left-col-description" v-html="tlLeftAboutDescription"></div>
+    <!-- left sec -->
+    <div id="timeline__leftCol">
+      <div id="timeline__leftCol__wrapper" ref="tlLeftColInner">
+        <img v-show="tlLeftAboutThumbnail!=null" id="timeline__leftCol__wrapper__img" v-bind:src="tlLeftAboutThumbnail" />
+        <div id="timeline__leftCol__wrapper__inner">
+          <h2 id="timeline__leftCol__wrapper__inner__title" v-show="tlLeftAboutYear!=undefined&&tlLeftAboutTitle!=undefined">{{tlLeftAboutYear}} / {{tlLeftAboutTitle}}</h2>
+          <div id="timeline__leftCol__wrapper__inner__description" v-html="tlLeftAboutDescription"></div>
         </div>
       </div>
     </div>
-    <div id="tl-wrap">
-      <div id="left-line"></div>
-      <div id="tl-items">
-        <!-- v-for -->
-        <div class="tl-item" v-for="(item, key) in items" :key="key">
+    <!-- main sec -->
+    <div id="timeline__main">
+      <div id="timeline__main__leftLine"></div>
+      <!-- ti-items start -->
+      <div id="timeline__main__items">
+        <div class="timeline__item" v-for="(item, key) in items" :key="key">
           <!-- Year About -->
-          <div class="year-about" v-bind:class="{ aboutCol: !item.isTitle&&!item.isItem, hide: item.isTitle||item.isItem, aboutMarginTopMax: item.isFirst, aboutMarginTopMin: !item.isFirst }">
-            <div class="card__contentsWrapper">
-              <progressive-img class="year-about-img" v-bind:class="{hide: item.thumbnail==null}" v-bind:data-src="item.thumbnail" v-bind:src="item.thumbnail" />
-              <h2 class="year-about-title">{{item.title}}</h2>
-              <div class="year-about-description" v-html="item.description"></div>
+          <div class="timeline__item__yearAbout" v-bind:class="{ aboutCol: !item.isTitle&&!item.isItem, hide: item.isTitle||item.isItem, aboutMarginTopMax: item.isFirst, aboutMarginTopMin: !item.isFirst }">
+            <div class="timeline__item__yearAbout__contents">
+              <progressive-img class="timeline__item__yearAbout__contents__img" v-bind:class="{hide: item.thumbnail==null}" v-bind:data-src="item.thumbnail" v-bind:src="item.thumbnail" />
+              <h2 class="timeline__item__yearAbout__contents__title">{{item.title}}</h2>
+              <div class="timeline__item__yearAbout__contents__description" v-html="item.description"></div>
             </div>
           </div>
           <!-- Year -->
-          <div class="year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart&&item.isTitle, colBase: item.isStart&&item.isTitle }">
-            <div class="year-circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle&&!item.isStart , yearCircleEnd: item.isEnd }"><span class="year-text">{{item.madeYear}}</span></div>
+          <div class="timeline__item__year" v-bind:class="{ hide: item.isItem||item.isAbout, skelton: item.isSkelton, yearFixed: item.isStart&&item.isTitle, colBase: item.isStart&&item.isTitle }">
+            <div class="timeline__item__year__circle" v-bind:data-year="item.madeYear" v-bind:data-isEnd="item.isEnd" v-bind:class="{ colChild: item.isTitle&&!item.isStart , yearCircleEnd: item.isEnd }"><span class="timeline__item__year__text">{{item.madeYear}}</span></div>
           </div>
           <!-- Card -->
-          <div class="skelton" v-bind:class="{ cardCol: item.isItem&&!item.isAbout&&!item.isTitle }">
-            <div class="card-left" v-bind:class="{ hide: item.isTitle||item.isAbout }">
-              <div class="card-left-circle"></div>
-              <div class="card-left-line"></div>
+          <div class="timeline__item__card skelton" v-bind:class="{ cardCol: item.isItem&&!item.isAbout&&!item.isTitle }">
+            <div class="timeline__item__card__left" v-bind:class="{ hide: item.isTitle||item.isAbout }">
+              <div class="timeline__item__card__circle"></div>
+              <div class="timeline__item__card__line"></div>
             </div>
             <Card @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :item="item" :isDispEdit="isDispEdit" :isLogin="isLogin" v-bind:class="{ hide: item.isTitle||item.isAbout, cardMarginTop: item.isFixed }"></Card>
             <!-- Card HairLine -->
@@ -55,6 +58,7 @@
         </div>
       </div>
     </div>
+    <!-- ti-items end -->
   </div>
 </div>
 </template>
@@ -227,15 +231,15 @@ export default {
       if (this.colBase != undefined && str != this.beforeDispYear) {
         // Leftのほうも書き換え(indexと同じやつを取得)
         this.getAboutContents(str)
-        this.colBase.getElementsByClassName('year-text')[0].innerText = str
+        this.colBase.getElementsByClassName('timeline__item__year__text')[0].innerText = str
         this.beforeDispYear = str
       }
     },
     getAboutContents(year) {
       var node = this.aboutCol[this.colChildNowIndex]
-      var src = this.getAttribute(node.getElementsByClassName('year-about-img')[0], 'data-src')
-      var title = node.getElementsByClassName('year-about-title')[0].innerText
-      var description = node.getElementsByClassName('year-about-description')[0].innerHTML
+      var src = this.getAttribute(node.getElementsByClassName('timeline__item__yearAbout__contents__img')[0], 'data-src')
+      var title = node.getElementsByClassName('timeline__item__yearAbout__contents__title')[0].innerText
+      var description = node.getElementsByClassName('timeline__item__yearAbout__contents__description')[0].innerHTML
       this.setTlLeftAboutText(src, year, title, description)
     },
     setTlLeftAboutText(tmb, year, title, desc) {
@@ -302,10 +306,10 @@ export default {
       }
     },
     setTLHeight() {
-      var e = this.createBoundingClientRect(document.getElementById('tl-items'))
+      var e = this.createBoundingClientRect(document.getElementById('timeline__main__items'))
 
-      var tlWrap = document.getElementById('tl-wrap')
-      var tlLeftLine = document.getElementById('left-line')
+      var tlWrap = document.getElementById('timeline__main')
+      var tlLeftLine = document.getElementById('timeline__main__leftLine')
 
       tlWrap.style.height = (e.rect.height+55)+"px"
       tlLeftLine.style.height = (e.rect.height+15)+"px"
@@ -541,10 +545,10 @@ export default {
   }
 }
 </script>
-<style scoped>
->>> h1,
->>> h2,
->>> h3 {
+<style lang="scss" scoped>
+/deep/ h1,
+/deep/ h2,
+/deep/ h3 {
   margin: 5px;
 }
 p {
@@ -559,125 +563,201 @@ hr {
 .progressive-image {
   max-width: auto !important;
 }
->>> .card-inview {
-  background-color: red !important;
+.card {
+  position: relative;
 }
-@media (max-width: 3000px) and (min-width: 630px) {
-  hr {
-    margin: 0;
-  }
-  #timeline {
-    text-align: center;
-  }
-  #loading, #timeline-wrapper {
-    text-align: left;
-  }
-  #timeline-wrapper {
-    /*display: inline-block;*/
-    width: 100%;
-    display: grid;
-    grid-template-columns: 250px 1fr;
-  }
-  >>> .card__contentsWrapper {
-    width: 450px;
-  }
-  >>> .progressive-image,
-  >>> #card-button-wrapper {
-    width: 450px;
-  }
-  >>> .year-about {
-    display: inline-block;
-    padding: 10px 20px 10px 10px;
-  }
-  >>> .year-about-img,
-  >>> .year-about-description{
-    display: none;
-  }
-  >>> .card {
-    margin: 10px 0px 10px 0px;
-    display: inline-block;
-  }
-}
-@media (max-width: 630px) {
-  hr {
-    margin: 8px;
-  }
-  #timeline-wrapper {
-    display: block;
-  }
-  #tl-left-col-wrap {
-    display: none;
-  }
-  #left-line, .card-left-circle {
-    display: none !important;
-  }
-  >>> .progressive-image,
-  >>> #card-button-wrapper {
-    width: 100%;
-    display: block !important;
-  }
-  >>> .year-about,
-  >>> .card {
-    width: auto !important;
-  }
-  >>> .year-about {
-    display: block;
-    border-radius: 0px 25px 25px 25px !important;
-    margin-left: 10px !important;
-    margin-right: 10px !important;
-  }
-  >>> .year-about-img,
-  >>> .year-about-description{
-    display: block;
-  }
-  >>> .card {
-    margin: 0px 10px 0px 10px !important;
-    /*border: 1px solid #9699a0;*/
-  }
-  .card-left-line {
-    display: none;
-  }
-}
-#bottom-menu {
+
+#timeline__bottomMenu {
   position: fixed;
-  display: none;
+  display: none !important;
   width: 100%;
   height: 100%;
   z-index: 999;
+  &__innerRel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  &__closeDiv {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    cursor: pointer;
+  }
+  &__innerAbs {
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    border-radius: 15px 15px 0 0;
+    background-color: white;
+  }
+  &__contents {
+    height: 90%;
+    margin: 15px;
+    &__button {
+      background-color:transparent;
+      border: none;
+      font-size: 1.2rem;
+      color: gray;
+      cursor: pointer;
+    }
+  }
+  &__swipeBar {
+    display: inline-block;
+    height: 35px;
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    text-align: center;
+    &__inner {
+      display: inline-block;
+      width: 20%;
+      height: 15px;
+      border-radius: 25px;
+      background-color: #e6e6e6;
+    }
+  }
 }
-#bottom-menu-inner-rel {
-  position: relative;
+#timeline {
   width: 100%;
+  height: auto;
+  color: #2c3e50;
+  background-color: #f2f2f5;
+  &__loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  &__leftCol__wrapper {
+    display: inline-block;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: #dbdbdb;
+    overflow: scroll;
+    &__inner {
+      padding: 15px;
+      padding-top: 0;
+      &__title {
+        margin: 5px;
+      }
+      &__description {
+        margin: 5px;
+      }
+    }
+    &__img {
+      width: 100%;
+    }
+  }
+  &__main {
+    position: relative;
+    /* set height with JS */
+    height: 30000px;
+    &__leftLine {
+      display: inline-block;
+      width: 10px;
+      /* set height with JS */
+      height: 30000px;
+      margin-top: 40px;
+      margin-left: 21.5px;
+      float: left;
+      background-color: #dbdbdb;
+    }
+    &__items {
+      position: absolute;
+      width: 100%;
+    }
+  }
+}
+.timeline__item {
+  &__yearAbout {
+    position: relative;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 10px;
+    border-radius: 0px 25px 25px 0px;
+    background-color: #dbdbdb;
+    &__contents {
+      &__img {
+        border-radius: 25px;
+        z-index: 1;
+        margin-top: 10px;
+      }
+      &__title {
+        display: inline-block;
+        margin: 5px 0 0 0;
+      }
+      &__description {
+        font-size: large;
+        margin: 5px;
+      }
+    }
+  }
+  &__card {
+    &__circle {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      margin-top: 23px;
+      margin-left: 6px;
+      background-color: #60bece;
+      border-radius: 50px;
+      z-index: 3;
+    }
+    &__line {
+      width: 40px;
+      height: 10px;
+      float: left;
+      margin-top: 37px;
+      margin-left: 20px;
+      background-color: #dbdbdb;
+    }
+  }
+  &__year {
+    position: relative;
+    margin-bottom: 10px;
+    z-index: 2;
+    &__text {
+      font-size: x-large;
+      color: #ffffff;
+    }
+    &__circle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 40px;
+      margin-left: 5px;
+      border-radius: 50px;
+      background-color: #bababa;
+      opacity: 0.85;
+    }
+  }
+}
+.colBase {
+  margin-top: 10px;
+}
+.colBase > .timeline__item__year__circle {
+  border: 1px solid #bababa;
+  opacity: 0.7;
+}
+#article {
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  /*overflow: scroll;*/
+  overflow: auto;
 }
-#bottom-menu-close-div {
-  position: absolute;
-  top: 0;
+.cardMarginTop {
+  margin-top: 20px;
+}
+.yearCircleEnd {
+  width: 190px !important;
+}
+.yearFixed {
+  position: fixed;
   width: 100%;
-  height: 10%;
-  cursor: pointer;
-}
-#bottom-menu-inner-abs {
-  position: absolute;
-  width: 100%;
-  /* Change with touchHandlerE & #bmi-a-contents */
-  height: 90%;
-  border-radius: 15px 15px 0 0;
-  background-color: white;
-}
-#bmi-a-contents {
-  height: 90%;
-  margin: 15px;
-}
-#bmi-a-contents > button {
-  background-color:transparent;
-  border: none;
-  font-size: 1.2rem;
-  color: gray;
-}
-.button {
-  cursor: pointer;
+  z-index: 4;
 }
 .show {
   display: block !important;
@@ -723,83 +803,8 @@ hr {
     0% {bottom: 0;opacity: 1;}
     100% {bottom: -100%;opacity: 0;}
 }
-#bottom-menu-swipe-bar {
-  display: inline-block;
-  height: 35px;
-  width: 100%;
-  padding: 10px 0px 0px 0px;
-  text-align: center;
-}
-#bottom-menu-swipe-bar-inner {
-  display: inline-block;
-  width: 20%;
-  height: 15px;
-  border-radius: 25px;
-  background-color: #e6e6e6;
-}
-
-#timeline {
-  width: 100%;
-  height: auto;
-}
 .stop-scroll {
   overflow: hidden !important;
-}
-#loading {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-#article {
-  height: 100%;
-  /*overflow: scroll;*/
-  overflow: auto;
-}
-#tl-left-col-inner {
-  display: inline-block;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  background-color: #dbdbdb;
-  overflow: scroll;
-}
-#tl-left-col-inner-c {
-  padding: 15px;
-  padding-top: 0;
-}
-.tl-left-col-img {
-  width: 100%;
-}
-.tl-left-col-title {
-  margin: 5px;
-}
-.tl-left-col-description {
-  margin: 5px;
-}
-#tl-wrap {
-  position: relative;
-  /* set height with JS */
-  height: 30000px;
-}
-#left-line {
-  display: inline-block;
-  width: 10px;
-  /* set height with JS */
-  height: 30000px;
-  margin-top: 40px;
-  margin-left: 21.5px;
-  float: left;
-}
-#tl-items {
-  position: absolute;
-  width: 100%;
-}
-.year-about {
-  position: relative;
-  margin-left: 30px;
-  margin-bottom: 10px;
-  padding: 10px 10px 10px 10px;
-  border-radius: 0px 25px 25px 0px;
 }
 .aboutMarginTopMax {
   margin-top: -10px;
@@ -807,69 +812,92 @@ hr {
 .aboutMarginTopMin {
   margin-top: -20px;
 }
-.year-about-img {
-  border-radius: 25px;
-  z-index: 1;
-  margin-top: 10px;
+
+@mixin pc {
+  @media (max-width: 3000px) and (min-width: 630px) {
+    @content;
+  }
 }
-.year-about-title {
-  display: inline-block;
-  margin: 5px 0 0 0;
+@mixin sp {
+  @media (max-width: 630px) {
+    @content;
+  }
 }
-.year-about-description {
-  font-size: large;
-  margin: 5px;
+@include pc {
+  hr {
+    margin: 0;
+  }
+  #timeline {
+    text-align: center;
+  }
+  #timeline__loading, #timeline__wrapper {
+    text-align: left;
+  }
+  #timeline__wrapper {
+    /*display: inline-block;*/
+    width: 100%;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+  }
+  /deep/ .card__contentsWrapper,
+  /deep/ .timeline__item__yearAbout__contents {
+    width: 450px;
+  }
+  /deep/ .progressive-image,
+  /deep/ .card__contentsWrapper__buttonWrapper {
+    width: 450px;
+  }
+  /deep/ .timeline__item__yearAbout {
+    display: inline-block;
+    padding: 10px 20px 10px 10px;
+  }
+  /deep/ .timeline__item__yearAbout__contents__img,
+  /deep/ .timeline__item__yearAbout__contents__description{
+    display: none !important;
+  }
+  /deep/ .card {
+    margin: 10px 0px 10px 0px;
+    display: inline-block;
+  }
 }
-.card {
-  position: relative;
-}
-.cardMarginTop {
-  margin-top: 20px;
-}
-.card-left-circle {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  margin-top: 23px;
-  margin-left: 6px;
-  background-color: white;
-  border-radius: 50px;
-  z-index: 3;
-}
-.card-left-line {
-  width: 40px;
-  height: 10px;
-  float: left;
-  margin-top: 37px;
-  margin-left: 20px;
-}
-.year {
-  position: relative;
-  margin-bottom: 10px;
-  z-index: 2;
-}
-.colBase {
-  margin-top: 10px;
-}
-.yearCircleEnd {
-  width: 190px !important;
-}
-.year-text {
-  font-size: x-large;
-}
-.year-circle {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 40px;
-  margin-left: 5px;
-  border-radius: 50px;
-}
-.yearFixed {
-  position: fixed;
-  width: 100%;
-  z-index: 4;
+@include sp {
+  hr {
+    margin: 8px;
+  }
+  #timeline__wrapper {
+  display: block;
+  }
+  #timeline__leftCol {
+    display: none !important;
+  }
+  #timeline__main__leftLine, .timeline__item__card__circle {
+    display: none !important;
+  }
+  /deep/ .progressive-image,
+  /deep/ .card__contentsWrapper__buttonWrapper {
+    width: 100%;
+    display: block !important;
+  }
+  /deep/ .timeline__item__yearAbout,
+  /deep/ .card {
+    width: auto !important;
+  }
+  /deep/ .timeline__item__yearAbout {
+    display: block;
+    border-radius: 0px 25px 25px 25px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+  /deep/ .timeline__item__yearAbout__contents__img,
+  /deep/ .timeline__item__yearAbout__contents__description{
+    display: block;
+  }
+  /deep/ .card {
+    margin: 0px 10px 0px 10px !important;
+    /*border: 1px solid #9699a0;*/
+  }
+  .timeline__item__card__line {
+    display: none !important;
+  }
 }
 </style>

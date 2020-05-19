@@ -21,7 +21,7 @@
       <p class="card__contentsWrapper__kdwr" v-show="item.kdwr!=''&&item.kdwr!=null">{{item.kdwr}}</p>
       <div v-show="isDispEdit&&isLogin"><button @click="oepnEdit(item.id)" class="card__button card__button--edit">Edit</button></div>
       <!-- 依存あるかも: #card-button-wrapper -->
-      <div id="card__contentsWrapper__buttonWrapper" v-show="!isLimit">
+      <div class="card__contentsWrapper__buttonWrapper" v-show="!isLimit">
         <button @click="cardButtonEv(item.siteurl, item.id)" class="card__button card__button--read wid50per" v-bind:disabled="!item.isDispReadButton"><font-awesome-icon icon="book-reader" /> 詳しく読む</button>
         <button @click="goToSite(item.siteurl)" class="card__button card__button--gosite wid50per" v-bind:disabled="!item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
       </div>
@@ -63,9 +63,11 @@ export default {
   border-radius: 25px;
   padding: 15px 10px 15px 10px;
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, 0.2);
+  background-color: #fcfcfc;
   &__contentsWrapper__img {
     border-radius: 25px;
     z-index: 1;
+    border: 1px solid #dbdbdb;
   }
   &__contentsWrapper__title {
     margin: 0 5px 0;

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import './assets/css/works-colors-test-blue.css'
+/*import './assets/css/works-colors-test-blue.css'*/
 
 export default {
   name: 'App'
@@ -34,6 +34,7 @@ body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  background-color: #fdfcfc;
   overflow-x: hidden !important;
   overflow-y: scroll !important;
   -webkit-overflow-scrolling: touch;

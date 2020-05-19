@@ -271,48 +271,48 @@ export default {
 </script>
 
 <style scoped>
->>> p,
->>> ol > li {
+/deep/ p,
+/deep/ ol > li {
   background-color: rgba(240, 240, 240, 0.8);
   border-radius: 15px;
 }
->>> p {
+/deep/ p {
   display: inline-block;
   font-size: large;
   margin: 3px 3px 3px;
   padding: 10px;
 }
->>> ol {
+/deep/ ol {
   display: inline-block;
   margin: 0;
   padding: 0;
   list-style: none;
   counter-reset: ol_li;
 }
->>> ol > li:before {
+/deep/ ol > li:before {
   margin-right: .25em;
   counter-increment: ol_li;
   content: counter(ol_li);
   color: #2c3e50;
 }
->>> li > p {
+/deep/ li > p {
   background-color: transparent !important;
 }
->>> ol > li {
+/deep/ ol > li {
   margin: 5px;
   padding: 10px;
 }
 
->>> h1,
->>> h2,
->>> h3,
->>> h4,
->>> h5,
->>> h6 {
+/deep/ h1,
+/deep/ h2,
+/deep/ h3,
+/deep/ h4,
+/deep/ h5,
+/deep/ h6 {
   color: white;
   margin: 1px 1px 1px !important;
 }
->>> hr {
+/deep/ hr {
   display: none;
 }
 
@@ -341,23 +341,23 @@ export default {
 .title-item {
   cursor: pointer;
 }
->>> .devicon-wrap > svg,
->>> .devicon-line {
+/deep/ .devicon-wrap > svg,
+/deep/ .devicon-line {
   width: 100px;
   padding: 5px;
   background-color: rgba(240, 240, 240, 0.8);
   border-radius: 15px;
 }
->>> .devicon-of {
+/deep/ .devicon-of {
   height: 100px;
 }
->>> .devicon-wrap {
+/deep/ .devicon-wrap {
   display: inline-block;
   padding-top: 3px;
   padding-left: 3px;
   cursor: pointer;
 }
->>> .iframe-wrapper {
+/deep/ .iframe-wrapper {
   padding: 5px;
 }
 #aboutcontents-wrap {
@@ -468,10 +468,10 @@ export default {
   height: 90%;
   margin: 15px;
 }
->>> #bmi-a-contents > h1 {
+/deep/ #bmi-a-contents > h1 {
   color: #2c3e50;
 }
->>> #bmi-a-contents > p {
+/deep/ #bmi-a-contents > p {
   margin: 0;
   padding: 0 0 0 10px;
   background-color: transparent;
@@ -547,7 +547,7 @@ export default {
     100% {bottom: -100%;opacity: 0;}
 }
 @media (max-width: 3000px) and (min-width: 600px) {
-  >>> .iframe-wrapper > iframe {
+  /deep/ .iframe-wrapper > iframe {
     width: 80%;
   }
   #aboutcontents-bg-img {
@@ -562,13 +562,13 @@ export default {
 }
 /* SP */
 @media screen and (max-width:600px) {
-  >>> p {
+  /deep/ p {
     display: block;
   }
-  >>> .iframe-wrapper > iframe {
+  /deep/ .iframe-wrapper > iframe {
     width: 100%;
   }
-  >>> .apli-2019 {
+  /deep/ .apli-2019 {
     margin-top: 7px;
   }
   #aboutcontents-bg-img {
