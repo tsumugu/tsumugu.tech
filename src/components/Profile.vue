@@ -160,12 +160,14 @@ export default {
         title = "c#"
       } else if (title == "c plus plus") {
         title = "c++"
+      } else if (title == "line bot") {
+        title = "bot"
       }
       var resList
       if (pf == "lang") {
         resList = this.itemListAll.filter(e => e.allLangSplited.includes(title))
       } else {
-        resList = this.itemListAll.filter(e => e.genle == title)
+        resList = this.itemListAll.filter(e => e.genle.toLowerCase() == title)
       }
       this.itemList = resList
     },
