@@ -569,7 +569,7 @@ hr {
 
 #timeline__bottomMenu {
   position: fixed;
-  display: none !important;
+  display: none;
   width: 100%;
   height: 100%;
   z-index: 999;
@@ -752,7 +752,7 @@ hr {
   margin-top: 20px;
 }
 .yearCircleEnd {
-  width: 190px !important;
+  width: 190px;
 }
 .yearFixed {
   position: fixed;
@@ -853,7 +853,7 @@ hr {
   }
   /deep/ .timeline__item__yearAbout__contents__img,
   /deep/ .timeline__item__yearAbout__contents__description{
-    display: none !important;
+    display: none;
   }
   /deep/ .card {
     margin: 10px 0px 10px 0px;
@@ -868,36 +868,36 @@ hr {
   display: block;
   }
   #timeline__leftCol {
-    display: none !important;
+    display: none;
   }
   #timeline__main__leftLine, .timeline__item__card__circle {
-    display: none !important;
+    display: none;
   }
   /deep/ .progressive-image,
   /deep/ .card__contentsWrapper__buttonWrapper {
     width: 100%;
-    display: block !important;
+    display: block;
   }
   /deep/ .timeline__item__yearAbout,
   /deep/ .card {
-    width: auto !important;
+    width: auto;
   }
   /deep/ .timeline__item__yearAbout {
     display: block;
-    border-radius: 0px 25px 25px 25px !important;
-    margin-left: 10px !important;
-    margin-right: 10px !important;
+    border-radius: 0px 25px 25px 25px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   /deep/ .timeline__item__yearAbout__contents__img,
   /deep/ .timeline__item__yearAbout__contents__description{
     display: block;
   }
   /deep/ .card {
-    margin: 0px 10px 0px 10px !important;
+    margin: 0px 10px 0px 10px;
     /*border: 1px solid #9699a0;*/
   }
   .timeline__item__card__line {
-    display: none !important;
+    display: none;
   }
 }
 </style>
