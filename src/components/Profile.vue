@@ -1,37 +1,37 @@
 <template>
-  <div id="aboutcontents-wrap">
-    <!--hide img for load progress-->
+  <div id="profile">
     <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg" v-on:load="loadendPC" v-show="isShowImg">
     <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg" v-on:load="loadendSP" v-show="isShowImg">
-    <div id="bottom-menu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadeinBM: isShowBottomMenu, fadeoutBM: !isShowBottomMenu }">
-      <div id="bottom-menu-inner-rel">
-        <div id="bottom-menu-close-div" v-on:click="closeBottomMenu"></div>
-        <div id="bottom-menu-inner-abs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
-          <div id="bmi-a-contents">
-            <div id="title-item-wrapper-contents">
-              <button @click="closeBottomMenu()" class="button b-close" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
-              <div id="bottom-menu-swipe-bar" ref="bottommenuswipe" v-show="supportTouch"><span id="bottom-menu-swipe-bar-inner"></span></div>
+    <div id="profile__bottomMenu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadeinBM: isShowBottomMenu, fadeoutBM: !isShowBottomMenu }">
+      <div id="profile__bottomMenu__innerRel">
+        <div id="profile__bottomMenu__closeDiv" v-on:click="closeBottomMenu"></div>
+        <div id="profile__bottomMenu__innerAbs" class="pos-zero" ref="bottommenu" v-bind:class="{ bottommenuin: isShowBottomMenuInner, bottommenuout: !isShowBottomMenuInner }">
+          <div id="profile__bottomMenu__contents">
+            <div id="profile__bottomMenu__contents__wrapper">
+              <button @click="closeBottomMenu()" id="profile__bottomMenu__contents__button" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
+              <div id="profile__bottomMenu__swipeBar" ref="bottommenuswipe" v-show="supportTouch"><span id="profile__bottomMenu__swipeBar__inner"></span></div>
               <h1>{{skillName}}</h1>
               <p>{{skillDesc}}</p>
             </div>
-            <div id="title-item-wrapper">
+            <h2>作品</h2>
+            <div id="profile__bottomMenu__contents__items">
               <div v-for="item in itemList">
-                <p class="title-item" @click="goToArticle(item.id)">{{item.title}}</p>
+                <p class="profile__bottomMenu__titleItem" @click="goToArticle(item.id)">{{item.title}}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div id="aboutcontents-main-wrap">
-      <div id="aboutcontents-bgcolor"></div>
-      <div id="aboutcontents-bg-img" v-bind:class="{fadeinbg: fadeinText}"></div>
-      <div id="aboutcontents-text">
-        <div id="profile-text-wrapper" v-if="fadeinText">
-          <div id="profile-text" v-bind:class="{fadein: fadeinText}" v-html="aboutText" ref="aboutText"></div>
+    <div id="profile__wrapper">
+      <div id="profile__wrapper__bgcolor"></div>
+      <div id="profile__wrapper__bgimg" v-bind:class="{fadeinbg: fadeinText}"></div>
+      <div id="profile__wrapper__textwrap">
+        <div id="profile__wrapper__textwrap__inner" v-if="fadeinText">
+          <div id="profile__wrapper__textwrap__inner__text" v-bind:class="{fadein: fadeinText}" v-html="aboutText" ref="aboutText"></div>
         </div>
-        <div id="title-text-wrapper">
-          <span id="title-text" v-show="!hideText" v-bind:class="{fadeout: fadeoutText}">Profile</span>
+        <div id="profile__wrapper__textwrap__titleinner">
+          <span id="profile__wrapper__textwrap__titleinner__text" v-show="!hideText" v-bind:class="{fadeout: fadeoutText}">Profile</span>
         </div>
       </div>
     </div>
@@ -54,6 +54,7 @@ export default {
       isShowImg: false,
       isFinPC: false,
       isFinSP: false,
+      isFinData: false,
       hideText: false,
       deviconElms: null,
       isShowBottomMenu: false,
@@ -70,6 +71,11 @@ export default {
       itemListAll: []
     }
   },
+  watch: {
+    isFinData() {
+      this.checkLoad()
+    }
+  },
   methods: {
     onClickScrollIcon() {
       this.$router.push('/')
@@ -83,17 +89,15 @@ export default {
       this.checkLoad()
     },
     checkLoad() {
-      if (this.isFinPC&&this.isFinSP) {
-        // Fadein text When finLoad
-        this.doFadeText()
+      if (this.isFinData&&this.isFinPC&&this.isFinSP) {
+        setTimeout(() => {
+          this.doFadeText()
+        }, 300)
       }
     },
     doFadeText() {
-      this.fadeoutText = true
-      setTimeout(() => {
-        this.fadeinText = true
-        this.hideText = true
-      }, 3000)
+      this.fadeinText = true
+      this.hideText = true
     },
     onClickDevivonEve(e) {
       var title = null;
@@ -106,7 +110,6 @@ export default {
         }
       })
       if (title != null && query != null) {
-        /*this.goToWorks(title, query)*/
         this.dispSkillInfo(title, query);
         this.openBottomMenu();
       }
@@ -221,37 +224,48 @@ export default {
   },
   mounted() {
     var _this = this
-    // Load about
-    axios.get('https://tsumugu.tech/getcontent.php?id=aG59wLtmrgwDD77Exsqu')
-    .then(function (response) {
-      var post = response.data.posts[0]
-      _this.aboutText = post.html
-      setTimeout(() => {
-        var baseElm = _this.$refs.aboutText
-        _this.deviconElms = Array.from(baseElm.getElementsByClassName('devicon-click'))
-        _this.deviconElms.forEach(function (element) {
-	        element.addEventListener('click', _this.onClickDevivonEve, false)
-        })
-      }, 3500)
-    })
-    .catch(function (error) {
-      alert("情報の取得に失敗しました。再読み込みしてください")
-    })
-    .then(function () {
-    })
-    // timeout
-    setTimeout(() => {
-      this.doFadeText()
-    }, 3000)
     //
     this.getItems()
-    var langpfObjLocal = []
-    firebase.firestore().collection('languages').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        langpfObjLocal.push({titleShort: doc.id, title: doc.data().title, desc: doc.data().description})
+    // Load about
+    var getAbout = new Promise(function(resolve, reject) {
+      axios.get('https://tsumugu.tech/getcontent.php?id=aG59wLtmrgwDD77Exsqu')
+      .then(function (response) {
+        var post = response.data.posts[0]
+        _this.aboutText = post.html
+        setTimeout(() => {
+          var baseElm = _this.$refs.aboutText
+          _this.deviconElms = Array.from(baseElm.getElementsByClassName('devicon-click'))
+          _this.deviconElms.forEach(function (element) {
+            element.addEventListener('click', _this.onClickDevivonEve, false)
+          })
+        }, 3500)
+        resolve();
+      })
+      .catch(function (error) {
+        reject();
       })
     })
-    this.langpfObj = langpfObjLocal
+    //
+    var getLanguage = new Promise(function(resolve, reject) {
+      var langpfObjLocal = []
+      firebase.firestore().collection('languages').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          langpfObjLocal.push({titleShort: doc.id, title: doc.data().title, desc: doc.data().description})
+        })
+        _this.langpfObj = langpfObjLocal
+        resolve();
+      })
+      .catch(function (error) {
+        reject();
+      })
+    })
+    //
+    Promise.all([getAbout, getLanguage]).then(function () {
+      _this.isFinData = true
+    }).catch(function (error) {
+      console.log(error)
+      alert("情報の取得に失敗しました。再読み込みしてください")
+    });
     //
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
@@ -272,7 +286,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /deep/ p,
 /deep/ ol > li {
   background-color: rgba(240, 240, 240, 0.8);
@@ -304,7 +318,6 @@ export default {
   margin: 5px;
   padding: 10px;
 }
-
 /deep/ h1,
 /deep/ h2,
 /deep/ h3,
@@ -316,32 +329,6 @@ export default {
 }
 /deep/ hr {
   display: none;
-}
-
-#title-item-wrapper > h1,
-#title-item-wrapper-contents > h1 {
-  color: #2c3e50 !important;
-  padding: 5px !important;
-}
-#title-item-wrapper > p,
-#title-item-wrapper-contents > p {
-  margin: 0 !important;
-  padding: 0 0 10px 10px !important;
-  border-radius: auto !important;
-  background-color: transparent !important;
-}
-#title-item-wrapper {
-  height: 70%;
-  overflow-y: scroll;
-}
-#title-item-wrapper-contents > button {
-  background-color:transparent;
-  border: none;
-  font-size: 1.2rem;
-  color: gray;
-}
-.title-item {
-  cursor: pointer;
 }
 /deep/ .devicon-wrap > svg,
 /deep/ .devicon-line {
@@ -362,139 +349,155 @@ export default {
 /deep/ .iframe-wrapper {
   padding: 5px;
 }
-#aboutcontents-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+#profile__bottomMenu__contents__items > h1,
+#profile__bottomMenu__contents__wrapper > h1,
+#profile__bottomMenu__contents__items > h2,
+#profile__bottomMenu__contents__wrapper > h2 {
+  color: #2c3e50 !important;
+  padding: 5px !important;
 }
-#aboutcontents-bgcolor {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgb(240, 240, 240);
+#profile__bottomMenu__contents__items > p,
+#profile__bottomMenu__contents__wrapper > p {
+  margin: 0 !important;
+  padding: 0 0 0 10px !important;
+  border-radius: auto !important;
+  background-color: transparent !important;
 }
-#aboutcontents-bg-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  background-position: center center;
-  background-size: cover;
-  background-attachment: fixed;
+/deep/ #profile__bottomMenu__contents > h1,
+/deep/ #profile__bottomMenu__contents > h2 {
+  color: #2c3e50;
+  padding: 5px !important;
 }
-#aboutcontents-text {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 3;
+/deep/ #profile__bottomMenu__contents > p {
+  margin: 0;
+  padding: 0 0 0 10px;
+  background-color: transparent;
 }
-#profile-text-wrapper {
-  position: absolute;
-  height: 100%;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-#profile-text-wrapper::-webkit-scrollbar {
+#profile__wrapper__textwrap__inner::-webkit-scrollbar {
   display:none;
-}
-#profile-text {
-  height: 110%;
 }
 #profile-text-back {
   width: 100%;
   margin-top: 10px;
   text-align: center;
 }
-.scrollIcon {
-  display: inline-block;
-  color: #ffffff;
-  font-size: 2em;
-  opacity: 0.7;
-  animation: vertical 1700ms ease-in-out infinite alternate;
+.profile__bottomMenu__titleItem {
   cursor: pointer;
 }
-@keyframes vertical {
-  0% {transform:translateY(-10px)}
-  100% {transform:translateY(0px)}
-}
-#title-text-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+#profile {
+  position: relative;
   width: 100%;
   height: 100%;
-}
-#title-text {
-  width: 100%;
-  text-align: center;
-  background-color: rgba(240, 240, 240, 0.8);
-  font-size: 4rem;
-}
-#profile-text {
-  padding: 10px;
+  overflow: hidden;
+  &__wrapper {
+    &__bgcolor {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: rgb(240, 240, 240);
+    }
+    &__bgimg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      background-position: center center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    &__textwrap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      &__inner {
+        position: absolute;
+        height: 100%;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &__text {
+          height: 110%;
+          padding: 10px;
+        }
+      }
+      &__titleinner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        &__text {
+          width: 100%;
+          text-align: center;
+          background-color: rgba(240, 240, 240, 0.8);
+          font-size: 4rem;
+        }
+      }
+    }
+  }
 }
 
-#bottom-menu {
+#profile__bottomMenu {
   position: fixed;
   display: none;
   width: 100%;
   height: 100%;
   z-index: 999;
+  &__innerRel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  &__closeDiv {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 90%;
+    cursor: pointer;
+  }
+  &__innerAbs {
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    border-radius: 15px 15px 0 0;
+    background-color: white;
+  }
+  &__contents {
+    height: 90%;
+    margin: 15px;
+    &__items {
+      height: 60%;
+      overflow-y: scroll;
+    }
+    &__button {
+      background-color:transparent;
+      border: none;
+      font-size: 1.2rem;
+      color: gray;
+      cursor: pointer;
+    }
+  }
+  &__swipeBar {
+    display: inline-block;
+    height: 35px;
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    text-align: center;
+    &__inner {
+      display: inline-block;
+      width: 20%;
+      height: 15px;
+      border-radius: 25px;
+      background-color: #e6e6e6;
+    }
+  }
 }
-#bottom-menu-inner-rel {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-}
-#bottom-menu-close-div {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 90%;
-  cursor: pointer;
-}
-#bottom-menu-inner-abs {
-  position: absolute;
-  width: 100%;
-  /* Change with touchHandlerE & #bmi-a-contents & #bottom-menu-close-div */
-  height: 90%;
-  border-radius: 15px 15px 0 0;
-  background-color: white;
-}
-#bmi-a-contents {
-  height: 90%;
-  margin: 15px;
-}
-/deep/ #bmi-a-contents > h1 {
-  color: #2c3e50;
-}
-/deep/ #bmi-a-contents > p {
-  margin: 0;
-  padding: 0 0 0 10px;
-  background-color: transparent;
-}
-#bottom-menu-swipe-bar {
-  display: inline-block;
-  height: 35px;
-  width: 100%;
-  padding: 10px 0px 0px 0px;
-  text-align: center;
-}
-#bottom-menu-swipe-bar-inner {
-  display: inline-block;
-  width: 20%;
-  height: 15px;
-  border-radius: 25px;
-  background-color: #e6e6e6;
-}
-.button {
-  cursor: pointer;
-}
+
 .show {
   display: block !important;
 }
@@ -506,6 +509,14 @@ export default {
 }
 .pos-zero {
   bottom: -100%;
+}
+.scrollIcon {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 2em;
+  opacity: 0.7;
+  animation: vertical 1700ms ease-in-out infinite alternate;
+  cursor: pointer;
 }
 .fadein {
   animation: fadeIn 2000ms ease 0s 1 forwards;
@@ -548,17 +559,21 @@ export default {
     0% {bottom: 0;opacity: 1;}
     100% {bottom: -100%;opacity: 0;}
 }
+@keyframes vertical {
+  0% {transform:translateY(-10px)}
+  100% {transform:translateY(0px)}
+}
 @media (max-width: 3000px) and (min-width: 600px) {
   /deep/ .iframe-wrapper > iframe {
     width: 80%;
   }
-  #aboutcontents-bg-img {
+  #profile__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg");
   }
-  #profile-text {
+  #profile__wrapper__textwrap__inner__text {
     width: 80%;
   }
-  #profile-text-wrapper {
+  #profile__wrapper__textwrap__inner {
     width: 100%;
   }
 }
@@ -573,10 +588,10 @@ export default {
   /deep/ .apli-2019 {
     margin-top: 7px;
   }
-  #aboutcontents-bg-img {
+  #profile__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg");
   }
-  #profile-text-wrapper {
+  #profile__wrapper__textwrap__inner {
     width: 100%;
   }
 }
