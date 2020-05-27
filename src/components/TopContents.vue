@@ -200,7 +200,6 @@ a:hover {
     }
   }
 }
-
 .topScrollOpenBg {
   color: $gray !important;
 }
@@ -256,7 +255,6 @@ a:hover {
   0% {bottom: 0}
   100% {bottom: -100%}
 }
-
 @media (max-width: 3000px) and (min-width: 600px) {
   #top__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");

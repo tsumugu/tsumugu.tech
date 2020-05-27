@@ -4,7 +4,7 @@
     <div v-if="isCardExist">
       <Card :item="item" :isDispEdit=false :isLogin=false :isLimit=true></Card>
       <ArticleContents v-show="item.isDispReadButton" :cardArticleId="cardArticleId"></ArticleContents>
-      <div v-show="!item.isDispReadButton" v-html="item.description" />
+      <div v-show="!item.isDispReadButton" v-html="item.description"></div>
     </div>
     <div v-else>
       Article Not Found
