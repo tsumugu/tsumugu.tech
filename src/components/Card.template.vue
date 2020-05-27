@@ -63,11 +63,11 @@ export default {
   border-radius: 25px;
   padding: 15px 10px 15px 10px;
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, 0.2);
-  background-color: #fcfcfc;
+  background-color: $card-background;
   &__contentsWrapper__img {
     border-radius: 25px;
     z-index: 1;
-    border: 1px solid #dbdbdb;
+    border: 1px solid $card-border;
   }
   &__contentsWrapper__title {
     margin: 0 5px 0;
@@ -90,20 +90,20 @@ export default {
     }
     &__wrapper {
       padding: 10px;
-      border: 2px solid #94cf55;
+      border: 2px solid $study-border;
       border-radius: 25px;
     }
   }
   &__tag {
-    border: 2px solid #60bece;
+    border: 2px solid $main;
     border-radius: 25px;
     &__title {
       display: inline-block;
       width: 80px;
       margin: 0;
       padding: 10px;
-      color: white;
-      background-color: #60bece;
+      color: $white;
+      background-color: $main;
       border-radius: 18px 0 0 18px;
       opacity: 0.75;
       text-align: center;
@@ -112,8 +112,8 @@ export default {
         width: 80px;
         margin: 0;
         padding: 10px;
-        color: white;
-        background-color: #97cf57;
+        color: $white;
+        background-color: $study;
         border-radius: 18px 0 0 18px;
         opacity: 0.75;
         text-align: center;
@@ -123,10 +123,10 @@ export default {
         width: auto !important;
         margin: 0;
         padding: 5px !important;
-        background-color:#97cf57 !important;
+        background-color:$study !important;
         border-radius: 18px 18px 0 0 !important;
         opacity: 0.75;
-        color: white;
+        color: $white;
         text-align: center;
       }
     }
@@ -151,11 +151,11 @@ export default {
       &--green {
         margin: 5px;
         text-align: center;
-        color: #7fb349;
+        color: $study-dark;
       }
     }
     &--green {
-      border: 2px solid #94cf55;
+      border: 2px solid $study-border;
       border-radius: 25px;
     }
   }
@@ -172,15 +172,15 @@ export default {
       height: 35px;
       width: 35px;
       margin-bottom: 10px;
-      background-color: #e6e6e6;
+      background-color: $close-button;
     }
     &--gosite {
       margin-top: 10px;
       display: inline-block;
       height: 50px;
       border-radius: 25px;
-      background-color: #60bece;
-      color: white;
+      background-color: $main;
+      color: $white;
       font-size: large;
     }
     &--read {
@@ -188,8 +188,8 @@ export default {
       display: inline-block;
       height: 50px;
       border-radius: 25px;
-      background-color: #60bece;
-      color: white;
+      background-color: $main;
+      color: $white;
       font-size: large;
     }
   }

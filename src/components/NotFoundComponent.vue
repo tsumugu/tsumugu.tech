@@ -15,7 +15,7 @@
 <script>
 </script>
 
-<style>
+<style  lang="scss">
 * {
   font-family: sans-serif;
 }
@@ -30,15 +30,15 @@ h1, p {
 }
 #contents {
   height: 100%;
-  color: white;
-  background-color: #90c21e;
+  color: $white;
+  background-color: $notfound-bg;
 }
 #sky {
   margin: 0px 0px 0px;
   padding: 5px 5px 5px 10px;
   width: 100%;
   height: 150px;
-  background-color: #57bcf2;
+  background-color: $notfound-sky;
   z-index: 2;
 }
 #sky-mes {
@@ -56,7 +56,7 @@ h1, p {
 #bg {
   width: 100%;
   height:100%;
-  background-color: #90c21e;
+  background-color: $notfound-bg;
   z-index: 1;
 }
 @media screen and (max-width: 480px) {

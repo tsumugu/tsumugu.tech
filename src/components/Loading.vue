@@ -5,7 +5,7 @@
 <script>
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .loader,
 .loader:before,
 .loader:after {
@@ -18,7 +18,7 @@
   animation: load7 1.8s infinite ease-in-out;
 }
 .loader {
-  color: #60bece;
+  color: $main;
   font-size: 10px;
   margin: 80px auto;
   position: relative;

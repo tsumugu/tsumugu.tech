@@ -4,7 +4,7 @@
     <div v-if="isCardExist">
       <Card :item="item" :isDispEdit=false :isLogin=false :isLimit=true></Card>
       <ArticleContents v-show="item.isDispReadButton" :cardArticleId="cardArticleId"></ArticleContents>
-      <p v-show="!item.isDispReadButton">{{item.description}}</p>
+      <div v-show="!item.isDispReadButton" v-html="item.description" />
     </div>
     <div v-else>
       Article Not Found
@@ -79,8 +79,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #article_wrap {
+  height: 100%;
+  background-color: $works-background;
   padding: 10px;
 }
 </style>

@@ -494,8 +494,8 @@ label {
 #works {
   height: 100%;
   overflow: scroll;
-  color: #2c3e50;
-  background-color: #f2f2f5;
+  color: $normal-text;
+  background-color: $works-background;
   &__loading {
     position: fixed;
     width: 100%;
@@ -551,7 +551,7 @@ label {
     width: 20%;
     height: 15px;
     border-radius: 25px;
-    background-color: #e6e6e6;
+    background-color: $close-button;
   }
 }
 .checkbox {
@@ -575,11 +575,11 @@ label {
     left: 0;
     width: 15px;
     height: 15px;
-    border: 1px solid #c7c7c7;
+    border: 1px solid $works-checkbox-border;
     border-radius: 4px;
   }
   &__input:checked {
-    color: #60bece;
+    color: $main;
   }
 }
 .checkbox__input:checked + .checkbox__parts::after {
@@ -591,8 +591,8 @@ label {
   width: 7px;
   height: 14px;
   transform: rotate(40deg);
-  border-bottom: 3px solid #60bece;
-  border-right: 3px solid #60bece;
+  border-bottom: 3px solid $main;
+  border-right: 3px solid $main;
 }
 
 #works__control__fixed {
@@ -604,7 +604,7 @@ label {
   &__wrapper {
     margin: 10px;
     padding: 20px;
-    background-color: #dbdbdb;
+    background-color: $card-border;
     user-select: none;
     box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
     box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);

@@ -103,17 +103,17 @@ li {
 }
 a {
   text-decoration: none;
-  color: gray;
+  color: $gray;
 }
 a:hover {
-  color: #2c3e50;
+  color: $normal-text;
 }
 #top__wrapper__scroll__text:hover {
-  color: #2c3e50;
+  color: $normal-text;
 }
 #top__wrapper__name, #top__wrapper__scroll {
   position: absolute;
-  color: #ffffff;
+  color: $white;
   z-index: 3;
 }
 #top__wrapper__scroll, #top__wrapper__buttons {
@@ -131,7 +131,7 @@ a:hover {
       width: 100%;
       height: 100%;
       z-index: 1;
-      background-color: rgb(240, 240, 240);
+      background-color: $top-background;
     }
     &__bgimg {
       position: absolute;
@@ -153,7 +153,7 @@ a:hover {
         margin-left: -35%;
         margin-bottom: -15px;
         cursor: pointer;
-        color: gray;
+        color: $gray;
         opacity: 0;
       }
     }
@@ -169,7 +169,7 @@ a:hover {
       bottom: -100%;
       width: 100%;
       height: 100%;
-      background-color: white;
+      background-color: $white;
       opacity: 0.9;
       z-index: 4;
       &__links {
@@ -191,7 +191,7 @@ a:hover {
           /* 15 + (#top__wrapper__menu__links__tls margin top) */
           bottom: 60px;
           width:135px;
-          border-top: 2px solid gray;
+          border-top: 2px solid $gray;
           opacity: 0.7;
           transform: rotate(-36deg);
           transform-origin: 0% 0%;
@@ -202,16 +202,16 @@ a:hover {
 }
 
 .topScrollOpenBg {
-  color: gray !important;
+  color: $gray !important;
 }
 .top-menu-scrollicon {
   font-size: 2.5rem;
-  color: gray;
+  color: $gray;
   opacity: 1;
   cursor: pointer;
 }
 .top-menu-opacity {
-  color: gray;
+  color: $gray;
   opacity: 0.7;
 }
 .top-menu-desc-p {

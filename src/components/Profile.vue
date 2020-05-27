@@ -309,7 +309,7 @@ export default {
   margin-right: .25em;
   counter-increment: ol_li;
   content: counter(ol_li);
-  color: #2c3e50;
+  color: $normal-text;
 }
 /deep/ li > p {
   background-color: transparent !important;
@@ -324,7 +324,7 @@ export default {
 /deep/ h4,
 /deep/ h5,
 /deep/ h6 {
-  color: white;
+  color: $white;
   margin: 1px 1px 1px !important;
 }
 /deep/ hr {
@@ -353,7 +353,7 @@ export default {
 #profile__bottomMenu__contents__wrapper > h1,
 #profile__bottomMenu__contents__items > h2,
 #profile__bottomMenu__contents__wrapper > h2 {
-  color: #2c3e50 !important;
+  color: $normal-text !important;
   padding: 5px !important;
 }
 #profile__bottomMenu__contents__items > p,
@@ -365,7 +365,7 @@ export default {
 }
 /deep/ #profile__bottomMenu__contents > h1,
 /deep/ #profile__bottomMenu__contents > h2 {
-  color: #2c3e50;
+  color: $normal-text;
   padding: 5px !important;
 }
 /deep/ #profile__bottomMenu__contents > p {
@@ -465,7 +465,7 @@ export default {
     width: 100%;
     height: 90%;
     border-radius: 15px 15px 0 0;
-    background-color: white;
+    background-color: $white;
   }
   &__contents {
     height: 90%;
@@ -478,7 +478,7 @@ export default {
       background-color:transparent;
       border: none;
       font-size: 1.2rem;
-      color: gray;
+      color: $gray;
       cursor: pointer;
     }
   }
@@ -493,7 +493,7 @@ export default {
       width: 20%;
       height: 15px;
       border-radius: 25px;
-      background-color: #e6e6e6;
+      background-color: $close-button;
     }
   }
 }
@@ -512,7 +512,7 @@ export default {
 }
 .scrollIcon {
   display: inline-block;
-  color: #ffffff;
+  color: $white;
   font-size: 2em;
   opacity: 0.7;
   animation: vertical 1700ms ease-in-out infinite alternate;

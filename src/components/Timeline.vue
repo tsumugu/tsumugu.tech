@@ -591,16 +591,16 @@ hr {
     width: 100%;
     height: 90%;
     border-radius: 15px 15px 0 0;
-    background-color: white;
+    background-color: $white;
   }
   &__contents {
     height: 90%;
     margin: 15px;
     &__button {
-      background-color:transparent;
+      background-color: $transparent;
       border: none;
       font-size: 1.2rem;
-      color: gray;
+      color: $gray;
       cursor: pointer;
     }
   }
@@ -615,15 +615,15 @@ hr {
       width: 20%;
       height: 15px;
       border-radius: 25px;
-      background-color: #e6e6e6;
+      background-color: $close-button;
     }
   }
 }
 #timeline {
   width: 100%;
   height: auto;
-  color: #2c3e50;
-  background-color: #f2f2f5;
+  color: $normal-text;
+  background-color: $works-background;
   &__loading {
     position: fixed;
     width: 100%;
@@ -634,7 +634,7 @@ hr {
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: #dbdbdb;
+    background-color: $card-border;
     overflow: scroll;
     &__inner {
       padding: 15px;
@@ -662,7 +662,7 @@ hr {
       margin-top: 40px;
       margin-left: 21.5px;
       float: left;
-      background-color: #dbdbdb;
+      background-color: $card-border;
     }
     &__items {
       position: absolute;
@@ -677,7 +677,7 @@ hr {
     margin-bottom: 10px;
     padding: 10px 10px 10px 10px;
     border-radius: 0px 25px 25px 0px;
-    background-color: #dbdbdb;
+    background-color: $card-border;
     &__contents {
       &__img {
         border-radius: 25px;
@@ -701,7 +701,7 @@ hr {
       height: 40px;
       margin-top: 23px;
       margin-left: 6px;
-      background-color: #60bece;
+      background-color: $main;
       border-radius: 50px;
       z-index: 3;
     }
@@ -711,7 +711,7 @@ hr {
       float: left;
       margin-top: 37px;
       margin-left: 20px;
-      background-color: #dbdbdb;
+      background-color: $card-border;
     }
   }
   &__year {
@@ -720,7 +720,7 @@ hr {
     z-index: 2;
     &__text {
       font-size: x-large;
-      color: #ffffff;
+      color: $white;
     }
     &__circle {
       display: flex;
@@ -731,7 +731,7 @@ hr {
       height: 40px;
       margin-left: 5px;
       border-radius: 50px;
-      background-color: #bababa;
+      background-color: $tl-circle-bg;
       opacity: 0.85;
     }
   }
@@ -740,7 +740,7 @@ hr {
   margin-top: 10px;
 }
 .colBase > .timeline__item__year__circle {
-  border: 1px solid #bababa;
+  border: 1px solid $tl-circle-bg;
   opacity: 0.7;
 }
 #article {
@@ -894,7 +894,6 @@ hr {
   }
   /deep/ .card {
     margin: 0px 10px 0px 10px;
-    /*border: 1px solid #9699a0;*/
   }
   .timeline__item__card__line {
     display: none;
