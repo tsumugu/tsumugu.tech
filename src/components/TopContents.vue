@@ -1,16 +1,16 @@
 <template>
-  <div id="top-wrap">
-    <div id="top-main-wrap">
-      <div id="top-bgcolor"></div>
-      <div id="top-bg-img"></div>
-      <div id="top-name"></div>
-      <div id="top-scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top-scroll-text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" /></div>
-      <div id="top-button" class="scrollIcon" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" /></div>
-      <div id="top-menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
-        <div id="top-menu-links-wrapper">
-          <div id="top-menu-link-works"><router-link class="top-menu-scrollicon" to="Works" id="top-menu-link-works-text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" />  Works</router-link><p class="top-menu-desc-p">作品の一覧</p></div>
-          <div id="top-menu-link-tl"><router-link to="Timeline" id="top-menu-link-tl-text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" /></router-link><p class="top-menu-desc-p">作品やできごとを時系列で</p></div>
-          <div id="top-menu-links-bgborder"></div>
+  <div id="top">
+    <div id="top__wrapper">
+      <div id="top__wrapper__bgcolor"></div>
+      <div id="top__wrapper__bgimg"></div>
+      <div id="top__wrapper__name"></div>
+      <div id="top__wrapper__scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top__wrapper__scroll__text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" /></div>
+      <div id="top__wrapper__buttons" class="scrollIcon" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" /></div>
+      <div id="top__wrapper__menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
+        <div id="top__wrapper__menu__links">
+          <div id="top__wrapper__menu__links__works"><router-link class="top-menu-scrollicon" to="Works" id="top__wrapper__menu__links__works__text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" />  Works</router-link><p class="top-menu-desc-p">作品の一覧</p></div>
+          <div id="top__wrapper__menu__links__tl"><router-link to="Timeline" id="top__wrapper__menu__links__tl__text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" /></router-link><p class="top-menu-desc-p">作品やできごとを時系列で</p></div>
+          <div id="top__wrapper__menu__links__bgborder"></div>
         </div>
       </div>
     </div>
@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 ul {
   list-style: none;
   user-select: none;
@@ -103,94 +103,109 @@ li {
 }
 a {
   text-decoration: none;
-  /**/
   color: gray;
 }
 a:hover {
-  /**/
   color: #2c3e50;
 }
-#top-scroll-text:hover {
-  /**/
+#top__wrapper__scroll__text:hover {
   color: #2c3e50;
 }
-#top-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-#top-bgcolor {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgb(240, 240, 240);
-}
-#top-bg-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-
-  background-size: cover;
-  background-attachment: fixed;
-}
-#top-name, #top-scroll {
+#top__wrapper__name, #top__wrapper__scroll {
   position: absolute;
   color: #ffffff;
   z-index: 3;
 }
-#top-name {
-  font-size: 3rem;
-  font-family: 'Sen', sans-serif;
-  opacity: 0.9;
-}
-#top-scroll, #top-button {
+#top__wrapper__scroll, #top__wrapper__buttons {
   font-size: 2em;
   z-index: 99;
 }
-#top-scroll {
-  bottom: 12px;
-  margin-left: 48%;
+
+#top {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &__wrapper {
+    &__bgcolor {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: rgb(240, 240, 240);
+    }
+    &__bgimg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    &__name {
+      font-size: 3rem;
+      font-family: 'Sen', sans-serif;
+      opacity: 0.9;
+    }
+    &__scroll {
+      bottom: 12px;
+      margin-left: 48%;
+      &__text {
+        margin-left: -35%;
+        margin-bottom: -15px;
+        cursor: pointer;
+        color: gray;
+        opacity: 0;
+      }
+    }
+    &__buttons {
+      position: absolute;
+      width: 100%;
+      top: 12px;
+      z-index: 5;
+      text-align: center;
+    }
+    &__menu {
+      position: absolute;
+      bottom: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      opacity: 0.9;
+      z-index: 4;
+      &__links {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: inline-block;
+        width: 360px;
+        &__works {
+          width: 50%;
+        }
+        &__tl {
+          text-align: right;
+        }
+        &__bgborder {
+          position: absolute;
+          left: 110px;
+          /* 15 + (#top__wrapper__menu__links__tls margin top) */
+          bottom: 60px;
+          width:135px;
+          border-top: 2px solid gray;
+          opacity: 0.7;
+          transform: rotate(-36deg);
+          transform-origin: 0% 0%;
+        }
+      }
+    }
+  }
 }
-#top-scroll-text {
-  margin-left: -35%;
-  margin-bottom: -15px;
-  cursor: pointer;
-  /**/
-  color: gray;
-  opacity: 0;
-}
+
 .topScrollOpenBg {
   color: gray !important;
 }
-#top-button {
-  position: absolute;
-  width: 100%;
-  top: 12px;
-  z-index: 5;
-  text-align: center;
-}
-#top-menu {
-  position: absolute;
-  bottom: -100%;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  opacity: 0.9;
-  z-index: 4;
-}
-#top-menu-links-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-block;
-  width: 360px;
-}
 .top-menu-scrollicon {
   font-size: 2.5rem;
-  /**/
   color: gray;
   opacity: 1;
   cursor: pointer;
@@ -205,23 +220,6 @@ a:hover {
 .scrollIcon {
   cursor: pointer;
   opacity: 0.7;
-}
-#top-menu-link-works {
-  width: 50%;
-}
-#top-menu-link-tl {
-  text-align: right;
-}
-#top-menu-links-bgborder {
-  position: absolute;
-  left: 110px;
-  /* 15 + (#top-menu-link-tls margin top) */
-  bottom: 60px;
-  width:135px;
-  border-top: 2px solid gray;
-  opacity: 0.7;
-  transform: rotate(-36deg);
-  transform-origin: 0% 0%;
 }
 .fuwafuwa {
   animation: vertical 1700ms ease-in-out infinite alternate;
@@ -260,31 +258,31 @@ a:hover {
 }
 
 @media (max-width: 3000px) and (min-width: 600px) {
-  #top-bg-img {
+  #top__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");
     background-position: center top;
   }
-  #top-name {
+  #top__wrapper__name {
     top: 50%;
     margin-left: 10%;
     text-align: left;
   }
-  #top-name:before {
+  #top__wrapper__name:before {
     content: "Tsumugu Yamaguchi";
   }
 }
 /* SP */
 @media screen and (max-width:600px) {
-  #top-bg-img {
+  #top__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPSP.jpg");
     background-position: center center
   }
-  #top-name {
+  #top__wrapper__name {
     bottom: 22%;
     margin-left: 5%;
     text-align: left;
   }
-  #top-name:before {
+  #top__wrapper__name:before {
     content: "Tsumugu\AYamaguchi";
     white-space: pre;
   }
