@@ -1,23 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-//import top from '@/components/Top'
-const top = () => import('../components/Top.vue')
-//import profile from '@/components/Profile'
-const profile = () => import('../components/Profile.vue')
-//import works from '@/components/Works'
-const works = () => import('../components/Works.vue')
-//import article from '@/components/Article'
-const article = () => import('../components/Article.vue')
-//import tl from '@/components/Timeline'
-const tl = () => import('../components/Timeline.vue')
-//import addworks from '@/components/AddWorks'
-const addworks = () => import('../components/AddWorks.vue')
-//import auth from '@/components/Auth'
-const auth = () => import('../components/Auth.vue')
-//import edit from '@/components/Edit'
-const edit = () => import('../components/Edit.vue')
-//import notfoundcomponent from '@/components/NotFoundComponent'
-const notfoundcomponent = () => import('../components/NotFoundComponent.vue')
+import top from '@/components/Top'
+import profile from '@/components/Profile'
+import works from '@/components/Works'
+import article from '@/components/Article'
+import tl from '@/components/Timeline'
+import addworks from '@/components/AddWorks'
+import auth from '@/components/Auth'
+import edit from '@/components/Edit'
+import notfoundcomponent from '@/components/NotFoundComponent'
 
 Vue.use(Router)
 export default new Router({
