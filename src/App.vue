@@ -26,7 +26,6 @@ export default {
 
 <style>
 * :not(#top-name) {
-  font-family: "TBUDGothic R";
   font-family: 'Noto Sans JP', sans-serif;
 }
 body, html {
