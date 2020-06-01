@@ -43,7 +43,9 @@
           </div>
           <div id="works__control__fixed__wrapper__other">
             <p class="works__control__fixed__wrapper__checkTitle" style="display: block;">その他</p>
-            <label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox__input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox__parts">意図が明確なものだけ表示</span></label>
+            <ul>
+              <li><label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox__input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox__parts">意図が明確なものだけ表示</span></label></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -58,13 +60,11 @@
 <script>
 import firebase from 'firebase'
 import Card from './Card.template.vue'
-import Chart from './Chart.vue'
 import Loading from './Loading.vue'
 import ArticleContents from './ArticleContents.vue'
 export default {
   components: {
     Card,
-    Chart,
     Loading,
     ArticleContents
   },
@@ -485,7 +485,9 @@ ul {
   padding: 0;
 }
 li{
-  display: inline;
+  display: inline-block;
+  margin-top: 15px;
+  margin-right: 10px;
 }
 label {
   cursor: pointer;
@@ -554,45 +556,27 @@ label {
     background-color: $close-button;
   }
 }
+
 .checkbox {
   &__reset {
     display: inline-block;
-    margin-left: 5px;
   }
   &__input {
     display: none;
   }
   &__parts {
-    padding-left: 20px;
-    position:relative;
-    margin-right: 20px;
-  }
-  &__parts::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 5px;
-    left: 0;
-    width: 15px;
-    height: 15px;
-    border: 1px solid $works-checkbox-border;
-    border-radius: 4px;
-  }
-  &__input:checked {
-    color: $main;
+    color: $white;
+    background-color: $main;
+    border-radius: 5px;
+    padding: 5px;
+    opacity: 0.3;
   }
 }
-.checkbox__input:checked + .checkbox__parts::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 5px;
-  width: 7px;
-  height: 14px;
-  transform: rotate(40deg);
-  border-bottom: 3px solid $main;
-  border-right: 3px solid $main;
+.checkbox__reset > .checkbox__parts {
+  padding: 0;
+}
+.checkbox__input:checked + .checkbox__parts {
+  opacity: 1;
 }
 
 #works__control__fixed {
