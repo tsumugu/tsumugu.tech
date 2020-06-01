@@ -1,16 +1,26 @@
 <template>
   <div id="app">
     <transition mode="out-in">
-      <router-view :key="$route.path" />
+      <router-view :key="$route.path" :FirebaseDataManagerProps=FirebaseDataManager />
     </transition>
   </div>
 </template>
 
 <script>
-/*import './assets/css/works-colors-test-blue.css'*/
+import firebase from 'firebase'
+import FDM from './assets/js/firebase_data_manager.js'
 
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      FirebaseDataManager: null
+    }
+  },
+  mounted() {
+    //FirebaseDataManager
+    this.FirebaseDataManager = new FDM(firebase)
+  }
 }
 </script>
 

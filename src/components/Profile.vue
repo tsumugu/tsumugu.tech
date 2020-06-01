@@ -39,6 +39,7 @@
 </template>
 <script>
 import firebase from 'firebase'
+import FDM from '../assets/js/firebase_data_manager.js'
 import Card from './Card.template.vue'
 var axios = require('axios')
 
@@ -46,8 +47,12 @@ export default {
   components: {
     Card
   },
+  props: {
+    FirebaseDataManagerProps: null
+  },
   data() {
     return {
+      FirebaseDataManager: null,
       fadeinText: false,
       fadeoutText: false,
       aboutText: null,
@@ -223,6 +228,12 @@ export default {
     }
   },
   mounted() {
+    // FirebaseDataManager
+    this.FirebaseDataManager = this.FirebaseDataManagerProps
+    if (this.FirebaseDataManager == null) {
+      this.FirebaseDataManager = new FDM(firebase)
+    }
+    //
     var _this = this
     //
     this.getItems()
@@ -248,7 +259,7 @@ export default {
     //
     var getLanguage = new Promise(function(resolve, reject) {
       var langpfObjLocal = []
-      firebase.firestore().collection('languages').get().then((querySnapshot) => {
+      _this.FirebaseDataManager.get('languages').then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           langpfObjLocal.push({titleShort: doc.id, title: doc.data().title, desc: doc.data().description})
         })
@@ -273,15 +284,6 @@ export default {
       bottommenuswipe.addEventListener('touchmove', this.touchHandlerM, false);
       bottommenuswipe.addEventListener('touchend', this.touchHandlerE, false);
     }
-  },
-  destroyed() {
-    var _this = this
-    this.deviconElms.forEach(function (element) {
-      element.removeEventListener('click', _this.onClickDevivonEve, false);
-    })
-    var bottommenuswipe = this.$refs.bottommenuswipe
-    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false);
-    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false);
   }
 }
 </script>

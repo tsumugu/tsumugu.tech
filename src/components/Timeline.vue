@@ -65,6 +65,7 @@
 
 <script>
 import firebase from 'firebase'
+import FDM from '../assets/js/firebase_data_manager.js'
 var axios = require('axios')
 import ArticleContents from './ArticleContents.vue'
 import Card from './Card.template.vue'
@@ -75,9 +76,12 @@ export default {
     Card,
     Loading
   },
+  props: {
+    FirebaseDataManagerProps: null
+  },
   data () {
     return {
-      db: null,
+      FirebaseDataManager: null,
       loading: true,
       items: [],
       itemCount: 0,
@@ -322,7 +326,7 @@ export default {
       var querySnapshotArr = []
       //About
       var getAbout = new Promise(function(resolve, reject) {
-        _this.db.collection('about').orderBy("year", "asc").get().then((querySnapshot) => {
+        _this.FirebaseDataManager.get('about').then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             querySnapshotArr.push({
               'isSkelton': false,
@@ -344,7 +348,7 @@ export default {
       })
       // Works
       var getWorks = new Promise(function(resolve, reject) {
-        _this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
+        _this.FirebaseDataManager.get('Works').then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             querySnapshotArr.push({
               'id': doc.id,
@@ -481,7 +485,12 @@ export default {
     }
   },
   mounted() {
-    this.db = firebase.firestore()
+    // FirebaseDataManager
+    this.FirebaseDataManager = this.FirebaseDataManagerProps
+    if (this.FirebaseDataManager == null) {
+      this.FirebaseDataManager = new FDM(firebase)
+    }
+    //
     this.drawTL()
 
     var _this = this
@@ -536,12 +545,6 @@ export default {
       }
     }, 50)
     //
-  },
-  destroyed() {
-    var bottommenuswipe = this.$refs.bottommenuswipe
-    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false)
-    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false)
-    window.removeEventListener('resize', this.windowResizedHandler, false)
   }
 }
 </script>

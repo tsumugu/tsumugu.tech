@@ -59,6 +59,7 @@
 
 <script>
 import firebase from 'firebase'
+import FDM from '../assets/js/firebase_data_manager.js'
 import Card from './Card.template.vue'
 import Loading from './Loading.vue'
 import ArticleContents from './ArticleContents.vue'
@@ -68,9 +69,12 @@ export default {
     Loading,
     ArticleContents
   },
+  props: {
+    FirebaseDataManagerProps: null
+  },
   data() {
     return {
-      db: null,
+      FirebaseDataManager: null,
       chartData: null,
       loading: true,
       checkedIsCarefullySelect: false,
@@ -330,7 +334,7 @@ export default {
       this.yearStr = []
       this.yearCount = []
       this.yearCountFor = []
-      this.db.collection('Works').orderBy("madeYear", "asc").orderBy("madeMonth", "asc").get().then((querySnapshot) => {
+      this.FirebaseDataManager.get('Works').then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
           var whatLearned = (doc.data().whatLearned === undefined || doc.data().whatLearned == null || doc.data().whatLearned == "") ? '' : doc.data().whatLearned
@@ -457,7 +461,11 @@ export default {
     }
   },
   mounted() {
-    this.db = firebase.firestore()
+    // FirebaseDataManager
+    this.FirebaseDataManager = this.FirebaseDataManagerProps
+    if (this.FirebaseDataManager == null) {
+      this.FirebaseDataManager = new FDM(firebase)
+    }
     this.getItems()
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
@@ -467,12 +475,7 @@ export default {
     }
 
     window.addEventListener('resize', this.windowResizedHandler, false)
-  },
-  destroyed() {
-    var bottommenuswipe = this.$refs.bottommenuswipe
-    bottommenuswipe.removeEventListener('touchmove', this.touchHandlerM, false)
-    bottommenuswipe.removeEventListener('touchend', this.touchHandlerE, false)
-    window.removeEventListener('resize', this.windowResizedHandler, false)
+    //
   }
 }
 </script>
