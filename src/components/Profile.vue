@@ -60,6 +60,7 @@ export default {
       isFinPC: false,
       isFinSP: false,
       isFinData: false,
+      startTime: null,
       hideText: false,
       deviconElms: null,
       isShowBottomMenu: false,
@@ -95,9 +96,13 @@ export default {
     },
     checkLoad() {
       if (this.isFinData&&this.isFinPC&&this.isFinSP) {
+        // 文字を見せるために最低でもborderTimeぶんは待機
+        var loadTime = new Date().getTime() - this.startTime.getTime()
+        var borderTime = 1000
+        var waitTime = borderTime - loadTime
         setTimeout(() => {
           this.doFadeText()
-        }, 300)
+        }, waitTime)
       }
     },
     doFadeText() {
@@ -228,6 +233,7 @@ export default {
     }
   },
   mounted() {
+    this.startTime = new Date()
     // FirebaseDataManager
     this.FirebaseDataManager = this.FirebaseDataManagerProps
     if (this.FirebaseDataManager == null) {
