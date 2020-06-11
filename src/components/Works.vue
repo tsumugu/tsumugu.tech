@@ -638,6 +638,7 @@ label {
     background-color: $works-main;
     color: $white;
     font-size: large;
+    margin-bottom: 10px;
   }
 }
 
