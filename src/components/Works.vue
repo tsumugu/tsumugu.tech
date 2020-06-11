@@ -18,7 +18,8 @@
     </div>
     <div id="works__control__fixed">
       <div id="works__control__fixed__wrapper">
-        <div id="works__control__fixed__wrapper__result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"> ｜ <p id="works__control__fixed__wrapper__result__title" v-on:click="filterToggle">絞り込む {{isDispFilterdivMark}}</p></div>
+        <div id="works__control__fixed__wrapper__result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"> ｜ <div id="works__control__fixed__wrapper__result__title" v-on:click="filterToggle">絞り込む <span id="works__control__fixed__wrapper__result__title__mark">{{isDispFilterdivMark}}</span></div></div>
+
         <div id="works__control__fixed__wrapper__filterDiv" v-show="isDispFilterdiv">
           <div id="works__control__fixed__wrapper__genle">
             <p class="works__control__fixed__wrapper__checkTitle">プラットフォーム</p>
@@ -41,17 +42,14 @@
               <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox__input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox__parts">{{val.key}}</span></label></li>
             </ul>
           </div>
-          <div id="works__control__fixed__wrapper__other">
-            <p class="works__control__fixed__wrapper__checkTitle" style="display: block;">その他</p>
-            <ul>
-              <li><label name="carefullySelect"><input type="checkbox" id="CarefullySelect" class="checkbox__input" name="carefullySelect" v-model="checkedIsCarefullySelect"><span class="checkbox__parts">意図が明確なものだけ表示</span></label></li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
     <div id="works__cardWrapper">
       <Card class="works__cardWrapper__card" v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
+    </div>
+    <div class="works__carefullySelectWrapper">
+      <button name="carefullySelect" class="works__carefullySelectWrapper__button" v-show="checkedIsCarefullySelect"  v-on:click="checkedIsCarefullySelect=!checkedIsCarefullySelect">さらに表示</button>
     </div>
   </div>
 </div>
@@ -77,7 +75,7 @@ export default {
       FirebaseDataManager: null,
       chartData: null,
       loading: true,
-      checkedIsCarefullySelect: false,
+      checkedIsCarefullySelect: true,
       checkedSkills: [],
       checkedGenle: [],
       checkedYear: [],
@@ -119,11 +117,7 @@ export default {
   },
   watch: {
     checkedIsCarefullySelect() {
-      if (this.checkedIsCarefullySelect) {
-        this.doCarefullySelect()
-      } else {
-        this.doFiltering()
-      }
+      this.doCarefullySelect()
     },
     checkedSkills() {
       this.doFiltering()
@@ -235,7 +229,11 @@ export default {
       return res.includes(true)
     },
     doCarefullySelect() {
-      this.divideThree(this.cardItems.filter(doc => doc.isDispArticle != false))
+      if (this.checkedIsCarefullySelect) {
+        this.divideThree(this.cardItems.filter(doc => (doc.problem != null&&doc.problem != "")))
+      } else {
+        this.divideThree(this.cardItems)
+      }
     },
     doFiltering() {
       if (!this.checkedIsCarefullySelect) {
@@ -368,7 +366,12 @@ export default {
           _this.yearStr.push(doc.data().madeYear)
           _this.cardItems.push(docVal)
         })
-        _this.divideThree(_this.cardItems)
+        // sort cardItems
+        var important = _this.cardItems.filter(doc => (doc.problem != null&&doc.problem != ""))
+        var notImportant = _this.cardItems.filter(doc => (doc.problem == null||doc.problem == ""))
+        _this.cardItems = important.concat(notImportant)
+        //
+        _this.doCarefullySelect()
         //
         _this.skillsStr.forEach(element => {
           var currntCount = _this.skillsCount[element]
@@ -569,7 +572,7 @@ label {
   }
   &__parts {
     color: $white;
-    background-color: $main;
+    background-color: $works-main;
     border-radius: 5px;
     padding: 5px;
     opacity: 0.3;
@@ -606,6 +609,12 @@ label {
       display: inline-block;
       margin: 0;
       cursor: pointer;
+      &__mark {
+        display: inline-block;
+        margin: 0;
+        cursor: pointer;
+        color: $works-main;
+      }
     }
   }
 }
@@ -613,6 +622,23 @@ label {
   display: inline-block;
   margin: 0;
   font-size: 1.35rem;
+}
+
+.works__carefullySelectWrapper {
+  text-align: center;
+  &__button {
+    display: inline;
+    width: 80%;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    border-radius: 25px;
+    background-color: $works-main;
+    color: $white;
+    font-size: large;
+  }
 }
 
 #article {
