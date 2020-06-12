@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    <!--
     <div id="works__control__fixed">
       <div id="works__control__fixed__wrapper">
         <div id="works__control__fixed__wrapper__result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"> ｜ <div id="works__control__fixed__wrapper__result__title" v-on:click="filterToggle">絞り込む <span id="works__control__fixed__wrapper__result__title__mark">{{isDispFilterdivMark}}</span></div></div>
@@ -45,6 +46,7 @@
         </div>
       </div>
     </div>
+    -->
     <div id="works__cardWrapper">
       <Card class="works__cardWrapper__card" v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
     </div>
