@@ -354,6 +354,9 @@ export default {
   padding-left: 3px;
   cursor: pointer;
 }
+/deep/ .devicon-click {
+  cursor: pointer;
+}
 /deep/ .iframe-wrapper {
   padding: 5px;
 }
