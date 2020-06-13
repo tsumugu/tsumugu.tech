@@ -113,13 +113,29 @@ export default {
       var title = null;
       var query = null;
       var path = e.path || (e.composedPath && e.composedPath())
-      path.forEach(function (data) {
-        var etitle = data.title
-        if (etitle != undefined && etitle != "" && title == null) {
-          title = data.title
-          query = data.dataset.query
+      if (path == undefined) {
+        // ブラウザによってはPathリストが取得できないことがあるのでそれ対策。
+        var elmName = e.target.tagName.toLowerCase()
+        var dataTarget = null
+        if (elmName == "div") {
+          dataTarget = e.target
+        } else if (elmName == "svg") {
+          dataTarget = e.target.parentNode
+        } else if (elmName == "path") {
+          dataTarget = e.target.parentNode.parentNode
         }
-      })
+        title = dataTarget.title
+        query = dataTarget.dataset.query
+      } else {
+        // Pathリストが取得できるブラウザはこれが実行される
+        path.forEach(function (data) {
+          var etitle = data.title
+          if (etitle != undefined && etitle != "" && title == null) {
+            title = data.title
+            query = data.dataset.query
+          }
+        })
+      }
       if (title != null && query != null) {
         this.dispSkillInfo(title, query);
         this.openBottomMenu();
