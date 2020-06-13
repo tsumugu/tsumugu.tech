@@ -336,6 +336,9 @@ export default {
   content: counter(ol_li);
   color: $normal-text;
 }
+/deep/ .profile__myHistory__ol > li:before {
+  content: "" !important;
+}
 /deep/ li > p {
   background-color: transparent !important;
 }
@@ -604,6 +607,10 @@ export default {
   #profile__wrapper__textwrap__inner {
     width: 100%;
   }
+  /deep/ .profile__myHistory__ol__img {
+    width: 400px;
+    border-radius: 15px;
+  }
 }
 /* SP */
 @media screen and (max-width:600px) {
@@ -621,6 +628,13 @@ export default {
   }
   #profile__wrapper__textwrap__inner {
     width: 100%;
+  }
+  /deep/ .profile__myHistory__ol__img {
+    width: 100%;
+    border-radius: 15px;
+  }
+  /deep/ .profile__myHistory__ol > li {
+    padding-right: 18px;
   }
 }
 </style>
