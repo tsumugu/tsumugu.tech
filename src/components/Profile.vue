@@ -112,7 +112,8 @@ export default {
     onClickDevivonEve(e) {
       var title = null;
       var query = null;
-      e.path.forEach(function (data) {
+      var path = e.path || (e.composedPath && e.composedPath())
+      path.forEach(function (data) {
         var etitle = data.title
         if (etitle != undefined && etitle != "" && title == null) {
           title = data.title
