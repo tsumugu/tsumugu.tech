@@ -499,7 +499,7 @@ export default {
     background-color: $white;
   }
   &__contents {
-    height: 90%;
+    height: 100%;
     margin: 15px;
     &__items {
       height: 60%;

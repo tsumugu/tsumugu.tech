@@ -379,6 +379,7 @@ export default {
       Promise.all([getAbout, getWorks]).then(function () {
         _this.loading = false
         // Sort [querySnapshotArr] by madeYear
+        // sortに順番ずれるバグ？
         querySnapshotArr.sort(function(a,b){
           var aa = a.madeYear;
           var bb = b.madeYear;
