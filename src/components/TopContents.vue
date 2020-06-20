@@ -6,7 +6,7 @@
       <div id="top__wrapper__name"></div>
       <div id="top__wrapper__scroll" class="fuwafuwa" v-bind:class="{topScrollOpenBg: isMenuOpen}"><div id="top__wrapper__scroll__text" v-on:click="onClickScrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}">Profile</div><font-awesome-icon class="scrollIcon" v-on:click="onClickScrollIcon" icon="chevron-down" /></div>
       <div id="top__wrapper__buttons" class="scrollIcon" v-bind:class="{topScrollOpenBg: isMenuOpen}" v-show="isMenuOpen"><font-awesome-icon class="scrollIcon" v-bind:class="{fadein: isMenuOpen, fadeout: !isMenuOpen&&!isFirst}" v-on:click="toggle" icon="chevron-up" /></div>
-      <div id="top__wrapper__menu" v-bind:class="{openMenu: isMenuOpen, closeMenu: !isMenuOpen&&!isFirst}">
+      <div id="top__wrapper__menu" v-bind:class="{openMenuNofade: isMenuOpen&&isOpenMenuInBack, openMenu: isMenuOpen&&!isOpenMenuInBack, closeMenu: !isMenuOpen&&!isFirst}">
         <div id="top__wrapper__menu__links">
           <div id="top__wrapper__menu__links__works"><router-link class="top-menu-scrollicon" to="Works" id="top__wrapper__menu__links__works__text"><font-awesome-icon class="top-menu-opacity" icon="chevron-left" />  Works</router-link><p class="top-menu-desc-p">作品の一覧</p></div>
           <div id="top__wrapper__menu__links__tl"><router-link to="Timeline" id="top__wrapper__menu__links__tl__text" class="top-menu-scrollicon">Timeline  <font-awesome-icon class="top-menu-opacity" icon="chevron-right" /></router-link><p class="top-menu-desc-p">作品やできごとを時系列で</p></div>
@@ -19,11 +19,13 @@
 <script>
 export default {
   props: {
+    isOpenMenuInBackP: false,
     isMenuOpenP: false,
     isFirstP: true,
   },
   data() {
     return {
+      isOpenMenuInBack: false,
       isMenuOpen: false,
       isFirst: true
     }
@@ -35,6 +37,9 @@ export default {
         this.$parent.pageWcNum = 0
       }
     },
+    isOpenMenuInBackP() {
+      this.isOpenMenuInBack = this.isOpenMenuInBackP
+    },
     isMenuOpenP() {
       this.isMenuOpen = this.isMenuOpenP
     },
@@ -44,6 +49,7 @@ export default {
   },
   methods: {
     toggle() {
+      this.isOpenMenuInBack = false
       this.isFirst = false
       this.isMenuOpen = !this.isMenuOpen
     },
@@ -228,6 +234,10 @@ a:hover {
 }
 .fadeout {
   animation: fadeOut 500ms ease 0s 1 forwards;
+}
+.openMenuNofade {
+  opacity: 1;
+  bottom: 0 !important;
 }
 .openMenu {
   animation: open 800ms ease 0s 1 forwards;

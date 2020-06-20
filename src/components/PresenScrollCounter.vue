@@ -4,7 +4,7 @@
       <div id="bgitems">
         <div id="bgtree">
           <!-- Child Components Area -->
-          <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP" @updated="treeUpdateEvt"></component>
+          <component id="childComponent" v-bind:is="currentComponent" :pageNum="pageNum" :pageWcNum="pageWcNum" :isMenuOpenP="isMenuOpenP" :isOpenMenuInBackP="isOpenMenuInBackP" :isFirstP="isFirstP" @updated="treeUpdateEvt"></component>
           <!---->
         </div>
       </div>
@@ -27,6 +27,10 @@ export default {
       type: Object
     },
     isAnimating: {
+      type: Boolean,
+      default: false
+    },
+    isOpenMenuInBackP: {
       type: Boolean,
       default: false
     },

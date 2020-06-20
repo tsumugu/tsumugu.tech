@@ -1,5 +1,5 @@
 <template>
-  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent" :px="px" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP"></PresenScrollCounter>
+  <PresenScrollCounter @updatePageNum="onUpdatePageNum" :currentComponent="currentComponent" :px="px" :isOpenMenuInBackP="isOpenMenuInBackP" :isMenuOpenP="isMenuOpenP" :isFirstP="isFirstP"></PresenScrollCounter>
 </template>
 
 <script>
@@ -14,6 +14,7 @@ export default {
     return {
       currentComponent: TopContents,
       px: 30,
+      isOpenMenuInBackP: false,
       isMenuOpenP: false,
       isFirstP: true
     }
@@ -22,6 +23,8 @@ export default {
     var dispMenuLists = ["/Works", "/Timeline", "/Profile"]
     next(vm => {
       if (~dispMenuLists.indexOf(from.path)){
+        // このときフェードインをなくす
+        vm.isOpenMenuInBackP = true
         vm.isFirstP = false
         vm.isMenuOpenP = true
       }
@@ -31,6 +34,7 @@ export default {
     onUpdatePageNum: function(pageNum) {
       console.log(pageNum)
       if (pageNum == 0) {
+        this.isOpenMenuInBackP = false
         this.isMenuOpenP = false
       } else if (pageNum == 1) {
         this.isMenuOpenP = true
