@@ -35,6 +35,10 @@ export default new Router({
       component: tl
     },
     {
+      path: '/tl',
+      component: tl
+    },
+    {
       path: '/Auth',
       component: auth
     },
