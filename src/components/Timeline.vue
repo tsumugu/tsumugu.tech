@@ -524,6 +524,7 @@ export default {
 
     //
     setInterval(() => {
+      //hereaaaaa
       if (this.colChild != undefined) {
         var dispYear
         if (this.colChildNow != undefined) {
@@ -536,7 +537,7 @@ export default {
         }
         this.setYearText(dispYear)
       } else {
-        this.setYearText(2019)
+        this.setYearText("2020")
       }
       this.checkPosAndChangeCount()
 
