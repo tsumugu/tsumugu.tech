@@ -550,13 +550,13 @@ export default {
   cursor: pointer;
 }
 .fadein {
-  animation: fadeIn 2000ms ease 0s 1 forwards;
+  animation: fadeIn 500ms ease 0s 1 forwards;
+}
+.fadeout {
+  animation: fadeOut 500ms ease 0s 1 forwards;
 }
 .fadeinbg {
   animation: fadeInBG 2000ms ease 0s 1 forwards;
-}
-.fadeout {
-  animation: fadeOut 3000ms ease 0s 1 forwards;
 }
 .bottommenuin {
   animation: BMIn 1000ms ease 0s 1 forwards;
