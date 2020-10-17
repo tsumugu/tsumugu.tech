@@ -192,6 +192,8 @@ export default {
         title = "c++"
       } else if (title == "line bot") {
         title = "bot"
+      } else if (title == "arduino lang") {
+        title = "arduino言語"
       }
       var resList
       if (pf == "lang") {
@@ -359,8 +361,9 @@ export default {
   display: none;
 }
 /deep/ .devicon-wrap > svg,
-/deep/ .devicon-line {
+/deep/ .devicon-img {
   width: 100px;
+  height: 100px;
   padding: 5px;
   background-color: rgba(240, 240, 240, 0.8);
   border-radius: 15px;
