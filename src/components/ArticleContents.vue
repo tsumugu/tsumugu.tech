@@ -1,5 +1,6 @@
 <template>
 <div id="article">
+  <div id="article-slideshow"><vue-gallery-slideshow :images="imagesList" :index="slideshowindex" @close="slideshowindex = null"></vue-gallery-slideshow></div>
   <div v-if="loading">
   <Loading></Loading>
   </div>
@@ -17,10 +18,12 @@
 import firebase from 'firebase'
 var axios = require('axios')
 import Loading from './Loading.vue'
+import VueGallerySlideshow from 'vue-gallery-slideshow'
 
 export default {
   components: {
-    Loading
+    Loading,
+    VueGallerySlideshow
   },
   props: {
     cardArticleId: {
@@ -43,17 +46,38 @@ export default {
       loading: true,
       error: false,
       body: null,
-      isLogin: false
+      imagesList: [],
+      isLogin: false,
+      slideshowindex: null
     }
   },
   methods: {
     oepnEdit(articleId) {
-      window.open("http://readme.tsumugu2626.xyz/edit/?author=tsumugu-tech&rip="+articleId)
+      window.open("https://readme.tsumugu2626.xyz/edit/?author=tsumugu-tech&rip="+articleId)
     },
     updateLinkBlank() {
       for (var i=0;i<document.links.length;i++) {
 		    var e = document.links[i]
 			  e.target = "_blank"
+	    }
+    },
+    addImgtagToList() {
+      this.imagesList = []
+      this.slideshowindex = null
+
+      var imgtags = document.getElementById("article-contents-body").getElementsByTagName("img")
+      var _this = this
+      for (var i=0;i<imgtags.length;i++) {
+        var tagelm = imgtags[i]
+		    var src = tagelm.src
+			  this.imagesList.push(src)
+        //クリックイベントのためにデータ属性を付与
+        tagelm.setAttribute("data-imgindex", i)
+        //クリックイベントを設定
+        tagelm.addEventListener("click", e => {
+          var imgIndex = e.target.getAttribute("data-imgindex")
+          _this.slideshowindex = imgIndex
+        })
 	    }
     },
     loadArticle(articleId) {
@@ -69,7 +93,10 @@ export default {
         var post = response.data.posts[0]
         _this.body = post.html
         setTimeout(() => {
+          //リンクを別タブ開くように上書き
           _this.updateLinkBlank()
+          //画像をスライドショー用の配列にぶち込む
+          _this.addImgtagToList()
         }, 500)
       })
       .catch(function (error) {
@@ -91,6 +118,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 >>> #article-contents {
   margin: 10px !important;
@@ -125,20 +153,22 @@ export default {
 >>> a {
   width:100%;
 }
->>> img {
+
+#article-contents >>> img {
   border: 0.5px solid #eaecef;
   height: auto;
 }
 @media (max-width: 3000px) and (min-width: 600px) {
-  >>> img {
+  #article-contents >>> img {
     width: 30%;
   }
 }
 @media (max-width: 600px) {
-  >>> img {
+  #article-contents >>> img {
     width: 100%;
   }
 }
+
 img >>> .emojione {
   height: 16px !important;
   width: 16px !important;

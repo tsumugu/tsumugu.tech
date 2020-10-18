@@ -28,6 +28,7 @@
     "snapsvg": "^0.5.1",
     "vue-chartjs": "^3.5.0",
     "vue-cookies": "^1.7.0",
+    "vue-gallery-slideshow": "^1.5.2",
     "vue-progressive-image": "^3.2.0",
     "vue-router": "^3.1.5",
     "vueinview": "^1.0.7",
