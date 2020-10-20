@@ -362,14 +362,11 @@ export default {
 }
 /deep/ .devicon-wrap > svg,
 /deep/ .devicon-img {
-  width: 100px;
-  height: 100px;
+  width: 5rem;
+  height: 5rem;
   padding: 5px;
   background-color: rgba(240, 240, 240, 0.8);
   border-radius: 15px;
-}
-/deep/ .devicon-of {
-  height: 100px;
 }
 /deep/ .devicon-wrap {
   display: inline-block;
