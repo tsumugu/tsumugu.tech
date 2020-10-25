@@ -1,5 +1,5 @@
 
- 
+
 <template>
 <div id="article">
   <div id="article-slideshow"><vue-gallery-slideshow :images="imagesList" :index="slideshowindex" @close="slideshowindex = null"></vue-gallery-slideshow></div>
@@ -122,6 +122,14 @@ export default {
 <style scoped>
 >>> #article-contents {
   margin: 10px !important;
+  text-align: center;
+}
+>>> #article-contents-body {
+  display: inline-block;
+  /* 800pxまでは100%, それより上は800px固定 */
+  max-width: 800px;
+  width: 100%;
+  text-align: left;
 }
 >>> p {
   font-size: large;
@@ -158,7 +166,7 @@ export default {
 }
 @media (max-width: 3000px) and (min-width: 600px) {
   #article-contents >>> img {
-    width: 30%;
+    width: 50%;
   }
 }
 @media (max-width: 600px) {
