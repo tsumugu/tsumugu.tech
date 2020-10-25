@@ -265,6 +265,20 @@ a:hover {
   0% {bottom: 0}
   100% {bottom: -100%}
 }
+
+/* レスポンシブ */
+/* 1. 画面の大きなPC */
+@media (min-width: 1500px) {
+  #top__wrapper__name {
+    width: 100%;
+    text-align: right;
+  }
+  #top__wrapper__name:before {
+    padding-right: 45%;
+    font-size: 4rem;
+  }
+}
+/* 2. PC */
 @media (max-width: 3000px) and (min-width: 600px) {
   #top__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");
@@ -272,14 +286,31 @@ a:hover {
   }
   #top__wrapper__name {
     top: 50%;
-    margin-left: 10%;
-    text-align: left;
   }
   #top__wrapper__name:before {
     content: "Tsumugu Yamaguchi";
   }
 }
-/* SP */
+/* PCの名前の調整 */
+@media (max-width: 1500px) and (min-width: 900px) {
+  #top__wrapper__name {
+    width: 100%;
+    text-align: right;
+  }
+  #top__wrapper__name:before {
+    padding-right: 45%;
+  }
+}
+@media (max-width: 900px) and (min-width: 600px) {
+  #top__wrapper__name {
+    text-align: left;
+    margin-left: 5%;
+  }
+  #top__wrapper__name:before {
+    padding-right: 0;
+  }
+}
+/* 3. スマホなど */
 @media screen and (max-width:600px) {
   #top__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPSP.jpg");
@@ -288,7 +319,6 @@ a:hover {
   #top__wrapper__name {
     bottom: 22%;
     margin-left: 5%;
-    text-align: left;
   }
   #top__wrapper__name:before {
     content: "Tsumugu\AYamaguchi";
