@@ -1,16 +1,21 @@
 <template>
-  <div id="edit">
-    <div><button v-on:click="goReadme">Edit</button></div>
-    <div><input type="text" placeholder="title" v-model="title"></input></div>
-    <div><input type="text" placeholder="siteurl" v-model="siteurl"></input></div>
-    <div><input type="text" placeholder="thumbnail" v-model="thumbnail"></input></div>
-    <div><button v-on:click="save">Save</button><label name="isDispRead"><input type="checkbox" id="isDispRead" v-model="isDispRead">読むボタンを表示</input></label><label name="isDispRead"><input type="checkbox" id="isDispArticle" v-model="isDispArticle">絞り込み時この記事を表示</input></label></div>
-    <div>説明:<textarea v-model="description">{{description}}</textarea></div>
-    <div>こだわり:<textarea v-model="kdwr">{{kdwr}}</textarea></div>
-    <div>ターゲット:<textarea v-model="targetUser">{{targetUser}}</textarea></div>
-    <div>課題:<textarea v-model="problem">{{problem}}</textarea></div>
-    <div>解決:<textarea v-model="solution">{{solution}}</textarea></div>
-    <div>学んだこと:<textarea v-model="whatLearned">{{whatLearned}}</textarea></div>
+  <div v-if="!isLogin">
+    Error
+  </div>
+  <div v-else>
+    <div id="edit">
+      <div><button v-on:click="goReadme">Edit</button></div>
+      <div><input type="text" placeholder="title" v-model="title"></input></div>
+      <div><input type="text" placeholder="siteurl" v-model="siteurl"></input></div>
+      <div><input type="text" placeholder="thumbnail" v-model="thumbnail"></input></div>
+      <div><button v-on:click="save">Save</button><label name="isDispRead"><input type="checkbox" id="isDispRead" v-model="isDispRead">読むボタンを表示</input></label><label name="isDispRead"><input type="checkbox" id="isDispArticle" v-model="isDispArticle">絞り込み時この記事を表示</input></label></div>
+      <div>説明:<textarea v-model="description">{{description}}</textarea></div>
+      <div>こだわり:<textarea v-model="kdwr">{{kdwr}}</textarea></div>
+      <div>ターゲット:<textarea v-model="targetUser">{{targetUser}}</textarea></div>
+      <div>課題:<textarea v-model="problem">{{problem}}</textarea></div>
+      <div>解決:<textarea v-model="solution">{{solution}}</textarea></div>
+      <div>学んだこと:<textarea v-model="whatLearned">{{whatLearned}}</textarea></div>
+    </div>
   </div>
 </template>
 
