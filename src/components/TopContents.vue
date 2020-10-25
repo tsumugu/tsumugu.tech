@@ -281,6 +281,7 @@ a:hover {
   #top__wrapper__name:before {
     padding-right: 45%;
     font-size: 4rem;
+    content: "Tsumugu Yamaguchi";
   }
 }
 /* 2. PC */
