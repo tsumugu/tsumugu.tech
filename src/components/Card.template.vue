@@ -60,6 +60,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .card {
+  max-width: 760px;
   border-radius: 25px;
   padding: 15px 10px 15px 10px;
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, 0.2);

@@ -653,19 +653,33 @@ label {
   align-self: end;
   margin:10px;
 }
-@media (min-width: 630px) {
+
+#works__cardWrapper {
+  display: grid;
+  width: 100%;
+}
+/* 380pxごとに1つ増やしていく */
+@media (min-width: 1240px) {
   #works__cardWrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
-@media (max-width: 630px) {
+@media (max-width: 1520px) and (min-width: 1140px) {
+  #works__cardWrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1140px) and (min-width: 760px) {
+  #works__cardWrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 760px) {
   #works__cardWrapper {
     display: block;
-    width: 100%;
   }
 }
+
 .show {
   display: block !important;
 }
