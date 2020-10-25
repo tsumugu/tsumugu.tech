@@ -279,7 +279,7 @@ a:hover {
   }
 }
 /* 2. PC */
-@media (max-width: 3000px) and (min-width: 600px) {
+@media (max-width: 1500px) and (min-width: 600px) {
   #top__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");
     background-position: center top;
