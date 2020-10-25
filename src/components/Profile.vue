@@ -596,13 +596,13 @@ export default {
 }
 @media (min-width: 600px) {
   /deep/ .iframe-wrapper > iframe {
-    width: 80%;
+    width: 100%;
   }
   #profile__wrapper__bgimg {
     background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg");
   }
   #profile__wrapper__textwrap__inner__text {
-    width: 80%;
+    max-width: 800px;
   }
   #profile__wrapper__textwrap__inner {
     width: 100%;
