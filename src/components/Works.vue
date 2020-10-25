@@ -653,7 +653,7 @@ label {
   align-self: end;
   margin:10px;
 }
-@media (max-width: 3000px) and (min-width: 630px) {
+@media (min-width: 630px) {
   #works__cardWrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

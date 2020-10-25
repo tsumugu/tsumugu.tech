@@ -594,7 +594,7 @@ export default {
   0% {transform:translateY(-10px)}
   100% {transform:translateY(0px)}
 }
-@media (max-width: 3000px) and (min-width: 600px) {
+@media (min-width: 600px) {
   /deep/ .iframe-wrapper > iframe {
     width: 80%;
   }

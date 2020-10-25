@@ -819,7 +819,12 @@ hr {
 }
 
 @mixin pc {
-  @media (max-width: 3000px) and (min-width: 630px) {
+  @media (min-width: 800px) {
+    @content;
+  }
+}
+@mixin tab {
+  @media (min-width: 630px) and (max-width: 800px) {
     @content;
   }
 }
@@ -863,6 +868,13 @@ hr {
   /deep/ .card {
     margin: 10px 0px 10px 0px;
     display: inline-block;
+  }
+}
+@include tab {
+  #timeline__wrapper {
+    /*display: inline-block;*/
+    width: 70%;
+    margin: 0 auto;
   }
 }
 @include sp {

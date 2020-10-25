@@ -45,11 +45,6 @@ h1, p {
   display: inline-block;
   vertical-align: top;
 }
-#sky-sun {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 10px;
-}
 #yagi {
   padding-left: 10px;
 }
@@ -58,10 +53,5 @@ h1, p {
   height:100%;
   background-color: $notfound-bg;
   z-index: 1;
-}
-@media screen and (max-width: 480px) {
-  #sky-sun {
-    display: none;
-  }
 }
 </style>

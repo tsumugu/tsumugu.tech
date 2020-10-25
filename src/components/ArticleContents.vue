@@ -164,12 +164,12 @@ export default {
   border: 0.5px solid #eaecef;
   height: auto;
 }
-@media (max-width: 3000px) and (min-width: 600px) {
+@media screen and (min-width: 600px) {
   #article-contents >>> img {
     width: 50%;
   }
 }
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
   #article-contents >>> img {
     width: 100%;
   }
