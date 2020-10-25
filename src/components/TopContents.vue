@@ -274,6 +274,7 @@ a:hover {
     background-position: center top;
   }
   #top__wrapper__name {
+    top: 50%;
     width: 100%;
     text-align: right;
   }
