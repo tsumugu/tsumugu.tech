@@ -122,14 +122,12 @@ export default {
 <style scoped>
 >>> #article-contents {
   margin: 10px !important;
-  text-align: center;
 }
 >>> #article-contents-body {
   display: inline-block;
   /* 800pxまでは100%, それより上は800px固定 */
   max-width: 800px;
   width: 100%;
-  text-align: left;
 }
 >>> p {
   font-size: large;

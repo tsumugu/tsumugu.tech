@@ -824,12 +824,12 @@ hr {
   }
 }
 @mixin tab {
-  @media (min-width: 630px) and (max-width: 800px) {
+  @media (max-width: 800px) and (min-width: 500px) {
     @content;
   }
 }
 @mixin sp {
-  @media (max-width: 630px) {
+  @media (max-width: 500px) {
     @content;
   }
 }
@@ -871,10 +871,42 @@ hr {
   }
 }
 @include tab {
+  hr {
+    margin: 8px;
+  }
   #timeline__wrapper {
-    /*display: inline-block;*/
-    width: 70%;
-    margin: 0 auto;
+    max-width: 500px;
+  }
+  #timeline__leftCol {
+    display: none;
+  }
+  #timeline__main__leftLine, .timeline__item__card__circle {
+    display: none;
+  }
+  /deep/ .progressive-image,
+  /deep/ .card__contentsWrapper__buttonWrapper {
+    width: 100%;
+    display: block;
+  }
+  /deep/ .timeline__item__yearAbout,
+  /deep/ .card {
+    width: auto;
+  }
+  /deep/ .timeline__item__yearAbout {
+    display: block;
+    border-radius: 0px 25px 25px 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  /deep/ .timeline__item__yearAbout__contents__img,
+  /deep/ .timeline__item__yearAbout__contents__description{
+    display: block;
+  }
+  /deep/ .card {
+    margin: 0px 10px 0px 10px;
+  }
+  .timeline__item__card__line {
+    display: none;
   }
 }
 @include sp {
@@ -882,7 +914,7 @@ hr {
     margin: 8px;
   }
   #timeline__wrapper {
-  display: block;
+    display: block;
   }
   #timeline__leftCol {
     display: none;
