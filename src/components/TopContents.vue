@@ -269,6 +269,10 @@ a:hover {
 /* レスポンシブ */
 /* 1. 画面の大きなPC */
 @media (min-width: 1500px) {
+  #top__wrapper__bgimg {
+    background-image: url("https://tsumugu.s3-ap-northeast-1.amazonaws.com/TOPPC.jpg");
+    background-position: center top;
+  }
   #top__wrapper__name {
     width: 100%;
     text-align: right;
