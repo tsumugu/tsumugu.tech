@@ -25,6 +25,7 @@
         <button @click="cardButtonEv(item.siteurl, item.id)" class="card__button card__button--read wid50per" v-bind:disabled="!item.isDispReadButton"><font-awesome-icon icon="book-reader" /> 詳しく読む</button>
         <button @click="goToSite(item.siteurl)" class="card__button card__button--gosite wid50per" v-bind:disabled="!item.isDispGotoSiteButton"><font-awesome-icon icon="external-link-alt" /> サイトを開く</button>
       </div>
+      <slot></slot>
     </div>
   </div>
 </template>
