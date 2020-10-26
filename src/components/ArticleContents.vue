@@ -172,37 +172,37 @@ export default {
     width: 100%;
   }
 }
-img >>> .emojione {
+>>> .emojione {
   height: 16px !important;
   width: 16px !important;
   border-style: none !important;
 }
-img >>>  .emojione_h1 {
+>>> .emojione_h1 {
   height: 32px !important;
   width: 32px !important;
   border-style: none !important;
 }
-img >>>  .emojione_h2 {
+>>> .emojione_h2 {
   height: 25px !important;
   width: 25px !important;
   border-style: none !important;
 }
-img >>>  .emojione_h3 {
+>>> .emojione_h3 {
   height: 18px !important;
   width: 18px !important;
   border-style: none !important;
 }
-img >>>  .emojione_h4 {
+>>> .emojione_h4 {
   height: 14px !important;
   width: 14px !important;
   border-style: none !important;
 }
-img >>>  .emojione_h5 {
+>>> .emojione_h5 {
   height: 12px !important;
   width: 12px !important;
   border-style: none !important;
 }
-img >>> .emojione_h6 {
+>>> .emojione_h6 {
   height: 10px !important;
   width: 10px !important;
   border-style: none !important;
