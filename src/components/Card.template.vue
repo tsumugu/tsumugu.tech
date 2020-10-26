@@ -8,11 +8,11 @@
       <div class="card__contentsWrapper__tags">
         <div class="card__contentsWrapper__tags__wrapper" v-show="item.problem!=''||item.targetUser!=''||item.solution!=''">
           <div v-bind:class="{ card__contentsWrapper__tags__wrapper__TaishoKadai: item.targetUser!=''&&item.problem!='' }">
-            <div class="card__tag--green" v-show="item.targetUser!=''"><p class="card__tag__title--green">対象 <font-awesome-icon icon="user" /></p><p class="card__tag__val--green">{{item.targetUser}}</p></div>
-            <div class="card__tag--green" v-show="item.problem!=''"><p class="card__tag__title--green">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card__tag__val--green">{{item.problem}}</p></div>
+            <div class="card__tag--red" v-show="item.targetUser!=''"><p class="card__tag__title--red">対象 <font-awesome-icon icon="user" /></p><p class="card__tag__val--red">{{item.targetUser}}</p></div>
+            <div class="card__tag--red" v-show="item.problem!=''"><p class="card__tag__title--red">課題 <font-awesome-icon icon="sad-tear" /></p><p class="card__tag__val--red">{{item.problem}}</p></div>
           </div>
-          <div class="card__tag__arrow--green" v-show="item.solution!=''" v-bind:class="{ cardTagsArrowMargin: item.targetUser!=''&&item.problem!='' }"><font-awesome-icon icon="arrow-down" size="lg" /></div>
-          <div class="card__tag--green" v-show="item.solution!=''"><p class="card__tag__title--green">解決 <font-awesome-icon icon="grin-beam" /></p><p class="card__tag__val--green">{{item.solution}}</p></div>
+          <div class="card__tag__arrow--red" v-show="item.solution!=''" v-bind:class="{ cardTagsArrowMargin: item.targetUser!=''&&item.problem!='' }"><font-awesome-icon icon="arrow-down" size="lg" /></div>
+          <div class="card__tag--red" v-show="item.solution!=''"><p class="card__tag__title--red">解決 <font-awesome-icon icon="grin-beam" /></p><p class="card__tag__val--red">{{item.solution}}</p></div>
         </div>
         <div class="card__tag--green" v-show="item.whatLearned!=''"><p class="card__tag__title--study">学習 <font-awesome-icon icon="school" /></p><p class="card__tag__val--study">{{item.whatLearned}}</p></div>
         <div class="card__tag" v-show="item.genle!=''"><p class="card__tag__title">環境 <font-awesome-icon icon="mobile-alt" /></p><p class="card__tag__val">{{item.genle}}</p></div>
@@ -92,7 +92,7 @@ export default {
     }
     &__wrapper {
       padding: 10px;
-      border: 2px solid $study-border;
+      border: 2px solid $red-border;
       border-radius: 25px;
     }
   }
@@ -131,6 +131,17 @@ export default {
         color: $white;
         text-align: center;
       }
+      &--red {
+        display: block;
+        width: auto !important;
+        margin: 0;
+        padding: 5px !important;
+        background-color:$red !important;
+        border-radius: 18px 18px 0 0 !important;
+        opacity: 0.75;
+        color: $white;
+        text-align: center;
+      }
     }
     &__val {
       display: inline-block;
@@ -148,6 +159,11 @@ export default {
         width: auto !important;
         text-align: center !important;
       }
+      &--red {
+        display: block !important;
+        width: auto !important;
+        text-align: center !important;
+      }
     }
     &__arrow{
       &--green {
@@ -155,9 +171,18 @@ export default {
         text-align: center;
         color: $study-dark;
       }
+      &--red {
+        margin: 5px;
+        text-align: center;
+        color: $red-dark;
+      }
     }
     &--green {
       border: 2px solid $study-border;
+      border-radius: 25px;
+    }
+    &--red {
+      border: 2px solid $red-border;
       border-radius: 25px;
     }
   }
