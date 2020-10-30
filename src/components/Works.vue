@@ -16,42 +16,11 @@
         </div>
       </div>
     </div>
-    <!--
-    <div id="works__control__fixed">
-      <div id="works__control__fixed__wrapper">
-        <div id="works__control__fixed__wrapper__result">{{searchRes}}件 <input type="text" placeholder="検索" v-model="searchWord"> ｜ <div id="works__control__fixed__wrapper__result__title" v-on:click="filterToggle">絞り込む <span id="works__control__fixed__wrapper__result__title__mark">{{isDispFilterdivMark}}</span></div></div>
-
-        <div id="works__control__fixed__wrapper__filterDiv" v-show="isDispFilterdiv">
-          <div id="works__control__fixed__wrapper__genle">
-            <p class="works__control__fixed__wrapper__checkTitle">プラットフォーム</p>
-            <label for="resetGenle" class="checkbox__reset"><input type="checkbox" id="resetGenle" class="checkbox__input" name="resetGenle" value="resetGenle" v-model="resetGenle"><span class="checkbox__parts">リセット</span></label>
-            <ul>
-              <li v-for="val in genleCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox__input" :name="val.key" :value="val.key" v-model="checkedGenle"><span class="checkbox__parts">{{val.key}}</span></label></li>
-            </ul>
-          </div>
-          <div id="works__control__fixed__wrapper__skill">
-            <p class="works__control__fixed__wrapper__checkTitle">言語</p>
-            <label for="resetSkill" class="checkbox__reset"><input type="checkbox" id="resetSkill" class="checkbox__input" name="resetSkill" value="resetSkill" v-model="resetSkill"><span class="checkbox__parts">リセット</span></label>
-            <ul>
-              <li v-for="val in skillsCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox__input" :name="val.key" :value="val.key" v-model="checkedSkills"><span class="checkbox__parts">{{val.key}}</span></label></li>
-            </ul>
-          </div>
-          <div id="works__control__fixed__wrapper__filter">
-            <p class="works__control__fixed__wrapper__checkTitle">制作年</p>
-            <label for="resetYearCount" class="checkbox__reset"><input type="checkbox" id="resetYearCount" class="checkbox__input" name="resetYearCount" value="resetYearCount" v-model="resetYearCount"><span class="checkbox__parts">リセット</span></label>
-            <ul>
-              <li v-for="val in yearCountFor"><label :for="val.key"><input type="checkbox" :id="val.key" class="checkbox__input" :name="val.key" :value="val.key" v-model="checkedYear"><span class="checkbox__parts">{{val.key}}</span></label></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
     <div id="works__cardWrapper">
-      <Card class="works__cardWrapper__card" v-for="item in itemDivThree" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
-    </div>
-    <div class="works__carefullySelectWrapper">
-      <button name="carefullySelect" class="works__carefullySelectWrapper__button" v-show="checkedIsCarefullySelect"  v-on:click="checkedIsCarefullySelect=!checkedIsCarefullySelect">さらに表示</button>
+      <div v-for='category in itemsInCategories'>
+        <h1>{{category.name}}</h1>
+        <Card class="works__cardWrapper__card" v-for="item in category.items" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
+      </div>
     </div>
   </div>
 </div>
@@ -77,36 +46,6 @@ export default {
       FirebaseDataManager: null,
       chartData: null,
       loading: true,
-      checkedIsCarefullySelect: true,
-      checkedSkills: [],
-      checkedGenle: [],
-      checkedYear: [],
-      searchWord: "",
-      searchRes: 0,
-      cardItems: [],
-      itemDivThree: [],
-      skillsStr: [],
-      skillsCount: [],
-      skillsCountFor: [],
-      genleStr: [],
-      genleCount: [],
-      genleCountFor: [],
-      yearStr: [],
-      yearCount: [],
-      yearCountFor: [],
-      resetGenle: false,
-      resetSkill: false,
-      resetYearCount: false,
-      themeColors: {
-        'web': 'rgba(227, 79, 38, 0.8)',
-        'マイコン': 'rgba(0, 135, 143, 0.8)',
-        'Android': 'rgba(164, 198, 57, 0.8)',
-        'Bot': 'rgba(0, 195, 0, 0.8)',
-        'Unity': 'rgba(34, 44, 55, 0.8)',
-        'oF': 'rgba(51, 51, 51, 0.8)',
-        'iOS': 'rgba(142, 142, 147, 0.8)',
-        'Other': 'rgba(202, 203, 202, 0.8)'
-      },
       cardArticleId: null,
       isShowBottomMenu: false,
       isHideBottomMenu: true,
@@ -114,64 +53,11 @@ export default {
       swipeY: 0,
       supportTouch: false,
       isDispFilterdiv: false,
-      isDispFilterdivMark: "▶"
-    }
-  },
-  watch: {
-    checkedIsCarefullySelect() {
-      this.doCarefullySelect()
-    },
-    checkedSkills() {
-      this.doFiltering()
-    },
-    checkedGenle() {
-      this.doFiltering()
-    },
-    checkedYear() {
-      this.doFiltering()
-    },
-    resetGenle() {
-      if (this.resetGenle) {
-        this.checkedGenle = []
-      } else {
-        this.genleCountFor.forEach((e) => {
-          this.checkedGenle.push(e.key)
-        })
-      }
-    },
-    resetSkill() {
-      if (this.resetSkill) {
-        this.checkedSkills = []
-      } else {
-        this.skillsCountFor.forEach((e) => {
-          this.checkedSkills.push(e.key)
-        })
-      }
-    },
-    resetYearCount() {
-      if (this.resetYearCount) {
-        this.checkedYear = []
-      } else {
-        this.yearCountFor.forEach((e) => {
-          this.checkedYear.push(e.key)
-        })
-      }
-    },
-    searchWord() {
-      this.doFiltering()
-    },
-    isDispFilterdiv() {
-      if (this.isDispFilterdiv) {
-        this.isDispFilterdivMark = "▼"
-      } else {
-        this.isDispFilterdivMark = "▶"
-      }
+      isDispFilterdivMark: "▶",
+      itemsInCategories: []
     }
   },
   methods: {
-    filterToggle() {
-      this.isDispFilterdiv = !this.isDispFilterdiv
-    },
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
@@ -219,121 +105,8 @@ export default {
         this.closeBottomMenu();
       }
     },
-    checkIsSkillIncludes(allLang) {
-      if (allLang==undefined) {
-        return false
-      }
-      var _this = this
-      var res = []
-      allLang.split("/").forEach((element) => {
-        res.push(_this.checkedSkills.includes(element))
-      })
-      return res.includes(true)
-    },
-    doCarefullySelect() {
-      if (this.checkedIsCarefullySelect) {
-        this.divideThree(this.cardItems.filter(doc => (doc.problem != null&&doc.problem != "")))
-      } else {
-        this.divideThree(this.cardItems)
-      }
-    },
-    doFiltering() {
-      if (!this.checkedIsCarefullySelect) {
-        this.divideThree(this.cardItems.filter(doc =>
-          this.checkedGenle.includes(doc.genle)
-          && this.checkedYear.includes(String(doc.madeYear))
-          && this.checkIsSkillIncludes(doc.allLang)
-          && (doc.title+doc.kdwr+doc.description).indexOf(this.searchWord) != -1
-        ))
-      }
-    },
-    dispChart(list) {
-      var genleList = []
-      list.forEach(element => {
-        var currntCount = genleList[element.genle]
-        if (currntCount == undefined) {
-          currntCount = 1
-        } else {
-          currntCount += 1
-        }
-        genleList[element.genle] = currntCount
-      })
-      var labels = []
-      var data = []
-      var bgColor = []
-      var genleListSorted = []
-      for(let k of Object.keys(this.themeColors)) {
-        var ck = k=="oF" ? "openFrameworks" : k
-        genleListSorted[ck] = genleList[ck]
-      }
-      for(let k of Object.keys(genleListSorted)) {
-        var ck = k=="openFrameworks" ? "oF" : k
-        labels.push(ck)
-        data.push(genleList[k])
-        bgColor.push(this.themeColors[ck])
-      }
-      this.chartData = {
-        labels: labels,
-        datasets: [
-          {
-            data: data,
-            backgroundColor: bgColor,
-            borderColor: 'transparent'
-          }
-        ]
-      }
-      //
-    },
-    divideThree(list) {
-      this.dispChart(list)
-      this.itemDivThree = list
-      this.searchRes = list.length
-    },
-    renameAndMakeArray(arg) {
-      if (arg==undefined) {
-        return undefined
-      }
-      var retArray = []
-      var renameDicObj = {
-        "html": "HTML",
-        "javascript": "JavaScript",
-        "css": "CSS",
-        "php": "PHP",
-        "java": "Java",
-        "swift": "Swift",
-        "python": "Python",
-        "c sharp": "C#",
-        "c plus plus": "C++",
-
-        "web": "web",
-        "android": "Android",
-        "ios": "iOS",
-        "line bot": "Bot",
-        "openframeworks": "openFrameworks",
-        "vue.js": "Vue.js",
-        "マイコン": "マイコン",
-        "unity": "Unity",
-      }
-      arg.split(",").forEach((el) => {
-        var elSmall = decodeURI(el.toLowerCase())
-        var renamedEl = renameDicObj[elSmall]
-        if (renamedEl != undefined) {
-          retArray.push(renamedEl)
-        }
-      })
-      return retArray
-    },
     getItems() {
       var _this = this
-      this.cardItems = []
-      this.skillsStr = []
-      this.skillsCount = []
-      this.genleStr = []
-      this.genleCount = []
-      this.genleCountFor = []
-      this.yearStr = []
-      this.yearCount = []
-      this.yearCountFor = []
       this.FirebaseDataManager.get('Works').then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
@@ -361,95 +134,17 @@ export default {
             'isDispArticle': doc.data().isDispArticle,
             'isDispReadButton': isDispRead
           }
-          if (doc.data().allLang != undefined) {
-            doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
-          }
-          _this.genleStr.push(doc.data().genle)
-          _this.yearStr.push(doc.data().madeYear)
-          _this.cardItems.push(docVal)
+          _this.itemsInCategories[doc.data()["works-genle"]].items.push(docVal)
         })
-        // sort cardItems
-        var important = _this.cardItems.filter(doc => (doc.problem != null&&doc.problem != ""))
-        var notImportant = _this.cardItems.filter(doc => (doc.problem == null||doc.problem == ""))
-        _this.cardItems = important.concat(notImportant)
-        //
-        _this.doCarefullySelect()
-        //
-        _this.skillsStr.forEach(element => {
-          var currntCount = _this.skillsCount[element]
-          if (currntCount == undefined) {
-            currntCount = 1
-          } else {
-            currntCount += 1
-          }
-          _this.skillsCount[element] = currntCount
-        })
-        _this.genleStr.forEach(element => {
-          var currntCount = _this.genleCount[element]
-          if (currntCount == undefined) {
-            currntCount = 1
-          } else {
-            currntCount += 1
-          }
-          _this.genleCount[element] = currntCount
-        })
-        Object.keys(_this.skillsCount).forEach(function(key) {
-          _this.skillsCountFor.push({"key": key, "count": _this.skillsCount[key]})
-          _this.checkedSkills.push(key)
-        })
-        _this.skillsCountFor.sort(function(a,b){
-          var aa = a.count;
-          var bb = b.count;
-          if(aa > bb){return -1;}
-          if(aa < bb){return 1;}
-          return 0;
-        })
-        Object.keys(_this.genleCount).forEach(function(key) {
-          _this.genleCountFor.push({"key": key, "count": _this.genleCount[key]})
-          _this.checkedGenle.push(key)
-        })
-        _this.genleCountFor.sort(function(a,b){
-          var aa = a.count;
-          var bb = b.count;
-          if(aa > bb){return -1;}
-          if(aa < bb){return 1;}
-          return 0;
-        })
-        _this.yearStr.forEach(element => {
-          var currntCount = _this.yearCount[element]
-          if (currntCount == undefined) {
-            currntCount = 1
-          } else {
-            currntCount += 1
-          }
-          _this.yearCount[element] = currntCount
-        })
-        Object.keys(_this.yearCount).forEach(function(key) {
-          _this.yearCountFor.push({"key": key, "count": _this.yearCount[key]})
-          _this.checkedYear.push(key)
-        })
-        _this.yearCountFor.sort(function(a,b){
-          var aa = a.key;
-          var bb = b.key;
-          if(aa > bb){return 1;}
-          if(aa < bb){return -1;}
-          return 0;
-        })
-        // Set Checked
-        var querySkills = this.$route.query.lang
-        var queryGenle = this.$route.query.pf
-        if (querySkills != undefined) {
-          this.checkedSkills = this.renameAndMakeArray(querySkills)
-        }
-        if (queryGenle != undefined) {
-          this.checkedGenle = this.renameAndMakeArray(queryGenle)
-        }
+        this.itemsInCategories = Object.assign({}, _this.itemsInCategories);
         //
         setTimeout(() => {
           this.windowResizedHandler()
         }, 500)
         //
         this.loading = false
+
+        console.log(_this.itemsInCategories)
       })
       .catch(function(error) {
         //onError
@@ -457,12 +152,23 @@ export default {
         alert("情報の取得に失敗しました。再読み込みしてください")
       })
     },
-    windowResizedHandler() {
-      // #works__control__fixedのHeightを(#works__cardWrapperのpadding-top)+10に変える
-      var e = document.getElementById('works__control__fixed')
-      var rect = e.getBoundingClientRect()
-      var height = rect.height
-      document.getElementById('works__cardWrapper').style.padding = height+"px 0 0 0"
+    getCategories() {
+      var _this = this
+      this.FirebaseDataManager.get('works-genle').then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var id = doc.id
+          var name = doc.data().name
+          var order = doc.data().order
+
+          _this.itemsInCategories[id] = {id: id, name: name, order:order, items: []}
+        })
+        _this.getItems()
+      })
+      .catch(function(error) {
+        //onError
+        console.log(error)
+        alert("情報の取得に失敗しました。再読み込みしてください")
+      })
     }
   },
   mounted() {
@@ -471,7 +177,7 @@ export default {
     if (this.FirebaseDataManager == null) {
       this.FirebaseDataManager = new FDM(firebase)
     }
-    this.getItems()
+    this.getCategories()
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
       var bottommenuswipe = this.$refs.bottommenuswipe
@@ -655,29 +361,8 @@ label {
 }
 
 #works__cardWrapper {
-  display: grid;
+  display: block;
   width: 100%;
-}
-/* 380pxごとに1つ増やしていく */
-@media (min-width: 1240px) {
-  #works__cardWrapper {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-@media (max-width: 1520px) and (min-width: 1140px) {
-  #works__cardWrapper {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 1140px) and (min-width: 760px) {
-  #works__cardWrapper {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 760px) {
-  #works__cardWrapper {
-    display: block;
-  }
 }
 
 .show {
