@@ -793,7 +793,6 @@ hr {
 }
 .colBase > .timeline__item__year__circle {
   border: 1px solid $tl-circle-bg;
-  opacity: 0.7;
 }
 #article {
   height: 100%;
@@ -894,7 +893,7 @@ hr {
     /*display: inline-block;*/
     width: 100%;
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 35% 1fr;
   }
   /deep/ .card__contentsWrapper,
   /deep/ .timeline__item__yearAbout__contents {
