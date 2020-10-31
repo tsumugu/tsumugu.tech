@@ -11,17 +11,16 @@
           <div id="works__bottomMenu__contents">
             <button id="works__bottomMenu__contents__button" @click="closeBottomMenu()" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
             <div id="works__bottomMenu__swipeBar" ref="bottommenuswipe" v-show="supportTouch"><span id="works__bottomMenu__swipeBarInner"></span></div>
-            <ArticleContents :cardArticleId="cardArticleId" :isDispEdit=false :isLogin=false></ArticleContents>
+            <div id="works__bottomMenu__contents__cards">
+              <Card v-for="item in inBottomMenuItems" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div id="works__cardWrapper">
       <div v-for='category in itemsInCategories'>
-        <h1 id="works__cardWrapper__h1title">{{category.name}} ({{Object.keys(category.items).length}})</h1>
-        <div id="works__cardWrapper__slide">
-          <Card id="works__cardWrapper__card" v-for="item in category.items" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
-        </div>
+        <h1 id="works__cardWrapper__h1title" v-on:click="openBottomMenu(category.items)">{{category.name}} ({{Object.keys(category.items).length}})</h1>
       </div>
     </div>
   </div>
@@ -56,15 +55,17 @@ export default {
       supportTouch: false,
       isDispFilterdiv: false,
       isDispFilterdivMark: "▶",
-      itemsInCategories: []
+      itemsInCategories: [],
+      inBottomMenuItems: []
     }
   },
   methods: {
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
-      this.cardArticleId = articleId
-      this.openBottomMenu()
+
+      var routePath = "https://tsumugu.tech/Article/"+articleId
+      window.open(routePath)
     },
     goToSite(siteUrl) {
       window.open(siteUrl);
@@ -72,10 +73,11 @@ export default {
     oepnEdit(articleId) {
       window.open("https://tsumugu.tech/edit/"+articleId);
     },
-    openBottomMenu() {
+    openBottomMenu(item) {
       this.isShowBottomMenu = true
       this.isShowBottomMenuInner = true
       this.isHideBottomMenu = false
+      this.inBottomMenuItems = item
     },
     closeBottomMenu() {
       this.isShowBottomMenuInner = false
@@ -212,12 +214,14 @@ label {
 }
 
 #works {
-  height: 100%;
-  overflow: scroll;
   color: $normal-text;
   background-color: $works-background;
   &__loading {
     position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  &__wrapper {
     width: 100%;
     height: 100%;
   }
@@ -251,6 +255,10 @@ label {
   &__contents {
     height: 90%;
     margin: 15px;
+    &__cards {
+      height: 100%;
+      overflow: auto;
+    }
   }
   &__contents__button {
     background-color:transparent;
@@ -362,6 +370,8 @@ label {
 .card {
   width: 30%;
   display: inline-block;
+  margin: 10px;
+  border: 1px solid $card-border;
 }
 
 #works__cardWrapper {
@@ -373,6 +383,7 @@ label {
   }
   &__h1title {
     margin: 15px 0 0 0;
+    cursor: pointer;
   }
   &__slide {
     overflow: scroll;
