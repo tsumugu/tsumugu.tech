@@ -27,6 +27,9 @@
         </div>
       </div>
     </div>
+    <div id="timeline__importantToggleButton">
+      <input type="checkbox" v-model="isShowNotImportant">
+    </div>
     <!-- main sec -->
     <div id="timeline__main">
       <div id="timeline__main__leftLine"></div>
@@ -98,6 +101,7 @@ export default {
       isShowBottomMenu: false,
       isHideBottomMenu: true,
       isShowBottomMenuInner: false,
+      isShowNotImportant: false,
       cardSiteUrl: null,
       cardArticleId: null,
       isDispEdit: false,
@@ -113,7 +117,35 @@ export default {
       tlLeftAboutDescription: null
     }
   },
+  watch: {
+    isShowNotImportant() {
+      // TL再描画
+      this.drawTL()
+      //スクロールをトップに飛ばす
+      document.getElementById("app").scrollTop = 0
+    }
+  },
   methods: {
+    resetVal() {
+      this.items = []
+      this.itemCount = 0
+      this.colBase = null
+      this.colChild = null
+      this.colChildNow = null
+      this.colChildNowIndex = 0
+      this.colChildBefore = null
+      this.cardCol = null
+      this.cardColNow = null
+      this.colCounter = 0
+      this.cardColCounter = 0
+      this.aboutCol = null
+      this.beforeDispYear = 0
+      this.tlLeftColInner = null
+      this.tlLeftAboutThumbnail = null
+      this.tlLeftAboutTitle = null
+      this.tlLeftAboutYear = null
+      this.tlLeftAboutDescription = null
+    },
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
@@ -320,7 +352,8 @@ export default {
     },
     drawTL() {
       var _this = this
-      this.items = []
+
+      this.resetVal()
 
       //Get Deta from Firebase
       var querySnapshotArr = []
@@ -350,7 +383,7 @@ export default {
       var getWorks = new Promise(function(resolve, reject) {
         _this.FirebaseDataManager.get('Works').then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            querySnapshotArr.push({
+            var docvallist = {
               'id': doc.id,
               'thumbnail': doc.data().thumbnail,
               'title': doc.data().title,
@@ -366,7 +399,17 @@ export default {
               'problem': doc.data().problem,
               'targetUser': doc.data().targetUser,
               'isDispReadButton': doc.data().isDispReadButton
-            })
+            }
+            // 絞り込み
+            if (_this.isShowNotImportant) {
+              // 全部表示
+              querySnapshotArr.push(docvallist)
+            } else {
+              // 一部表示
+              if (doc.data().isDispArticle) {
+                querySnapshotArr.push(docvallist)
+              }
+            }
           })
           _this.itemCount = querySnapshot.size
           resolve();
@@ -633,6 +676,10 @@ hr {
     position: fixed;
     width: 100%;
     height: 100%;
+  }
+  &__importantToggleButton {
+    position: absolute;
+    z-index:5;
   }
   &__leftCol__wrapper {
     display: inline-block;
