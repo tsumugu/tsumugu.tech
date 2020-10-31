@@ -18,8 +18,10 @@
     </div>
     <div id="works__cardWrapper">
       <div v-for='category in itemsInCategories'>
-        <h1>{{category.name}}</h1>
-        <Card class="works__cardWrapper__card" v-for="item in category.items" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispEdit=false :isLogin=false></Card>
+        <h1 id="works__cardWrapper__h1title">{{category.name}} ({{Object.keys(category.items).length}})</h1>
+        <div id="works__cardWrapper__slide">
+          <Card id="works__cardWrapper__card" v-for="item in category.items" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
+        </div>
       </div>
     </div>
   </div>
@@ -136,15 +138,16 @@ export default {
           }
           _this.itemsInCategories[doc.data()["works-genle"]].items.push(docVal)
         })
-        this.itemsInCategories = Object.assign({}, _this.itemsInCategories);
-        //
-        setTimeout(() => {
-          this.windowResizedHandler()
-        }, 500)
-        //
+        //oeder要素でsort
+        _this.itemsInCategories.sort(function(a,b){
+          var aa = a.order;
+          var bb = b.order;
+          if(aa < bb){return -1;}
+          if(aa > bb){return 1;}
+          return 0;
+        })
+        this.itemsInCategories = Object.assign({}, _this.itemsInCategories)
         this.loading = false
-
-        console.log(_this.itemsInCategories)
       })
       .catch(function(error) {
         //onError
@@ -162,6 +165,7 @@ export default {
 
           _this.itemsInCategories[id] = {id: id, name: name, order:order, items: []}
         })
+
         _this.getItems()
       })
       .catch(function(error) {
@@ -355,14 +359,25 @@ label {
   overflow: scroll;
 }
 
-.works__cardWrapper__card {
-  align-self: end;
-  margin:10px;
+.card {
+  width: 30%;
+  display: inline-block;
 }
 
 #works__cardWrapper {
-  display: block;
-  width: 100%;
+  padding: 0 15px 15px 15px;
+  &__card {
+    display: inline-block;
+    align-self: end;
+    margin:10px;
+  }
+  &__h1title {
+    margin: 15px 0 0 0;
+  }
+  &__slide {
+    overflow: scroll;
+    white-space: nowrap;
+  }
 }
 
 .show {
