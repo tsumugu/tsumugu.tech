@@ -20,9 +20,12 @@
     <!-- left sec -->
     <div id="timeline__leftCol">
       <div id="timeline__leftCol__wrapper" ref="tlLeftColInner">
-        <img v-show="tlLeftAboutThumbnail!=null" id="timeline__leftCol__wrapper__img" v-bind:src="tlLeftAboutThumbnail" />
         <div id="timeline__leftCol__wrapper__inner">
-          <h2 id="timeline__leftCol__wrapper__inner__title" v-show="tlLeftAboutYear!=undefined&&tlLeftAboutTitle!=undefined">{{tlLeftAboutYear}} / {{tlLeftAboutTitle}}</h2>
+          <div id="timeline__leftCol__wrapper__inner__titleWrapper">
+            <p id="timeline__leftCol__wrapper__inner__titleWrapper__title" v-show="tlLeftAboutYear!=undefined&&tlLeftAboutTitle!=undefined">{{tlLeftAboutYear}}</p>
+            <p id="timeline__leftCol__wrapper__inner__titleWrapper__subtitle" v-show="tlLeftAboutYear!=undefined&&tlLeftAboutTitle!=undefined">{{tlLeftAboutTitle}}</p>
+          </div>
+          <img v-show="tlLeftAboutThumbnail!=null" id="timeline__leftCol__wrapper__inner__img" v-bind:src="tlLeftAboutThumbnail" />
           <div id="timeline__leftCol__wrapper__inner__description" v-html="tlLeftAboutDescription"></div>
         </div>
       </div>
@@ -667,7 +670,7 @@ hr {
     }
   }
 }
-#timeline {
+/deep/ #timeline {
   width: 100%;
   height: auto;
   color: $normal-text;
@@ -689,17 +692,29 @@ hr {
     background-color: $card-border;
     overflow: scroll;
     &__inner {
-      padding: 15px;
-      padding-top: 0;
-      &__title {
-        margin: 5px;
+      &__titleWrapper {
+        margin: 10px;
+        &__title {
+          display: inline-block;
+          margin: 15px;
+          font-size: 3rem;
+        }
+        &__subtitle {
+          display: inline-block;
+          margin: 0;
+          font-size: 1.5rem;
+        }
       }
       &__description {
-        margin: 5px;
+        margin: 5px 25px 25px 25px;
+        font-size: 1.25rem;
+        > h3 {
+          margin: 0;
+        }
       }
-    }
-    &__img {
-      width: 100%;
+      &__img {
+        width: 100%;
+      }
     }
   }
   &__main {
