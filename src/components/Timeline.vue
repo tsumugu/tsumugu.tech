@@ -31,7 +31,12 @@
       </div>
     </div>
     <div id="timeline__importantToggleButton">
-      <input type="checkbox" v-model="isShowNotImportant">
+      <!-- 仮 -->
+      <div id="switchArea">
+        <input type="checkbox" id="switch1" v-model="isShowNotImportant">
+        <label for="switch1"><span></span></label>
+        <div id="swImg"></div>
+      </div>
     </div>
     <!-- main sec -->
     <div id="timeline__main">
@@ -618,6 +623,53 @@ hr {
   position: relative;
 }
 
+/deep/ #switchArea {
+  line-height: 60px;
+  letter-spacing: 0;
+  text-align: center;
+  font-size: 27px;
+  position: relative;
+  margin: auto;
+  width: 150px;
+  background: #fff;
+  input[type="checkbox"] {
+    display: none;
+  }
+  label {
+    display: block;
+    box-sizing: border-box;
+    height: 60px;
+    border: 2px solid #999999;
+    border-radius: 30px;
+  }
+  input[type="checkbox"]:checked +label {
+    border-color: #78bd78;
+  }
+  label span:after{
+    content: "短縮";
+    padding: 0 0 0 36px;
+    color: #999999;
+  }
+  input[type="checkbox"]:checked + label span:after{
+    content: "フル";
+    padding: 0 36px 0 0;
+    color: #78bd78;
+  }
+  #swImg {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    background: #999999;
+    top: 4px;
+    left: 4px;
+    border-radius: 26px;
+    transition: .2s;
+  }
+  input[type="checkbox"]:checked ~ #swImg {
+    transform: translateX(90px);
+    background: #78bd78;
+  }
+}
 #timeline__bottomMenu {
   position: fixed;
   display: none;
