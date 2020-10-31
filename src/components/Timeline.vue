@@ -693,7 +693,9 @@ hr {
     overflow: scroll;
     &__inner {
       &__titleWrapper {
+        /*
         margin: 10px;
+        */
         &__title {
           display: inline-block;
           margin: 15px;
@@ -928,6 +930,7 @@ hr {
   }
   /deep/ .card {
     margin: 10px 0px 10px 0px;
+    border: 1px solid $card-border;
     display: inline-block;
   }
 }
@@ -965,6 +968,7 @@ hr {
   }
   /deep/ .card {
     margin: 0px 10px 0px 10px;
+    border: 1px solid $card-border;
   }
   .timeline__item__card__line {
     display: none;
@@ -1004,6 +1008,7 @@ hr {
   }
   /deep/ .card {
     margin: 0px 10px 0px 10px;
+    border: 1px solid $card-border;
   }
   .timeline__item__card__line {
     display: none;
