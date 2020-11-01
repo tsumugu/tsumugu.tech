@@ -214,6 +214,7 @@ label {
 }
 
 #works {
+  height: 100%;
   color: $normal-text;
   background-color: $works-background;
   &__loading {
@@ -224,6 +225,22 @@ label {
   &__wrapper {
     width: 100%;
     height: 100%;
+  }
+  &__cardWrapper {
+    padding: 0 15px 15px 15px;
+    &__card {
+      display: inline-block;
+      align-self: end;
+      margin:10px;
+    }
+    &__h1title {
+      margin: 0;
+      cursor: pointer;
+    }
+    &__slide {
+      overflow: scroll;
+      white-space: nowrap;
+    }
   }
 }
 #works__bottomMenu {
@@ -283,111 +300,49 @@ label {
   }
 }
 
-.checkbox {
-  &__reset {
-    display: inline-block;
-  }
-  &__input {
-    display: none;
-  }
-  &__parts {
-    color: $white;
-    background-color: $works-main;
-    border-radius: 5px;
-    padding: 5px;
-    opacity: 0.3;
-  }
-}
-.checkbox__reset > .checkbox__parts {
-  padding: 0;
-}
-.checkbox__input:checked + .checkbox__parts {
-  opacity: 1;
-}
-
-#works__control__fixed {
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  width: 100%;
-  &__wrapper {
-    margin: 10px;
-    padding: 20px;
-    background-color: $card-border;
-    user-select: none;
-    box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
-    box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);
-    border-radius: 25px;
-  }
-  &__wrapper__filterDiv {
-    padding-left: 1.5rem;
-  }
-  &__wrapper__result {
-    font-size: 1.3rem;
-    &__title {
-      display: inline-block;
-      margin: 0;
-      cursor: pointer;
-      &__mark {
-        display: inline-block;
-        margin: 0;
-        cursor: pointer;
-        color: $works-main;
-      }
-    }
-  }
-}
-.works__control__fixed__wrapper__checkTitle {
-  display: inline-block;
-  margin: 0;
-  font-size: 1.35rem;
-}
-
-.works__carefullySelectWrapper {
-  text-align: center;
-  &__button {
-    display: inline;
-    width: 80%;
-    height: 50px;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    border-radius: 25px;
-    background-color: $works-main;
-    color: $white;
-    font-size: large;
-    margin-bottom: 10px;
-  }
-}
-
-#article {
-  height: 100%;
-  overflow: scroll;
-}
-
 .card {
-  width: 30%;
+  max-width: 760px;
   display: inline-block;
   margin: 10px;
   border: 1px solid $card-border;
 }
 
-#works__cardWrapper {
-  padding: 0 15px 15px 15px;
-  &__card {
-    display: inline-block;
-    align-self: end;
-    margin:10px;
+.progressive-image {
+  max-width: auto !important;
+}
+@mixin pc {
+  @media (min-width: 800px) {
+    @content;
   }
-  &__h1title {
-    margin: 15px 0 0 0;
-    cursor: pointer;
+}
+@mixin tab {
+  @media (max-width: 800px) and (min-width: 500px) {
+    @content;
   }
-  &__slide {
-    overflow: scroll;
-    white-space: nowrap;
+}
+@mixin sp {
+  @media (max-width: 500px) {
+    @content;
+  }
+}
+@include pc {
+  /deep/ .progressive-image,
+  /deep/ .card__contentsWrapper {
+    width: 450px;
+  }
+}
+@include tab {
+  /deep/ .progressive-image,
+  /deep/ .card__contentsWrapper {
+    width: 100%;
+    display: block;
+  }
+}
+@include sp {
+  /deep/ .progressive-image,
+  /deep/ .card__contentsWrapper {
+    width: 100%;
+    display: block;
   }
 }
 
