@@ -741,6 +741,8 @@ hr {
         &__title {
           display: inline-block;
           margin: 15px;
+          font-family: 'Roboto', sans-serif;
+          font-weight: 100;
           font-size: 3rem;
         }
         &__subtitle {
@@ -830,6 +832,8 @@ hr {
     margin-bottom: 10px;
     z-index: 2;
     &__text {
+      font-family: 'Roboto', sans-serif !important;
+      font-weight: 100;
       font-size: x-large;
       color: $white;
     }
