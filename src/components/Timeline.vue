@@ -49,6 +49,7 @@
             <div class="timeline__item__yearAbout__contents">
               <progressive-img class="timeline__item__yearAbout__contents__img" v-bind:class="{hide: item.thumbnail==null}" v-bind:data-src="item.thumbnail" v-bind:src="item.thumbnail" />
               <h2 class="timeline__item__yearAbout__contents__title">{{item.title}}</h2>
+              <h3 class="timeline__item__yearAbout__contents__subtitle" v-show="item.title != item.subtitle">{{item.subtitle}}</h3>
               <div class="timeline__item__yearAbout__contents__description" v-html="item.description"></div>
             </div>
           </div>
@@ -283,7 +284,7 @@ export default {
     getAboutContents(year) {
       var node = this.aboutCol[this.colChildNowIndex]
       var src = this.getAttribute(node.getElementsByClassName('timeline__item__yearAbout__contents__img')[0], 'data-src')
-      var title = node.getElementsByClassName('timeline__item__yearAbout__contents__title')[0].innerText
+      var title = node.getElementsByClassName('timeline__item__yearAbout__contents__subtitle')[0].innerText
       var description = node.getElementsByClassName('timeline__item__yearAbout__contents__description')[0].innerHTML
       this.setTlLeftAboutText(src, year, title, description)
     },
@@ -370,6 +371,7 @@ export default {
       var getAbout = new Promise(function(resolve, reject) {
         _this.FirebaseDataManager.get('about').then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
+            var subtitle = (doc.data().subtitle === undefined) ? doc.data().title : doc.data().subtitle
             querySnapshotArr.push({
               'isSkelton': false,
               'isEnd': false,
@@ -379,6 +381,7 @@ export default {
               'madeYear': doc.data().year,
               'thumbnail': doc.data().imgUrl,
               'title': doc.data().title,
+              'subtitle': subtitle,
               'description': doc.data().des
             })
           })
@@ -513,6 +516,7 @@ export default {
               'madeDay': docData.madeDay,
               'thumbnail': docData.thumbnail,
               'title': docData.title,
+              'subtitle': docData.subtitle,
               'description': docData.description
             }
             _this.items.push(data)
@@ -974,6 +978,7 @@ hr {
     padding: 10px 20px 10px 10px;
   }
   /deep/ .timeline__item__yearAbout__contents__img,
+  /deep/ .timeline__item__yearAbout__contents__subtitle,
   /deep/ .timeline__item__yearAbout__contents__description{
     display: none;
   }
@@ -1012,6 +1017,7 @@ hr {
     margin-right: 10px;
   }
   /deep/ .timeline__item__yearAbout__contents__img,
+  /deep/ .timeline__item__yearAbout__contents__subtitle,
   /deep/ .timeline__item__yearAbout__contents__description{
     display: block;
   }
@@ -1052,6 +1058,7 @@ hr {
     margin-right: 10px;
   }
   /deep/ .timeline__item__yearAbout__contents__img,
+  /deep/ .timeline__item__yearAbout__contents__subtitle,
   /deep/ .timeline__item__yearAbout__contents__description{
     display: block;
   }
