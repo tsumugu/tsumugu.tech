@@ -78,7 +78,6 @@ export default {
     border: 1px solid $card-border;
   }
   &__contentsWrapper__title {
-  // u m s h
     margin: 0 5px 15px 5px;
     white-space: normal;
   }

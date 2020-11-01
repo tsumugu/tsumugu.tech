@@ -11,17 +11,17 @@
           <div id="works__bottomMenu__contents">
             <button id="works__bottomMenu__contents__button" @click="closeBottomMenu()" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
             <div id="works__bottomMenu__swipeBar" ref="bottommenuswipe" v-show="supportTouch"><span id="works__bottomMenu__swipeBarInner"></span></div>
-            <div id="works__bottomMenu__contents__cards">
-              <Card v-for="item in inBottomMenuItems" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
-            </div>
+            <ArticleContents :cardArticleId="cardArticleId" :isDispEdit=false :isLogin=false></ArticleContents>
           </div>
         </div>
       </div>
     </div>
+    <div id="works__wrapper__titles">
+      <p id="works__wrapper__titles__title">Works</p>
+      <p id="works__wrapper__titles__description">数ある作品の中から重要なものを厳選</p>
+    </div>
     <div id="works__cardWrapper">
-      <div v-for='category in itemsInCategories'>
-        <h1 id="works__cardWrapper__h1title" v-on:click="openBottomMenu(category.items)">{{category.name}} ({{Object.keys(category.items).length}})</h1>
-      </div>
+      <Card class="works__cardWrapper__card" v-for="item in cardItems" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
     </div>
   </div>
 </div>
@@ -47,6 +47,36 @@ export default {
       FirebaseDataManager: null,
       chartData: null,
       loading: true,
+      checkedIsCarefullySelect: true,
+      checkedSkills: [],
+      checkedGenle: [],
+      checkedYear: [],
+      searchWord: "",
+      searchRes: 0,
+      cardItems: [],
+      itemDivThree: [],
+      skillsStr: [],
+      skillsCount: [],
+      skillsCountFor: [],
+      genleStr: [],
+      genleCount: [],
+      genleCountFor: [],
+      yearStr: [],
+      yearCount: [],
+      yearCountFor: [],
+      resetGenle: false,
+      resetSkill: false,
+      resetYearCount: false,
+      themeColors: {
+        'web': 'rgba(227, 79, 38, 0.8)',
+        'マイコン': 'rgba(0, 135, 143, 0.8)',
+        'Android': 'rgba(164, 198, 57, 0.8)',
+        'Bot': 'rgba(0, 195, 0, 0.8)',
+        'Unity': 'rgba(34, 44, 55, 0.8)',
+        'oF': 'rgba(51, 51, 51, 0.8)',
+        'iOS': 'rgba(142, 142, 147, 0.8)',
+        'Other': 'rgba(202, 203, 202, 0.8)'
+      },
       cardArticleId: null,
       isShowBottomMenu: false,
       isHideBottomMenu: true,
@@ -54,18 +84,66 @@ export default {
       swipeY: 0,
       supportTouch: false,
       isDispFilterdiv: false,
-      isDispFilterdivMark: "▶",
-      itemsInCategories: [],
-      inBottomMenuItems: []
+      isDispFilterdivMark: "▶"
+    }
+  },
+  watch: {
+    checkedIsCarefullySelect() {
+      this.doCarefullySelect()
+    },
+    checkedSkills() {
+      this.doFiltering()
+    },
+    checkedGenle() {
+      this.doFiltering()
+    },
+    checkedYear() {
+      this.doFiltering()
+    },
+    resetGenle() {
+      if (this.resetGenle) {
+        this.checkedGenle = []
+      } else {
+        this.genleCountFor.forEach((e) => {
+          this.checkedGenle.push(e.key)
+        })
+      }
+    },
+    resetSkill() {
+      if (this.resetSkill) {
+        this.checkedSkills = []
+      } else {
+        this.skillsCountFor.forEach((e) => {
+          this.checkedSkills.push(e.key)
+        })
+      }
+    },
+    resetYearCount() {
+      if (this.resetYearCount) {
+        this.checkedYear = []
+      } else {
+        this.yearCountFor.forEach((e) => {
+          this.checkedYear.push(e.key)
+        })
+      }
+    },
+    searchWord() {
+      this.doFiltering()
+    },
+    isDispFilterdiv() {
+      if (this.isDispFilterdiv) {
+        this.isDispFilterdivMark = "▼"
+      } else {
+        this.isDispFilterdivMark = "▶"
+      }
     }
   },
   methods: {
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
-
-      var routePath = "https://tsumugu.tech/Article/"+articleId
-      window.open(routePath)
+      this.cardArticleId = articleId
+      this.openBottomMenu()
     },
     goToSite(siteUrl) {
       window.open(siteUrl);
@@ -73,11 +151,10 @@ export default {
     oepnEdit(articleId) {
       window.open("https://tsumugu.tech/edit/"+articleId);
     },
-    openBottomMenu(item) {
+    openBottomMenu() {
       this.isShowBottomMenu = true
       this.isShowBottomMenuInner = true
       this.isHideBottomMenu = false
-      this.inBottomMenuItems = item
     },
     closeBottomMenu() {
       this.isShowBottomMenuInner = false
@@ -111,6 +188,7 @@ export default {
     },
     getItems() {
       var _this = this
+      this.cardItems = []
       this.FirebaseDataManager.get('Works').then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
@@ -138,21 +216,17 @@ export default {
             'isDispArticle': doc.data().isDispArticle,
             'isDispReadButton': isDispRead
           }
-          //
-          doc.data()["works-genle"].toString(10).split(".").forEach((i) => {
-            _this.itemsInCategories[i].items.push(docVal)
-          })
-          //
+          if (doc.data().allLang != undefined) {
+            doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
+          }
+          if (doc.data().isDispArticle) {
+            _this.cardItems.push(docVal)
+          }
         })
-        //oeder要素でsort
-        _this.itemsInCategories.sort(function(a,b){
-          var aa = a.order;
-          var bb = b.order;
-          if(aa < bb){return -1;}
-          if(aa > bb){return 1;}
-          return 0;
-        })
-        this.itemsInCategories = Object.assign({}, _this.itemsInCategories)
+        setTimeout(() => {
+          this.windowResizedHandler()
+        }, 500)
+        //
         this.loading = false
       })
       .catch(function(error) {
@@ -161,24 +235,12 @@ export default {
         alert("情報の取得に失敗しました。再読み込みしてください")
       })
     },
-    getCategories() {
-      var _this = this
-      this.FirebaseDataManager.get('works-genle').then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var id = doc.id
-          var name = doc.data().name
-          var order = doc.data().order
-
-          _this.itemsInCategories[id] = {id: id, name: name, order:order, items: []}
-        })
-
-        _this.getItems()
-      })
-      .catch(function(error) {
-        //onError
-        console.log(error)
-        alert("情報の取得に失敗しました。再読み込みしてください")
-      })
+    windowResizedHandler() {
+      // #works__control__fixedのHeightを(#works__cardWrapperのpadding-top)+10に変える
+      var e = document.getElementById('works__control__fixed')
+      var rect = e.getBoundingClientRect()
+      var height = rect.height
+      document.getElementById('works__cardWrapper').style.padding = height+"px 0 0 0"
     }
   },
   mounted() {
@@ -187,7 +249,7 @@ export default {
     if (this.FirebaseDataManager == null) {
       this.FirebaseDataManager = new FDM(firebase)
     }
-    this.getCategories()
+    this.getItems()
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
       var bottommenuswipe = this.$refs.bottommenuswipe
@@ -219,6 +281,7 @@ label {
 
 #works {
   height: 100%;
+  overflow: scroll;
   color: $normal-text;
   background-color: $works-background;
   &__loading {
@@ -227,23 +290,16 @@ label {
     height: 100%;
   }
   &__wrapper {
-    width: 100%;
-    height: 100%;
-  }
-  &__cardWrapper {
-    padding: 0 15px 15px 15px;
-    &__card {
-      display: inline-block;
-      align-self: end;
-      margin:10px;
-    }
-    &__h1title {
-      margin: 0;
-      cursor: pointer;
-    }
-    &__slide {
-      overflow: scroll;
-      white-space: nowrap;
+    &__titles {
+      margin: 15px;
+      &__title {
+        font-size: 3rem;
+        margin: 0;
+      }
+      &__description {
+        font-size: 1.5rem;
+        margin: 0;
+      }
     }
   }
 }
@@ -276,10 +332,6 @@ label {
   &__contents {
     height: 90%;
     margin: 15px;
-    &__cards {
-      height: 100%;
-      overflow: auto;
-    }
   }
   &__contents__button {
     background-color:transparent;
@@ -304,48 +356,117 @@ label {
   }
 }
 
-.card {
-  max-width: 760px;
-  display: inline-block;
-  margin: 10px;
-  border: 1px solid $card-border;
+.checkbox {
+  &__reset {
+    display: inline-block;
+  }
+  &__input {
+    display: none;
+  }
+  &__parts {
+    color: $white;
+    background-color: $works-main;
+    border-radius: 5px;
+    padding: 5px;
+    opacity: 0.3;
+  }
+}
+.checkbox__reset > .checkbox__parts {
+  padding: 0;
+}
+.checkbox__input:checked + .checkbox__parts {
+  opacity: 1;
 }
 
-.progressive-image {
-  max-width: auto !important;
-}
-@mixin pc {
-  @media (min-width: 800px) {
-    @content;
+#works__control__fixed {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  &__wrapper {
+    margin: 10px;
+    padding: 20px;
+    background-color: $card-border;
+    user-select: none;
+    box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
+    box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);
+    border-radius: 25px;
+  }
+  &__wrapper__filterDiv {
+    padding-left: 1.5rem;
+  }
+  &__wrapper__result {
+    font-size: 1.3rem;
+    &__title {
+      display: inline-block;
+      margin: 0;
+      cursor: pointer;
+      &__mark {
+        display: inline-block;
+        margin: 0;
+        cursor: pointer;
+        color: $works-main;
+      }
+    }
   }
 }
-@mixin tab {
-  @media (max-width: 800px) and (min-width: 500px) {
-    @content;
+.works__control__fixed__wrapper__checkTitle {
+  display: inline-block;
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.works__carefullySelectWrapper {
+  text-align: center;
+  &__button {
+    display: inline;
+    width: 80%;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    border-radius: 25px;
+    background-color: $works-main;
+    color: $white;
+    font-size: large;
+    margin-bottom: 10px;
   }
 }
-@mixin sp {
-  @media (max-width: 500px) {
-    @content;
+
+#article {
+  height: 100%;
+  overflow: scroll;
+}
+
+.works__cardWrapper__card {
+  align-self: end;
+  margin:10px;
+}
+
+#works__cardWrapper {
+  display: grid;
+  width: 100%;
+}
+/* 380pxごとに1つ増やしていく */
+@media (min-width: 1240px) {
+  #works__cardWrapper {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
-@include pc {
-  /deep/ .progressive-image,
-  /deep/ .card__contentsWrapper {
-    width: 450px;
+@media (max-width: 1520px) and (min-width: 1140px) {
+  #works__cardWrapper {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
-@include tab {
-  /deep/ .progressive-image,
-  /deep/ .card__contentsWrapper {
-    width: 100%;
-    display: block;
+@media (max-width: 1140px) and (min-width: 760px) {
+  #works__cardWrapper {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-@include sp {
-  /deep/ .progressive-image,
-  /deep/ .card__contentsWrapper {
-    width: 100%;
+@media (max-width: 760px) {
+  #works__cardWrapper {
     display: block;
   }
 }
