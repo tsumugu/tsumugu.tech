@@ -30,13 +30,14 @@
         </div>
       </div>
     </div>
+    <!--
     <div id="timeline__importantToggleButton">
-      <!-- 仮 -->
       <div id="importantToggleButton">
         <input type="checkbox" id="importantToggleButton__checkbox" v-model="isShowNotImportant">
         <label id="importantToggleButton__labelfull" for="importantToggleButton__checkbox">フル</label><label id="importantToggleButton__labelshort" for="importantToggleButton__checkbox">短縮</label>
       </div>
     </div>
+    -->
     <!-- main sec -->
     <div id="timeline__main">
       <div id="timeline__main__leftLine"></div>
@@ -108,7 +109,8 @@ export default {
       isShowBottomMenu: false,
       isHideBottomMenu: true,
       isShowBottomMenuInner: false,
-      isShowNotImportant: false,
+      // 絞り込み有効時はfalseに
+      isShowNotImportant: true,
       cardSiteUrl: null,
       cardArticleId: null,
       isDispEdit: false,

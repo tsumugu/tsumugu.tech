@@ -138,7 +138,11 @@ export default {
             'isDispArticle': doc.data().isDispArticle,
             'isDispReadButton': isDispRead
           }
-          _this.itemsInCategories[doc.data()["works-genle"]].items.push(docVal)
+          //
+          doc.data()["works-genle"].toString(10).split(".").forEach((i) => {
+            _this.itemsInCategories[i].items.push(docVal)
+          })
+          //
         })
         //oeder要素でsort
         _this.itemsInCategories.sort(function(a,b){
