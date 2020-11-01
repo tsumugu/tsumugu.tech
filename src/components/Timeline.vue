@@ -740,7 +740,7 @@ hr {
         */
         &__title {
           display: inline-block;
-          margin: 15px;
+          margin: 15px 5px 15px 15px;
           font-family: 'Roboto', sans-serif;
           font-weight: 100;
           font-size: 3rem;
@@ -748,6 +748,7 @@ hr {
         &__subtitle {
           display: inline-block;
           margin: 0;
+          font-weight: 100;
           font-size: 1.5rem;
         }
       }
