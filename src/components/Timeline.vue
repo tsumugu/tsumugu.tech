@@ -32,10 +32,9 @@
     </div>
     <div id="timeline__importantToggleButton">
       <!-- 仮 -->
-      <div id="switchArea">
-        <input type="checkbox" id="switch1" v-model="isShowNotImportant">
-        <label for="switch1"><span></span></label>
-        <div id="swImg"></div>
+      <div id="importantToggleButton">
+        <input type="checkbox" id="importantToggleButton__checkbox" v-model="isShowNotImportant">
+        <label id="importantToggleButton__labelfull" for="importantToggleButton__checkbox">フル</label><label id="importantToggleButton__labelshort" for="importantToggleButton__checkbox">短縮</label>
       </div>
     </div>
     <!-- main sec -->
@@ -623,53 +622,42 @@ hr {
   position: relative;
 }
 
-/deep/ #switchArea {
-  line-height: 60px;
-  letter-spacing: 0;
-  text-align: center;
-  font-size: 27px;
-  position: relative;
-  margin: auto;
-  width: 150px;
-  background: #fff;
+/deep/ #importantToggleButton {
   input[type="checkbox"] {
     display: none;
   }
   label {
-    display: block;
-    box-sizing: border-box;
-    height: 60px;
-    border: 2px solid #999999;
-    border-radius: 30px;
+    padding: 10px;
+    font-size: 1.5rem;
   }
-  input[type="checkbox"]:checked +label {
-    border-color: #78bd78;
+  #importantToggleButton__labelshort {
+    border: 1px solid $card-border;
+    border-left: none;
+    border-radius: 0 50px 50px 0;
+    background-color: $red;
   }
-  label span:after{
-    content: "短縮";
-    padding: 0 0 0 36px;
-    color: #999999;
+  #importantToggleButton__labelfull {
+    border: 1px solid $card-border;
+    border-right: none;
+    border-radius: 50px 0 0 50px;
+    animation: changeToggleButtonColorR 500ms ease 0s 1 forwards;
   }
-  input[type="checkbox"]:checked + label span:after{
-    content: "フル";
-    padding: 0 36px 0 0;
-    color: #78bd78;
+  input[type="checkbox"]:checked ~ #importantToggleButton__labelshort {
+    background-color: #ffffff;
   }
-  #swImg {
-    position: absolute;
-    width: 52px;
-    height: 52px;
-    background: #999999;
-    top: 4px;
-    left: 4px;
-    border-radius: 26px;
-    transition: .2s;
-  }
-  input[type="checkbox"]:checked ~ #swImg {
-    transform: translateX(90px);
-    background: #78bd78;
+  input[type="checkbox"]:checked ~ #importantToggleButton__labelfull {
+    animation: changeToggleButtonColorT 500ms ease 0s 1 forwards;
   }
 }
+@keyframes changeToggleButtonColorT {
+    0% {background-color: #ffffff;}
+    100% {background-color: $red;}
+}
+@keyframes changeToggleButtonColorR {
+    0% {background-color: $red;}
+    100% {background-color: #ffffff;}
+}
+
 #timeline__bottomMenu {
   position: fixed;
   display: none;
@@ -734,6 +722,8 @@ hr {
   }
   &__importantToggleButton {
     position: absolute;
+    bottom: 3%;
+    right: 25px;
     z-index:5;
   }
   &__leftCol__wrapper {
@@ -761,7 +751,7 @@ hr {
       }
       &__description {
         margin: 5px 25px 25px 25px;
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         > h3 {
           margin: 0;
         }
