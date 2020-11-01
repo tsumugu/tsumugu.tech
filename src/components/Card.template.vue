@@ -42,7 +42,8 @@ export default {
       type: Boolean
     },
     isDispKadai: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     isLogin: {
       type: Boolean
@@ -77,12 +78,13 @@ export default {
     border: 1px solid $card-border;
   }
   &__contentsWrapper__title {
-    margin: 0 5px 0;
+  // u m s h
+    margin: 0 5px 15px 5px;
     white-space: normal;
   }
   &__contentsWrapper__description {
     font-size: large;
-    margin: 0px 5px 0px 5px;
+    margin: 5px 5px 0px 5px;
     white-space: normal;
   }
   &__contentsWrapper__kdwr {
@@ -104,6 +106,7 @@ export default {
     }
   }
   &__tag {
+    margin-top: 3px;
     border: 2px solid $main;
     border-radius: 25px;
     &__title {
