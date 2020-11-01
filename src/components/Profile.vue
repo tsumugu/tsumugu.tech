@@ -332,6 +332,9 @@ export default {
   list-style: none;
   counter-reset: ol_li;
 }
+/deep/ li {
+  list-style: none;
+}
 /deep/ ol > li:before {
   margin-right: .25em;
   counter-increment: ol_li;
@@ -359,6 +362,9 @@ export default {
 }
 /deep/ hr {
   display: none;
+}
+/deep/ img {
+  width: 25%;
 }
 /deep/ .devicon-wrap > svg,
 /deep/ .devicon-img {
