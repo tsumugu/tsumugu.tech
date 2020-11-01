@@ -26,7 +26,7 @@ export default {
 
 <style>
 * :not(#top-name) {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Hiragino Kaku Gothic W1 JIS2004', sans-serif;
 }
 body, html {
   /*height: 10000px !important;*/

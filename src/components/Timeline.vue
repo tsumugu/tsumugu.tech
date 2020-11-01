@@ -747,14 +747,13 @@ hr {
         &__title {
           display: inline-block;
           margin: 15px 5px 15px 15px;
-          font-family: 'Roboto', sans-serif;
-          font-weight: 100;
+          font-family: 'Hiragino Kaku Gothic W0 JIS2004', sans-serif;
           font-size: 3rem;
         }
         &__subtitle {
           display: inline-block;
           margin: 0;
-          font-weight: 100;
+          font-family: 'Hiragino Kaku Gothic W0 JIS2004', sans-serif;
           font-size: 1.5rem;
         }
       }
