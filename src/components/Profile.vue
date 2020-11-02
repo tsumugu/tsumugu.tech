@@ -252,6 +252,7 @@ export default {
     }
   },
   mounted() {
+    Ts.loadFont();
     this.startTime = new Date()
     // FirebaseDataManager
     this.FirebaseDataManager = this.FirebaseDataManagerProps

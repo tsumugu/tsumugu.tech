@@ -432,7 +432,6 @@ export default {
       })
       // Sort, Add items
       Promise.all([getAbout, getWorks]).then(function () {
-        _this.loading = false
         // Sort [querySnapshotArr] by madeYear
         // sortに順番ずれるバグ？
         querySnapshotArr.sort(function(a,b){
@@ -526,6 +525,7 @@ export default {
         })
         // v-forが描画され終ったときに実行されるイベント
         _this.$nextTick(() => {
+          _this.loading = false
           setTimeout(() => {
             _this.colBase = document.getElementsByClassName('colBase')[0]
             _this.aboutCol = document.getElementsByClassName('aboutCol')
@@ -747,13 +747,12 @@ hr {
         &__title {
           display: inline-block;
           margin: 15px 5px 15px 15px;
-          font-family: 'Hiragino Kaku Gothic W0 JIS2004', sans-serif;
+          /*font-family: 'Hiragino Kaku Gothic W0 JIS2004', sans-serif;*/
           font-size: 3rem;
         }
         &__subtitle {
           display: inline-block;
           margin: 0;
-          font-family: 'Hiragino Kaku Gothic W0 JIS2004', sans-serif;
           font-size: 1.5rem;
         }
       }
