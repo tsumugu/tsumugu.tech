@@ -5,6 +5,7 @@ import profile from '@/components/Profile'
 import works from '@/components/Works'
 import article from '@/components/Article'
 import tl from '@/components/Timeline'
+import skill from '@/components/Skill'
 import addworks from '@/components/AddWorks'
 import auth from '@/components/Auth'
 import edit from '@/components/Edit'
@@ -37,6 +38,10 @@ export default new Router({
     {
       path: '/tl',
       component: tl
+    },
+    {
+      path: '/Skill',
+      component: skill
     },
     {
       path: '/Auth',
