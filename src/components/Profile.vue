@@ -1,29 +1,23 @@
-<template>
+ <template>
   <div id="profile">
-    <div id="section1">
-      <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg">
-    </div>
-    <div id="section2">
-      <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg">
-    </div>
-    <div id="section3">
-      <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg">
-    </div>
-    <div id="section4">
-      <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg">
-    </div>
+    <ProfileContents v-for="item in items" :item="item"></ProfileContents>
   </div>
 </template>
 <script>
 import firebase from 'firebase'
 import FDM from '../assets/js/firebase_data_manager.js'
+import ProfileContents from './ProfileContents.vue'
 
 export default {
+  components: {
+    ProfileContents
+  },
   props: {
     FirebaseDataManagerProps: null
   },
   data() {
     return {
+      items: []
     }
   },
   methods: {
@@ -34,94 +28,55 @@ export default {
     if (this.FirebaseDataManager == null) {
       this.FirebaseDataManager = new FDM(firebase)
     }
-
-    /*
-    var getLanguage = new Promise(function(resolve, reject) {
-      var langpfObjLocal = []
-      _this.FirebaseDataManager.get('languages').then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          langpfObjLocal.push({titleShort: doc.id, title: doc.data().title, desc: doc.data().description})
-        })
-        _this.langpfObj = langpfObjLocal
-        resolve();
-      })
-      .catch(function (error) {
-        reject();
+    var _this = this
+    this.FirebaseDataManager.get('profile').then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var docVal = {
+          'title': doc.data().title,
+          'description': doc.data().description,
+          'bgImg': 'url('+doc.data().bgImg+')'
+         }
+        _this.items.push(docVal)
       })
     })
-    Promise.all([getAbout, getLanguage]).then(function () {
-      _this.isFinData = true
-    }).catch(function (error) {
+    .catch(function(error) {
+      //onError
       console.log(error)
       alert("情報の取得に失敗しました。再読み込みしてください")
-    });
-    */
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
-div {
-  text-align:center;
-}
-img {
+#profile {
   width: 100%;
-  vertical-align:top;
+  height: 100%;
+  overflow: auto;
 }
-
-#section1,
-#section2,
-#section3,
-#section4{
-  padding: 50px 30px;
-}
-
-#section1, #section3 {
-  background:pink;
-}
-#section2, #section3, #section4 {
+/deep/ .profileSection {
+  display: block;
   position: relative;
-  z-index: 0;
-}
-
-#section2::after{
-  content: '';
-  position: absolute;
-  left:0;
-  top: 0;
-  transform: skewY(-5deg);
-  transform-origin: bottom left;
-
-  z-index: -1;
-  width:100%;
-  height:100%;
-  background:#fff;
-}
-#section3::after{
-  background:pink;
-  content: '';
-  position: absolute;
-  left:0;
-  top: 0;
-  transform: skewY(5deg);
-  transform-origin: bottom left;
-
-  z-index: -1;
-  width:100%;
-  height:100%;
-  background:#fff;
-}
-#section4::after{
-  content: '';
-  position: absolute;
-  left:0;
-  top: 0;
-  transform: skewY(-5deg);
-  transform-origin: bottom left;
-
-  z-index: -1;
-  width:100%;
-  height:100%;
-  background:#fff;
+  width: 100%;
+  height: 100%;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  &__infoWrapper {
+    position: absolute;
+    bottom: 5%;
+    padding-right: 45%;
+    z-index: 3;
+    color: $white;
+    bottom: 22%;
+    margin-left: 5%;
+    &__inner {
+      &__title {
+        font-size: 3rem;
+      }
+      &__description {
+      }
+    }
+  }
 }
 </style>

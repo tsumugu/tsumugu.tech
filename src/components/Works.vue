@@ -109,7 +109,7 @@ export default {
       }
     },
     getItems() {
-    var _this = this
+      var _this = this
       this.FirebaseDataManager.get('Works').then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton

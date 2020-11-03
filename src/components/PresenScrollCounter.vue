@@ -41,6 +41,14 @@ export default {
     isFirstP: {
       type: Boolean,
       default: true
+    },
+    pageNumCountMin: {
+      type: Number,
+      default: -1
+    },
+    pageNumCountMax: {
+      type: Number,
+      default: 2
     }
   },
   data() {
@@ -146,13 +154,13 @@ export default {
         }
         if (dis > 0) {
           // console.log("Plus")
-          if (2>this.pageNum&&this.pageNum>=-1) {
+          if (this.pageNumCountMax>this.pageNum&&this.pageNum>=this.pageNumCountMin) {
             this.pageNum += 1
             this.pageWcNum = (this.pageNum*10)+1
           }
         } else {
           // console.log("Minus")
-          if (2>=this.pageNum&&this.pageNum>=0) {
+          if (this.pageNumCountMax>=this.pageNum&&this.pageNum>=0) {
             this.pageNum -= 1
             this.pageWcNum = (this.pageNum*10)+1
           }
