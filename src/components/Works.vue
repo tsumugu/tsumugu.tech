@@ -11,8 +11,10 @@
           <div id="works__bottomMenu__contents">
             <button id="works__bottomMenu__contents__button" @click="closeBottomMenu()" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
             <div id="works__bottomMenu__swipeBar" ref="bottommenuswipe" v-show="supportTouch"><span id="works__bottomMenu__swipeBarInner"></span></div>
-            <div id="works__bottomMenu__contents__cards">
-              <Card v-for="item in inBottomMenuItems" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
+            <div id="works__bottomMenu__contents__works">
+              <div class="works__cardWrapper">
+                <Card class="works__cardWrapper__card" v-for="item in inBottomMenuItems" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
+              </div>
             </div>
           </div>
         </div>
@@ -20,9 +22,8 @@
     </div>
     <div id="works__wrapper__titles">
       <p id="works__wrapper__titles__title">Works</p>
-      <p id="works__wrapper__titles__description">数ある作品の中から重要なものを厳選</p>
     </div>
-    <div id="works__cardWrapper">
+    <div class="works__cardWrapper">
       <WorksThumb class="works__cardWrapper__card" v-for="category in itemsInCategories" :item="category" @openmenu="openBottomMenu(category.items)"></WorksThumb>
     </div>
   </div>
@@ -64,19 +65,18 @@ export default {
     cardButtonEv(argObj) {
       var siteUrl = argObj.siteUrl
       var articleId = argObj.articleId
-      this.cardArticleId = articleId
-      this.openBottomMenu()
+
+      var routePath = "https://tsumugu.tech/Article/"+articleId
+      window.open(routePath)
     },
     goToSite(siteUrl) {
       window.open(siteUrl);
     },
-    oepnEdit(articleId) {
-      window.open("https://tsumugu.tech/edit/"+articleId);
-    },
-    openBottomMenu() {
+    openBottomMenu(item) {
       this.isShowBottomMenu = true
       this.isShowBottomMenuInner = true
       this.isHideBottomMenu = false
+      this.inBottomMenuItems = item
     },
     closeBottomMenu() {
       this.isShowBottomMenuInner = false
@@ -152,6 +152,7 @@ export default {
           return 0;
         })
         this.itemsInCategories = Object.assign({}, _this.itemsInCategories)
+        console.log(this.itemsInCategories)
         this.loading = false
       })
       .catch(function(error) {
@@ -224,6 +225,10 @@ label {
   cursor: pointer;
 }
 
+.card {
+  border: 1px solid $card-border;
+}
+
 #works {
   height: 100%;
   overflow: scroll;
@@ -236,14 +241,12 @@ label {
   }
   &__wrapper {
     &__titles {
-      margin: 15px;
+      /*margin: 15px;*/
+      margin: 0;
       &__title {
         font-size: 3rem;
         margin: 0;
-      }
-      &__description {
-        font-size: 1.5rem;
-        margin: 0;
+        padding: 15px;
       }
     }
   }
@@ -277,6 +280,10 @@ label {
   &__contents {
     height: 90%;
     margin: 15px;
+    &__works {
+      height: 100%;
+      overflow: auto;
+    }
   }
   &__contents__button {
     background-color:transparent;
@@ -301,117 +308,33 @@ label {
   }
 }
 
-.checkbox {
-  &__reset {
-    display: inline-block;
-  }
-  &__input {
-    display: none;
-  }
-  &__parts {
-    color: $white;
-    background-color: $works-main;
-    border-radius: 5px;
-    padding: 5px;
-    opacity: 0.3;
-  }
-}
-.checkbox__reset > .checkbox__parts {
-  padding: 0;
-}
-.checkbox__input:checked + .checkbox__parts {
-  opacity: 1;
-}
-
-#works__control__fixed {
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  width: 100%;
-  &__wrapper {
-    margin: 10px;
-    padding: 20px;
-    background-color: $card-border;
-    user-select: none;
-    box-shadow: 0 0 5px 2px rgba(204, 204, 204, 1);
-    box-shadow: 0 0 5px 2px rgba(148, 148, 148, 0.8);
-    border-radius: 25px;
-  }
-  &__wrapper__filterDiv {
-    padding-left: 1.5rem;
-  }
-  &__wrapper__result {
-    font-size: 1.3rem;
-    &__title {
-      display: inline-block;
-      margin: 0;
-      cursor: pointer;
-      &__mark {
-        display: inline-block;
-        margin: 0;
-        cursor: pointer;
-        color: $works-main;
-      }
-    }
-  }
-}
-.works__control__fixed__wrapper__checkTitle {
-  display: inline-block;
-  margin: 0;
-  font-size: 1.35rem;
-}
-
-.works__carefullySelectWrapper {
-  text-align: center;
-  &__button {
-    display: inline;
-    width: 80%;
-    height: 50px;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    border-radius: 25px;
-    background-color: $works-main;
-    color: $white;
-    font-size: large;
-    margin-bottom: 10px;
-  }
-}
-
-#article {
-  height: 100%;
-  overflow: scroll;
-}
-
 .works__cardWrapper__card {
   align-self: end;
   margin:10px;
 }
 
-#works__cardWrapper {
+.works__cardWrapper {
   display: grid;
   width: 100%;
 }
 /* 380pxごとに1つ増やしていく */
 @media (min-width: 1240px) {
-  #works__cardWrapper {
+  .works__cardWrapper {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 @media (max-width: 1520px) and (min-width: 1140px) {
-  #works__cardWrapper {
+  .works__cardWrapper {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 1140px) and (min-width: 760px) {
-  #works__cardWrapper {
+  .works__cardWrapper {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (max-width: 760px) {
-  #works__cardWrapper {
+  .works__cardWrapper {
     display: block;
   }
 }
