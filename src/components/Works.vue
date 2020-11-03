@@ -11,7 +11,9 @@
           <div id="works__bottomMenu__contents">
             <button id="works__bottomMenu__contents__button" @click="closeBottomMenu()" v-show="!supportTouch"><font-awesome-icon icon="times" size="lg" /></button>
             <div id="works__bottomMenu__swipeBar" ref="bottommenuswipe" v-show="supportTouch"><span id="works__bottomMenu__swipeBarInner"></span></div>
-            <ArticleContents :cardArticleId="cardArticleId" :isDispEdit=false :isLogin=false></ArticleContents>
+            <div id="works__bottomMenu__contents__cards">
+              <Card v-for="item in inBottomMenuItems" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
+            </div>
           </div>
         </div>
       </div>
@@ -21,7 +23,7 @@
       <p id="works__wrapper__titles__description">数ある作品の中から重要なものを厳選</p>
     </div>
     <div id="works__cardWrapper">
-      <Card class="works__cardWrapper__card" v-for="item in cardItems" v-show="item.isShow" :item="item" @cardButtonEv="cardButtonEv" @goToSite="goToSite" @oepnEdit="oepnEdit" :isDispKadai=false :isDispEdit=false :isLogin=false></Card>
+      <WorksThumb class="works__cardWrapper__card" v-for="category in itemsInCategories" :item="category" @openmenu="openBottomMenu(category.items)"></WorksThumb>
     </div>
   </div>
 </div>
@@ -31,11 +33,13 @@
 import firebase from 'firebase'
 import FDM from '../assets/js/firebase_data_manager.js'
 import Card from './Card.template.vue'
+import WorksThumb from './WorksThumb.template.vue'
 import Loading from './Loading.vue'
 import ArticleContents from './ArticleContents.vue'
 export default {
   components: {
     Card,
+    WorksThumb,
     Loading,
     ArticleContents
   },
@@ -45,97 +49,15 @@ export default {
   data() {
     return {
       FirebaseDataManager: null,
-      chartData: null,
       loading: true,
-      checkedIsCarefullySelect: true,
-      checkedSkills: [],
-      checkedGenle: [],
-      checkedYear: [],
-      searchWord: "",
-      searchRes: 0,
-      cardItems: [],
-      itemDivThree: [],
-      skillsStr: [],
-      skillsCount: [],
-      skillsCountFor: [],
-      genleStr: [],
-      genleCount: [],
-      genleCountFor: [],
-      yearStr: [],
-      yearCount: [],
-      yearCountFor: [],
-      resetGenle: false,
-      resetSkill: false,
-      resetYearCount: false,
-      themeColors: {
-        'web': 'rgba(227, 79, 38, 0.8)',
-        'マイコン': 'rgba(0, 135, 143, 0.8)',
-        'Android': 'rgba(164, 198, 57, 0.8)',
-        'Bot': 'rgba(0, 195, 0, 0.8)',
-        'Unity': 'rgba(34, 44, 55, 0.8)',
-        'oF': 'rgba(51, 51, 51, 0.8)',
-        'iOS': 'rgba(142, 142, 147, 0.8)',
-        'Other': 'rgba(202, 203, 202, 0.8)'
-      },
       cardArticleId: null,
       isShowBottomMenu: false,
       isHideBottomMenu: true,
       isShowBottomMenuInner: false,
       swipeY: 0,
       supportTouch: false,
-      isDispFilterdiv: false,
-      isDispFilterdivMark: "▶"
-    }
-  },
-  watch: {
-    checkedIsCarefullySelect() {
-      this.doCarefullySelect()
-    },
-    checkedSkills() {
-      this.doFiltering()
-    },
-    checkedGenle() {
-      this.doFiltering()
-    },
-    checkedYear() {
-      this.doFiltering()
-    },
-    resetGenle() {
-      if (this.resetGenle) {
-        this.checkedGenle = []
-      } else {
-        this.genleCountFor.forEach((e) => {
-          this.checkedGenle.push(e.key)
-        })
-      }
-    },
-    resetSkill() {
-      if (this.resetSkill) {
-        this.checkedSkills = []
-      } else {
-        this.skillsCountFor.forEach((e) => {
-          this.checkedSkills.push(e.key)
-        })
-      }
-    },
-    resetYearCount() {
-      if (this.resetYearCount) {
-        this.checkedYear = []
-      } else {
-        this.yearCountFor.forEach((e) => {
-          this.checkedYear.push(e.key)
-        })
-      }
-    },
-    searchWord() {
-      this.doFiltering()
-    },
-    isDispFilterdiv() {
-      if (this.isDispFilterdiv) {
-        this.isDispFilterdivMark = "▼"
-      } else {
-        this.isDispFilterdivMark = "▶"
-      }
+      itemsInCategories: [],
+      inBottomMenuItems: []
     }
   },
   methods: {
@@ -187,8 +109,7 @@ export default {
       }
     },
     getItems() {
-      var _this = this
-      this.cardItems = []
+    var _this = this
       this.FirebaseDataManager.get('Works').then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var isDispRead = doc.data().isDispReadButton==undefined ? true : doc.data().isDispReadButton
@@ -216,18 +137,42 @@ export default {
             'isDispArticle': doc.data().isDispArticle,
             'isDispReadButton': isDispRead
           }
-          if (doc.data().allLang != undefined) {
-            doc.data().allLang.split("/").forEach(element => _this.skillsStr.push(element))
-          }
-          if (doc.data().isDispArticle) {
-            _this.cardItems.push(docVal)
-          }
+          //
+          doc.data()["works-genle"].toString(10).split(".").forEach((i) => {
+            _this.itemsInCategories[i].items.push(docVal)
+          })
+          //
         })
-        setTimeout(() => {
-          this.windowResizedHandler()
-        }, 500)
-        //
+        //oeder要素でsort
+        _this.itemsInCategories.sort(function(a,b){
+          var aa = a.order;
+          var bb = b.order;
+          if(aa < bb){return -1;}
+          if(aa > bb){return 1;}
+          return 0;
+        })
+        this.itemsInCategories = Object.assign({}, _this.itemsInCategories)
         this.loading = false
+      })
+      .catch(function(error) {
+        //onError
+        console.log(error)
+        alert("情報の取得に失敗しました。再読み込みしてください")
+      })
+    },
+    getCategories() {
+      var _this = this
+      this.FirebaseDataManager.get('works-genle').then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var id = doc.id
+          var name = doc.data().name
+          var thumbnail = doc.data().thumbnail
+          var order = doc.data().order
+
+          _this.itemsInCategories[id] = {id: id, name: name, thumbnail: thumbnail, order:order, items: []}
+        })
+
+        _this.getItems()
       })
       .catch(function(error) {
         //onError
@@ -249,7 +194,7 @@ export default {
     if (this.FirebaseDataManager == null) {
       this.FirebaseDataManager = new FDM(firebase)
     }
-    this.getItems()
+    this.getCategories()
     this.supportTouch = 'ontouchend' in document
     if (this.supportTouch) {
       var bottommenuswipe = this.$refs.bottommenuswipe
