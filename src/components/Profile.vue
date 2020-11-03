@@ -62,21 +62,28 @@ export default {
   background-position: center top;
   background-size: cover;
   background-attachment: fixed;
+  overflow: hidden;
   &__infoWrapper {
     position: absolute;
-    bottom: 5%;
-    padding-right: 45%;
-    z-index: 3;
-    color: $white;
     bottom: 22%;
     margin-left: 5%;
+    z-index: 3;
+
+    max-width: 55%;
+
+    color: $white;
     &__inner {
       &__title {
         font-size: 3rem;
       }
-      &__description {
-      }
     }
   }
+}
+/deep/ .profileSection__infoWrapper__description__title {
+  font-size: 1.5rem;
+}
+/deep/ .profileSection__infoWrapper__description__title > span {
+  font-size: 2rem;
+  color: #c00000;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="profileSection__infoWrapper">
       <div class="profileSection__infoWrapper__inner">
         <div class="profileSection__infoWrapper__inner__title">{{item.title}}</div>
-        <div class="profileSection__infoWrapper__description">{{item.description}}</div>
+        <div class="profileSection__infoWrapper__description" v-html="item.description"></div>
       </div>
     </div>
   </div>

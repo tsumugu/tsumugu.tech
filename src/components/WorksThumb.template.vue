@@ -39,6 +39,7 @@ export default {
     left: 10%;
     font-family: "Shin Go ExLight" !important;
     font-size: 1.2rem;
+    color: $white;
     user-select: none;
   }
   &__img:hover + &__title {
