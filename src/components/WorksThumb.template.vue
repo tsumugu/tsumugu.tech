@@ -41,6 +41,10 @@ export default {
     font-size: 1.2rem;
     color: $white;
     user-select: none;
+    text-shadow:  2px  2px 10px $text-shadow,
+              -2px  2px 10px $text-shadow,
+               2px -2px 10px $text-shadow,
+              -2px -2px 10px $text-shadow;
   }
 }
 @keyframes fadeIn {

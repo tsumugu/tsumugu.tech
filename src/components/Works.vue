@@ -322,13 +322,13 @@ label {
   }
 }
 
-.works__cardWrapper__card {
-  align-self: end;
-  margin:10px;
-}
 .works__cardWrapper {
   display: grid;
   width: 100%;
+  &__card {
+    align-self: end;
+    margin:10px;
+  }
 }
 /* 380pxごとに1つ増やしていく */
 @media (min-width: 1240px) {
