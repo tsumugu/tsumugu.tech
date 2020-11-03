@@ -42,12 +42,9 @@ export default {
     color: $white;
     user-select: none;
   }
-  &__img:hover + &__title {
-    color: $white;
-  }
 }
 @keyframes fadeIn {
     0% {opacity: 1}
-    100% {opacity: 0.6}
+    100% {opacity: 0.4}
 }
 </style>
