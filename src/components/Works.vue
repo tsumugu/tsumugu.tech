@@ -143,7 +143,21 @@ export default {
           })
           //
         })
-        //oeder要素でsort
+        //重要なものを最初に持っていく
+        _this.itemsInCategories.forEach((j, c) => {
+          var isDispTrueItems = []
+          var isDispFalseItems = []
+          j.items.forEach((k) => {
+            if (k.isDispArticle) {
+              isDispTrueItems.push(k)
+            } else {
+              isDispFalseItems.push(k)
+            }
+          })
+          var mergeArray = isDispTrueItems.concat(isDispFalseItems)
+          _this.itemsInCategories[c].items = mergeArray
+        })
+        //itemsInCategoriesをorder要素でsort
         _this.itemsInCategories.sort(function(a,b){
           var aa = a.order;
           var bb = b.order;
