@@ -25,8 +25,10 @@ export default {
   max-width: 760px;
   background-color: $img-mouseover-bg;
   cursor: pointer;
+  text-align:center;
   &__img {
     width: 100%;
+    vertical-align:top;
   }
   &__img:hover {
     animation: fadeIn 500ms ease 0s 1 forwards;

@@ -312,7 +312,6 @@ label {
   align-self: end;
   margin:10px;
 }
-
 .works__cardWrapper {
   display: grid;
   width: 100%;
