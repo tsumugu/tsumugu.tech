@@ -65,25 +65,76 @@ export default {
   overflow: hidden;
   &__infoWrapper {
     position: absolute;
-    bottom: 22%;
-    margin-left: 5%;
     z-index: 3;
-
-    max-width: 55%;
-
     color: $white;
-    &__inner {
-      &__title {
-        font-size: 3rem;
-      }
-    }
   }
 }
-/deep/ .profileSection__infoWrapper__description__title {
-  font-size: 1.5rem;
+/* レスポンシブ */
+/* 1. 画面の大きなPC */
+@media (min-width: 1500px) {
+  /deep/ .profileSection__infoWrapper {
+    bottom: 22%;
+    margin-left: 5%;
+    max-width: 45%;
+  }
+  /deep/ .profileSection__infoWrapper__inner {
+    font-size: 1rem;
+  }
+  /deep/ .profileSection__infoWrapper__inner__title {
+    font-size: 3rem;
+  }
+  /deep/ .profileSection__infoWrapper__description__title {
+    font-size: 1.5rem;
+  }
+  /deep/ .profileSection__infoWrapper__description__title > span {
+    font-size: 2rem;
+    color: #c00000;
+  }
 }
-/deep/ .profileSection__infoWrapper__description__title > span {
-  font-size: 2rem;
-  color: #c00000;
+/* 2. PC */
+@media (max-width: 1500px) and (min-width: 600px) {
+  /deep/ .profileSection__infoWrapper {
+    bottom: 22%;
+    margin-left: 5%;
+    max-width: 55%;
+  }
+  /deep/ .profileSection__infoWrapper__inner {
+    font-size: 1rem;
+  }
+  /deep/ .profileSection__infoWrapper__inner__title {
+    font-size: 3rem;
+  }
+  /deep/ .profileSection__infoWrapper__description__title {
+    font-size: 1.5rem;
+  }
+  /deep/ .profileSection__infoWrapper__description__title > span {
+    font-size: 2rem;
+    color: #c00000;
+  }
+
+}
+/* 3. スマホなど */
+@media screen and (max-width:600px) {
+  /deep/ .profileSection__infoWrapper {
+    bottom: 10%;
+    width: 100%;
+  }
+  /deep/ .profileSection__infoWrapper__inner {
+    font-size: 0.9rem;
+  }
+  /deep/ .profileSection__infoWrapper__inner__title {
+    font-size: 2.5rem;
+    margin: 15px 15px 15px 0;
+  }
+  /deep/ .profileSection__infoWrapper__description {
+    margin: 0 15px 15px 15px;
+  }
+  /deep/ .profileSection__infoWrapper__description__title {
+    font-size: 1rem;
+  }
+  /deep/ .profileSection__infoWrapper__description__title > span {
+    font-size: 1.5rem;
+    color: #c00000;
+  }
 }
 </style>

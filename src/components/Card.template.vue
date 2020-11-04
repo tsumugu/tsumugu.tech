@@ -1,6 +1,5 @@
 <template>
   <div class="card" v-bind:id="item.id">
-    <div class="card__recommendMark">recommend</div>
     <!-- 依存あり -->
     <div class="card__contentsWrapper">
       <h2 class="card__contentsWrapper__title">{{item.title}}</h2>
@@ -73,12 +72,6 @@ export default {
   padding: 15px;
   box-shadow: 0 0 5px 3px rgba(204, 204, 204, 0.2);
   background-color: $card-background;
-  &__recommendMark {
-    display: inline-block;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: pink;
-  }
   &__contentsWrapper__img {
     border-radius: 10px;
     z-index: 1;
