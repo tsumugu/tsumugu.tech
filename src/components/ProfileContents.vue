@@ -1,5 +1,5 @@
  <template>
-  <div class="profileSection" v-bind:style="{ backgroundImage: item.bgImg}">
+  <div class="profileSection" v-bind:style="{ backgroundImage: item.bgImg, backgroundPosition: item.bgPos}">
     <div class="profileSection__infoWrapper">
       <div class="profileSection__infoWrapper__inner">
         <div class="profileSection__infoWrapper__inner__title">{{item.title}}</div>
