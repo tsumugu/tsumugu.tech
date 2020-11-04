@@ -83,7 +83,7 @@ export default {
 
 <style lang="scss" scoped>
 #article_wrap {
-  height: 100%;
+  height: auto;
   background-color: $works-background;
   padding: 10px;
 }
