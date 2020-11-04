@@ -74,6 +74,21 @@ export default {
     position: absolute;
     z-index: 3;
     color: $white;
+    &__description {
+      &__readbutton{
+        margin: 10px 10px 10px 0;
+        > a {
+          padding: 10px;
+          border-radius: 10px;
+          color: $white;
+          background-color: $main;
+          text-decoration: none;
+        }
+        > a:after {
+          content: "▶";
+        }
+      }
+    }
   }
 }
 /* レスポンシブ */
