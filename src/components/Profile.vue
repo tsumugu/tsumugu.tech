@@ -124,7 +124,7 @@ export default {
   }
   /deep/ .profileSection__infoWrapper__inner__title {
     font-size: 2.5rem;
-    margin: 15px 15px 15px 0;
+    margin: 15px 15px 0 15px;
   }
   /deep/ .profileSection__infoWrapper__description {
     margin: 0 15px 15px 15px;
