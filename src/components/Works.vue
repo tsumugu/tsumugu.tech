@@ -246,6 +246,7 @@ label {
 #works {
   height: 100%;
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   color: $normal-text;
   background-color: $works-background;
   &__loading {
@@ -297,6 +298,7 @@ label {
     &__works {
       height: 100%;
       overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
   &__contents__button {

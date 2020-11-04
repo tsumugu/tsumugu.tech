@@ -229,6 +229,7 @@ progress {
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   float: left;
 }
 #bgtree {

@@ -452,6 +452,7 @@ export default {
         height: 100%;
         overflow-y: scroll;
         -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         &__text {
           height: 110%;
@@ -507,6 +508,7 @@ export default {
     &__items {
       height: 60%;
       overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
     }
     &__button {
       background-color:transparent;

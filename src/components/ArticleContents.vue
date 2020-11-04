@@ -1,5 +1,3 @@
-
-
 <template>
 <div id="article">
   <div id="article-slideshow"><vue-gallery-slideshow :images="imagesList" :index="slideshowindex" @close="slideshowindex = null"></vue-gallery-slideshow></div>
@@ -221,6 +219,7 @@ export default {
   line-height: 1.2;
   background-color: #f7f7f7;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   word-wrap: normal;
   white-space: pre;
 }

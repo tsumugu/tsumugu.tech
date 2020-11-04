@@ -739,6 +739,7 @@ hr {
     width: 100%;
     background-color: $card-border;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
     &__inner {
       &__titleWrapper {
         /*
@@ -866,6 +867,7 @@ hr {
   height: 100%;
   /*overflow: scroll;*/
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .cardMarginTop {
   margin-top: 20px;
