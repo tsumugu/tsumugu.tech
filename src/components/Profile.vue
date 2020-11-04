@@ -1,15 +1,20 @@
  <template>
   <div id="profile">
+    <div id="profile__loading" v-show="loading">
+      <Loading></Loading>
+    </div>
     <ProfileContents v-for="item in items" :item="item"></ProfileContents>
   </div>
 </template>
 <script>
 import firebase from 'firebase'
 import FDM from '../assets/js/firebase_data_manager.js'
+import Loading from './Loading.vue'
 import ProfileContents from './ProfileContents.vue'
 
 export default {
   components: {
+    Loading,
     ProfileContents
   },
   props: {
@@ -17,6 +22,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       items: []
     }
   },
@@ -38,6 +44,7 @@ export default {
          }
         _this.items.push(docVal)
       })
+      _this.loading = false
     })
     .catch(function(error) {
       //onError

@@ -1,5 +1,6 @@
 <template>
   <div class="worksThumb" v-on:click="openmenu()">
+    <div class="worksThumb__cover"></div>
     <img class="worksThumb__img" v-bind:src="item.thumbnail">
     <p class="worksThumb__title">{{item.name}}</p>
   </div>
@@ -26,15 +27,22 @@ export default {
   background-color: $img-mouseover-bg;
   cursor: pointer;
   text-align:center;
+  &__cover {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+  }
   &__img {
     width: 100%;
     vertical-align:top;
   }
-  &__img:hover {
+  &__cover:hover + &__img {
     animation: fadeIn 500ms ease 0s 1 forwards;
   }
   &__title {
     position: absolute;
+    z-index: 2;
     bottom: 5%;
     left: 10%;
     font-family: "Shin Go ExLight" !important;
