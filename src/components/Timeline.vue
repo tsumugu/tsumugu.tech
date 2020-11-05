@@ -287,6 +287,16 @@ export default {
       var title = node.getElementsByClassName('timeline__item__yearAbout__contents__subtitle')[0].innerText
       var description = node.getElementsByClassName('timeline__item__yearAbout__contents__description')[0].innerHTML
       this.setTlLeftAboutText(src, year, title, description)
+      //ちらつきを防ぐために次のものもあらかじめ読み込んでおく
+      /*
+      var colChildNextIndex = this.colChildNowIndex + 1
+      var nextNode = this.aboutCol[colChildNextIndex]
+      if (nextNode != undefined) {
+        var title = nextNode.getElementsByClassName('timeline__item__yearAbout__contents__subtitle')[0].innerText
+        var description = nextNode.getElementsByClassName('timeline__item__yearAbout__contents__description')[0].innerHTML
+        alert(title+description)
+      }
+      */
     },
     setTlLeftAboutText(tmb, year, title, desc) {
       this.tlLeftAboutThumbnail = tmb

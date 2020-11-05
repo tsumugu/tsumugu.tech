@@ -105,6 +105,7 @@ export default {
   },
   created () {
     var _this = this
+    _this.isLoading = false
     firebase.auth().onAuthStateChanged((user) => {
       if (user != null) {
         _this.isLogin = true
