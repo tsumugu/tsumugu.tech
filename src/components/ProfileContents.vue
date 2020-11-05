@@ -1,13 +1,5 @@
  <template>
-  <div :class="item.class">
-    <component is="style">
-      .{{item.classname}} {
-        background-image: {{item.bgImg}};
-        background-position: {{item.bgPos}};
-        background-size: cover;
-        /*background-attachment: fixed;*/
-      }
-    </component>
+  <div class="profileSection" v-bind:style="{ backgroundImage: item.bgImg, backgroundPosition: item.bgPos}">
     <div class="profileSection__infoWrapper">
       <div class="profileSection__infoWrapper__inner">
         <div class="profileSection__infoWrapper__inner__title">{{item.title}}</div>
