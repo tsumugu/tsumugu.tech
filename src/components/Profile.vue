@@ -39,6 +39,8 @@ export default {
       querySnapshot.forEach((doc) => {
         var bgPos = doc.data().bgPos==undefined ? "center top" : doc.data().bgPos
         var docVal = {
+          'class': 'profileSection profileSection'+doc.id,
+          'classname': 'profileSection'+doc.id,
           'title': doc.data().title,
           'description': doc.data().description,
           'bgImg': 'url('+doc.data().bgImg+')',
@@ -68,8 +70,6 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-attachment: fixed;
   overflow: hidden;
   &__infoWrapper {
     position: absolute;
