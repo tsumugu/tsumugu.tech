@@ -82,7 +82,6 @@ export default {
   &__infoWrapper {
     position: absolute;
     z-index: 3;
-    color: $white;
     &__description {
       &__readbutton{
         margin: 10px 10px 10px 0;
@@ -104,15 +103,21 @@ export default {
 /* 1. 画面の大きなPC */
 @media (min-width: 1500px) {
   /deep/ .profileSection__infoWrapper {
-    bottom: 22%;
+    bottom: 15%;
     margin-left: 5%;
     max-width: 45%;
+    color: $profile-text;
+    background-color: $profile-text-bg;
+    padding: 30px;
   }
   /deep/ .profileSection__infoWrapper__inner {
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
   /deep/ .profileSection__infoWrapper__inner__title {
     font-size: 3rem;
+  }
+  /deep/ .profileSection__infoWrapper__top__title {
+    font-size: 1.3rem;
   }
   /deep/ .profileSection__infoWrapper__description__title {
     font-size: 1.5rem;
@@ -125,15 +130,21 @@ export default {
 /* 2. PC */
 @media (max-width: 1500px) and (min-width: 600px) {
   /deep/ .profileSection__infoWrapper {
-    bottom: 22%;
+    bottom: 5%;
     margin-left: 5%;
     max-width: 55%;
+    color: $profile-text;
+    background-color: $profile-text-bg;
+    padding: 30px;
   }
   /deep/ .profileSection__infoWrapper__inner {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   /deep/ .profileSection__infoWrapper__inner__title {
     font-size: 3rem;
+  }
+  /deep/ .profileSection__infoWrapper__top__title {
+    font-size: 1.3rem;
   }
   /deep/ .profileSection__infoWrapper__description__title {
     font-size: 1.5rem;
@@ -149,19 +160,24 @@ export default {
   /deep/ .profileSection__infoWrapper {
     bottom: 10%;
     width: 100%;
+    color: $profile-text;
+    background-color: $profile-text-bg;
+    padding: 0px;
   }
   /deep/ .profileSection__infoWrapper__inner {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   /deep/ .profileSection__infoWrapper__inner__title {
-    font-size: 2.5rem;
     margin: 15px 15px 0 15px;
+    font-size: 2rem;
   }
   /deep/ .profileSection__infoWrapper__description {
     margin: 0 15px 15px 15px;
   }
+  /deep/ .profileSection__infoWrapper__top__title {
+  }
   /deep/ .profileSection__infoWrapper__description__title {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   /deep/ .profileSection__infoWrapper__description__title > span {
     font-size: 1.5rem;
