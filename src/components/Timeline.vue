@@ -124,7 +124,8 @@ export default {
       tlLeftAboutThumbnail: null,
       tlLeftAboutTitle: null,
       tlLeftAboutYear: null,
-      tlLeftAboutDescription: null
+      tlLeftAboutDescription: null,
+      beforeCalltime: 0
     }
   },
   watch: {
@@ -320,7 +321,7 @@ export default {
       // console.log(this.colChildBefore, this.colChildNow, this.colChild)
       // console.log(crB, crN, cr)
       //console.log(posB, posN, pos)
-      if (10>pos) {
+      if (10>=pos) {
         this.setcolChild(this.colCounter, false)
         this.colCounter++
         this.toggleFadeinAndOut(this.colChildNow)
@@ -552,15 +553,37 @@ export default {
     }
   },
   mounted() {
+    var _this = this
     // FirebaseDataManager
     this.FirebaseDataManager = this.FirebaseDataManagerProps
     if (this.FirebaseDataManager == null) {
       this.FirebaseDataManager = new FDM(firebase)
     }
+
+    document.addEventListener('mousewheel', (e) => {
+      if (_this.colChildNowIndex < 4) {
+        var delta = e.wheelDeltaY
+        var nowtimestamp = new Date().getTime()
+        var defTime = nowtimestamp-_this.beforeCalltime
+        if (defTime > 100) {
+          if (delta > 0) {
+            //up
+          } else if (delta < 0) {
+            // down
+            if (_this.colChildNowIndex < 4) {
+              document.getElementById("app").scrollTop += 60
+              _this.beforeCalltime = new Date().getTime()
+              e.preventDefault()
+            }
+          }
+        } else {
+          e.preventDefault()
+        }
+      }
+    }, { passive: false });
+
     //
     this.drawTL()
-
-    var _this = this
     var cookie = this.$cookies.get("edit")
     if (cookie !== null) {
       if (cookie.toString() === "true") {
