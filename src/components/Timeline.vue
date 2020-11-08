@@ -784,18 +784,17 @@ hr {
     -webkit-overflow-scrolling: touch;
     &__inner {
       &__titleWrapper {
-        /*
-        margin: 10px;
-        */
+        vertical-align: bottom;
         &__title {
           display: inline-block;
-          margin: 15px 5px 15px 15px;
-          /*font-family: 'Hiragino Kaku Gothic W0 JIS2004', sans-serif;*/
+          /*margin: 15px 5px 15px 15px;*/
+          margin: 20px -15px 0 20px;
           font-size: 3rem;
+          line-height: 1;
         }
         &__subtitle {
           display: inline-block;
-          margin: 0;
+          margin:  0 0 20px 20px;
           font-size: 1.5rem;
         }
       }
@@ -976,13 +975,18 @@ hr {
   margin-top: -20px;
 }
 
+@mixin bigpc {
+  @media (min-width: 1100px) {
+    @content;
+  }
+}
 @mixin pc {
-  @media (min-width: 800px) {
+  @media (max-width: 1100px) and (min-width: 900px) {
     @content;
   }
 }
 @mixin tab {
-  @media (max-width: 800px) and (min-width: 500px) {
+  @media (max-width: 900px) and (min-width: 500px) {
     @content;
   }
 }
@@ -991,7 +995,7 @@ hr {
     @content;
   }
 }
-@include pc {
+@include bigpc {
   hr {
     margin: 0;
   }
@@ -1006,6 +1010,46 @@ hr {
     width: 100%;
     display: grid;
     grid-template-columns: 35% 1fr;
+  }
+  /deep/ .card__contentsWrapper,
+  /deep/ .timeline__item__yearAbout__contents {
+    width: 450px;
+  }
+  /deep/ .progressive-image,
+  /deep/ .card__contentsWrapper__buttonWrapper {
+    width: 450px;
+  }
+  /deep/ .timeline__item__yearAbout {
+    display: inline-block;
+    padding: 10px 20px 10px 10px;
+  }
+  /deep/ .timeline__item__yearAbout__contents__img,
+  /deep/ .timeline__item__yearAbout__contents__subtitle,
+  /deep/ .timeline__item__yearAbout__contents__description{
+    display: none;
+  }
+  /deep/ .card {
+    margin: 10px 0px 10px 0px;
+    border: 1px solid $card-border;
+    display: inline-block;
+  }
+}
+
+@include pc {
+  hr {
+    margin: 0;
+  }
+  #timeline {
+    text-align: center;
+  }
+  #timeline__loading, #timeline__wrapper {
+    text-align: left;
+  }
+  #timeline__wrapper {
+    /*display: inline-block;*/
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 560px;
   }
   /deep/ .card__contentsWrapper,
   /deep/ .timeline__item__yearAbout__contents {
