@@ -1,5 +1,10 @@
 <template>
   <div id="profile">
+    <component is="style" v-if="hideClickable">
+      .clickable {
+        display: none;
+      }
+    </component>
     <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFPC.jpg" v-on:load="loadendPC" v-show="isShowImg">
     <img src="https://tsumugu.s3-ap-northeast-1.amazonaws.com/PFSP.jpg" v-on:load="loadendSP" v-show="isShowImg">
     <div id="profile__bottomMenu" class="skelton" v-bind:class="{ show: !isHideBottomMenu, fadeinBM: isShowBottomMenu, fadeoutBM: !isShowBottomMenu }">
@@ -13,7 +18,7 @@
               <h1>{{skillName}}</h1>
               <p>{{skillDesc}}</p>
             </div>
-            <h2>作品</h2>
+            <h2>{{skillWorksName}}</h2>
             <div id="profile__bottomMenu__contents__items">
               <div v-for="item in itemList">
                 <p class="profile__bottomMenu__titleItem" @click="goToArticle(item.id)">{{item.title}}</p>
@@ -71,6 +76,7 @@ export default {
       skillNameUrl: null,
       skillDesc: null,
       skillQuery: null,
+      skillWorksName: "",
       langpfObj: null,
       itemList: [],
       itemListAll: []
@@ -172,7 +178,8 @@ export default {
             'isShow': true,
             'isDispGotoSiteButton': (doc.data().siteurl !== null),
             'isDispArticle': doc.data().isDispArticle,
-            'isDispReadButton': isDispRead
+            'isDispReadButton': isDispRead,
+            hideClickable: false
           }
           _this.itemListAll.push(docVal)
         })
@@ -208,6 +215,12 @@ export default {
       this.skillNameUrl = title
       this.skillQuery = query
       this.skillDesc = info[0].desc
+      this.skillWorksName = query=="lang" ? "この言語を利用した作品" : "このプラットフォーム・開発環境の作品"
+      if (this.$cookies.get("isHideClickable") == null || this.$cookies.get("isHideClickable") == undefined) {
+        this.$cookies.set("isHideClickable", true)
+        // .clickableをdisplay: none;に
+        this.hideClickable = true
+      }
       this.getArticle(this.skillNameUrl, query)
     },
     goToArticle(itemId) {
@@ -250,7 +263,6 @@ export default {
     }
   },
   mounted() {
-    Ts.loadFont();
     this.startTime = new Date()
     // FirebaseDataManager
     this.FirebaseDataManager = this.FirebaseDataManagerProps
@@ -272,6 +284,13 @@ export default {
           _this.deviconElms = Array.from(baseElm.getElementsByClassName('devicon-click'))
           _this.deviconElms.forEach(function (element) {
             element.addEventListener('click', _this.onClickDevivonEve, false)
+            if (_this.$cookies.get("isHideClickable") == null || _this.$cookies.get("isHideClickable") == undefined) {
+              var newNode = document.createElement( "i" )
+              newNode.classList.add("clickable")
+              newNode.classList.add("far")
+              newNode.classList.add("fa-hand-point-up")
+              element.appendChild(newNode)
+            }
           })
         }, 1000)
         resolve();
@@ -313,6 +332,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .devicon-wrap {
+  position: relative;
+}
+/deep/ .fa,
+/deep/ .far,
+/deep/ .fas {
+  position: absolute;
+  font-family: "Font Awesome 5 Free" !important;
+  font-size: 2rem;
+  top: 4rem;
+  left: 4rem;
+}
+/deep/ #profile__wrapper__textwrap__inner__text > h1 {
+  text-shadow:  1px  1px 5px $text-shadow-light,
+            -1px  1px 5px $text-shadow-light,
+             1px -1px 5px $text-shadow-light,
+            -1px -1px 5px $text-shadow-light;
+}
+
 /deep/ p,
 /deep/ ol > li {
   background-color: rgba(240, 240, 240, 0.8);
