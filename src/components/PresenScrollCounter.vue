@@ -139,14 +139,7 @@ export default {
       //前回から時間経ってるかチェック
       var nowtimestamp = new Date().getTime()
       var defTime = nowtimestamp-this.beforeCalltime
-      // Chrome&&Opera&&edge: 70, FireFox: 10
-      var scrollPwr = 70
-      if (navigator.userAgent.toLowerCase().indexOf('gecko') > -1) {
-        scrollPwr = 9
-      }
-      console.log(navigator.userAgent)
-      console.log(Math.abs(deltaY), scrollPwr)
-      if (defTime > 100 && Math.abs(deltaY)>scrollPwr) {
+      if (defTime > 500) {
         // console.log(deltaY, event)
         var dis = null
         if (deltaY == -0) {
