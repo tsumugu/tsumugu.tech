@@ -125,7 +125,8 @@ export default {
       tlLeftAboutTitle: null,
       tlLeftAboutYear: null,
       tlLeftAboutDescription: null,
-      beforeCalltime: 0
+      beforeCalltime: 0,
+      scrollDelta: 60
     }
   },
   watch: {
@@ -209,6 +210,7 @@ export default {
     windowResizedHandler() {
       this.cardColborder = window.innerHeight*0.8
       this.tlLeftColInner.style.height = (window.innerHeight)+"px"
+      this.getScrollDelta()
     },
     createBoundingClientRect(e) {
       if (e == undefined) {
@@ -370,6 +372,13 @@ export default {
 
       tlWrap.style.height = (e.rect.height+55)+"px"
       tlLeftLine.style.height = (e.rect.height+15)+"px"
+    },
+    getScrollDelta() {
+      var crColBase = this.createBoundingClientRect(document.getElementsByClassName('colBase')[0])
+      var crAboutCol = this.createBoundingClientRect(document.getElementsByClassName('aboutCol')[0])
+      if (crColBase!=undefined && crAboutCol!=undefined) {
+        this.scrollDelta = crAboutCol.height+crColBase.height
+      }
     },
     drawTL() {
       var _this = this
@@ -542,8 +551,9 @@ export default {
             _this.aboutCol = document.getElementsByClassName('aboutCol')
             _this.setcolChild(0, true)
             _this.setCardCol(0, true)
+            _this.getScrollDelta()
             _this.setTLHeight()
-          }, 1000)
+          }, 100)
         })
         //
       }).catch(function (error) {
@@ -567,11 +577,16 @@ export default {
         var defTime = nowtimestamp-_this.beforeCalltime
         if (defTime > 100) {
           if (delta > 0) {
-            //up
+            // up
+            /*
+            document.getElementById("app").scrollTop -= (_this.scrollDelta)
+            _this.beforeCalltime = new Date().getTime()
+            e.preventDefault()
+            */
           } else if (delta < 0) {
             // down
             if (_this.colChildNowIndex < 4) {
-              document.getElementById("app").scrollTop += 60
+              document.getElementById("app").scrollTop += _this.scrollDelta
               _this.beforeCalltime = new Date().getTime()
               e.preventDefault()
             }
