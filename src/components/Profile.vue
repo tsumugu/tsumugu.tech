@@ -86,6 +86,7 @@ export default {
       &__title {
         border-left: solid 5px $main;
         padding: 10px 0 10px 10px;
+        margin-left: -15px;
       }
     }
     &__description {
