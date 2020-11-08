@@ -210,6 +210,7 @@ export default {
     windowResizedHandler() {
       this.cardColborder = window.innerHeight*0.8
       this.tlLeftColInner.style.height = (window.innerHeight)+"px"
+      this.setTLHeight()
       this.getScrollDelta()
     },
     createBoundingClientRect(e) {
@@ -546,14 +547,14 @@ export default {
         })
         // v-forが描画され終ったときに実行されるイベント
         _this.$nextTick(() => {
+          _this.colBase = document.getElementsByClassName('colBase')[0]
+          _this.aboutCol = document.getElementsByClassName('aboutCol')
+          _this.setcolChild(0, true)
+          _this.setCardCol(0, true)
+          _this.getScrollDelta()
           setTimeout(() => {
-            _this.colBase = document.getElementsByClassName('colBase')[0]
-            _this.aboutCol = document.getElementsByClassName('aboutCol')
-            _this.setcolChild(0, true)
-            _this.setCardCol(0, true)
-            _this.getScrollDelta()
             _this.setTLHeight()
-          }, 100)
+          }, 500)
         })
         //
       }).catch(function (error) {
@@ -578,18 +579,11 @@ export default {
         if (defTime > 100) {
           if (delta > 0) {
             // up
-            /*
-            document.getElementById("app").scrollTop -= (_this.scrollDelta)
-            _this.beforeCalltime = new Date().getTime()
-            e.preventDefault()
-            */
           } else if (delta < 0) {
             // down
-            if (_this.colChildNowIndex < 4) {
-              document.getElementById("app").scrollTop += _this.scrollDelta
-              _this.beforeCalltime = new Date().getTime()
-              e.preventDefault()
-            }
+            document.getElementById("app").scrollTop += _this.scrollDelta
+            _this.beforeCalltime = new Date().getTime()
+            e.preventDefault()
           }
         } else {
           e.preventDefault()
