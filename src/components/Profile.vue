@@ -82,9 +82,15 @@ export default {
   &__infoWrapper {
     position: absolute;
     z-index: 3;
+    &__inner {
+      &__title {
+        border-left: solid 5px $main;
+        padding: 10px 0 10px 10px;
+      }
+    }
     &__description {
       &__readbutton{
-        margin: 10px 10px 10px 0;
+        margin: 10px 15px 15px 0;
         > a {
           padding: 10px;
           border-radius: 10px;
@@ -104,23 +110,30 @@ export default {
 @media (min-width: 1500px) {
   /deep/ .profileSection__infoWrapper {
     bottom: 15%;
-    margin-left: 5%;
+    padding: 30px;
+    padding-left: calc(5% + 30px);
     max-width: 45%;
     color: $profile-text;
     background-color: $profile-text-bg;
-    padding: 30px;
   }
   /deep/ .profileSection__infoWrapper__inner {
     font-size: 1.3rem;
   }
   /deep/ .profileSection__infoWrapper__inner__title {
     font-size: 3rem;
+    line-height: 1;
   }
   /deep/ .profileSection__infoWrapper__top__title {
+    margin-top: 10px;
     font-size: 1.3rem;
   }
   /deep/ .profileSection__infoWrapper__description__title {
+    margin-top: 10px;
     font-size: 1.5rem;
+    line-height: 1;
+  }
+  /deep/ .profileSection__infoWrapper__description__readbutton{
+    margin: 10px 15px 20px 0;
   }
   /deep/ .profileSection__infoWrapper__description__title > span {
     font-size: 2rem;
@@ -131,23 +144,30 @@ export default {
 @media (max-width: 1500px) and (min-width: 600px) {
   /deep/ .profileSection__infoWrapper {
     bottom: 5%;
-    margin-left: 5%;
+    padding: 30px;
+    padding-left: calc(5% + 30px);
     max-width: 55%;
     color: $profile-text;
     background-color: $profile-text-bg;
-    padding: 30px;
   }
   /deep/ .profileSection__infoWrapper__inner {
     font-size: 1.1rem;
   }
   /deep/ .profileSection__infoWrapper__inner__title {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    line-height: 1;
   }
   /deep/ .profileSection__infoWrapper__top__title {
-    font-size: 1.3rem;
+    margin-top: 10px;
+    font-size: 1.1rem;
   }
   /deep/ .profileSection__infoWrapper__description__title {
+    margin-top: 10px;
     font-size: 1.5rem;
+    line-height: 1;
+  }
+  /deep/ .profileSection__infoWrapper__description__readbutton{
+    margin: 10px 15px 15px 0;
   }
   /deep/ .profileSection__infoWrapper__description__title > span {
     font-size: 2rem;
