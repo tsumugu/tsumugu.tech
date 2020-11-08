@@ -139,7 +139,20 @@ export default {
       //前回から時間経ってるかチェック
       var nowtimestamp = new Date().getTime()
       var defTime = nowtimestamp-this.beforeCalltime
-      if (defTime > 500) {
+      // Chrome&&Opera&&edge: 70, FireFox: 10, Safari: 1
+      var scrollPwr = 0
+      /*
+      var userAgent = window.navigator.userAgent.toLowerCase()
+      var scrollPwr = 70
+      if ((userAgent.indexOf('safari') > -1) && /macintosh/i.test(userAgent)) {
+        scrollPwr = 0
+      } else if ((userAgent.indexOf('gecko') > -1) && (userAgent.indexOf('firefox') > -1)) {
+        scrollPwr = 9
+      }
+      */
+      console.log(navigator.userAgent)
+      console.log(Math.abs(deltaY), scrollPwr, defTime)
+      if (defTime > 100 && Math.abs(deltaY)>scrollPwr) {
         // console.log(deltaY, event)
         var dis = null
         if (deltaY == -0) {
