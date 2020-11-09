@@ -376,7 +376,7 @@ export default {
       var crAboutCol = this.createBoundingClientRect(document.getElementsByClassName('aboutCol')[0])
       var crS4Col = this.createBoundingClientRect(document.getElementsByClassName('aboutCol')[4])
       if (crColBase!=undefined && crAboutCol!=undefined && crS4Col!=undefined) {
-        this.S4TopPos = crS4Col.yEnd+250
+        this.S4TopPos = crS4Col.yEnd+100
         this.scrollDelta = crAboutCol.height+crColBase.height
       }
     },
