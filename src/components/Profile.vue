@@ -179,7 +179,7 @@ export default {
     line-height: 1;
   }
   /deep/ .profileSection__infoWrapper__description__readbutton{
-    margin: 10px 15px 15px 0;
+    margin: 5px 15px 15px 0;
   }
   /deep/ .profileSection__infoWrapper__description__title > span {
     font-size: 2rem;
@@ -209,6 +209,9 @@ export default {
   }
   /deep/ .profileSection__infoWrapper__top__title {
     margin-top: 10px;
+  }
+  /deep/ .profileSection__infoWrapper__description__readbutton{
+    margin: 5px 15px 15px 0;
   }
   /deep/ .profileSection__infoWrapper__description__title {
     margin-top: 10px;
