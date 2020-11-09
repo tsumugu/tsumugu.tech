@@ -126,7 +126,9 @@ export default {
       tlLeftAboutYear: null,
       tlLeftAboutDescription: null,
       beforeCalltime: 0,
-      scrollDelta: 60
+      scrollDelta: 60,
+      S4TopPos: 0,
+      defBorder: 100
     }
   },
   watch: {
@@ -365,9 +367,16 @@ export default {
       tlLeftLine.style.height = (e.rect.height+15)+"px"
     },
     getScrollDelta() {
+      var ua = window.navigator.userAgent.toLowerCase()
+      var isMac = ((ua.indexOf('mac') > -1) && (ua.indexOf('os') > -1)) && !((ua.indexOf('iphone') > -1) || (ua.indexOf('ipad') > -1) || (ua.indexOf('windows') > -1))
+      if (isMac) {
+        this.defBorder = 1000
+      }
       var crColBase = this.createBoundingClientRect(document.getElementsByClassName('colBase')[0])
       var crAboutCol = this.createBoundingClientRect(document.getElementsByClassName('aboutCol')[0])
-      if (crColBase!=undefined && crAboutCol!=undefined) {
+      var crS4Col = this.createBoundingClientRect(document.getElementsByClassName('aboutCol')[4])
+      if (crColBase!=undefined && crAboutCol!=undefined && crS4Col!=undefined) {
+        this.S4TopPos = crS4Col.yEnd+250
         this.scrollDelta = crAboutCol.height+crColBase.height
       }
     },
@@ -560,20 +569,26 @@ export default {
     if (this.FirebaseDataManager == null) {
       this.FirebaseDataManager = new FDM(firebase)
     }
-
     document.addEventListener('mousewheel', (e) => {
-      if (_this.colChildNowIndex < 4) {
+      if (_this.colChildNowIndex <= 4) {
         var delta = e.wheelDeltaY
         var nowtimestamp = new Date().getTime()
         var defTime = nowtimestamp-_this.beforeCalltime
-        if (defTime > 100) {
+        if (defTime > _this.defBorder) {
           if (delta > 0) {
             // up
+            if (document.getElementById("app").scrollTop < this.S4TopPos) {
+              document.getElementById("app").scrollTop -= (_this.scrollDelta-5)
+              _this.beforeCalltime = new Date().getTime()
+              e.preventDefault()
+            }
           } else if (delta < 0) {
             // down
-            document.getElementById("app").scrollTop += _this.scrollDelta
-            _this.beforeCalltime = new Date().getTime()
-            e.preventDefault()
+            if (_this.colChildNowIndex < 4) {
+              document.getElementById("app").scrollTop += _this.scrollDelta
+              _this.beforeCalltime = new Date().getTime()
+              e.preventDefault()
+            }
           }
         } else {
           e.preventDefault()

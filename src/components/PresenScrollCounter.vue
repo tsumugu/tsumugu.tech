@@ -130,7 +130,6 @@ export default {
       this.touchedElementName = null
     },
     wheelHandler: function(event) {
-      console.log(event)
       //前回から時間経ってるかチェック
       var nowtimestamp = new Date().getTime()
       var defTime = nowtimestamp-this.beforeCalltime
@@ -177,7 +176,7 @@ export default {
       var ua = window.navigator.userAgent.toLowerCase()
       var isMac = ((ua.indexOf('mac') > -1) && (ua.indexOf('os') > -1)) && !((ua.indexOf('iphone') > -1) || (ua.indexOf('ipad') > -1) || (ua.indexOf('windows') > -1))
       if (isMac) {
-        this.defBorder = 2000
+        this.defBorder = 1500
       }
     }
   },
