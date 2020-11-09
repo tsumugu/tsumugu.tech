@@ -117,15 +117,19 @@ export default {
     background-color: $profile-text-bg;
   }
   /deep/ .profileSection__infoWrapper__inner {
-    font-size: 1.3rem;
+    /*font-size: 1.3rem;*/
   }
   /deep/ .profileSection__infoWrapper__inner__title {
+    margin-left: -15px;
     font-size: 3rem;
     line-height: 1;
   }
   /deep/ .profileSection__infoWrapper__top__title {
     margin-top: 10px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+  }
+  /deep/ .profileSection__infoWrapper__description {
+    font-size: 1.2em;
   }
   /deep/ .profileSection__infoWrapper__description__title {
     margin-top: 10px;
@@ -154,12 +158,16 @@ export default {
     font-size: 1.1rem;
   }
   /deep/ .profileSection__infoWrapper__inner__title {
+    margin-left: -15px;
     font-size: 2.5rem;
     line-height: 1;
   }
   /deep/ .profileSection__infoWrapper__top__title {
     margin-top: 10px;
     font-size: 1.1rem;
+  }
+  /deep/ .profileSection__infoWrapper__description {
+    font-size: 1.1em;
   }
   /deep/ .profileSection__infoWrapper__description__title {
     margin-top: 10px;
