@@ -47,6 +47,7 @@ body, html {
   overflow-x: hidden !important;
   overflow-y: scroll !important;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 .v-enter-active, .v-leave-active {
   transition: opacity .5s;

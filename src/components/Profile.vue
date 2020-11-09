@@ -86,7 +86,6 @@ export default {
       &__title {
         border-left: solid 5px $main;
         padding: 10px 0 10px 10px;
-        margin-left: -15px;
       }
     }
     &__description {
@@ -191,14 +190,18 @@ export default {
   /deep/ .profileSection__infoWrapper__inner__title {
     margin: 15px 15px 0 15px;
     font-size: 2rem;
+    line-height: 1;
   }
   /deep/ .profileSection__infoWrapper__description {
     margin: 0 15px 15px 15px;
   }
   /deep/ .profileSection__infoWrapper__top__title {
+    margin-top: 10px;
   }
   /deep/ .profileSection__infoWrapper__description__title {
+    margin-top: 10px;
     font-size: 1.1rem;
+    line-height: 1;
   }
   /deep/ .profileSection__infoWrapper__description__title > span {
     font-size: 1.5rem;

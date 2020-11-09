@@ -58,7 +58,8 @@ export default {
       swipeY_S: 0,
       touchedElementName: null,
       beforeTypo: 0,
-      timeoutId: null
+      timeoutId: null,
+      defBorder: 500
     }
   },
   watch: {
@@ -129,52 +130,35 @@ export default {
       this.touchedElementName = null
     },
     wheelHandler: function(event) {
-      var _this = this
-      window.clearTimeout(this.timeoutId)
-      _this.timeoutId = window.setTimeout(function() {
-        _this.scrollCountEvent(event.deltaY)
-      }, 100)
-    },
-    scrollCountEvent: function(deltaY) {
+      console.log(event)
       //前回から時間経ってるかチェック
       var nowtimestamp = new Date().getTime()
       var defTime = nowtimestamp-this.beforeCalltime
-      // Chrome&&Opera&&edge: 70, FireFox: 10, Safari: 1
-      var scrollPwr = 0
-      /*
-      var userAgent = window.navigator.userAgent.toLowerCase()
-      var scrollPwr = 70
-      if ((userAgent.indexOf('safari') > -1) && /macintosh/i.test(userAgent)) {
-        scrollPwr = 0
-      } else if ((userAgent.indexOf('gecko') > -1) && (userAgent.indexOf('firefox') > -1)) {
-        scrollPwr = 9
+      if (defTime > this.defBorder) {
+        this.scrollCountEvent(event.deltaY)
+        this.beforeCalltime = new Date().getTime()
       }
-      */
-      console.log(navigator.userAgent)
-      console.log(Math.abs(deltaY), scrollPwr, defTime)
-      if (defTime > 100 && Math.abs(deltaY)>scrollPwr) {
-        // console.log(deltaY, event)
-        var dis = null
-        if (deltaY == -0) {
-          dis = -1
-        } else {
-          dis = deltaY
+    },
+    scrollCountEvent: function(deltaY) {
+      var dis = null
+      if (deltaY == -0) {
+        dis = -1
+      } else {
+        dis = deltaY
+      }
+      if (dis > 0) {
+        // console.log("Plus")
+        if (this.pageNumCountMax>this.pageNum&&this.pageNum>=this.pageNumCountMin) {
+          this.pageNum += 1
+          this.pageWcNum = (this.pageNum*10)+1
         }
-        if (dis > 0) {
-          // console.log("Plus")
-          if (this.pageNumCountMax>this.pageNum&&this.pageNum>=this.pageNumCountMin) {
-            this.pageNum += 1
-            this.pageWcNum = (this.pageNum*10)+1
-          }
-        } else {
-          // console.log("Minus")
-          if (this.pageNumCountMax>=this.pageNum&&this.pageNum>=0) {
-            this.pageNum -= 1
-            this.pageWcNum = (this.pageNum*10)+1
-          }
+      } else {
+        // console.log("Minus")
+        if (this.pageNumCountMax>=this.pageNum&&this.pageNum>=0) {
+          this.pageNum -= 1
+          this.pageWcNum = (this.pageNum*10)+1
         }
       }
-      this.beforeCalltime = new Date().getTime()
       //
     }
   },
@@ -190,6 +174,11 @@ export default {
       window.addEventListener('touchcancel', this.touchHandlerR, { passive: false });
     } else {
       window.addEventListener('wheel', this.wheelHandler, { passive: false })
+      var ua = window.navigator.userAgent.toLowerCase()
+      var isMac = ((ua.indexOf('mac') > -1) && (ua.indexOf('os') > -1)) && !((ua.indexOf('iphone') > -1) || (ua.indexOf('ipad') > -1) || (ua.indexOf('windows') > -1))
+      if (isMac) {
+        this.defBorder = 2000
+      }
     }
   },
   destroyed() {
