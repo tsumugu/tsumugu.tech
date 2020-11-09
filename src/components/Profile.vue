@@ -47,10 +47,14 @@ export default {
     this.FirebaseDataManager.get('profile').then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var bgPos = doc.data().bgPos==undefined ? "center top" : doc.data().bgPos
+        var bgImgSP = doc.data().bgImgSP==undefined ? doc.data().bgImg : doc.data().bgImgSP
         var docVal = {
+          'class': 'profileSection profileSection'+doc.id,
+          'classname': 'profileSection'+doc.id,
           'title': doc.data().title,
           'description': doc.data().description,
-          'bgImg': 'url('+doc.data().bgImg+')',
+          'bgImgPC': 'url('+doc.data().bgImg+')',
+          'bgImgSP': 'url('+bgImgSP+')',
           'bgPos': bgPos
          }
         _this.items.push(docVal)

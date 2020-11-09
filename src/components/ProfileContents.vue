@@ -1,5 +1,26 @@
  <template>
-  <div class="profileSection" v-bind:style="{ backgroundImage: item.bgImg, backgroundPosition: item.bgPos}">
+  <div :class="item.class">
+    <component is="style">
+      .{{item.classname}} {
+        background-position: {{item.bgPos}};
+        background-size: cover;
+      }
+      @media (min-width: 1500px) {
+        .{{item.classname}} {
+          background-image: {{item.bgImgPC}};
+        }
+      }
+      @media (max-width: 1500px) and (min-width: 600px) {
+        .{{item.classname}} {
+          background-image: {{item.bgImgPC}};
+        }
+      }
+      @media screen and (max-width:600px) {
+        .{{item.classname}} {
+          background-image: {{item.bgImgSP}};
+        }
+      }
+    </component>
     <div class="profileSection__infoWrapper">
       <div class="profileSection__infoWrapper__inner">
         <div class="profileSection__infoWrapper__inner__title">{{item.title}}</div>
