@@ -640,7 +640,8 @@ export default {
         }
         this.setYearText(dispYear)
       } else {
-        this.setYearText("2020")
+        // FIXME: 毎年最新の年に修正する必要がある。
+        this.setYearText("2021")
       }
       this.checkPosAndChangeCount()
 
