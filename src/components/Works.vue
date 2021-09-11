@@ -138,9 +138,11 @@ export default {
             'isDispReadButton': isDispRead
           }
           //
-          doc.data()["works-genle"].toString(10).split(".").forEach((i) => {
-            _this.itemsInCategories[i].items.push(docVal)
-          })
+          if (doc.data()["works-genle"] != undefined) {
+            doc.data()["works-genle"].toString(10).split(".").forEach((i) => {
+              _this.itemsInCategories[i].items.push(docVal)
+            })
+          }
           //
         })
         //重要なものを最初に持っていく
