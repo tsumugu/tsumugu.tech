@@ -128,7 +128,8 @@ export default {
       beforeCalltime: 0,
       scrollDelta: 60,
       S4TopPos: 0,
-      defBorder: 100
+      defBorder: 100,
+      deltaBorder: 0
     }
   },
   watch: {
@@ -370,13 +371,13 @@ export default {
       var ua = window.navigator.userAgent.toLowerCase()
       var isMac = ((ua.indexOf('mac') > -1) && (ua.indexOf('os') > -1)) && !((ua.indexOf('iphone') > -1) || (ua.indexOf('ipad') > -1) || (ua.indexOf('windows') > -1))
       if (isMac) {
-        this.defBorder = 1000
+        this.defBorder = 300
       }
       var crColBase = this.createBoundingClientRect(document.getElementsByClassName('colBase')[0])
       var crAboutCol = this.createBoundingClientRect(document.getElementsByClassName('aboutCol')[0])
       var crS4Col = this.createBoundingClientRect(document.getElementsByClassName('aboutCol')[4])
       if (crColBase!=undefined && crAboutCol!=undefined && crS4Col!=undefined) {
-        this.S4TopPos = crS4Col.yEnd+100
+        this.S4TopPos = crS4Col.yEnd-40
         this.scrollDelta = crAboutCol.height+crColBase.height
       }
     },
@@ -575,14 +576,14 @@ export default {
         var nowtimestamp = new Date().getTime()
         var defTime = nowtimestamp-_this.beforeCalltime
         if (defTime > _this.defBorder) {
-          if (delta > 0) {
+          if (delta > _this.deltaBorder) {
             // up
             if (document.getElementById("app").scrollTop < this.S4TopPos) {
-              document.getElementById("app").scrollTop -= (_this.scrollDelta-5)
+              document.getElementById("app").scrollTop -= (_this.scrollDelta-1)
               _this.beforeCalltime = new Date().getTime()
               e.preventDefault()
             }
-          } else if (delta < 0) {
+          } else if (delta < _this.deltaBorder) {
             // down
             if (_this.colChildNowIndex < 4) {
               document.getElementById("app").scrollTop += _this.scrollDelta
