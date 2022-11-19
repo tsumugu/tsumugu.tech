@@ -32,7 +32,7 @@
     "vue-progressive-image": "^3.2.0",
     "vue-router": "^3.1.5",
     "vueinview": "^1.0.7",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "ajv": "^6.12.3",
@@ -68,7 +68,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^5.1.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "jest": "^25.1.0",
     "jest-serializer-vue": "^2.0.2",
     "matter-attractors": "^0.1.6",
